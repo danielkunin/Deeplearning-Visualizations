@@ -1,4 +1,4 @@
-function MNIST(histogram) {
+function MNIST(histogram, initialization) {
 
 	// dimensions of network
 	var layers = [784,300,300,300,300,10],
@@ -18,7 +18,7 @@ function MNIST(histogram) {
 
 	// declare variables for activations
 	var activations = {};
-	for (var l = 1; l < layers.length - 1; l++) {
+	for (var l = 1; l < layers.length; l++) {
 		activations['a' + l] = dl.variable(dl.zeros([batch,layers[l]]), false)
 	}
 
@@ -33,7 +33,9 @@ function MNIST(histogram) {
 		// layer 4
 		activations['a4'].assign(dl.tanh(dl.matMul(activations['a3'], parameters["w4"]).add(parameters["b4"])));
 		// layer 5
-		return dl.sigmoid(dl.matMul(activations['a4'], parameters["w5"]).add(parameters["b5"]));
+		activations['a5'].assign(dl.softmax(dl.matMul(activations['a4'], parameters["w5"]).add(parameters["b5"])));
+		// layer 5
+		return activations['a5'];
 	}
 
 	// loss function
@@ -45,16 +47,22 @@ function MNIST(histogram) {
 
 	// initialize parameters
 	for (var l = 1; l < layers.length; l++) {
-		// Xe-Initialization
-		// parameters['w' + l].assign(dl.randomNormal([layers[l-1],layers[l]],0,Math.sqrt(2/layers[l-1])));
-		// Uniform
-		parameters['w' + l].assign(dl.randomUniform([layers[l-1],layers[l]],-Math.sqrt(1/layers[l-1]),Math.sqrt(1/layers[l-1])));
+		if (initialization == "xe") {
+			// Xe-Initialization
+			parameters['w' + l].assign(dl.randomNormal([layers[l-1],layers[l]],0,Math.sqrt(2/layers[l-1])));
+		} else if (initialization == "uniform"){
+			// Uniform
+			parameters['w' + l].assign(dl.randomUniform([layers[l-1],layers[l]],-Math.sqrt(1/layers[l-1]),Math.sqrt(1/layers[l-1])));
+		} else if (initialization == "normal") {
+			// Standard Normal
+			parameters['w' + l].assign(dl.randomNormal([layers[l-1],layers[l]],0,1));
+		};
 	}
 
 	// train model
-	var index = 0;
-	var epoch = 0;
-	var max = 100;
+	var index = 0,
+		epoch = 0,
+		max = 100;
 	d3.timer(() => {
 		// get batch
 		dl.tidy(() => {
@@ -64,7 +72,7 @@ function MNIST(histogram) {
 		// minimize
 		optimizer.minimize(() => loss(f(x), y));
 		// update plot
-		histogram([activations['a1'].dataSync(), activations['a2'].dataSync(), activations['a3'].dataSync(), activations['a4'].dataSync()]);
+		histogram([activations['a1'].dataSync(), activations['a2'].dataSync(), activations['a3'].dataSync(), activations['a4'].dataSync(),activations['a5'].dataSync()]);
 		// increment
 		index = (index + batch) % sample
 		epoch += 1;

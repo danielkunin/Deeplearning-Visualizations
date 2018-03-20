@@ -1,4 +1,3 @@
-// var data = d3.range(1000).map(d3.randomBates(10));
 
 // setup dimensions
 var margin = {top: 30, right: 30, bottom: 30, left: 30},
@@ -18,8 +17,8 @@ var x = d3.scaleLinear()
     .rangeRound([0, width]);
 
 var y = d3.scaleLinear()
+	.domain([0,1])
     .range([height, 0]);
-
 
 svg.append("g")
     .attr("class", "axis axis--x")
@@ -36,6 +35,7 @@ function histogram(data) {
             .thresholds(x.ticks(200))
             (data[i]);
         y.domain([0, d3.max(bins, function(d) { return Math.max(y.domain()[1],d.length); })]);
+        // bins /= d3.max(bins, function(d) { return d.length; })
         activations.push(bins);
     }
 
@@ -53,3 +53,18 @@ function histogram(data) {
     lines.attr("d", valueline);
 
 }
+
+
+// temporary buttons
+d3.select("#zero").on("click", function() {
+  MNIST(histogram, "zero");
+});
+d3.select("#unif").on("click", function() {
+  MNIST(histogram, "uniform");
+});
+d3.select("#xe").on("click", function() {
+  MNIST(histogram, "xe");
+});
+d3.select("#norm").on("click", function() {
+  MNIST(histogram, "normal");
+});
