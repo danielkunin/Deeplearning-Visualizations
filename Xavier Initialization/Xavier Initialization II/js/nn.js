@@ -1,81 +1,119 @@
-function MNIST(histogram, initialization) {
+function MNIST(layers, histogram, initialization) {
 
-	// dimensions of network
-	var layers = [784,300,300,300,300,10],
-		batch = 10,
-		sample = 50;
+	// load mnist
+	extract('data/mnist_test.csv.zip');
 
-	// declare data
-	var x = dl.variable(dl.zeros([batch,layers[0]])),
-		y = dl.variable(dl.zeros([batch,10]));
+	// constants of network
+	const batch = 10;
+	const learningRate = 0.03;
+	const optimizer = dl.train.sgd(learningRate);
 	      
 	// declare parameters for weights and biases
-	var parameters = {};
+	const parameters = {};
 	for (var l = 1; l < layers.length; l++) {
 		parameters['w' + l] = dl.variable(dl.zeros([layers[l-1],layers[l]]));
 		parameters['b' + l] = dl.variable(dl.zeros([1,layers[l]]));
 	}
 
 	// declare variables for activations
-	var activations = {};
-	for (var l = 1; l < layers.length; l++) {
+	const activations = {};
+	for (var l = 0; l < layers.length; l++) {
 		activations['a' + l] = dl.variable(dl.zeros([batch,layers[l]]), false)
 	}
 
+	// declare output label variable
+	const labels = dl.variable(dl.zeros([batch,10]));
+
 	// forward propogation
-	var f = x => {
-		// layer 1
-		activations['a1'].assign(dl.tanh(dl.matMul(x, parameters["w1"]).add(parameters["b1"])));
-		// layer 2
-		activations['a2'].assign(dl.tanh(dl.matMul(activations['a1'], parameters["w2"]).add(parameters["b2"])));
-		// layer 3
-		activations['a3'].assign(dl.tanh(dl.matMul(activations['a2'], parameters["w3"]).add(parameters["b3"])));
-		// layer 4
-		activations['a4'].assign(dl.tanh(dl.matMul(activations['a3'], parameters["w4"]).add(parameters["b4"])));
-		// layer 5
-		activations['a5'].assign(dl.softmax(dl.matMul(activations['a4'], parameters["w5"]).add(parameters["b5"])));
-		// layer 5
-		return activations['a5'];
+	function f(x) {
+		// hidden layers
+		for (var l = 1; l < layers.length - 1; l++) {
+			activations['a' + l].assign(dl.tanh(dl.matMul(activations['a' + (l-1)], parameters['w' + l]).add(parameters['b' + l])));
+		}
+		// output layer
+		activations['a' + l].assign(dl.softmax(dl.matMul(activations['a' + (l-1)], parameters['w' + l]).add(parameters['b' + l])));
+		// return logits
+		return dl.matMul(activations['a' + (l-1)], parameters['w' + l]).add(parameters['b' + l]);
 	}
 
 	// loss function
-	var loss = (logits, labels) => dl.losses.softmaxCrossEntropy(labels, logits).mean();
+	const loss = (logits, labels) => dl.losses.softmaxCrossEntropy(labels, logits).mean();
 
-	// optimizer + learning rate
-	var learningRate = 0.01;
-	var optimizer = dl.train.sgd(learningRate);
 
 	// initialize parameters
-	for (var l = 1; l < layers.length; l++) {
-		if (initialization == "xe") {
-			// Xe-Initialization
-			parameters['w' + l].assign(dl.randomNormal([layers[l-1],layers[l]],0,Math.sqrt(2/layers[l-1])));
-		} else if (initialization == "uniform"){
-			// Uniform
-			parameters['w' + l].assign(dl.randomUniform([layers[l-1],layers[l]],-Math.sqrt(1/layers[l-1]),Math.sqrt(1/layers[l-1])));
-		} else if (initialization == "normal") {
-			// Standard Normal
-			parameters['w' + l].assign(dl.randomNormal([layers[l-1],layers[l]],0,1));
-		};
+	function initialize(style) {
+		dl.tidy(() => {
+			for (var l = 1; l < layers.length; l++) {
+				if (style == "xe") {
+					// Xe-Initialization
+					parameters['w' + l].assign(dl.randomNormal([layers[l-1],layers[l]],0,Math.sqrt(2/layers[l-1])));
+				} else if (style == "uniform"){
+					// Uniform
+					parameters['w' + l].assign(dl.randomUniform([layers[l-1],layers[l]],-Math.sqrt(1/layers[l-1]),Math.sqrt(1/layers[l-1])));
+				} else if (style == "normal") {
+					// Standard Normal
+					parameters['w' + l].assign(dl.randomNormal([layers[l-1],layers[l]],0,1));
+				} else {
+					// Zeros
+					parameters['w' + l].assign(dl.variable(dl.zeros([layers[l-1],layers[l]])));
+				}
+				// Zero Bias
+				parameters['b' + l].assign(dl.variable(dl.zeros([1,layers[l]])));
+			}
+		});
 	}
 
 	// train model
-	var index = 0,
-		epoch = 0,
-		max = 100;
-	d3.timer(() => {
-		// get batch
-		dl.tidy(() => {
-			x.assign(dl.tensor2d(mnist["images"].slice(index,index + batch)));
-			y.assign(dl.oneHot(dl.tensor(mnist["labels"].slice(index,index + batch)),10));
-		});
-		// minimize
-		optimizer.minimize(() => loss(f(x), y));
-		// update plot
-		histogram([activations['a1'].dataSync(), activations['a2'].dataSync(), activations['a3'].dataSync(), activations['a4'].dataSync(),activations['a5'].dataSync()]);
-		// increment
-		index = (index + batch) % sample
-		epoch += 1;
-		// return epoch == max;
-	}, 100);
+	function train(histogram) {
+		var index = 0,
+			epoch = 0,
+			max = 0;
+		function iteration() {
+			// get batch
+			dl.tidy(() => {
+				activations['a0'].assign(dl.tensor2d(DATA["images"].slice(index,index + batch)));
+				labels.assign(dl.oneHot(dl.tensor(DATA["labels"].slice(index,index + batch)),10));
+			});
+			// minimize
+			// const cost = optimizer.minimize(() => loss(f(a0), labels), true);
+			// const cost = optimizer.minimize(() => loss(f(activations['a0']), labels), true);
+			// console.log(cost.dataSync());
+			// cost.dispose();
+			optimizer.minimize(() => loss(f(activations['a0']), labels));
+
+			// update plot
+			histogram([activations['a0'].dataSync(), activations['a1'].dataSync(), activations['a2'].dataSync(), activations['a3'].dataSync(), activations['a4'].dataSync(), activations['a5'].dataSync()]);
+			// increment
+			epoch += (index == 0);
+			index = (index + batch) % DATA['size'];
+			// check
+			if (epoch == max) {
+				t.stop();
+			}
+		}
+		// create timer
+		var t = d3.timer(iteration);
+		t.stop();
+
+		// play functions
+		function stop() {
+			t.stop();
+		}
+		function start() {
+			max = epoch - 1;
+			t.restart(iteration);
+		}
+		function step() {
+			t.stop();
+			max = epoch + 1;
+			t.restart(iteration);
+		}
+		function reset() {
+			t.stop();
+		}
+		return {'stop':stop, 'start':start, 'step':step, 'reset':reset};
+	}
+
+
+	return {'initialize':initialize, 'train':train};
 }
