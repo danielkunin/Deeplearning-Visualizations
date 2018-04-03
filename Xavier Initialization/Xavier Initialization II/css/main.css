@@ -23,6 +23,20 @@ p {
 	margin: auto;
 }
 
+#input {
+    white-space: initial;
+    width: 100px;
+    vertical-align: top;
+    display: inline-block;
+}
+#mnist {
+    white-space: initial;
+    width: 800px;
+    vertical-align: top;
+    display: inline-block;
+}
+
+
 .layer rect {
 	stroke-width: 2px;
 	fill: none;

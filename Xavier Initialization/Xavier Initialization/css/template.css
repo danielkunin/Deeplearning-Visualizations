@@ -1,0 +1,385 @@
+body {
+    width: 100%;
+    margin: 0;
+    font-family: "Assistant";
+    background-color: #FFFFFF;
+}
+
+.header,
+.footer {
+    width: 100%;
+    height: 100px;
+    background-color: white;
+}
+
+.header {
+    border-bottom: 1px solid #D0D0D0;
+    position: fixed;
+
+}
+
+.footer {
+    border-top: 1px solid #D0D0D0;
+    margin-top: 200px;
+}
+
+.main {
+    width: 100%;
+    height: auto;
+   /* background-color: #F0F0F0;*/
+}
+
+.container {
+  
+    width: 75%;
+    margin: 0 auto;
+    height: auto;
+}
+
+.container h1 {
+    margin: 0%;
+}
+
+.container h2 {
+    color: #9B9B9B;
+    margin-top: 0;
+    margin-bottom: 5%;
+}
+
+
+/*grid*/
+
+.column-8-8,
+.column-6-8,
+.column-4-8,
+.column-3-8,
+.column-2-8 {
+    /*	display: block;*/
+    margin-right: 2%;
+    margin-left: 2%;
+}
+
+
+.column-2-4 img,
+.column-3-4 img,
+.column-4-4 img,
+.column-6-4 img,
+.column-8-4 img {
+    width: 100%;
+    margin-top: 1em;
+    margin-bottom: 1.5em;
+}
+
+img{
+	width: 100%;}
+
+.column-align {
+    display: inline-block;
+    vertical-align: text-top;
+}
+
+.full-container-image img {
+    width: 100%;
+    margin-top: 1em;
+    margin-bottom: 1.5em;
+}
+
+
+
+
+/*Typography*/
+
+h1 {
+    font-size: 48px;
+}
+
+h2 {
+    font-weight: 400;
+}
+
+h3{
+
+}
+
+h5{
+	margin-bottom: 0.4em;
+	font-weight: 600;
+}
+
+p {
+    font-size: 18px;
+    margin-top: 1em;
+    margin-bottom: 1.5em;
+}
+
+.title{
+	padding-top: 200px;
+}
+
+.caption {
+    color: #9B9B9B;
+    font-weight: 200;
+}
+
+p.img-caption{
+	color: #9B9B9B;
+    font-weight: 200;
+    margin-top: 0;
+    margin-bottom: 2.5em;
+    font-size: 16px;
+    font-style: italic;
+}
+
+.divider-bottom{
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	padding-bottom: 1.5em;
+	margin-bottom: 2.5em;
+}
+
+.divider-top{
+	border-top: 1px solid rgba(0, 0, 0, 0.1);
+	padding-bottom: 1.5em;
+	margin-bottom: 2.5em;
+}
+
+
+/*Responsive*/
+
+@media screen and (max-width: 680px) {
+
+    .column-align {
+        display: block;
+    }
+
+
+    .column-8-8,.column-6-8,.column-4-8,
+    .column-3-8,.column-2-8 {
+        width: 100%;
+    }
+
+    .sm-screen-img{
+    	display: block;
+    }
+
+    .lg-screen-img{
+    	display: none;
+    }
+}
+
+@media screen and (min-width: 680px) {
+    .column-8-8 {
+        width: 84%;
+    }
+
+    .column-6-8 {
+        width: 67%;
+    }
+
+    .column-4-8 {
+        width: 42%;
+    }
+
+    .column-3-8{
+    	width: 31.5%;
+    }
+
+    .column-2-8 {
+        width: 21%;
+    }
+
+    .sm-screen-img{
+    	display: none;
+    }
+
+    .lg-screen-img{
+    	display: inline-block;
+    }
+}
+
+/*stylesheet*/
+.button{
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+	padding: 0.5em 1.2em;
+	font-size: 14px;
+	background-color: white;
+	border-radius: 0.2em;
+	 -webkit-transition: box-shadow 0.5s; /* For Safari 3.1 to 6.0 */
+    transition: box-shadow 0.5s;
+    font-family: "Assistant";
+}
+
+.button:hover{
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.button.emphasized{
+	background-color: #03A9F4 !important;
+	color:white;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+	border: transparent;
+}
+
+.button.emphasized:hover{
+	box-shadow: 0 2px 8px rgba(3, 169, 244, 0.4);
+}
+
+/*radioButton*/
+/* The container */
+.radio-container {
+    display: inline-block;
+    position: relative;
+    padding-left: 2.2em;
+    padding-right: 2.5em;
+    margin-bottom: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    
+}
+
+/* Hide the browser's default radio button */
+.radio-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #fff;
+    border:1px solid #d0d0d0;
+    border-radius: 50%;
+    -webkit-transition: border 0.5s; /* For Safari 3.1 to 6.0 */
+    transition: border 0.5s;
+
+
+}
+
+/* On mouse-over, add a grey background color */
+.radio-container:hover input ~ .checkmark {
+    border:1px solid rgba(3, 169, 244, 1);
+}
+
+/* When the radio button is checked, add a blue background */
+.radio-container input:checked ~ .checkmark {
+    background-color: #ffffff;
+    border:1px solid #039BE5;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.radio-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.radio-container .checkmark:after {
+ 	top: 6px;
+	left: 6px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: #03A9F4;
+}
+
+
+/*slider*/
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  margin: 7.5px 0;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);
+  background: rgba(208, 208, 208, 0.78);
+  border-radius: 25px;
+  border: 0px solid rgba(1, 1, 1, 0);
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 0px 0px 0px rgba(3, 169, 244, 0.23), 0px 0px 0px rgba(20, 180, 252, 0.23);
+  border: 0px solid rgba(0, 0, 0, 0);
+  height: 20px;
+  width: 20px;
+  border-radius: 50px;
+  background: rgba(41, 182, 246, 0.94);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -7.5px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: rgba(221, 221, 221, 0.78);
+}
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);
+  background: rgba(208, 208, 208, 0.78);
+  border-radius: 25px;
+  border: 0px solid rgba(1, 1, 1, 0);
+}
+input[type=range]::-moz-range-thumb {
+  box-shadow: 0px 0px 0px rgba(3, 169, 244, 0.23), 0px 0px 0px rgba(20, 180, 252, 0.23);
+  border: 0px solid rgba(0, 0, 0, 0);
+  height: 20px;
+  width: 20px;
+  border-radius: 50px;
+  background: rgba(41, 182, 246, 0.94);
+  cursor: pointer;
+}
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: rgba(195, 195, 195, 0.78);
+  border: 0px solid rgba(1, 1, 1, 0);
+  border-radius: 50px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);
+}
+input[type=range]::-ms-fill-upper {
+  background: rgba(208, 208, 208, 0.78);
+  border: 0px solid rgba(1, 1, 1, 0);
+  border-radius: 50px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);
+}
+input[type=range]::-ms-thumb {
+  box-shadow: 0px 0px 0px rgba(3, 169, 244, 0.23), 0px 0px 0px rgba(20, 180, 252, 0.23);
+  border: 0px solid rgba(0, 0, 0, 0);
+  height: 20px;
+  width: 20px;
+  border-radius: 50px;
+  background: rgba(41, 182, 246, 0.94);
+  cursor: pointer;
+  height: 5px;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: rgba(208, 208, 208, 0.78);
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: rgba(221, 221, 221, 0.78);
+}

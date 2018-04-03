@@ -1,11 +1,11 @@
-function MNIST(layers, histogram, initialization) {
+function MNIST(layers) {
 
 	// load mnist
 	extract('data/mnist_test.csv.zip');
-	
+
 	// constants of network
-	const batch = 10;
-	const learningRate = 0.03;
+	const batch = 200;
+	const learningRate = 0.1;
 	const optimizer = dl.train.sgd(learningRate);
 	      
 	// declare parameters for weights and biases
@@ -64,11 +64,13 @@ function MNIST(layers, histogram, initialization) {
 	}
 
 	// train model
-	function train(histogram) {
+	function train(histogram, draw) {
 		var index = 0,
 			epoch = 0,
 			max = 0;
 		function iteration() {
+			// print batch
+			// draw(DATA["images"].slice(index,index + batch))
 			// get batch
 			dl.tidy(() => {
 				activations['a0'].assign(dl.tensor2d(DATA["images"].slice(index,index + batch)));
@@ -80,10 +82,12 @@ function MNIST(layers, histogram, initialization) {
 			// console.log(cost.dataSync());
 			// cost.dispose();
 			optimizer.minimize(() => loss(f(activations['a0']), labels));
-
+			dl.tidy(() => {
+				draw(DATA["images"].slice(index,index + batch),  dl.equal(activations['a5'].argMax(1), labels.argMax(1)).dataSync());
+			});
 			// update plot
 			var data = [];
-			for (var l = 0; l < layers.length; l++) {
+			for (var l = 1; l < layers.length - 1; l++) {
 				data.push(activations['a' + l].dataSync());
 			}
 			histogram(data);

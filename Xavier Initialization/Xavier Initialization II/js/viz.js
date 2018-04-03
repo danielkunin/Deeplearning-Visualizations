@@ -19,6 +19,7 @@ var layout = d3.scaleLinear()
 var x = d3.scaleLinear()
   .domain([-1.2,1.2]);
 var y = d3.scaleLinear()
+  .domain([0,1])
   .range([height - pad, pad]);
 
 // Create
@@ -46,7 +47,7 @@ function histogram(data) {
 
     // update path
     lines.attr("d", function(d,i) { 
-      y.domain([0, d3.max(d, function(d) { return d.length; })]);
+      y.domain([0, d3.max(d, function(d) { return Math.max(d.length, y.domain()[1]); })]);
       var axis = d3.selectAll(".axis--y").nodes()[i];
       d3.select(axis).call(d3.axisLeft(y).ticks(5, "s"));
       return valueline(d)
@@ -111,25 +112,26 @@ function setup(layers) {
 
 var layers = [784,300,300,300,300,10],
     nn = setup(layers),
+    sample = input_plot(),
     train;
 
 
 // temporary initialization buttons
 d3.select("#zero").on("click", function() {
   nn.initialize('zero');
-  train = nn.train(histogram);
+  train = nn.train(histogram, sample);
 });
 d3.select("#unif").on("click", function() {
   nn.initialize('uniform');
-  train = nn.train(histogram);
+  train = nn.train(histogram, sample);
 });
 d3.select("#xe").on("click", function() {
   nn.initialize('xe');
-  train = nn.train(histogram);
+  train = nn.train(histogram, sample);
 });
 d3.select("#norm").on("click", function() {
   nn.initialize('normal');
-  train = nn.train(histogram);
+  train = nn.train(histogram, sample);
 });
 // temporary train buttons
 d3.select("#reset").on("click", function() {
@@ -155,11 +157,11 @@ function input_plot() {
   // setup dimensions
   var margin = {top: 0, right: 0, bottom: 0, left: 0},
       width = 100 - margin.left - margin.right,
-      height = 300 - margin.top - margin.bottom;
+      height = 200 - margin.top - margin.bottom;
 
   // setup size
   var n = 10,
-      m = 30;
+      m = 20;
 
   // add canvas
   var canvas = d3.select("#input").append("canvas")
@@ -172,7 +174,7 @@ function input_plot() {
   var ctx = canvas.node().getContext("2d")
 
   // add mnist image
-  function drawDigit(xoff, yoff, pixels) {
+  function drawDigit(xoff, yoff, pixels, label) {
     var i = 0;
     for (var y = 0; y < 28; y++) {
       for (var x = 0; x < 28; x++) {
@@ -183,15 +185,17 @@ function input_plot() {
         i++;
       }
     }
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = label ? "green" : "red"; 
+    ctx.strokeRect(xoff * 28, yoff * 28, 26, 26);
   }
 
-  function sample() {
-  for (var i = 0; i < n * m; i++) {
-    var index = Math.floor(Math.random() * DATA["size"]);
-    drawDigit(i % n, Math.floor(i / n), DATA["images"][index]);
+  function sample(digits, labels) {
+    for (var i = 0; i < n * m; i++) {
+      drawDigit(i % n, Math.floor(i / n), digits[i], labels[i]);
+    }
   }
-}
-sample();
-  return drawDigit;
+
+  return sample;
 }
 
