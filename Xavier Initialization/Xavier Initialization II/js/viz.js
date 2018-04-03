@@ -1,7 +1,7 @@
 
 // setup dimensions
 var margin = {top: 20, right: 20, bottom: 20, left: 20},
-  width = 1000 - margin.left - margin.right,
+  width = 800 - margin.left - margin.right,
   height = 300 - margin.top - margin.bottom
   pad = 20;
 
@@ -144,3 +144,54 @@ d3.select("#stop").on("click", function() {
 d3.select("#step").on("click", function() {
   train.step();
 });
+
+
+
+//////////////////////////
+// setup prediction plot
+//////////////////////////
+function input_plot() {
+
+  // setup dimensions
+  var margin = {top: 0, right: 0, bottom: 0, left: 0},
+      width = 100 - margin.left - margin.right,
+      height = 300 - margin.top - margin.bottom;
+
+  // setup size
+  var n = 10,
+      m = 30;
+
+  // add canvas
+  var canvas = d3.select("#input").append("canvas")
+    .style("width", function(){ return width + "px"; })
+    .style("height", function(){ return height + "px"; })
+    .attr("width", n * 28)
+    .attr("height", m * 28);
+
+  // get context
+  var ctx = canvas.node().getContext("2d")
+
+  // add mnist image
+  function drawDigit(xoff, yoff, pixels) {
+    var i = 0;
+    for (var y = 0; y < 28; y++) {
+      for (var x = 0; x < 28; x++) {
+        var c = Math.floor(255 * pixels[i]);
+        var color= 'rgb(' + c + ',' + c + ',' + c + ')';
+        ctx.fillStyle = color;
+        ctx.fillRect(xoff * 28 + x, yoff * 28 + y, 1, 1);
+        i++;
+      }
+    }
+  }
+
+  function sample() {
+  for (var i = 0; i < n * m; i++) {
+    var index = Math.floor(Math.random() * DATA["size"]);
+    drawDigit(i % n, Math.floor(i / n), DATA["images"][index]);
+  }
+}
+sample();
+  return drawDigit;
+}
+

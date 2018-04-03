@@ -2,7 +2,7 @@ function MNIST(layers, histogram, initialization) {
 
 	// load mnist
 	extract('data/mnist_test.csv.zip');
-
+	
 	// constants of network
 	const batch = 10;
 	const learningRate = 0.03;
@@ -82,10 +82,14 @@ function MNIST(layers, histogram, initialization) {
 			optimizer.minimize(() => loss(f(activations['a0']), labels));
 
 			// update plot
-			histogram([activations['a0'].dataSync(), activations['a1'].dataSync(), activations['a2'].dataSync(), activations['a3'].dataSync(), activations['a4'].dataSync(), activations['a5'].dataSync()]);
+			var data = [];
+			for (var l = 0; l < layers.length; l++) {
+				data.push(activations['a' + l].dataSync());
+			}
+			histogram(data);
 			// increment
-			epoch += (index == 0);
 			index = (index + batch) % DATA['size'];
+			epoch += (index == 0);
 			// check
 			if (epoch == max) {
 				t.stop();
@@ -110,6 +114,11 @@ function MNIST(layers, histogram, initialization) {
 		}
 		function reset() {
 			t.stop();
+			var data = [];
+			for (var l = 0; l < layers.length; l++) {
+				data.push([]);
+			}
+			histogram(data);
 		}
 		return {'stop':stop, 'start':start, 'step':step, 'reset':reset};
 	}

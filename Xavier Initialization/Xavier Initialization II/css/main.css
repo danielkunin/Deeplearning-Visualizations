@@ -17,6 +17,12 @@ p {
 }
 
 
+
+#second {
+	width: 1000px;
+	margin: auto;
+}
+
 .layer rect {
 	stroke-width: 2px;
 	fill: none;
