@@ -43,7 +43,7 @@
     </div>
     <div class="main">
         <div class="container">
-            <div class="column-6-8 divider-bottom">
+            <div class="column-8-8 divider-bottom">
                 <h3>Problem statement</h3>
                 <p>A neural network model is defined by its <i>architecture</i> and its <i>parameters</i>. In order to build a cat classifier with a 3-layer neural network (architecture), you need to learn the parameters using the optimization process:
                 </p>
@@ -122,6 +122,7 @@
             <div class="column-2-8 column-align">
                 <p class="caption">Zero initialization doesn’t work because it lacks at breaking the symmetry.</p>
             </div>
+            <div class="column-8-8 divider-bottom"></div>
             <div class="column-6-8">
                 <h3>What are the issues with a bad initialization?</h3>
                 <p>An inappropriate initialization leads to:</p>
@@ -131,35 +132,24 @@
                 </ol>
                 <p>In both cases, parameters do not converge to “good” values. Let’s illustrate this.</p>
                 <p>Consider this 9-layer neural network just after it was initialized.</p>
-                <img src="img/image-placeholder.png">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-            </div>
-        </div>
-        <div class="full-container-image">
-            <img src="img/image-placeholder.png">
-            <div class="container">
-                <div class="column-3-4">
-                    <p class="img-caption">image caption</span>
-                </div>
+                <img src="img/9layer.png">
+                <p>At every iteration of the optimization loop (forward, cost, backward, update), we observe that back-propagated gradients are either amplified or minified as we move from the output layer towards the input layer. This makes sense if you recall the following: Assuming all the activation functions are linear (identity function), the output activation is:</p>
             </div>
         </div>
         <div class="container">
-            <div class="column-6-8">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            </div>
-            <div class="column-8-8 divider-bottom"></div>
-            <div class="column-2-8 column-align">
+            <div class="column-6-8 divider-bottom"></div>
+            <div class="column-4-8 column-align">
                 <h3>Exploding Gradient</h3>
                 <p>Consider the case where every weight is initialized slightly larger than the identity matrix. This simplifies to __, and the values of the activation __ increase exponentially with __. When these activations are used in backward propagation, this leads to the exploding gradient problem that you could visualize on the contour plot of the loss as:</p>
             </div>
-            <div class="column-6-8 column-align">
+            <div class="column-4-8 column-align">
                 <img src="img/exploding.png">
             </div>
-            <div class="column-2-8 column-align">
+            <div class="column-4-8 column-align">
                 <h3>Vanishing Gradient</h3>
                 <p>Similarly, consider the case where every weight is initialized slightly smaller than the identity matrix. This simplifies to __, and the values of the activation __  decreases exponentially with __. When these activations are used in backward propagation, this leads to the vanishing gradient problem that you could visualize on the contour plot of the loss as:</p>
             </div>
-            <div class="column-6-8 column-align">
+            <div class="column-4-8 column-align">
                 <img src="img/vanishing.png">
             </div>
             <div class="column-6-8 divider-bottom">
@@ -168,39 +158,95 @@
             <div class="column-6-8">
                 <h3>How do we fix this issue?</h3>
                 <p>Let's define our rule of thumb to translate the fact that we want the weights to be initialized neither “too big”, nor “too small”:</p>
-                <p>The variance should stay the same across every layer to prevent the signal from vanishing or exploding</p>
-                <img src="img/network.png">
+                <p class="img-caption">The variance should stay the same across every layer to prevent the signal from vanishing or exploding</p>
+
+                <p>In the visualization below, observe the impact of the weights’ distribution on each layer’s activations’ distribution.</p>
             </div>
-            <div class="column-6-8">
-                <h5>Default button</h5>
-                <button class="button">button</button>
-
-                <h5>Emphasized button</h5>
-                <button class="button emphasized">button</button>
-
-                <h5>Radio button</h5>
-                <label class="radio-container">One
-                    <input type="radio" checked="checked" name="radio">
+            <div class="column-2-8 column-align">
+                <h3>MNIST</h3>
+                <p>Load dataset and choose a batch size.</p>
+                <div>
+                    <button class="button" id="load">Load MNIST</button>
+                </div>
+            </div>
+            <div class="column-4-8 column-align">
+                <h3>Hidden Layers</h3>
+                <p>Select a variance to initialize weights with.</p>
+                <label class="radio-container">Zero
+                    <input type="radio" checked="checked" name="init">
                     <span class="checkmark"></span>
                 </label>
-                <label class="radio-container">Two
-                    <input type="radio" name="radio">
+                <label class="radio-container">Too Small
+                    <input type="radio" name="init">
                     <span class="checkmark"></span>
                 </label>
-                <label class="radio-container">Three
-                    <input type="radio" name="radio">
+                <label class="radio-container">Xe Initialization
+                    <input type="radio" name="init" checked>
                     <span class="checkmark"></span>
                 </label>
-                <label class="radio-container">Four
-                    <input type="radio" name="radio">
+                <label class="radio-container">Too Large
+                    <input type="radio" name="init">
                     <span class="checkmark"></span>
                 </label>
-
-                <h5>Slider</h5> 
-                <input type="range" min="0" max="1" step="0.01" value="0.5">
-                          
+            </div>
+            <div class="column-2-8 column-align">
+                <h3>Softmax</h3>
+                <p>Train model.</p>
+                <div>
+                    <button class="button" id="reset">Reset</button>
+                    <button class="button" id="train">Train</button>
+                </div>
+            </div>
+            <div class="column-2-8 column-align lg-screen-img">
+                <div id="mnist"></div>
+            </div>
+            <div class="column-4-8 column-align lg-screen-img">
+                <div id="hidden"></div>
+            </div>
+            <div class="column-2-8 column-align lg-screen-img">
+                <div id="softmax"></div>
+            </div>
+            <div class="column-6-8 column-align">
+                <p>More precisely, Glorot et al. (2010) preconise to initialize your network’s parameters with: This scheme is called Xavier initialization (click for more info (1)), and it’s the “appropriate initialization” in the visual above.</p>
+            </div>
+            <div class="column-2-8 column-align">
+                <p class="caption">(click for more info (1))</p>
             </div>
         </div>
+<!--         <div class="full-container-image">
+            <img src="img/image-placeholder.png">
+            <div class="container">
+                <div class="column-3-4">
+                    <p class="img-caption">image caption</p>
+                </div>
+                <div class="column-6-8">
+                    <h5>Default button</h5>
+                    <button class="button">button</button>
+                    <h5>Emphasized button</h5>
+                    <button class="button emphasized">button</button>
+
+                    <h5>Radio button</h5>
+                    <label class="radio-container">One
+                        <input type="radio" checked="checked" name="radio">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="radio-container">Two
+                        <input type="radio" name="radio">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="radio-container">Three
+                        <input type="radio" name="radio">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="radio-container">Four
+                        <input type="radio" name="radio">
+                        <span class="checkmark"></span>
+                    </label>
+                    <h5>Slider</h5> 
+                    <input type="range" min="0" max="1" step="0.01" value="0.5">
+                </div>
+            </div>
+        </div> -->
     </div>
     <div class="footer"></div>
 </body>
