@@ -149,31 +149,33 @@
                 <p class="img-caption">The variance should stay the same across every layer to prevent the signal from vanishing or exploding</p>
 
                 <p>In the visualization below, observe the impact of the weights’ distribution on each layer’s activations’ distribution.</p>
+                <img src="img/network.png">
             </div>
             <div class="column-2-8 column-align">
                 <h3>MNIST</h3>
                 <p>Load dataset and choose a batch size.</p>
                 <div>
-                    <button class="button" id="load">Load MNIST</button>
-                    <label id="percent">0%</label>
+                    <button class="button emphasized" id="load">
+                        Load MNIST (<span id="percent">0%</span>)
+                    </button>
                 </div>
             </div>
             <div class="column-4-8 column-align">
                 <h3>Hidden Layers</h3>
-                <p>Select a variance to initialize weights with.</p>
+                <p>Select a distribution to initialize weights with.</p>
                 <label class="radio-container">Zero
                     <input type="radio" value="zero" name="mnist">
                     <span class="checkmark"></span>
                 </label>
-                <label class="radio-container">Too Small
+                <label class="radio-container">Uniform
                     <input type="radio" value="uniform" name="mnist">
                     <span class="checkmark"></span>
                 </label>
-                <label class="radio-container">Xe Initialization
+                <label class="radio-container">Xavier
                     <input type="radio" value="xe" name="mnist" checked>
                     <span class="checkmark"></span>
                 </label>
-                <label class="radio-container">Too Large
+                <label class="radio-container">Normal
                     <input type="radio" value="normal" name="mnist">
                     <span class="checkmark"></span>
                 </label>
@@ -182,20 +184,34 @@
                 <h3>Softmax</h3>
                 <p>Train model.</p>
                 <div>
-                    <button class="button" id="reset">reset</button>
-                    <button class="button" id="start">start</button>
-                    <button class="button" id="stop">stop</button>
-                    <button class="button" id="step">step</button>
+                    <button class="button" id="mnist_reset">Reset</button>
+                    <button class="button" id="start">Train</button>
+                    <!-- <button class="button" id="stop">stop</button> -->
+                    <!-- <button class="button" id="step">step</button> -->
                 </div>
             </div>
             <div class="column-2-8 column-align lg-screen-img">
-                <div id="mnist"></div>
+                <div>
+                    <p>Input Layer</p>
+                    <div id="mnist"></div>
+                    <label>
+                    Batch: <span id="batch">0</span> 
+                    Epoch: <span id="epoch">0</span>
+                    </label>
+                </div>
             </div>
             <div class="column-4-8 column-align lg-screen-img">
                 <div id="hidden"></div>
             </div>
             <div class="column-2-8 column-align lg-screen-img">
-                <div id="softmax"></div>
+                <div>
+                    <p>Output Layer</p>
+                    <div id="softmax"></div>
+                    <label>
+                    Accuracy: <span id="accuracy">0.00</span>
+                    Loss: <span id="cost">0.00</span>
+                    </label>
+                </div>
             </div>
             <div class="column-6-8 column-align">
                 <p>More precisely, Glorot et al. (2010) preconise to initialize your network’s parameters with: This scheme is called Xavier initialization (click for more info (1)), and it’s the “appropriate initialization” in the visual above.</p>

@@ -6,7 +6,7 @@ var DATA = null;
 zip.workerScriptsPath = "/js/mnist/zip/";
 
 // Download the .zip file, Extract the .csv file, Load into RAM
-function extract(file) {
+function extract(file, draw) {
   zip.createReader(new zip.HttpReader(file), function(reader) {
 
     reader.getEntries(function(entries) {
@@ -17,6 +17,7 @@ function extract(file) {
 
         reader.close(function() {
           // onclose callback
+          draw(DATA["images"].slice(0,100), 0, 0);
         });
       }, function(current, total) {
         // onprogress callback

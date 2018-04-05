@@ -1,7 +1,7 @@
 function MNIST(layers) {
 
 	// constants of network
-	const batch = 200;
+	const batch = 100;
 	const learningRate = 0.1;
 	const optimizer = dl.train.sgd(learningRate);
 	      
@@ -61,27 +61,26 @@ function MNIST(layers) {
 	}
 
 	// train model
-	function train(histogram, draw) {
+	function train(histogram, draw, softmax) {
 		var index = 0,
 			epoch = 0,
 			max = 0;
 		function iteration() {
-			// print batch
-			// draw(DATA["images"].slice(index,index + batch))
 			// get batch
 			dl.tidy(() => {
 				activations['a0'].assign(dl.tensor2d(DATA["images"].slice(index,index + batch)));
 				labels.assign(dl.oneHot(dl.tensor(DATA["labels"].slice(index,index + batch)),10));
 			});
 			// minimize
-			// const cost = optimizer.minimize(() => loss(f(a0), labels), true);
-			// const cost = optimizer.minimize(() => loss(f(activations['a0']), labels), true);
-			// console.log(cost.dataSync());
-			// cost.dispose();
-			optimizer.minimize(() => loss(f(activations['a0']), labels));
+			const cost = optimizer.minimize(() => loss(f(activations['a0']), labels), true);
+			// optimizer.minimize(() => loss(f(activations['a0']), labels));
 			dl.tidy(() => {
-				draw(DATA["images"].slice(index,index + batch),  dl.equal(activations['a5'].argMax(1), labels.argMax(1)).dataSync());
+				var images = DATA["images"].slice(index,index + batch),
+					digits = dl.equal(activations['a5'].argMax(1), labels.argMax(1)).dataSync();
+				draw(images, index / batch, epoch);
+				softmax(digits, d3.mean(digits), cost.dataSync()[0]);
 			});
+			cost.dispose();
 			// update plot
 			var data = [];
 			for (var l = 1; l < layers.length - 1; l++) {
@@ -120,6 +119,8 @@ function MNIST(layers) {
 				data.push([]);
 			}
 			histogram(data);
+			draw([], 0, 0);
+			softmax([], 0, 0);
 		}
 		return {'stop':stop, 'start':start, 'step':step, 'reset':reset};
 	}
