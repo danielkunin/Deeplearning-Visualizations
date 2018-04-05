@@ -3,7 +3,7 @@
 var DATA = null;
 
 // Set directory of zip reader
-zip.workerScriptsPath = "./js/mnist/zip/";
+zip.workerScriptsPath = window.location.pathname.slice(0, -10) + "/js/mnist/zip/";
 
 // Download the .zip file, Extract the .csv file, Load into RAM
 function extract(file, draw) {
