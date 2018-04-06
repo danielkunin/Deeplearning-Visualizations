@@ -29,9 +29,16 @@
     <div class="header"></div>
     <div class="main divider-bottom">
         <div class="container">
-            <div class="column-6-8">
+            <div class="column-6-8 column-align">
                 <h1 class="title">Xavier Initialization</h1>
                 <h2>The lack of initialization techniques is one of the major reasons deep neural networks weren’t training properly in the past decades. Since then, new initializations schemes have been found to accelerate training. In this post, we will explain the methods to initialize the parameters of your neural network.</h2>
+            </div>
+            <div class="column-2-8 column-align">
+                <ul>Table of content
+                    <li>Problem statement</li>
+                    <li>What are the issues with a bad initialization?</li>
+                    <li>Exploding Gradient</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -137,8 +144,9 @@
         </div>
         <div class="container">
             <div class="column-6-8 divider-bottom"></div>
+            <div class="column-4-8 ">
+                <h3>Exploding Gradient</h3></div>
             <div class="column-4-8 column-align">
-                <h3>Exploding Gradient</h3>
                 <p>Consider the case where every weight is initialized slightly larger than the identity matrix.</p> 
                 <script>
                     var render = katex.renderToString("W^{[1]} = W^{[2]} = \\dots = W^{[L-1]}=\\begin{bmatrix}1.5 & 0 \\cr 0 & 1.5\\end{bmatrix}", {displayMode: true});
@@ -149,8 +157,12 @@
             <div class="column-4-8 column-align">
                 <img src="img/exploding.png">
             </div>
-            <div class="column-4-8 column-align">
+            <div class="column-4-8">
                 <h3>Vanishing Gradient</h3>
+
+            </div>
+
+            <div class="column-4-8 column-align">
                 <p>Similarly, consider the case where every weight is initialized slightly smaller than the identity matrix.</p>
                 <script>
                     var render = katex.renderToString("W^{[1]} = W^{[2]} = \\dots = W^{[L-1]}=\\begin{bmatrix}0.5 & 0 \\cr 0 & 0.5\\end{bmatrix}", {displayMode: true});
@@ -219,6 +231,7 @@
                     <button class="button inactive" id="mnist_step">Step</button>
                 </div>
             </div>
+
             <div class="column-2-8 column-align lg-screen-img">
                 <div>
                     <p>Input Layer</p>

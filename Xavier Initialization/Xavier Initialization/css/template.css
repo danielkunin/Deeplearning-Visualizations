@@ -14,7 +14,7 @@ body {
 
 .header {
     border-bottom: 1px solid #D0D0D0;
-    position: fixed;
+    margin-bottom: 10em;
 
 }
 
@@ -56,17 +56,15 @@ body {
 .column-4-8,
 .column-3-8,
 .column-2-8 {
-    /*	display: block;*/
-    margin-right: 2%;
-    margin-left: 2%;
+    margin:2% 2%;
 }
 
 
-.column-2-4 img,
-.column-3-4 img,
-.column-4-4 img,
-.column-6-4 img,
-.column-8-4 img {
+.column-2-8 img,
+.column-3-8 img,
+.column-4-8 img,
+.column-6-8 img,
+.column-8-8 img {
     width: 100%;
     margin-top: 1em;
     margin-bottom: 1.5em;
@@ -111,13 +109,24 @@ h5{
 p {
     font-size: 18px;
     margin-top: 1em;
-    margin-bottom: 1.5em;
+    margin-bottom: 1em;
 }
 
-.title{
+p i{
+  font-size: 16px;
+}
+
+li{
+  line-height: 2em;
+}
+ul{
+  list-style: none;
+}
+
+/*.title{
 	padding-top: 200px;
 }
-
+*/
 .caption {
     color: #9B9B9B;
     font-weight: 200;
@@ -166,6 +175,10 @@ h4.reference{
 	border-top: 1px solid rgba(0, 0, 0, 0.1);
 	padding-bottom: 1.5em;
 	margin-bottom: 2.5em;
+}
+
+.katex-display{
+  margin:2.5em 0 !important;
 }
 
 
