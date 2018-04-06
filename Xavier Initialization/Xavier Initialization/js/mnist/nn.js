@@ -1,3 +1,4 @@
+// creates MNIST Neural Network
 function MNIST(layers) {
 
 	// constants of network
@@ -61,7 +62,10 @@ function MNIST(layers) {
 	}
 
 	// train model
-	function train(histogram, draw, softmax) {
+	function train(initialization, histogram, draw, softmax) {
+		// initialize
+		initialize(initialization);
+
 		var index = 0,
 			epoch = 0,
 			max = 0;
@@ -73,7 +77,6 @@ function MNIST(layers) {
 			});
 			// minimize
 			const cost = optimizer.minimize(() => loss(f(activations['a0']), labels), true);
-			// optimizer.minimize(() => loss(f(activations['a0']), labels));
 			dl.tidy(() => {
 				var images = DATA["images"].slice(index,index + batch),
 					digits = dl.equal(activations['a5'].argMax(1), labels.argMax(1)).dataSync();
@@ -81,7 +84,7 @@ function MNIST(layers) {
 				softmax(digits, d3.mean(digits), cost.dataSync()[0]);
 			});
 			cost.dispose();
-			// update plot
+			// update histograms
 			var data = [];
 			for (var l = 1; l < layers.length - 1; l++) {
 				data.push(activations['a' + l].dataSync());
@@ -114,10 +117,15 @@ function MNIST(layers) {
 		}
 		function reset() {
 			t.stop();
+			initialize(initialization);
+			index = 0,
+			epoch = 0,
+			max = 0;
 			var data = [];
 			for (var l = 0; l < layers.length; l++) {
 				data.push([]);
 			}
+			// update plots
 			histogram(data);
 			draw([], 0, 0);
 			softmax([], 0, 0);

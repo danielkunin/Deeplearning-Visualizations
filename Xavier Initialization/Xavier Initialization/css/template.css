@@ -21,6 +21,8 @@ body {
 .footer {
     border-top: 1px solid #D0D0D0;
     margin-top: 200px;
+    padding-top:2em;
+    padding-bottom: 2em;
 }
 
 .main {
@@ -130,6 +132,30 @@ p.img-caption{
     font-style: italic;
 }
 
+p.inline-caption{
+  color: #9B9B9B;
+    font-weight: 200;
+    margin-top: 0;
+    margin-bottom: 2.5em;
+    font-size: 20px;
+    font-style: italic;
+    border-left: 2px solid #03A9F4;
+    padding-left: 1em;
+
+}
+
+h4.reference{
+  font-weight: 600;
+}
+
+
+.reference li{
+    padding-top:0.3em;
+    padding-bottom: 0.3em;
+    color: #9B9B9B;
+    
+}
+
 .divider-bottom{
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 	padding-bottom: 1.5em;
@@ -230,7 +256,8 @@ p.img-caption{
     position: relative;
     padding-left: 2.2em;
     padding-right: 2.5em;
-    margin-bottom: 8px;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
     cursor: pointer;
     font-size: 14px;
     -webkit-user-select: none;

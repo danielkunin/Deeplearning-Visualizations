@@ -394,7 +394,7 @@ function prediction_plot() {
       height = 250 - margin.top - margin.bottom;
 
   // add parent div
-  var output = d3.select("#output").append("div")
+  var output = d3.select("#prediction").append("div")
     .style("position","relative")
     .style("width", 250)
     .style("height", 250);
@@ -404,8 +404,8 @@ function prediction_plot() {
     .style("width", function(){ return width + "px"; })
     .style("height", function(){ return height + "px"; })
     .style("position", "absolute")
-    .style("left", margin.left)
-    .style("top", 0);
+    .style("left", margin.left + "px")
+    .style("top", 0 + "px");
 
   // add svg
   var svg = output.append("svg")
