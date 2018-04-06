@@ -249,6 +249,14 @@ h4.reference{
 	box-shadow: 0 2px 8px rgba(3, 169, 244, 0.4);
 }
 
+.button.inactive{
+  pointer-events: none;
+}
+
+.button.hidden{
+  display: none;
+}
+
 /*radioButton*/
 /* The container */
 .radio-container {

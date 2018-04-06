@@ -1,23 +1,20 @@
 
-// create data object
-var DATA = null;
-
 // Set directory of zip reader
 zip.workerScriptsPath = window.location.pathname.slice(0, -10) + "/js/mnist/zip/";
 
 // Download the .zip file, Extract the .csv file, Load into RAM
-function extract(file, draw) {
+function extract(file, data, draw) {
   zip.createReader(new zip.HttpReader(file), function(reader) {
 
     reader.getEntries(function(entries) {
 
       entries[0].getData(new zip.TextWriter(), function(text) {
         
-        process(text);
+        process(text, data);
 
         reader.close(function() {
           // onclose callback
-          draw(DATA["images"].slice(0,100), 0, 0);
+          draw(data["images"].slice(0,100), 0, 0);
         });
       }, function(current, total) {
         // onprogress callback
@@ -32,22 +29,24 @@ function extract(file, draw) {
 }
 
 // process a CSV formatted string into array of arrays of images and array of labels
-function process(text) {
+function process(text, data) {
     var lines = text.split(/\r\n|\n/);
     var images = [];
     var labels = [];
     // iterate through lines
     for (var i = 0; i < lines.length - 1; i++) {
-      var data = lines[i].split(',');
-      labels.push(parseFloat(data[0]));
+      var digits = lines[i].split(',');
+      labels.push(parseFloat(digits[0]));
       var image = [];
-      for (var j=1; j < data.length; j++) {
-        image.push(parseFloat(data[j]) / 255.0);
+      for (var j=1; j < digits.length; j++) {
+        image.push(parseFloat(digits[j]) / 255.0);
       }
       images.push(image);
     }
     // save data
-    DATA = { "images": images, "labels": labels, 'size': i};
+    data["images"] = images;
+    data["labels"] =  labels;
+    data['size'] =  i;
 }
 
 

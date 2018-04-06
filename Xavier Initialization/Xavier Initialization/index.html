@@ -96,6 +96,8 @@
                 <div>
                     <button class="button" id="reset">Reset</button>
                     <button class="button" id="train">Train</button>
+                    <button class="button hidden" id="playground_stop">Stop</button>
+                    <button class="button" id="playground_step">Step</button>
                 </div>
             </div>
             <div class="column-2-8 column-align lg-screen-img">
@@ -182,7 +184,7 @@
                 <h3>MNIST</h3>
                 <p>Load MNIST test dataset (10,000 images).</p>
                 <div>
-                    <button class="button emphasized" id="load">
+                    <button class="button emphasized" id="mnist_load">
                         Load MNIST (<span id="percent">0%</span>)
                     </button>
                 </div>
@@ -191,19 +193,19 @@
                 <h3>Hidden Layers</h3>
                 <p>Select a distribution to initialize weights with.</p>
                 <label class="radio-container">Zero
-                    <input type="radio" value="zero" name="mnist">
+                    <input type="radio" value="zero" name="mnist_init">
                     <span class="checkmark"></span>
                 </label>
                 <label class="radio-container">Uniform
-                    <input type="radio" value="uniform" name="mnist">
+                    <input type="radio" value="uniform" name="mnist_init">
                     <span class="checkmark"></span>
                 </label>
                 <label class="radio-container">Xavier
-                    <input type="radio" value="xe" name="mnist" checked>
+                    <input type="radio" value="xe" name="mnist_init" checked>
                     <span class="checkmark"></span>
                 </label>
                 <label class="radio-container">Normal
-                    <input type="radio" value="normal" name="mnist">
+                    <input type="radio" value="normal" name="mnist_init">
                     <span class="checkmark"></span>
                 </label>
             </div>
@@ -212,15 +214,15 @@
                 <p>Train model.</p>
                 <div>
                     <button class="button" id="mnist_reset">Reset</button>
-                    <button class="button" id="mnist_train">Train</button>
-                    <!-- <button class="button" id="stop">stop</button> -->
-                    <!-- <button class="button" id="step">step</button> -->
+                    <button class="button inactive" id="mnist_start">Start</button>
+                    <button class="button hidden" id="mnist_stop">Stop</button>
+                    <button class="button inactive" id="mnist_step">Step</button>
                 </div>
             </div>
             <div class="column-2-8 column-align lg-screen-img">
                 <div>
                     <p>Input Layer</p>
-                    <div id="mnist"></div>
+                    <div id="mnist_input"></div>
                     <label>
                     Batch: <span id="batch">0</span> 
                     Epoch: <span id="epoch">0</span>
@@ -228,17 +230,20 @@
                 </div>
             </div>
             <div class="column-4-8 column-align lg-screen-img">
-                <div id="hidden"></div>
+                <div id="mnist_network"></div>
             </div>
             <div class="column-2-8 column-align lg-screen-img">
                 <div>
                     <p>Output Layer</p>
-                    <div id="softmax"></div>
+                    <div id="mnist_output"></div>
                     <label>
-                    Accuracy: <span id="accuracy">0.00</span>
+                    Error: <span id="accuracy">0/100</span>
                     Loss: <span id="cost">0.00</span>
                     </label>
                 </div>
+            </div>
+            <div class="column-8-8 column-align">
+                <img src="img/network.png">
             </div>
             <div class="column-6-8 column-align">
                 <p>More precisely, Glorot et al. (2010) recommended to initialize your network’s parameters with:</p>
@@ -247,15 +252,22 @@
                     document.writeln(render);
                 </script>
                 <p>This scheme is called Xavier initialization (click for more info (1)), and it’s the “appropriate initialization” in the visual above.</p>
-                <img src="img/network.png">
             </div>
             <div class="column-2-8 column-align">
                 <p class="caption">For more information check out Glorot et al. (2010) paper which introduced Xavier initialization.</p>
                 <a href="http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf?hc_location=ufi"><img src="img/paper.png"></a>
             </div>
+            <div class="column-6-8 column-align">
+                <h3>Derivation of Xavier initialization with Tanh</h3>
+                <p>In this section, we will go over the math step by step. I think it sometimes help to understand the proof to grasp the concept, but you can get most of the intuition without the math, feel free to jump to the next section.</p>
+                <p>Let’s work on the layer  described in “How do we fix this issue” and assume the activation functions __ and  __ are :</p>
+            </div>
+            <div class="column-2-8 column-align">
+                <img src="img/tanh.png">
+                <p class="caption">tanh...</p>
+            </div>
             <div class="column-6-8">
-                <h3>Derivation of Xavier initialization</h3>
-                <p>In this section, we will go over the math step by step. I think it sometimes help to understand the proof to grasp the concept, but you can get most of the intuition without the maths -> feel free to jump to the next part.</p>
+                <p>Important properties of $tanh$ are its parity ($tanh(-x) = -tanh(x)$) and its linearity around 0 ($tanh'(0) = 1$).</p>
             </div>
         </div>
 

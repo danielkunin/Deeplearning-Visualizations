@@ -2,7 +2,7 @@
 //////////////////////////
 // setup hidden layers plot
 //////////////////////////
-function hidden_plot(layers) {
+function mnist_network(layers) {
   // setup dimensions
   var margin = {top: 20, right: 0, bottom: 20, left: 0},
     width = 425 - margin.left - margin.right,
@@ -10,7 +10,7 @@ function hidden_plot(layers) {
     pad = 5;
 
   // add svg
-  var svg = d3.select("#hidden").append("svg")
+  var svg = d3.select("#mnist_network").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
@@ -26,7 +26,8 @@ function hidden_plot(layers) {
     .domain([0,1])
     .range([height - pad, pad]);
 
-  // Create
+
+  // histogram function
   function histogram(data) {
 
     // histogram data
@@ -86,7 +87,7 @@ function hidden_plot(layers) {
     .attr('x', x(0))
     .attr('y', 0)
     .attr('text-anchor', 'middle')
-    .text(function(d,i) { return "Hidden Layer " + (i + 1); });
+    .text(function(d,i) { return "a[" + (i + 1) + "]"; });
   
   // add histogram path
   newlayers.append("path")
@@ -97,10 +98,6 @@ function hidden_plot(layers) {
     .attr("class", "axis axis--x")
     .attr("transform", "translate(0," + y.range()[0] + ")")
     .call(d3.axisBottom(x).ticks(3, "s"));
-  // newlayers.append("g")
-  //   .attr("class", "axis axis--y")
-  //   .attr("transform", "translate(" + x.range()[0] + ",0)")
-  //   .call(d3.axisLeft(y).ticks(5, "s"));
 
   return histogram;
 }
@@ -109,7 +106,7 @@ function hidden_plot(layers) {
 //////////////////////////
 // setup MNIST plot
 //////////////////////////
-function mnist_plot() {
+function mnist_input() {
 
   // setup dimensions
   var margin = {top: 0, right: 0, bottom: 0, left: 0},
@@ -121,7 +118,7 @@ function mnist_plot() {
       m = 10;
 
   // add canvas
-  var canvas = d3.select("#mnist").append("canvas")
+  var canvas = d3.select("#mnist_input").append("canvas")
     .style("width", function(){ return width + "px"; })
     .style("height", function(){ return height + "px"; })
     .attr("width", n * 28)
@@ -144,6 +141,7 @@ function mnist_plot() {
     }
   }
 
+  // draw input
   function draw(digits, batch, epoch) {
     for (var i = 0; i < digits.length; i++) {
       draw_digit(i % n, Math.floor(i / n), digits[i]);
@@ -159,7 +157,7 @@ function mnist_plot() {
 //////////////////////////
 // setup softmax plot
 //////////////////////////
-function softmax_plot() {
+function mnist_output() {
 
   // setup dimensions
   var margin = {top: 0, right: 0, bottom: 0, left: 0},
@@ -171,7 +169,7 @@ function softmax_plot() {
       m = 10;
 
   // add canvas
-  var canvas = d3.select("#softmax").append("canvas")
+  var canvas = d3.select("#mnist_output").append("canvas")
     .style("width", function(){ return width + "px"; })
     .style("height", function(){ return height + "px"; })
     .attr("width", n * 28)
@@ -180,7 +178,7 @@ function softmax_plot() {
   // get context
   var ctx = canvas.node().getContext("2d")
 
-  // add mnist image
+  // add image classification
   function draw_error(xoff, yoff, label) {
     var i = 0;
     for (var y = 0; y < 28; y++) {
@@ -193,11 +191,12 @@ function softmax_plot() {
     }
   }
 
-  function draw(labels, accuracy, cost) {
+  // draw output
+  function draw(labels, error, cost) {
     for (var i = 0; i < labels.length; i++) {
       draw_error(i % n, Math.floor(i / n), labels[i]);
     }
-    $('#accuracy').html(d3.format(".2f")(accuracy));
+    $('#accuracy').html(d3.format(".2r")(100 * error) + '/' + (n * m));
     $('#cost').html(d3.format(".2f")(cost));
   }
 
@@ -205,50 +204,66 @@ function softmax_plot() {
 }
 
 
+//////////////////////////
+// setup MNIST visualization
+//////////////////////////
+function mnist_setup() {
 
-function setup_mnist() {
-
+  // define layers and setup plots
   var layers = [784,300,300,300,300,10],
-      batch = mnist_plot(),
-      histogram = hidden_plot(layers.slice(1,-1)),
-      softmax = softmax_plot();
+      batch = mnist_input(),
+      histogram = mnist_network(layers.slice(1,-1)),
+      softmax = mnist_output();
+
   // create MNIST object
-  var nn = MNIST(layers),
-      mnist_train = nn.train("xe", histogram, batch, softmax);
+  var mnist = MNIST(layers),
+      mnist_train = mnist.train("xe", histogram, batch, softmax);
 
-
-  // bind radio buttons
-  $("input[name='mnist']").on("change", function () {
-    mnist_train.reset();
-    mnist_train = nn.train(this.value, histogram, batch, softmax);
-    mnist_train.start();
+  // bind initialization buttons
+  $("input[name='mnist_init']").on("change", function () {
+    $("#mnist_reset").click();
+    mnist_train = mnist.train(this.value, histogram, batch, softmax);
   });
 
-  // bind buttons buttons
+  // reset training button
   d3.select("#mnist_reset").on("click", function() {
     mnist_train.reset();
+    d3.select("#mnist_start").classed("hidden", false);
+    d3.select("#mnist_stop").classed("hidden", true);
   });
-  d3.select("#mnist_train").on("click", function() {
-    mnist_train.start();
-  });
-  // d3.select("#stop").on("click", function() {
-  //   mnist_train.stop();
-  // });
-  // d3.select("#step").on("click", function() {
-  //   mnist_train.step();
-  // });
 
+  // start training button
+  d3.select("#mnist_start").on("click", function() {
+    mnist_train.start();
+    d3.select("#mnist_start").classed("hidden", true);
+    d3.select("#mnist_stop").classed("hidden", false);
+  });
+
+  // stop training button
+  d3.select("#mnist_stop").on("click", function() {
+    mnist_train.stop();
+    d3.select("#mnist_start").classed("hidden", false);
+    d3.select("#mnist_stop").classed("hidden", true);
+  });
+
+  // step train button
+  d3.select("#mnist_step").on("click", function() {
+    mnist_train.step();
+  });
 
   // load mnist
-  d3.select("#load").on("click", function() {
-    if (DATA == null) {
-      extract('data/mnist_test.csv.zip', batch);
-    }
+  d3.select("#mnist_load").on("click", function() {
+    // extract zip
+    extract('data/mnist_test.csv.zip', mnist.data, batch);
+    // change button activations
+    d3.select("#mnist_load").classed("inactive", true)
+    d3.select("#mnist_start").classed("inactive", false)
+    d3.select("#mnist_step").classed("inactive", false)
   });
 
 }
 
 // wait until all documents load then setup
 $(window).load(function() {
-  setup_mnist();
+  mnist_setup();
 });

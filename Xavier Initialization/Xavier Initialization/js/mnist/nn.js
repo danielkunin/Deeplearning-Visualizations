@@ -2,6 +2,7 @@
 function MNIST(layers) {
 
 	// constants of network
+	const DATA = {"images": [], "labels": [], "size": 0};
 	const batch = 100;
 	const learningRate = 0.1;
 	const optimizer = dl.train.sgd(learningRate);
@@ -68,7 +69,7 @@ function MNIST(layers) {
 
 		var index = 0,
 			epoch = 0,
-			max = 0;
+			iterate = true;
 		function iteration() {
 			// get batch
 			dl.tidy(() => {
@@ -79,9 +80,9 @@ function MNIST(layers) {
 			const cost = optimizer.minimize(() => loss(f(activations['a0']), labels), true);
 			dl.tidy(() => {
 				var images = DATA["images"].slice(index,index + batch),
-					digits = dl.equal(activations['a5'].argMax(1), labels.argMax(1)).dataSync();
+					digits = dl.equal(activations['a' + (layers.length - 1)].argMax(1), labels.argMax(1)).dataSync();
 				draw(images, index / batch, epoch);
-				softmax(digits, d3.mean(digits), cost.dataSync()[0]);
+				softmax(digits, 1 - d3.mean(digits), cost.dataSync()[0]);
 			});
 			cost.dispose();
 			// update histograms
@@ -94,7 +95,7 @@ function MNIST(layers) {
 			index = (index + batch) % DATA['size'];
 			epoch += (index == 0);
 			// check
-			if (epoch == max) {
+			if (!iterate) {
 				t.stop();
 			}
 		}
@@ -107,12 +108,12 @@ function MNIST(layers) {
 			t.stop();
 		}
 		function start() {
-			max = epoch - 1;
+			iterate = true;
 			t.restart(iteration);
 		}
 		function step() {
 			t.stop();
-			max = epoch + 1;
+			iterate = false;
 			t.restart(iteration);
 		}
 		function reset() {
@@ -120,7 +121,7 @@ function MNIST(layers) {
 			initialize(initialization);
 			index = 0,
 			epoch = 0,
-			max = 0;
+			iterate = true;
 			var data = [];
 			for (var l = 0; l < layers.length; l++) {
 				data.push([]);
@@ -134,5 +135,5 @@ function MNIST(layers) {
 	}
 
 
-	return {'initialize':initialize, 'train':train};
+	return {'data': DATA, 'initialize':initialize, 'train':train};
 }
