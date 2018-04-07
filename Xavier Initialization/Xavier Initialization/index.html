@@ -80,7 +80,7 @@
             <div class="column-4-8 column-align">
                 <h3>Neural Network</h3>
                 <p>Select a variance to initialize weights with.</p>
-                <label class="radio-container">All Zeros
+                <label class="radio-container">Zero
                     <input type="radio" value=0  name="init">
                     <span class="checkmark"></span>
                 </label>
@@ -88,7 +88,7 @@
                     <input type="radio" value=0.01 name="init">
                     <span class="checkmark"></span>
                 </label>
-                <label class="radio-container">Xe Initialization
+                <label class="radio-container">Appropriate
                     <input type="radio" value=1 name="init" checked>
                     <span class="checkmark"></span>
                 </label>
@@ -140,21 +140,22 @@
                     var render = katex.renderToString("\\hat{y} = a^{[L]} = W^{[L]}W^{[L-1]}W^{[L-2]}\\dots W^{[3]}W^{[2]}W^{[1]}X", {displayMode: true});
                     document.writeln(render);
                 </script>
+                <p>where <script>document.write(katex.renderToString('L=10'))</script> and <script>document.write(katex.renderToString('W^{[1]},W^{[2]},\\dots,W^{[L-1]}'))</script> are all matrices of size <script>document.write(katex.renderToString('(2,2)'))</script>.</p>
             </div>
         </div>
         <div class="container">
             <div class="column-6-8 divider-bottom"></div>
             <div class="column-4-8 ">
                 <h3>Exploding Gradient</h3></div>
-            <div class="column-4-8 column-align">
+            <div class="column-6-8 column-align">
                 <p>Consider the case where every weight is initialized slightly larger than the identity matrix.</p> 
                 <script>
                     var render = katex.renderToString("W^{[1]} = W^{[2]} = \\dots = W^{[L-1]}=\\begin{bmatrix}1.5 & 0 \\cr 0 & 1.5\\end{bmatrix}", {displayMode: true});
                     document.writeln(render);
                 </script>
-                <p>This simplifies to __, and the values of the activation __ increase exponentially with __. When these activations are used in backward propagation, this leads to the exploding gradient problem that you could visualize on the contour plot of the loss as:</p>
+                <p>This simplifies to <script>document.write(katex.renderToString('\\hat{y} = W^{[L]}1.5^{L-1}X'))</script>, and the values of the activation <script>document.write(katex.renderToString('a^{[l]}'))</script> increase exponentially with <script>document.write(katex.renderToString('l'))</script>. When these activations are used in backward propagation, this leads to the exploding gradient problem that you could visualize on the contour plot of the loss as:</p>
             </div>
-            <div class="column-4-8 column-align">
+            <div class="column-2-8 column-align">
                 <img src="img/exploding.png">
             </div>
             <div class="column-4-8">
@@ -162,15 +163,15 @@
 
             </div>
 
-            <div class="column-4-8 column-align">
+            <div class="column-6-8 column-align">
                 <p>Similarly, consider the case where every weight is initialized slightly smaller than the identity matrix.</p>
                 <script>
                     var render = katex.renderToString("W^{[1]} = W^{[2]} = \\dots = W^{[L-1]}=\\begin{bmatrix}0.5 & 0 \\cr 0 & 0.5\\end{bmatrix}", {displayMode: true});
                     document.writeln(render);
                 </script>
-                <p>This simplifies to __, and the values of the activation __  decreases exponentially with __. When these activations are used in backward propagation, this leads to the vanishing gradient problem that you could visualize on the contour plot of the loss as:</p>
+                <p>This simplifies to <script>document.write(katex.renderToString('\\hat{y} = W^{[L]}0.5^{L-1}X'))</script>, and the values of the activation <script>document.write(katex.renderToString('a^{[l]}'))</script> decreases exponentially with <script>document.write(katex.renderToString('l'))</script>. When these activations are used in backward propagation, this leads to the vanishing gradient problem that you could visualize on the contour plot of the loss as:</p>
             </div>
-            <div class="column-4-8 column-align">
+            <div class="column-2-8 column-align">
                 <img src="img/vanishing.png">
             </div>
             <div class="column-6-8 divider-bottom">
@@ -180,7 +181,7 @@
                 <h3>How do we fix this issue?</h3>
                 <p>Let's define our rule of thumb to translate the fact that we want the weights to be initialized neither “too big”, nor “too small”:</p>
                 <p class="inline-caption">The variance should stay the same across every layer to prevent the signal from vanishing or exploding</p>
-                <p>More concretely, consider a layer __ and its forward propagation:</p>
+                <p>More concretely, consider a layer <script>document.write(katex.renderToString('l'))</script> and its forward propagation:</p>
                 <script>
                     var render = katex.renderToString("\\begin{aligned}a^{[l-1]} &= g^{[l-1]}(z^{[l-1]})\\cr z^{[l]} &= W^{[l]}a^{[l-1]} + b^{[l]}\\cr a^{[l]} &= g^{[l]}(z^{[l]}\\end{aligned}", {displayMode: true});
                     document.writeln(render);
@@ -194,7 +195,7 @@
             </div>
             <div class="column-2-8 column-align">
                 <h3>MNIST</h3>
-                <p>Load MNIST test dataset (10,000 images).</p>
+                <p>Load <a href="http://yann.lecun.com/exdb/mnist/">MNIST</a> test dataset (10,000 images).</p>
                 <div>
                     <button class="button emphasized" id="mnist_load">
                         Load MNIST (<span id="percent">0%</span>)
@@ -223,7 +224,7 @@
             </div>
             <div class="column-2-8 column-align">
                 <h3>Softmax</h3>
-                <p>Train model.</p>
+                <p><span class="correct">Blue</span> squares represent correctly classified images.  <span class="incorrect">Red</span> squares represent incorrectly classified images.</p>
                 <div>
                     <button class="button" id="mnist_reset">Reset</button>
                     <button class="button inactive" id="mnist_start">Start</button>
@@ -264,7 +265,7 @@
                     var render = katex.renderToString("\\begin{aligned}W^{[l]} &\\sim Normal(\\mu=0,\\sigma^2 = \\frac{1}{n^{[l-1]}})\\cr b^{[l]} &\\sim 0\\end{aligned}", {displayMode: true});
                     document.writeln(render);
                 </script>
-                <p>This scheme is called Xavier initialization (click for more info (1)), and it’s the “appropriate initialization” in the visual above.</p>
+                <p>This scheme is called Xavier initialization, and it’s the “appropriate initialization” in the visual above.</p>
             </div>
             <div class="column-2-8 column-align">
                 <p class="caption">For more information check out Glorot et al. (2010) paper which introduced Xavier initialization.</p>
@@ -273,54 +274,77 @@
             <div class="column-6-8 column-align">
                 <h3>Derivation of Xavier initialization with Tanh</h3>
                 <p>In this section, we will go over the math step by step. I think it sometimes help to understand the proof to grasp the concept, but you can get most of the intuition without the math, feel free to jump to the next section.</p>
-                <p>Let’s work on the layer  described in “How do we fix this issue” and assume the activation functions __ and  __ are :</p>
+                <p>Let’s work on the layer <script>document.write(katex.renderToString('l'))</script> described in “How do we fix this issue” and assume the activation functions <script>document.write(katex.renderToString('g^{[l-1]}'))</script> and <script>document.write(katex.renderToString('g^{[l]}'))</script> are <script>document.write(katex.renderToString('tanh'))</script>:</p>
             </div>
             <div class="column-2-8 column-align">
                 <img src="img/tanh.png">
                 <p class="caption">tanh...</p>
             </div>
             <div class="column-6-8">
-                <p>Important properties of $tanh$ are its parity ($tanh(-x) = -tanh(x)$) and its linearity around 0 ($tanh'(0) = 1$).</p>
+                <p>Important properties of <script>document.write(katex.renderToString('tanh'))</script> are its parity (<script>document.write(katex.renderToString('tanh(-x) = -tanh(x)'))</script>) and its linearity around 0 (<script>document.write(katex.renderToString("tanh'(0) = 1"))</script>).</p>
+                <p>Let’s work on the right-hand side of (*). Using the fact that <script>document.write(katex.renderToString("g^{[l]} = tanh"))</script> and <script>document.write(katex.renderToString("tanh(z^{[l]})[?][?][?]z^{[l]}"))</script>. We can simplify the right-hand side of (*) to:</p>
+                <script>
+                    var render = katex.renderToString("Var(a^{[l]}) = Var(tanh(z^{[l]})) = Var(z^{[l]})", {displayMode: true});
+                    document.writeln(render);
+                </script>
+                <p>Moreover, <script>document.write(katex.renderToString("z^{[l]} = W^{[l]}a^{[l-1]} + b^{[l]} = vector(z_1^{[l]},z_2^{[l]},\\dots,z_{n^{[l]}}^{[l]})"))</script> where <script>document.write(katex.renderToString("z_k^{[l]} = \\sum_{j=1}^{n^{[l-1]}w_{kj}^{[l]}a_j^{[l-1]} + b_k^{[l]}"))</script>.  For simplicity, let’s assume that <script>document.write(katex.renderToString("b^{[l]} = 0"))</script> (it will end up being true given the choice of initialization we will choose):</p>
+                <script>
+                    var render = katex.renderToString("z_k^{[l]} = \\sum_{j=1}^{n^{[l-1]}w_{kj}^{[l]}a_j^{[l-1]}", {displayMode: true});
+                    document.writeln(render);
+                </script>
+                <p>Looking element-wise at equation (**) now gives:</p>
+                <script>
+                    var render = katex.renderToString("Var(a_k^{[l]}) = Var(z_k^{[l]}) = Var(\\sum_{j=1}^{n^{[l-1]}w_{kj}^{[l]}a_j^{[l-1]})", {displayMode: true});
+                    document.writeln(render);
+                </script>
+                <p>A common “math trick” at this point is to extract the summation outside the variance. To do this we must make the following three assumptions:</p>
+                <ol>
+                    <li>Weights are independent and identically distributed</li>
+                    <li>Inputs are independent and identically distributed</li>
+                    <li>Weights and inputs are mutually independent</li>
+                </ol>
+                <p>Thus, now we have:</p>
+                <script>
+                    var render = katex.renderToString("Var(a_k^{[l]}) = Var(z_k^{[l]}) = Var(\\sum_{j=1}^{n^{[l-1]}w_{kj}^{[l]}a_j^{[l-1]}) = \\sum_{j=1}^{n^{[l-1]}Var(w_{kj}^{[l]}a_j^{[l-1]})", {displayMode: true});
+                    document.writeln(render);
+                </script>
+                <p>Another common “math trick” is to convert the variance of a product into product of variances, and we have a formula for it:</p>
+                <script>
+                    var render = katex.renderToString("Var(XY) = E[X]^2Var(Y) + Var(X)E[Y]^2 + Var(X)Var(Y)", {displayMode: true});
+                    document.writeln(render);
+                </script>
+                <p>Using this formula with <script>document.write(katex.renderToString("X = w_{kj}^{[l]}"))</script>and <script>document.write(katex.renderToString("Y = a_j^{[l-1]}"))</script>, we get:</p>
+                <script>
+                    var render = katex.renderToString("Var(w_{kj}^{[l]}a_j^{[l-1]}) = E[w_{kj}^{[l]}]^2Var(a_j^{[l-1]}) + Var(w_{kj}^{[l]})E[a_j^{[l-1]}]^2 + Var(w_{kj}^{[l]})Var(a_j^{[l-1]})", {displayMode: true});
+                    document.writeln(render);
+                </script>
+                <p>We’re almost done! A1 leads to <script>document.write(katex.renderToString("E[w_{kj}^{[l]}]^2 = 0"))</script> and A2 leads to <script>document.write(katex.renderToString("E[a_j^{[l-1]}]^2 = 0"))</script>given the initialization scheme we’re using. Thus,</p>
+                <script>
+                    var render = katex.renderToString("Var(z_k^{[l]}) = \\sum_{j=1}^{n^{[l-1]}}Var(w_{kj}^{[l]})Var(a_j^{[l-1]}) = \\sum_{j=1}^{n^{[l-1]}}Var(W^{[l]})Var(a^{[l-1]}) = n^{[l-1]}Var(W^{[l]})Var(a^{[l-1]})", {displayMode: true});
+                    document.writeln(render);
+                </script>
+                <p>The equality above results from A1 stating that for any entry <script>document.write(katex.renderToString("(i,j)"))</script> of <script>document.write(katex.renderToString("W^{[l]}"))</script>:</p>
+                <script>
+                    var render = katex.renderToString("Var(w_{kj}^{[l]}) = Var(w_{11}^{[l]}) = Var(w_{12}^{[l]})=\\dots = Var(W^{[l]})", {displayMode: true});
+                    document.writeln(render);
+                </script>
+                <p>Similarly A2 leads to :</p>
+                <script>
+                    var render = katex.renderToString("Var(a_j^{[l-1]}) = Var(a_1^{[l-1]}) = Var(a_2^{[l-1]})=\\dots = Var(a^{[l-1]})", {displayMode: true});
+                    document.writeln(render);
+                </script>
+                <p>With the same idea:</p>
+                <script>
+                    var render = katex.renderToString("Var(z^{[l]}) = Var(z_k^{[l]})", {displayMode: true});
+                    document.writeln(render);
+                </script>
+                <p>Wrapping up everything, we have:</p>
+                <script>
+                    var render = katex.renderToString("Var(a^{[l]}) = Var(z^{[l]}) = n^{[l-1]}Var(W^{[l]})Var(a^{[l-1]})", {displayMode: true});
+                    document.writeln(render);
+                </script>
             </div>
         </div>
-
-
-
-
-<!--         <div class="full-container-image">
-            <img src="img/image-placeholder.png">
-            <div class="container">
-                <div class="column-3-4">
-                    <p class="img-caption">image caption</p>
-                </div>
-                <div class="column-6-8">
-                    <h5>Default button</h5>
-                    <button class="button">button</button>
-                    <h5>Emphasized button</h5>
-                    <button class="button emphasized">button</button>
-
-                    <h5>Radio button</h5>
-                    <label class="radio-container">One
-                        <input type="radio" checked="checked" name="radio">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="radio-container">Two
-                        <input type="radio" name="radio">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="radio-container">Three
-                        <input type="radio" name="radio">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="radio-container">Four
-                        <input type="radio" name="radio">
-                        <span class="checkmark"></span>
-                    </label>
-                    <h5>Slider</h5> 
-                    <input type="range" min="0" max="1" step="0.01" value="0.5">
-                </div>
-            </div>
-        </div> -->
     </div>
     <div class="footer">
         <div class="container">
@@ -348,8 +372,12 @@
             </div>
             <div class="column-6-8 column-align">
                 <ol class="reference">
-                    <li></li>
-                    <li></li>
+                    <li>If X is a vector or a matrix, what does Var(X) concretely mean? Take this example, X is the input grayscale image of a neural network. This image comes from a distribution called “real world images”. If you select randomly 100000 images from this distribution and each time, you collect the value of a random pixel  in the middle of the image. What would the distribution of  look like. Maybe something like this:
+                    <img src="img/normal.png">
+                    All in all, Var(X) means the variance of any entry of the matrix (or vector) X (it is fair to assume they’re all distributed identically.)</li>
+                    <li>Concretely it means we pick every weight randomly and independently from a normal distribution centered in  and with variance .</li>
+                    <li>We assume that  (resp. ) is initialized with small values (resp. with zeros). Hence,  is small and we are in the linear regime of </li>
+                    <li>A1 will end up being true given our initialization scheme (we pick weights randomly according to a normal distribution centered in 0). A2 is not always true. For instance in images, inputs are pixel values, and pixel values in the same region are highly correlated with each other. On average, it’s more likely that a green pixel is surrounded by green pixels than by any other pixel color, because this pixel might be representing a grass field, or a green object. Although it’s not always true, we assume that inputs are distributed identically (let’s say from a normal distribution centered in 0.) A3 this is most of the time true at initialization, given that our initialization scheme makes our weights independent and identically distributed (i.i.d.) The fact that these assumptions are not always true doesn’t end up being a problem. The theory generalizes well to practical application.</li>
                 </ol>
             </div>
         </div>

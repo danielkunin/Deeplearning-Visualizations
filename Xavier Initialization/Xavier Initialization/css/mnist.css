@@ -48,3 +48,10 @@
 .layer-5 path.activations {
 	stroke: #fc4d77;
 }
+
+.correct {
+	color: #84DEFF;
+}
+.incorrect {
+	color: #FF8686;
+}
