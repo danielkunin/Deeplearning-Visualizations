@@ -27,24 +27,25 @@
 
 <body>
     <div class="header"></div>
-    <div class="main divider-bottom">
-        <div class="container">
+    <div class="main divider-bottom intro">
+        <div class="container ">
             <div class="column-6-8 column-align">
                 <h1 class="title">Xavier Initialization</h1>
                 <h2>The lack of initialization techniques is one of the major reasons deep neural networks weren’t training properly in the past decades. Since then, new initializations schemes have been found to accelerate training. In this post, we will explain the methods to initialize the parameters of your neural network.</h2>
             </div>
             <div class="column-2-8 column-align">
-                <ul>Table of content
-                    <li>Problem statement</li>
-                    <li>What are the issues with a bad initialization?</li>
-                    <li>Exploding Gradient</li>
+                <h3>Table of content</h3>
+                <ul class="tableOfContent">
+                    <li class="index index1">Problem statement</li>
+                    <li class="index index3">What are the issues with a bad initialization?</li>
+                    <li class="index index3">Derivation of Xavier initialization with Tanh</li>
                 </ul>
             </div>
         </div>
     </div>
     <div class="main">
         <div class="container">
-            <div class="column-8-8 divider-bottom">
+            <div class="column-6-8">
                 <h3>Problem statement</h3>
                 <p>A neural network model is defined by its <i>architecture</i> and its <i>parameters</i>. In order to build a cat classifier with a 3-layer neural network (architecture), you need to learn the parameters using the optimization process:
                 </p>
@@ -65,6 +66,9 @@
                 To illustrate our argumentation let’s consider this 3-layer neural network. You can play with different initialization scheme and observe their impact on the learning.
                 </p>
             </div>
+            
+        </div>
+        <div class="full-container">
             <div class="column-2-8 column-align">
                 <h3>Input Data</h3>
                 <p>Choose a dataset as input to the neural network and select whether to view weights or gradients.</p>
@@ -118,6 +122,8 @@
                 <div id="loss"></div>
                 <div id="prediction"></div>
             </div>
+        </div>
+        <div class="container">
             <div class="column-6-8 column-align">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
             </div>
@@ -125,7 +131,7 @@
                 <p class="caption">Zero initialization doesn’t work because it lacks at breaking the symmetry.</p>
             </div>
             <div class="column-8-8 divider-bottom"></div>
-            <div class="column-6-8">
+            <div class="column-6-8 index1-target">
                 <h3>What are the issues with a bad initialization?</h3>
                 <p>An inappropriate initialization leads to:</p>
                 <ol>
@@ -177,7 +183,7 @@
             <div class="column-6-8 divider-bottom">
                 <p>All in all, initializing your weights with inappropriate values will lead to divergence or slow-down in the training.</p>
             </div>
-            <div class="column-6-8">
+            <div class="column-6-8 index2-target">
                 <h3>How do we fix this issue?</h3>
                 <p>Let's define our rule of thumb to translate the fact that we want the weights to be initialized neither “too big”, nor “too small”:</p>
                 <p class="inline-caption">The variance should stay the same across every layer to prevent the signal from vanishing or exploding</p>
@@ -193,6 +199,8 @@
                 </script>
                 <p>In the visualization below, observe the impact of the weights’ distribution on each layer’s activations’ distribution.</p>
             </div>
+        </div>
+        <div class="full-container">
             <div class="column-2-8 column-align">
                 <h3>MNIST</h3>
                 <p>Load <a href="http://yann.lecun.com/exdb/mnist/">MNIST</a> test dataset (10,000 images).</p>
@@ -224,7 +232,7 @@
             </div>
             <div class="column-2-8 column-align">
                 <h3>Softmax</h3>
-                <p><span class="correct">Blue</span> squares represent correctly classified images.  <span class="incorrect">Red</span> squares represent incorrectly classified images.</p>
+                <p><span class="correct bold">Blue</span> squares represent correctly classified images.  <span class="incorrect bold">Red</span> squares represent incorrectly classified images.</p>
                 <div>
                     <button class="button" id="mnist_reset">Reset</button>
                     <button class="button inactive" id="mnist_start">Start</button>
@@ -256,6 +264,8 @@
                     </label>
                 </div>
             </div>
+        </div>
+        <div class="container">
             <div class="column-8-8 column-align">
                 <img src="img/network.png">
             </div>
@@ -268,10 +278,10 @@
                 <p>This scheme is called Xavier initialization, and it’s the “appropriate initialization” in the visual above.</p>
             </div>
             <div class="column-2-8 column-align">
-                <p class="caption">For more information check out Glorot et al. (2010) paper which introduced Xavier initialization.</p>
-                <a href="http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf?hc_location=ufi"><img src="img/paper.png"></a>
+                <p class="caption">For more information check out<a href="http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf?hc_location=ufi"> Glorot et al. (2010) paper which introduced Xavier initialization.</a></p>
+                
             </div>
-            <div class="column-6-8 column-align">
+            <div class="column-6-8 column-align index3-target">
                 <h3>Derivation of Xavier initialization with Tanh</h3>
                 <p>In this section, we will go over the math step by step. I think it sometimes help to understand the proof to grasp the concept, but you can get most of the intuition without the math, feel free to jump to the next section.</p>
                 <p>Let’s work on the layer <script>document.write(katex.renderToString('l'))</script> described in “How do we fix this issue” and assume the activation functions <script>document.write(katex.renderToString('g^{[l-1]}'))</script> and <script>document.write(katex.renderToString('g^{[l]}'))</script> are <script>document.write(katex.renderToString('tanh'))</script>:</p>
@@ -406,3 +416,6 @@
 <script src="js/mnist/data.js"></script>
 <!-- Visualization Code -->
 <script src="js/mnist/viz.js"></script>
+
+<!--Scroll To-->
+<script src="js/scroll-to.js"></script>

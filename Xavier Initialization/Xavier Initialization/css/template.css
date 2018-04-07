@@ -14,8 +14,11 @@ body {
 
 .header {
     border-bottom: 1px solid #D0D0D0;
-    margin-bottom: 10em;
+  
+}
 
+.intro{
+  padding-top:5em;
 }
 
 .footer {
@@ -59,6 +62,14 @@ body {
     margin:2% 2%;
 }
 
+.footer .column-8-8,
+.footer .column-6-8,
+.footer .column-4-8,
+.footer .column-3-8,
+.footer .column-2-8 {
+    margin:0% 2%;
+}
+
 
 .column-2-8 img,
 .column-3-8 img,
@@ -76,6 +87,14 @@ img{
 .column-align {
     display: inline-block;
     vertical-align: text-top;
+}
+
+.full-container{
+  background-color: #F9F9F9;
+  border-top:1px solid #E6E6E6;
+  border-bottom: 1px solid #E6E6E6;
+  
+  margin:2% 0;
 }
 
 .full-container-image img {
@@ -123,13 +142,31 @@ ul{
   list-style: none;
 }
 
-/*.title{
-	padding-top: 200px;
+ul.tableOfContent{
+  border-left: 1px solid black;
 }
-*/
+
+ul.tableOfContent li{
+  line-height: 1em;
+  margin:1em 0;
+  cursor: pointer;
+}
+
+
+ul.tableOfContent li:hover{
+
+}
+
+
+.bold{
+  font-weight: 600;
+}
+
+
 .caption {
     color: #9B9B9B;
     font-weight: 200;
+    font-size: 16px;
 }
 
 p.img-caption{
@@ -157,11 +194,18 @@ h4.reference{
   font-weight: 600;
 }
 
+ol.refernece{
+  margin: 0 !important;
+  list-style: none;
 
+}
 .reference li{
-    padding-top:0.3em;
-    padding-bottom: 0.3em;
+    /*padding-top:0.3em;
+    padding-bottom: 0.3em;*/
     color: #9B9B9B;
+    line-height: 1.5em;
+    padding:1% 0;
+
     
 }
 
@@ -203,6 +247,13 @@ h4.reference{
     .lg-screen-img{
     	display: none;
     }
+
+    .full-container{
+      width: 75%;
+      margin:0 auto;
+      background-color: transparent;
+    }
+
 }
 
 @media screen and (min-width: 680px) {
@@ -233,12 +284,17 @@ h4.reference{
     .lg-screen-img{
     	display: inline-block;
     }
-}
 
+    .full-container{
+    width: 100%;
+    padding: 0% 4%;
+    }
+}
 /*stylesheet*/
 .button{
-	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+	/*box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);*/
 	padding: 0.5em 1.2em;
+  margin: auto 0.2em;
 	font-size: 14px;
 	background-color: white;
 	border-radius: 0.2em;
@@ -249,6 +305,7 @@ h4.reference{
 
 .button:hover{
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  border:1px solid rgba(3, 169, 244, 1);
 }
 
 .button.emphasized{
@@ -277,8 +334,8 @@ h4.reference{
     position: relative;
     padding-left: 2.2em;
     padding-right: 2.5em;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
+    margin-top: 0.6em;
+    margin-bottom: 0.6em;
     cursor: pointer;
     font-size: 14px;
     -webkit-user-select: none;
