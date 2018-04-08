@@ -41,11 +41,13 @@ function PLAYGROUND(layers) {
 		// play functions
 		function stop() {
 			t.stop();
+			d3.selectAll('.link').classed('paused', true);
 		}
 
 		function start() {
 			training = true;
 			t.restart(iteration);
+			d3.selectAll('.link').classed('paused', false);
 		}
 
 		function step() {
@@ -55,14 +57,14 @@ function PLAYGROUND(layers) {
 		}
 
 		function reset() {
-			t.stop();
+			stop();
 			params = dl.tidy(() => { return init_params(); });
 			costs = [],
 			epoch = 0,
 			training = true;
 			pred(data, [[0.5]]);
 			loss(costs);
-			network([], "link");
+			network([], "connected");
 		}
 
 		return {'stop':stop, 'start':start, 'step':step, 'reset':reset};

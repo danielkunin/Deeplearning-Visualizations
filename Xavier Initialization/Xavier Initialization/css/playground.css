@@ -74,24 +74,24 @@ text.label {
 }
 
 
-line.link {
+.link.connected {
 	stroke: black;
 	stroke-width: 1px;
 	stroke-dasharray: 10;
 }
 
-line.solid {
-	stroke-dasharray: 0;
+.paused {
+	-webkit-animation-duration: 0s !important;
 }
 
-line.weight {
+.link.weight {
 	stroke-dasharray: 10;
 	-webkit-animation-name: forward; 
 	-webkit-animation-duration: 5s; 
 	-webkit-animation-iteration-count: infinite;
 	-webkit-animation-timing-function: linear;
 }
-line.gradient {
+.link.gradient {
 	stroke-dasharray: 10;
 	-webkit-animation-name: backward; 
 	-webkit-animation-duration: 5s; 

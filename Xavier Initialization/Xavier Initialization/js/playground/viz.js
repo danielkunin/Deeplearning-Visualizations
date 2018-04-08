@@ -203,7 +203,7 @@ function playground_network(layers) {
     return {'layer': layer, 'index': index};
   }
   function weight(source, target) {
-    return {'source': source, 'target': target, 'weight': 0, 'style':"link"};
+    return {'source': source, 'target': target, 'weight': 0, 'style':"connected"};
   }
   // create node data
   var nodes = [];
@@ -260,14 +260,14 @@ function playground_network(layers) {
 
     line.attr("stroke", function(d) { return color(d.weight); })
         .attr("stroke-width", function(d) { return z(Math.abs(d.weight)); })
-        .attr("class", function(d) { return d.style});
+        .attr("class", function(d) { return 'link ' + d.style});
 
     line.enter().append("line")
         .attr("x1", function(d) { return x_position(d.source) })
         .attr("y1", function(d) { return y_position(d.source); })
         .attr("x2", function(d) { return x_position(d.target); })
         .attr("y2", function(d) { return y_position(d.target); })
-        .attr("class", function(d) { return d.style});
+        .attr("class", function(d) { return 'link ' + d.style});
 
     line.exit().remove();
   }
@@ -520,13 +520,13 @@ function playground_setup() {
   $("input[name='playground_init']").on("change", function () {
     $("#playground_reset").click();
   });
-
+  
   // reset visualization
   function clear() {
     // clear input datasets
     datasets.classed('active', false);
     // update plots
-    network([], "link");
+    network([], "connected");
     loss([]);
     pred([],[[0.5]]);
   }
