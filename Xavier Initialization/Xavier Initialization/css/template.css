@@ -241,6 +241,10 @@ ol.refernece{
   list-style: none;
 
 }
+
+label.viz{
+  padding-right: 5%;
+}
 .reference li{
     /*padding-top:0.3em;
     padding-bottom: 0.3em;*/
@@ -376,6 +380,7 @@ ol.refernece{
 
 .inactive{
   pointer-events: none;
+  opacity: 0.3;
 }
 
 .hidden{
