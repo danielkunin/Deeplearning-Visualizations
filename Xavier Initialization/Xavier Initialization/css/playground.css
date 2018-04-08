@@ -27,14 +27,7 @@
 
 /* SVG elements */
 
-.axis path,
-.axis line {
-	fill: none;
-	stroke: black;
-	stroke-width: 1;
-	shape-rendering: crispEdges;
-}
-.axis text,
+
 text.label {
 	text-anchor: middle;
 	font-size: 10px;
@@ -52,6 +45,10 @@ text.label {
 	stroke-width: 2px;
 }
 .dataset:hover {
+	fill-opacity: 0;
+	stroke-opacity: 1;
+}
+.dataset.active {
 	fill-opacity: 0;
 	stroke-opacity: 1;
 }

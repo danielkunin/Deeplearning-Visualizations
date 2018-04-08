@@ -135,5 +135,5 @@ function MNIST(layers) {
 	}
 
 
-	return {'data': DATA, 'initialize':initialize, 'train':train};
+	return {'data': DATA, 'train': train};
 }

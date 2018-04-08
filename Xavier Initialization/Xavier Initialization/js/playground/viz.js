@@ -2,7 +2,7 @@
 //////////////////////////
 // load clickable images of datasets
 //////////////////////////
-function load_datasets() {
+function playground_dataset() {
   // setup dimensions
   var margin = {top: 30, right: 30, bottom: 30, left: 30},
       width = 250 - margin.left - margin.right,
@@ -10,7 +10,7 @@ function load_datasets() {
       padding = 10;
 
   // add svg
-  var svg = d3.select("#datasets").append("svg")
+  var svg = d3.select("#playground_dataset").append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -46,7 +46,7 @@ function load_datasets() {
   }
 
   // add images
-  var images = ['circle.png', 'spiral.png', 'square.png', 'gaussian.png'];
+  var images = ['circle.png', 'moon.png', 'square.png', 'gaussian.png'];
   return load(images);
 }
 
@@ -55,7 +55,7 @@ function load_datasets() {
 //////////////////////////
 // create legend
 //////////////////////////
-function create_legend() {
+function playground_legend() {
 
   // setup dimensions
   var margin = {top: 5, right: 30, bottom: 20, left: 30},
@@ -63,7 +63,7 @@ function create_legend() {
       height = 120 - margin.top - margin.bottom;
 
   // add svg
-  var svg = d3.select("#legend").append("svg")
+  var svg = d3.select("#playground_legend").append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -113,7 +113,7 @@ function create_legend() {
   }
   
   // load scale gradient legend
-  function gradient(color, id, x_cord, y_cord) {
+  function gradient(color, id, x_cord, y_cord, ticks) {
 
     var defs = svg.append("defs");
 
@@ -144,7 +144,9 @@ function create_legend() {
     svg.append("g")
       .attr("class", "axis axis--x")
       .attr("transform", "translate(0," + (y(y_cord) + 10) + ")")
-      .call(d3.axisBottom(x).ticks(3, "s"));
+      .call(d3.axisBottom(x)
+        .ticks(3, "s")
+        .tickFormat(function(d, i) { return ticks[i]; }));
 
     svg.append("text")
       .attr("x", 0)
@@ -157,8 +159,8 @@ function create_legend() {
 
   // load legend
   add(['Input', 'Relu', 'Sigmoid']);
-  gradient(c1, "Data", 0, 0);
-  gradient(c2, "Link", 0, 0.45);
+  gradient(c1, "Data", 0, 0, ["0", "0.5", "1"]);
+  gradient(c2, "Link", 0, 0.45, ["neg", "zero", "pos"]);
 
   return true;
 }
@@ -168,15 +170,15 @@ function create_legend() {
 //////////////////////////
 // initialize network
 //////////////////////////
-function setup_network() {
+function playground_network(layers) {
 
   // setup dimensions
   var margin = {top: 0, right: 25, bottom: 0, left: 25},
       width = 500 - margin.left - margin.right,
-      height = 350 - margin.top - margin.bottom;
+      height = 400 - margin.top - margin.bottom;
 
   // add svg
-  var svg = d3.select("#network").append("svg")
+  var svg = d3.select("#playground_network").append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -195,7 +197,6 @@ function setup_network() {
   var color = d3.scaleLinear()
     .range(['#F5D800','#FEF9D4','#FF9B41'])
     .clamp(true);
-  var activation = ['white', '#f5d800', '#f5d800', '#46c8b2'];
 
   // setup node and link structures
   function unit(layer, index) {
@@ -205,8 +206,7 @@ function setup_network() {
     return {'source': source, 'target': target, 'weight': 0, 'style':"link"};
   }
   // create node data
-  var layers = [2, 6, 3, 1],
-      nodes = [];
+  var nodes = [];
   for (var i = 0; i < layers.length; i++) {
     for (var j = 0; j < layers[i]; j++) {
       nodes.push(unit(i,j));
@@ -240,9 +240,11 @@ function setup_network() {
         .attr("cx", function(d) { return x_position(d); })
         .attr("cy", function(d) { return y_position(d); })
         .attr("r", 10)
-        .style("fill", function(d) { return activation[d.layer]; })
-        .style("stroke", "black")
-        .style("stroke-width", "2px");
+        .attr("class", function(d,i) {
+          if (d.layer == 0)                       return "Input";
+          else if (d.layer == layers.length - 1)  return "Sigmoid";
+          else                                    return "Relu";
+        });
 
     circle.exit().remove();
   }
@@ -306,7 +308,7 @@ function setup_network() {
 //////////////////////////
 // setup loss plot
 //////////////////////////
-function loss_plot() {
+function playground_loss() {
 
   // setup dimensions
   var margin = {top: 30, right: 40, bottom: 35, left: 40},
@@ -314,7 +316,7 @@ function loss_plot() {
       height = 150 - margin.top - margin.bottom;
 
   // add svg
-  var svg = d3.select("#loss").append("svg")
+  var svg = d3.select("#playground_loss").append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -348,7 +350,7 @@ function loss_plot() {
   svg.append("text")
     .text("Loss")
     .attr("class", "label")
-    .attr("dy", "-10px")
+    .attr("dy", "-12px")
     .attr("transform", "translate(" + -margin.left / 2 + "," + height / 2 + ")rotate(-90)");
 
   // path function
@@ -386,7 +388,7 @@ function loss_plot() {
 //////////////////////////
 // setup prediction plot
 //////////////////////////
-function prediction_plot() {
+function playground_pred() {
 
   // setup dimensions
   var margin = {top: 40, right: 40, bottom: 40, left: 40},
@@ -394,7 +396,7 @@ function prediction_plot() {
       height = 250 - margin.top - margin.bottom;
 
   // add parent div
-  var output = d3.select("#prediction").append("div")
+  var output = d3.select("#playground_pred").append("div")
     .style("position","relative")
     .style("width", 250)
     .style("height", 250);
@@ -501,44 +503,83 @@ function prediction_plot() {
 
 
 // setup visualization and bind on click functions 
-function setup_playground() {
-  // setup network
-  var datasets = load_datasets(),
-      legend = create_legend(),
-      network_update = setup_network(),
-      loss_update = loss_plot(),
-      prediction_update = prediction_plot();
-  // reset viz
-  function reset() {
-    stop = true;
-    network_update([], "link");
-    loss_update([]);
-    prediction_update([],[[0.5]]);
+function playground_setup() {
+
+  // define layers and setup plots
+  var layers = [2, 6, 3, 1],
+      datasets = playground_dataset(),
+      legend = playground_legend(),
+      network = playground_network(layers),
+      loss = playground_loss(),
+      pred = playground_pred();
+
+  // create PLAYGROUND object
+  var playground = PLAYGROUND(layers);
+
+  // bind initialization buttons
+  $("input[name='playground_init']").on("change", function () {
+    $("#playground_reset").click();
+  });
+
+  // reset visualization
+  function clear() {
+    // clear input datasets
+    datasets.classed('active', false);
+    // update plots
+    network([], "link");
+    loss([]);
+    pred([],[[0.5]]);
   }
-  d3.select("#reset").on("click",reset);
-  // bind data
+
+
+  // load data and bind training buttons
   datasets.on("click", function(d, i) {
-    reset();
+
+    // reset visualization
+    clear();
+
+    // highlight current dataset
+    d3.select(this).classed('active', true);
+
+    // generate data
     var data = generate_data(100, i);
-    prediction_update(data, [[0.5]]);
-    d3.select("#train").on("click", function() {
-      stop = false;
-      train(data, prediction_update, network_update, loss_update);
+    pred(data, [[0.5]]);
+
+    // create playground training
+    var train = playground.train(data, pred, network, loss);
+
+    // reset training button
+    d3.select("#playground_reset").on("click", function() {
+      train.reset();
+      d3.select("#playground_start").classed("hidden", false);
+      d3.select("#playground_stop").classed("hidden", true);
     });
-  });
-  // bind radio buttons
-  $("input[name='link']").on("change", function () {
-    style = this.value;
-  });
-  // bind radio buttons
-  $("input[name='init']").on("change", function () {
-    variance = this.value;
+
+    // start training button
+    d3.select("#playground_start").on("click", function() {
+      train.start();
+      d3.select("#playground_start").classed("hidden", true);
+      d3.select("#playground_stop").classed("hidden", false);
+    });
+
+    // stop training button
+    d3.select("#playground_stop").on("click", function() {
+      train.stop();
+      d3.select("#playground_start").classed("hidden", false);
+      d3.select("#playground_stop").classed("hidden", true);
+    });
+
+    // step train button
+    d3.select("#playground_step").on("click", function() {
+      train.step();
+    });
+
   });
 }  
 
 
 // wait until all documents load then setup
 $(window).load(function() {
-  setup_playground();
+  playground_setup();
 });
 

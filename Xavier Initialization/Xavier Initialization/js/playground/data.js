@@ -45,15 +45,15 @@ function Circle(n) {
 }
 
 // generate classification data in spiral
-function Spiral(n) {
+function Moon(n) {
 	var data = [];
 	function generate(delta, y, n) {
 		for (var i = 0; i < n; i++) {
-			var angle = 3 * i / n * Math.PI + delta,
-				noise = uniform(-0.1, 0.1),
-				r = i / n * 5 + noise,
-				x1 = Math.cos(angle) * r,
-				x2 = Math.sin(angle) * r;
+			var angle = i / n * Math.PI + delta,
+				noise = normal(1, 0.25),
+				r = i / n * 4 + noise,
+				x1 = Math.cos(angle) * r + (y - 0.5),
+				x2 = Math.sin(angle) * r - (y - 0.5);
 			data.push(point(x1, x2, y));
 		}
 	}
@@ -95,6 +95,6 @@ function Gauss(n) {
 
 // generate classification data
 function generate_data(n, index) {
-	var generators = [Circle, Spiral, Square, Gauss];
+	var generators = [Circle, Moon, Square, Gauss];
 	return generators[index](n);
 }

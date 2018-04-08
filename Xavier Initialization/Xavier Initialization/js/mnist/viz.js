@@ -217,38 +217,38 @@ function mnist_setup() {
 
   // create MNIST object
   var mnist = MNIST(layers),
-      mnist_train = mnist.train("xe", histogram, batch, softmax);
+      train = mnist.train("xe", histogram, batch, softmax);
 
   // bind initialization buttons
   $("input[name='mnist_init']").on("change", function () {
     $("#mnist_reset").click();
-    mnist_train = mnist.train(this.value, histogram, batch, softmax);
+    train = mnist.train(this.value, histogram, batch, softmax);
   });
 
   // reset training button
   d3.select("#mnist_reset").on("click", function() {
-    mnist_train.reset();
+    train.reset();
     d3.select("#mnist_start").classed("hidden", false);
     d3.select("#mnist_stop").classed("hidden", true);
   });
 
   // start training button
   d3.select("#mnist_start").on("click", function() {
-    mnist_train.start();
+    train.start();
     d3.select("#mnist_start").classed("hidden", true);
     d3.select("#mnist_stop").classed("hidden", false);
   });
 
   // stop training button
   d3.select("#mnist_stop").on("click", function() {
-    mnist_train.stop();
+    train.stop();
     d3.select("#mnist_start").classed("hidden", false);
     d3.select("#mnist_stop").classed("hidden", true);
   });
 
   // step train button
   d3.select("#mnist_step").on("click", function() {
-    mnist_train.step();
+    train.step();
   });
 
   // load mnist
