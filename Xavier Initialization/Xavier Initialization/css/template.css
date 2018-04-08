@@ -80,7 +80,7 @@ body {
     margin-top: 1em;
     margin-bottom: 1.5em;
 }
-
+.viz-column-8-8,
 .viz-column-4-8,
 .viz-column-2-8{
   margin:0% 2%;
@@ -94,16 +94,24 @@ body {
   width: 212.5px;
 }
 
-.viz-column-4-8{
-  width: 500px;
+.viz-column-8-8 img{  
+  width: 1000px;
+}
+.viz-column-8-8,
+.viz-column-4-8,
+.viz-column-2-8{
   display: inline-block;
   vertical-align: text-top;
+}
+.viz-column-8-8{
+  width: 1000px;
+}
+.viz-column-4-8{
+  width: 500px;
 }
 
 .viz-column-2-8{
   width: 250px;
-  display: inline-block;
-  vertical-align: text-top;
 }
 
 img{
