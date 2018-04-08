@@ -60,7 +60,11 @@ body {
 .column-4-8,
 .column-3-8,
 .column-2-8 {
-    margin:2% 2%;
+    margin:2%;
+}
+
+.no-margin{
+  margin:0 2% !important;
 }
 
 .footer .column-8-8,
@@ -78,7 +82,7 @@ body {
 .column-6-8 img,
 .column-8-8 img {
     width: 100%;
-    margin-top: 1em;
+    margin-top: 1.5em;
     margin-bottom: 1.5em;
 }
 .viz-column-8-8,
@@ -128,7 +132,7 @@ img{
   border-top:1px solid #E6E6E6;
   border-bottom: 1px solid #E6E6E6;
   
-  margin:2% auto;
+  margin:3% auto 2% auto;
   padding:2% 4% 2% 6%;
   min-width: 1200px;
 
@@ -154,7 +158,7 @@ h2 {
 }
 
 h3{
-
+  margin: 0 0;
 }
 
 h5{
@@ -174,28 +178,45 @@ p i{
 
 li{
   line-height: 1.8em;
+  font-size: 18px;
+}
+
+ol  ol li{
+  font-size: 16px;
+  line-height: 2em;
 }
 ul{
   list-style: none;
 }
 
+ol{
+ 
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
 ol.tableOfContent{
-  border-left: 1px solid black;
+  border-left: 1px solid #767676;
   color:#767676;
+  padding-left: 3em;
+  padding-top: 0em;
+  padding-bottom: 0em;
 }
 
 ol.tableOfContent li{
   line-height: 1em;
   margin:1em 0;
   cursor: pointer;
+  font-size: 16px;
 }
 
-h3.tableOfCotent{
-  color:#767676;
+h3.tableOfContent{
+  color:rgba(0,0,0,0.8);
+  padding-top: 1em;
 }
 
 
-ul.tableOfContent li:hover{
+ol.tableOfContent li:hover{
   color:black;
 
 }
@@ -235,23 +256,31 @@ p.inline-caption{
 
 h4.reference{
   font-weight: 600;
+   margin-top:1em;
+  margin-bottom:0.5em;
 }
 
-ol.refernece{
-  margin: 0 !important;
-  list-style: none;
+ol.reference{
+
+  padding-top:0;
+  padding-bottom: 0;
+  margin-top:0.5em;
+  margin-bottom:0.5em;
+ 
 
 }
+
+
 
 label.viz{
   padding-right: 5%;
 }
-.reference li{
-    /*padding-top:0.3em;
-    padding-bottom: 0.3em;*/
+ol.reference li{
+
     color: #9B9B9B;
     line-height: 1.5em;
     padding:1% 0;
+    font-size: 16px;
 
     
 }
@@ -295,18 +324,9 @@ label.viz{
     	display: block;
     }
 
-   /* body{
-       width: 1200px;}*/
-
-     /* .lg-screen-img{
-      	display: none;
-      }*/
-
-   /*   .full-container{
-        width: 75%;
-        margin:0 auto;
-        background-color: transparent;
-      }*/
+    ol{
+    padding-left: 1em;
+    } 
 
 }
 
@@ -338,6 +358,9 @@ label.viz{
     .lg-screen-img{
     	display: inline-block;
     }
+
+    ol{
+    padding-left: 4em;}
 
   
 }
