@@ -77,11 +77,11 @@ function playground_legend() {
     .domain([0,1])
     .range([0,height])
   var c1 = d3.scaleLinear()
-    .domain([0,0.5,1])
-    .range(['#FF8686','#FFFFFF','#8FDEFF']);
+    .domain([0,1])
+    .range(['#FF8686','#8FDEFF']);
   var c2 = d3.scaleLinear()
     .domain([0,0.5,1])
-    .range(['#F5D800','#FEF9D4','#FF9B41']);
+    .range(['#FF9B41','#F5D800','#46c8b2']);
 
   // create activation unit legend
   function add(data) {
@@ -192,10 +192,10 @@ function playground_network(layers) {
     .domain([0,1])
     .range([0, height]);
   var z = d3.scaleLinear()
-    .range([1,10])
+    .range([2,10])
     .clamp(true);
   var color = d3.scaleLinear()
-    .range(['#F5D800','#FEF9D4','#FF9B41'])
+    .range(['#FF9B41','#F5D800','#46c8b2'])
     .clamp(true);
 
   // setup node and link structures
@@ -425,8 +425,8 @@ function playground_pred() {
     .domain([-5,5])
     .range([height, 0]);
   var color = d3.scaleLinear()
-    .domain([0,0.5,1])
-    .range(['#FF8686','#FFFFFF','#8FDEFF']);
+    .domain([0,1])
+    .range(['#FF8686','#8FDEFF']);
 
   // axes groups
   svg.append("g")

@@ -162,14 +162,14 @@
                     var render = katex.renderToString("W^{[1]} = W^{[2]} = \\dots = W^{[L-1]}=\\begin{bmatrix}1.5 & 0 \\cr 0 & 1.5\\end{bmatrix}", {displayMode: true});
                     document.writeln(render);
                 </script>
-                <p>This simplifies to <script>document.write(katex.renderToString('\\hat{y} = W^{[L]}1.5^{L-1}X'))</script>, and the values of the activation <script>document.write(katex.renderToString('a^{[l]}'))</script> increase exponentially with <script>document.write(katex.renderToString('l'))</script>. When these activations are used in backward propagation, this leads to the exploding gradient problem that you could visualize on the contour plot of the loss as:</p>
+                <p>This simplifies to <script>document.write(katex.renderToString('\\hat{y} = W^{[L]}1.5^{L-1}X'))</script>, and the values of the activation <script>document.write(katex.renderToString('a^{[l]}'))</script> increase exponentially with <script>document.write(katex.renderToString('l'))</script>. When these activations are used in backward propagation, this leads to the exploding gradient problem.</p>
             </div>
             <div class="column-2-8 column-align">
                 <img src="img/exploding.png">
+                <p class="caption">This can be visualized on the contour plot of the loss as...</p>
             </div>
             <div class="column-4-8">
                 <h3>Vanishing Gradient</h3>
-
             </div>
 
             <div class="column-6-8 column-align">
@@ -178,10 +178,11 @@
                     var render = katex.renderToString("W^{[1]} = W^{[2]} = \\dots = W^{[L-1]}=\\begin{bmatrix}0.5 & 0 \\cr 0 & 0.5\\end{bmatrix}", {displayMode: true});
                     document.writeln(render);
                 </script>
-                <p>This simplifies to <script>document.write(katex.renderToString('\\hat{y} = W^{[L]}0.5^{L-1}X'))</script>, and the values of the activation <script>document.write(katex.renderToString('a^{[l]}'))</script> decreases exponentially with <script>document.write(katex.renderToString('l'))</script>. When these activations are used in backward propagation, this leads to the vanishing gradient problem that you could visualize on the contour plot of the loss as:</p>
+                <p>This simplifies to <script>document.write(katex.renderToString('\\hat{y} = W^{[L]}0.5^{L-1}X'))</script>, and the values of the activation <script>document.write(katex.renderToString('a^{[l]}'))</script> decreases exponentially with <script>document.write(katex.renderToString('l'))</script>. When these activations are used in backward propagation, this leads to the vanishing gradient problem.</p>
             </div>
             <div class="column-2-8 column-align">
                 <img src="img/vanishing.png">
+                <p class="caption">This can be visualized on the contour plot of the loss as...</p>
             </div>
             <div class="column-6-8 divider-bottom">
                 <p>All in all, initializing your weights with inappropriate values will lead to divergence or slow-down in the training.</p>

@@ -48,6 +48,3 @@ function process(text, data) {
     data["labels"] =  labels;
     data['size'] =  i;
 }
-
-
-

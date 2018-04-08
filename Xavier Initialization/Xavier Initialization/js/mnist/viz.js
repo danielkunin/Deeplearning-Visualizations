@@ -87,7 +87,7 @@ function mnist_network(layers) {
     .attr('x', x(0))
     .attr('y', 0)
     .attr('text-anchor', 'middle')
-    .text(function(d,i) { return "a[" + (i + 1) + "]"; });
+    .text(function(d,i) { return "A[" + (i + 1) + "]"; });
   
   // add histogram path
   newlayers.append("path")

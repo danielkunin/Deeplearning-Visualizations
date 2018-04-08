@@ -62,14 +62,14 @@ text.label {
 }
 
 .Relu {
-	fill: #f5d800;
-	stroke: black;
+	fill: white;
+	stroke: #ffab00;
     stroke-width: 2px;
 }
 
 .Sigmoid {
-	fill: #46c8b2;
-	stroke: black;
+	fill: white;
+	stroke: #26a69a;
     stroke-width: 2px;
 }
 
@@ -78,6 +78,10 @@ line.link {
 	stroke: black;
 	stroke-width: 1px;
 	stroke-dasharray: 10;
+}
+
+line.solid {
+	stroke-dasharray: 0;
 }
 
 line.weight {
