@@ -34,12 +34,12 @@
                 <h2>The lack of initialization techniques is one of the major reasons deep neural networks weren’t training properly in the past decades. Since then, new initializations schemes have been found to accelerate training. In this post, we will explain the methods to initialize the parameters of your neural network.</h2>
             </div>
             <div class="column-2-8 column-align">
-                <h3>Table of content</h3>
+                <h3 class="tableOfContent">Table of content</h3>
                 <ul class="tableOfContent">
-                    <li class="index index1">Problem statement</li>
-                    <li class="index index2">What are the issues with a bad initialization?</li>
-                    <li class="index index3">How do we fix this issue?</li>
-                    <li class="index index4">Derivation of Xavier initialization with Tanh</li>
+                    <li class="index index1">I&emsp; Problem statement</li>
+                    <li class="index index2">II&emsp; What are the issues with a bad initialization?</li>
+                    <li class="index index3">III&emsp; How do we fix this issue?</li>
+                    <li class="index index4">IIII&emsp;Derivation of Xavier initialization with Tanh</li>
                 </ul>
             </div>
         </div>
@@ -188,7 +188,7 @@
                 <p>All in all, initializing your weights with inappropriate values will lead to divergence or slow-down in the training.</p>
             </div>
             <div class="column-6-8 index3-target">
-                <h3>How do we fix this issue?</h3>
+                <h3>III&emsp;How do we fix this issue?</h3>
                 <p>Let's define our rule of thumb to translate the fact that we want the weights to be initialized neither “too big”, nor “too small”:</p>
                 <p class="inline-caption">The variance should stay the same across every layer to prevent the signal from vanishing or exploding</p>
                 <p>More concretely, consider a layer <script>document.write(katex.renderToString('l'))</script> and its forward propagation:</p>
@@ -248,8 +248,9 @@
             <div class="viz-column-2-8 ">
                     <p>Input Layer</p>
                     <div id="mnist_input"></div>
-                    <label>
-                    Batch: <span id="batch">0</span> 
+                    <label class="viz">
+                    Batch: <span id="batch">0</span> </label>
+                    <label >
                     Epoch: <span id="epoch">0</span>
                     </label>
             </div>
@@ -260,8 +261,10 @@
                 <div>
                     <p>Output Layer</p>
                     <div id="mnist_output"></div>
-                    <label>
+                    <label class="viz">
                     Error: <span id="accuracy">0/100</span>
+                    </label>
+                    <label>
                     Loss: <span id="cost">0.00</span>
                     </label>
                 </div>
@@ -285,7 +288,7 @@
                 
             </div>
             <div class="column-6-8 column-align index4-target">
-                <h3>III&emsp;Derivation of Xavier initialization with Tanh</h3>
+                <h3>IIII&emsp;Derivation of Xavier initialization with Tanh</h3>
                 <p>In this section, we will go over the math step by step. I think it sometimes help to understand the proof to grasp the concept, but you can get most of the intuition without the math, feel free to jump to the next section.</p>
                 <p>Let’s work on the layer <script>document.write(katex.renderToString('l'))</script> described in “How do we fix this issue” and assume the activation functions <script>document.write(katex.renderToString('g^{[l-1]}'))</script> and <script>document.write(katex.renderToString('g^{[l]}'))</script> are <script>document.write(katex.renderToString('tanh'))</script>:</p>
             </div>
