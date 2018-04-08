@@ -336,6 +336,22 @@ ol.refernece{
     font-family: "Assistant";
 }
 
+.button-transport{
+  padding: 0.2em 1em 0em 1em;
+  margin: auto 0.2em;
+  font-size: 14px;
+  background-color: white;
+  border-radius: 0.2em;
+   -webkit-transition: box-shadow 0.5s; /* For Safari 3.1 to 6.0 */
+    transition: box-shadow 0.5s;
+    font-family: "Assistant";
+}
+
+.button-transport img{
+  width: 1.5em;
+  height: 1.5em;
+}
+
 .button:hover{
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   border:1px solid rgba(3, 169, 244, 1);
