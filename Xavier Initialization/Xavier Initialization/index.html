@@ -52,6 +52,7 @@
                 <h3>I&emsp;Problem statement</h3>
                 <p>A neural network model is defined by its <i>architecture</i> and its <i>parameters</i>. In order to build a cat classifier with a 3-layer neural network (architecture), you need to learn the parameters using the optimization process:
                 </p>
+                <p>footnote example<sup class="footnote-index footnote-index1">1</sup></p>
                 <ol>
                     <li>Initialize the parameters</li>
                     <li>Use an optimization algorithm, repeat:</li>
@@ -75,6 +76,7 @@
             <div class="viz-column-2-8 ">
                 <h3>1. Input Data</h3>
                 <p>Choose a dataset as input to the neural network and select whether to view weights or gradients.</p>
+
                 <label class="radio-container">Gradients
                     <input type="radio" value="gradient" name="playground_link">
                     <span class="checkmark"></span>
@@ -289,14 +291,15 @@
                 <p class="caption">For more information check out<a href="http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf?hc_location=ufi"> Glorot et al. (2010) paper which introduced Xavier initialization.</a></p>
                 
             </div>
-            <div class="column-6-8 column-align index4-target">
+            <div class="column-6-8 index4-target">
                 <h3>IV&emsp;Derivation of Xavier initialization with Tanh</h3>
                 <p>In this section, we will go over the math step by step. I think it sometimes help to understand the proof to grasp the concept, but you can get most of the intuition without the math, feel free to jump to the next section.</p>
                 <p>Let’s work on the layer <script>document.write(katex.renderToString('l'))</script> described in “How do we fix this issue” and assume the activation functions <script>document.write(katex.renderToString('g^{[l-1]}'))</script> and <script>document.write(katex.renderToString('g^{[l]}'))</script> are <script>document.write(katex.renderToString('tanh'))</script>:</p>
             </div>
-            <div class="column-2-8 column-align">
+            <div class="column-6-8">
+            
                 <img src="img/tanh.png">
-                <p class="caption">tanh...</p>
+                
             </div>
             <div class="column-6-8">
                 <p>Important properties of <script>document.write(katex.renderToString('tanh'))</script> are its parity (<script>document.write(katex.renderToString('tanh(-x) = -tanh(x)'))</script>) and its linearity around 0 (<script>document.write(katex.renderToString("tanh'(0) = 1"))</script>).</p>
@@ -391,7 +394,7 @@
             </div>
             <div class="column-6-8 column-align">
                 <ol class="reference">
-                    <li>If X is a vector or a matrix, what does Var(X) concretely mean? Take this example, X is the input grayscale image of a neural network. This image comes from a distribution called “real world images”. If you select randomly 100000 images from this distribution and each time, you collect the value of a random pixel  in the middle of the image. What would the distribution of  look like. Maybe something like this:
+                    <li class="footnote-index1-target">If X is a vector or a matrix, what does Var(X) concretely mean? Take this example, X is the input grayscale image of a neural network. This image comes from a distribution called “real world images”. If you select randomly 100000 images from this distribution and each time, you collect the value of a random pixel  in the middle of the image. What would the distribution of  look like. Maybe something like this:
                     <img src="img/normal.png">
                     All in all, Var(X) means the variance of any entry of the matrix (or vector) X (it is fair to assume they’re all distributed identically.)</li>
                     <li>Concretely it means we pick every weight randomly and independently from a normal distribution centered in  and with variance .</li>

@@ -4,6 +4,12 @@ $(window).load(function() {
 			target = $("."+target+"-target");
 		toSection($(target));
 	});
+
+	$(".footnote-index").click(function() {	
+		var target = $(this).attr('class').split(' ').pop();
+			target = $("."+target+"-target");
+		toSection($(target));
+	});
 });
 
 

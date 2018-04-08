@@ -210,6 +210,10 @@ ol.tableOfContent li{
   font-size: 16px;
 }
 
+.footnote-index{
+  cursor: pointer;
+}
+
 h3.tableOfContent{
   color:rgba(0,0,0,0.8);
   padding-top: 1em;
