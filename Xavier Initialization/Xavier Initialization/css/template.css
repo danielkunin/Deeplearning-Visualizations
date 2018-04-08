@@ -271,6 +271,9 @@ label.viz{
   margin:2.5em 0 !important;
 }
 
+.katex{
+  font-size: 0.9em !important;
+}
 
 /*Responsive*/
 
