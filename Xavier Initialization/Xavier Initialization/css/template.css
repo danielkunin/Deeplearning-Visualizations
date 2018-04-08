@@ -3,6 +3,7 @@ body {
     margin: 0;
     font-family: "Assistant";
     background-color: #FFFFFF;
+
 }
 
 .header,
@@ -178,12 +179,12 @@ ul{
   list-style: none;
 }
 
-ul.tableOfContent{
+ol.tableOfContent{
   border-left: 1px solid black;
   color:#767676;
 }
 
-ul.tableOfContent li{
+ol.tableOfContent li{
   line-height: 1em;
   margin:1em 0;
   cursor: pointer;
@@ -268,7 +269,8 @@ label.viz{
 }
 
 .katex-display{
-  margin: 2.5em 0 !important;
+  margin:2.5em 0 !important;
+  font-size: 1.2em !important;
 }
 
 .katex{
@@ -293,15 +295,18 @@ label.viz{
     	display: block;
     }
 
-   /* .lg-screen-img{
-    	display: none;
-    }*/
+   /* body{
+       width: 1200px;}*/
 
- /*   .full-container{
-      width: 75%;
-      margin:0 auto;
-      background-color: transparent;
-    }*/
+     /* .lg-screen-img{
+      	display: none;
+      }*/
+
+   /*   .full-container{
+        width: 75%;
+        margin:0 auto;
+        background-color: transparent;
+      }*/
 
 }
 

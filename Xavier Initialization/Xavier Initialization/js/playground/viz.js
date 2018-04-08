@@ -520,7 +520,7 @@ function playground_setup() {
   $("input[name='playground_init']").on("change", function () {
     $("#playground_reset").click();
   });
-  
+
   // reset visualization
   function clear() {
     // clear input datasets
@@ -574,6 +574,10 @@ function playground_setup() {
       train.step();
     });
 
+    // remove inactive
+    d3.select("#playground_start").classed("inactive", false)
+    d3.select("#playground_step").classed("inactive", false)
+
   });
 }  
 
@@ -583,3 +587,9 @@ $(window).load(function() {
   playground_setup();
 });
 
+// make sure training stops when visualization is not in viewport
+$(window).on('resize scroll', function() {
+  if(!$("#playground").inView()) {
+    $("#playground_stop").click();
+  }
+});

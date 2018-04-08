@@ -183,7 +183,7 @@ function mnist_output() {
     var i = 0;
     for (var y = 0; y < 28; y++) {
       for (var x = 0; x < 28; x++) {
-        var color = label ? "#84DEFF" : "#FF8686"; 
+        var color = label ? "#009CDE" : "#FF8686"; 
         ctx.fillStyle = color;
         ctx.fillRect(xoff * 28 + x, yoff * 28 + y, 1, 1);
         i++;
@@ -266,4 +266,11 @@ function mnist_setup() {
 // wait until all documents load then setup
 $(window).load(function() {
   mnist_setup();
+});
+
+// make sure training stops when visualization is not in viewport
+$(window).on('resize scroll', function() {
+  if(!$("#mnist").inView()) {
+    $("#mnist_stop").click();
+  }
 });

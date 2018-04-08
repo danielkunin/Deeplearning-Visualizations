@@ -22,6 +22,8 @@
     <!-- Load Katex -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.css" integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>
+    <!--Scroll To-->
+    <script src="js/scroll-to.js"></script>
 
 </head>
 
@@ -35,12 +37,12 @@
             </div>
             <div class="column-2-8 column-align">
                 <h3 class="tableOfContent">Table of content</h3>
-                <ul class="tableOfContent">
-                    <li class="index index1">I&emsp; Problem statement</li>
-                    <li class="index index2">II&emsp; What are the issues with a bad initialization?</li>
-                    <li class="index index3">III&emsp; How do we fix this issue?</li>
-                    <li class="index index4">IV&emsp;Derivation of Xavier initialization with Tanh</li>
-                </ul>
+                <ol class="tableOfContent" type="I">
+                    <li class="index index1">Problem statement</li>
+                    <li class="index index2">What are the issues with a bad initialization?</li>
+                    <li class="index index3">How do we fix this issue?</li>
+                    <li class="index index4">Derivation of Xavier initialization with Tanh</li>
+                </ol>
             </div>
         </div>
     </div>
@@ -69,7 +71,7 @@
             </div>
             
         </div>
-        <div class="full-container">
+        <div class="full-container" id="playground">
             <div class="viz-column-2-8 ">
                 <h3>1. Input Data</h3>
                 <p>Choose a dataset as input to the neural network and select whether to view weights or gradients.</p>
@@ -109,9 +111,9 @@
                 <p>Train model.</p>
                 <div>
                     <button class="button-transport" id="playground_reset"><img src="img/reset.png"></button>
-                    <button class="button-transport" id="playground_start"><img src="img/play.png"></button>
+                    <button class="button-transport inactive" id="playground_start"><img src="img/play.png"></button>
                     <button class="button-transport hidden" id="playground_stop"><img src="img/pause.png"></button>
-                    <button class="button-transport" id="playground_step"><img src="img/fastforward.png"></button>
+                    <button class="button-transport inactive" id="playground_step"><img src="img/fastforward.png"></button>
                 </div>
             </div>
             <div class="viz-column-2-8 ">
@@ -204,7 +206,7 @@
                 <p>In the visualization below, observe the impact of the weights’ distribution on each layer’s activations’ distribution.</p>
             </div>
         </div>
-        <div class="full-container">
+        <div class="full-container" id="mnist">
             <div class="viz-column-2-8">
                 <h3>1. MNIST</h3>
                 <p>Load <a href="http://yann.lecun.com/exdb/mnist/">MNIST</a> test dataset (10,000 images).</p>
@@ -423,6 +425,3 @@
 <script src="js/mnist/data.js"></script>
 <!-- Visualization Code -->
 <script src="js/mnist/viz.js"></script>
-
-<!--Scroll To-->
-<script src="js/scroll-to.js"></script>
