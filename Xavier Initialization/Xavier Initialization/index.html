@@ -37,14 +37,16 @@
                 <h3>Table of content</h3>
                 <ul class="tableOfContent">
                     <li class="index index1">Problem statement</li>
-                    <li class="index index3">What are the issues with a bad initialization?</li>
-                    <li class="index index3">Derivation of Xavier initialization with Tanh</li>
+                    <li class="index index2">What are the issues with a bad initialization?</li>
+                    <li class="index index3">How do we fix this issue?</li>
+                    <li class="index index4">Derivation of Xavier initialization with Tanh</li>
+
                 </ul>
             </div>
         </div>
     </div>
     <div class="main">
-        <div class="container">
+        <div class="container index1-target">
             <div class="column-6-8">
                 <h3>Problem statement</h3>
                 <p>A neural network model is defined by its <i>architecture</i> and its <i>parameters</i>. In order to build a cat classifier with a 3-layer neural network (architecture), you need to learn the parameters using the optimization process:
@@ -69,7 +71,7 @@
             
         </div>
         <div class="full-container">
-            <div class="column-2-8 column-align">
+            <div class="viz-column-2-8 ">
                 <h3>Input Data</h3>
                 <p>Choose a dataset as input to the neural network and select whether to view weights or gradients.</p>
                 <label class="radio-container">Gradients
@@ -80,8 +82,9 @@
                     <input type="radio" value="weight" name="link" checked>
                     <span class="checkmark"></span>
                 </label>
+        
             </div>
-            <div class="column-4-8 column-align">
+            <div class="viz-column-4-8 ">
                 <h3>Neural Network</h3>
                 <p>Select a variance to initialize weights with.</p>
                 <label class="radio-container">Zero
@@ -100,8 +103,9 @@
                     <input type="radio" value=100 name="init">
                     <span class="checkmark"></span>
                 </label>
+               
             </div>
-            <div class="column-2-8 column-align">
+            <div class="viz-column-2-8 ">
                 <h3>Output Classification</h3>
                 <p>Train model.</p>
                 <div>
@@ -110,18 +114,26 @@
                     <button class="button hidden" id="playground_stop">Stop</button>
                     <button class="button" id="playground_step">Step</button>
                 </div>
+             
+               
             </div>
-            <div class="column-2-8 column-align lg-screen-img">
+
+            <div class="viz-column-2-8 ">
+                
                 <div id="datasets"></div>
                 <div id="legend"></div>
             </div>
-            <div class="column-4-8 column-align lg-screen-img">
-                <div id="network"></div>
+
+            <div class="viz-column-4-8 ">
+                
+                 <div id="network"></div>
             </div>
-            <div class="column-2-8 column-align lg-screen-img">
-                <div id="loss"></div>
+            <div class="viz-column-2-8 ">
+                
+                 <div id="loss"></div>
                 <div id="prediction"></div>
             </div>
+
         </div>
         <div class="container">
             <div class="column-6-8 column-align">
@@ -131,7 +143,7 @@
                 <p class="caption">Zero initialization doesn’t work because it lacks at breaking the symmetry.</p>
             </div>
             <div class="column-8-8 divider-bottom"></div>
-            <div class="column-6-8 index1-target">
+            <div class="column-6-8 index2-target">
                 <h3>What are the issues with a bad initialization?</h3>
                 <p>An inappropriate initialization leads to:</p>
                 <ol>
@@ -183,7 +195,7 @@
             <div class="column-6-8 divider-bottom">
                 <p>All in all, initializing your weights with inappropriate values will lead to divergence or slow-down in the training.</p>
             </div>
-            <div class="column-6-8 index2-target">
+            <div class="column-6-8 index3-target">
                 <h3>How do we fix this issue?</h3>
                 <p>Let's define our rule of thumb to translate the fact that we want the weights to be initialized neither “too big”, nor “too small”:</p>
                 <p class="inline-caption">The variance should stay the same across every layer to prevent the signal from vanishing or exploding</p>
@@ -201,7 +213,7 @@
             </div>
         </div>
         <div class="full-container">
-            <div class="column-2-8 column-align">
+            <div class="viz-column-2-8">
                 <h3>MNIST</h3>
                 <p>Load <a href="http://yann.lecun.com/exdb/mnist/">MNIST</a> test dataset (10,000 images).</p>
                 <div>
@@ -210,7 +222,7 @@
                     </button>
                 </div>
             </div>
-            <div class="column-4-8 column-align">
+            <div class="viz-column-4-8">
                 <h3>Hidden Layers</h3>
                 <p>Select a distribution to initialize weights with.</p>
                 <label class="radio-container">Zero
@@ -229,8 +241,9 @@
                     <input type="radio" value="normal" name="mnist_init">
                     <span class="checkmark"></span>
                 </label>
+
             </div>
-            <div class="column-2-8 column-align">
+            <div class="viz-column-2-8">
                 <h3>Softmax</h3>
                 <p><span class="correct bold">Blue</span> squares represent correctly classified images.  <span class="incorrect bold">Red</span> squares represent incorrectly classified images.</p>
                 <div>
@@ -241,20 +254,21 @@
                 </div>
             </div>
 
-            <div class="column-2-8 column-align lg-screen-img">
-                <div>
+            <div class="viz-column-2-8 ">
+                
                     <p>Input Layer</p>
                     <div id="mnist_input"></div>
                     <label>
                     Batch: <span id="batch">0</span> 
                     Epoch: <span id="epoch">0</span>
                     </label>
-                </div>
+               
             </div>
-            <div class="column-4-8 column-align lg-screen-img">
+            <div class="viz-column-4-8 ">
                 <div id="mnist_network"></div>
+            
             </div>
-            <div class="column-2-8 column-align lg-screen-img">
+            <div class="viz-column-2-8 ">
                 <div>
                     <p>Output Layer</p>
                     <div id="mnist_output"></div>
@@ -263,6 +277,15 @@
                     Loss: <span id="cost">0.00</span>
                     </label>
                 </div>
+            </div>
+              <div class="viz-column-2-8 ">
+                <img src="img/img1.png">
+            </div>
+            <div class="viz-column-4-8 ">
+                <img src="img/img2.png">
+            </div>
+             <div class="viz-column-2-8 ">
+                <img src="img/img3.png">
             </div>
         </div>
         <div class="container">
@@ -281,7 +304,7 @@
                 <p class="caption">For more information check out<a href="http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf?hc_location=ufi"> Glorot et al. (2010) paper which introduced Xavier initialization.</a></p>
                 
             </div>
-            <div class="column-6-8 column-align index3-target">
+            <div class="column-6-8 column-align index4-target">
                 <h3>Derivation of Xavier initialization with Tanh</h3>
                 <p>In this section, we will go over the math step by step. I think it sometimes help to understand the proof to grasp the concept, but you can get most of the intuition without the math, feel free to jump to the next section.</p>
                 <p>Let’s work on the layer <script>document.write(katex.renderToString('l'))</script> described in “How do we fix this issue” and assume the activation functions <script>document.write(katex.renderToString('g^{[l-1]}'))</script> and <script>document.write(katex.renderToString('g^{[l]}'))</script> are <script>document.write(katex.renderToString('tanh'))</script>:</p>
