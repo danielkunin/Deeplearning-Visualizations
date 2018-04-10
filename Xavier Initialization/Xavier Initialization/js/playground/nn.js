@@ -5,7 +5,7 @@ function PLAYGROUND(layers) {
 
 		// constants
 		var costs = [],
-			alpha = 0.05,
+			alpha = 0.1,
 			training = true,
 			epoch = 0;
 
@@ -31,6 +31,7 @@ function PLAYGROUND(layers) {
 			// check stop
 			if (!training) {
 				t.stop();
+				d3.selectAll('.link').classed('paused', true);
 			}
 		}
 
@@ -51,7 +52,7 @@ function PLAYGROUND(layers) {
 		}
 
 		function step() {
-			t.stop();
+			stop();
 			training = false;
 			t.restart(iteration);
 		}
@@ -146,7 +147,7 @@ function PLAYGROUND(layers) {
 		var variance = d3.select('input[name="playground_init"]:checked').property("value"),
 			params = {},
 			L = layers.length - 1,
-			scalar = [0, 0.01, 1, 100];
+			scalar = [0, 0.001, 1, 1000];
 
 		for (var l = 1; l <= L; l++) {
 			params['W' + l] = dl.tidy(() => { return dl.randomNormal([layers[l], layers[l-1]]).mul(dl.scalar( variance / layers[l-1]).sqrt()); });

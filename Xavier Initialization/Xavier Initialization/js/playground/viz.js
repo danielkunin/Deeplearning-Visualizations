@@ -536,6 +536,7 @@ function playground_setup() {
   datasets.on("click", function(d, i) {
 
     // reset visualization
+    $("#playground_reset").click();
     clear();
 
     // highlight current dataset

@@ -45,7 +45,7 @@ function MNIST(layers) {
 			for (var l = 1; l < layers.length; l++) {
 				if (style == "xe") {
 					// Xe-Initialization
-					parameters['w' + l].assign(dl.randomNormal([layers[l-1],layers[l]],0,Math.sqrt(2/layers[l-1])));
+					parameters['w' + l].assign(dl.randomNormal([layers[l-1],layers[l]],0,Math.sqrt(1/layers[l-1])));
 				} else if (style == "uniform"){
 					// Uniform
 					parameters['w' + l].assign(dl.randomUniform([layers[l-1],layers[l]],-Math.sqrt(1/layers[l-1]),Math.sqrt(1/layers[l-1])));
