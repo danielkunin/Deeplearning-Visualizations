@@ -4,9 +4,9 @@
 //////////////////////////
 function playground_dataset() {
   // setup dimensions
-  var margin = {top: 30, right: 30, bottom: 30, left: 30},
-      width = 250 - margin.left - margin.right,
-      height = 250 - margin.top - margin.bottom
+  var margin = {top: 10, right: 20, bottom: 10, left: 20},
+      width = 200 - margin.left - margin.right,
+      height = 180 - margin.top - margin.bottom
       padding = 10;
 
   // add svg
@@ -58,9 +58,9 @@ function playground_dataset() {
 function playground_legend() {
 
   // setup dimensions
-  var margin = {top: 5, right: 30, bottom: 20, left: 30},
+  var margin = {top: 5, right: 30, bottom: 20, left: 0},
       width = 250 - margin.left - margin.right,
-      height = 120 - margin.top - margin.bottom;
+      height = 150 - margin.top - margin.bottom;
 
   // add svg
   var svg = d3.select("#playground_legend").append("svg")
@@ -159,8 +159,8 @@ function playground_legend() {
 
   // load legend
   add(['Input', 'Relu', 'Sigmoid']);
-  gradient(c1, "Data", 0, 0, ["0", "0.5", "1"]);
-  gradient(c2, "Link", 0, 0.45, ["neg", "zero", "pos"]);
+  gradient(c1, "Data", 0, 0.1, ["0", "0.5", "1"]);
+  gradient(c2, "Link", 0, 0.5, ["neg", "zero", "pos"]);
 
   return true;
 }
@@ -311,8 +311,8 @@ function playground_network(layers) {
 function playground_loss() {
 
   // setup dimensions
-  var margin = {top: 30, right: 40, bottom: 35, left: 40},
-      width = 250 - margin.left - margin.right,
+  var margin = {top: 30, right: 40, bottom: 35, left: 60},
+      width = 300 - margin.left - margin.right,
       height = 150 - margin.top - margin.bottom;
 
   // add svg
@@ -348,7 +348,7 @@ function playground_loss() {
     .attr("dy", "-5px")
     .attr("transform", "translate(" + width / 2 + "," + (height + margin.bottom) + ")");              
   svg.append("text")
-    .text("Loss")
+    .text("Cost")
     .attr("class", "label")
     .attr("dy", "-12px")
     .attr("transform", "translate(" + -margin.left / 2 + "," + height / 2 + ")rotate(-90)");
@@ -391,9 +391,9 @@ function playground_loss() {
 function playground_pred() {
 
   // setup dimensions
-  var margin = {top: 40, right: 40, bottom: 40, left: 40},
-      width = 250 - margin.left - margin.right,
-      height = 250 - margin.top - margin.bottom;
+  var margin = {top: 60, right: 40, bottom: 40, left: 60},
+      width = 300 - margin.left - margin.right,
+      height = 300 - margin.top - margin.bottom;
 
   // add parent div
   var output = d3.select("#playground_pred").append("div")

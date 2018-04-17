@@ -32,7 +32,7 @@
     <div class="main divider-bottom intro">
         <div class="container ">
             <div class="column-6-8 column-align">
-                <h1 class="title">Xavier Initialization</h1>
+                <h1 class="title">Notes on initializing neural networks</h1>
                 <h2>The lack of initialization techniques is one of the major reasons deep neural networks weren’t training properly in the past decades. Since then, new initializations schemes have been found to accelerate training. In this post, we will explain the methods to initialize the parameters of your neural network.</h2>
             </div>
             <div class="column-2-8 column-align">
@@ -50,31 +50,79 @@
         <div class="container index1-target">
             <div class="column-6-8">
                 <h3>I&emsp;Problem statement</h3>
-                <p>A neural network model is defined by its architecture and its parameters. In order to build a cat classifier with a 3-layer neural network (architecture), you need to learn the parameters using the optimization process:
+                <p>A neural network model is defined by its <i>architecture</i> and its <i>parameters</i>. In order to build a cat classifier with a 3-layer neural network (fixed architecture), you need to learn the parameters using the training process:
                 </p>
                 <ol>
                     <li>Initialize the parameters</li>
-                    <li>Use an optimization algorithm, repeat:</li>
+                    <li>Use an optimization algorithm (such as Gradient Descent), repeat:</li>
                     <ol>
                         <li>Forward propagate an input image</li>
-                        <li>Compute the cost</li>
-                        <li>Backward propagation the gradients</li>
-                        <li>Update the parameters using gradient descent (for example)</li>
+                        <li>Compute the cost function</li>
+                        <li>Backward propagate the error to calculate the gradients</li>
+                        <li>Update the parameters using their gradients</li>
                     </ol>
                 </ol>
                 <p>
-                Given a new image, you can then use your model (architecture + learned parameters) to predict if there’s a cat.
+                Given a new image, you can then use your model (= architecture + learned parameters) to predict if there’s a cat.
                 </p>
                 <p>
-                To illustrate our argumentation let’s consider this 3-layer neural network. You can play with different initialization scheme and observe their impact on the learning.
+                It is critical to initialize the parameters with the right method. To illustrate this argument, let’s consider the 3-layer neural network below. Initialize this network with different initialization methods and observe the impact on the learning.
                 </p>
             </div>
             
         </div>
         <div class="full-container" id="playground">
-            <div class="viz-column-2-8 ">
-                <h3>1. Input Data</h3>
-                <p>Choose a training dataset and select whether to visualize weights or gradients.</p>
+            <div class="viz-column-2-8" id="playground_input">
+                <h3>1. Choose input dataset</h3>
+                <p>Choose a training dataset.</p>
+                <div id="playground_dataset"></div>
+                <p>Select whether to visualize weights or gradients.</p>
+                <label class="radio-container">Gradient
+                    <input type="radio" value="gradient" name="playground_link">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Weight
+                    <input type="radio" value="weight" name="playground_link" checked>
+                    <span class="checkmark"></span>
+                </label>
+                <div id="playground_legend"></div>
+            </div>
+            <div class="viz-column-4-8" id="playground_network">
+                <h3>2. Choose initialization method</h3>
+                <p>Select an initialization scheme for the neural network<sup class="footnote-index footnote-index1">1</sup>.</p>
+                <label class="radio-container">Zero
+                    <input type="radio" value=0  name="playground_init">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Too small
+                    <input type="radio" value=0.01 name="playground_init">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Appropriate
+                    <input type="radio" value=1 name="playground_init" checked>
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Too large
+                    <input type="radio" value=100 name="playground_init">
+                    <span class="checkmark"></span>
+                </label>
+               <div id="playground_network"></div>
+            </div>
+            <div class="viz-column-2-8 " id="playground_output">
+                <h3>3. Observe output during training</h3>
+                <p>Train the network using the following buttons.</p>
+                <div class="container">
+                    <button class="button-transport" id="playground_reset"><img src="img/reset.png"></button>
+                    <button class="button-transport inactive" id="playground_start"><img src="img/play.png"></button>
+                    <button class="button-transport hidden" id="playground_stop"><img src="img/pause.png"></button>
+                    <button class="button-transport inactive" id="playground_step"><img src="img/fastforward.png"></button>
+                </div>
+                <div id="playground_loss"></div>
+            	<div id="playground_pred"></div>
+            </div>
+            <!-- <div class="viz-column-2-8 ">
+                <div id="playground_dataset"></div>
+                <p>Select whether to visualize weights or gradients.</p>
                 <label class="radio-container">Gradients
                     <input type="radio" value="gradient" name="playground_link">
                     <span class="checkmark"></span>
@@ -83,49 +131,15 @@
                     <input type="radio" value="weight" name="playground_link" checked>
                     <span class="checkmark"></span>
                 </label>
-            </div>
-            <div class="viz-column-4-8 ">
-                <h3>2. Neural Network</h3>
-                <p>Select an initialization scheme for the neural network<sup class="footnote-index footnote-index1">1</sup>.</p>
-                <label class="radio-container">Zero
-                    <input type="radio" value=0  name="playground_init">
-                    <span class="checkmark"></span>
-                </label>
-                <label class="radio-container">Too Small
-                    <input type="radio" value=0.01 name="playground_init">
-                    <span class="checkmark"></span>
-                </label>
-                <label class="radio-container">Appropriate
-                    <input type="radio" value=1 name="playground_init" checked>
-                    <span class="checkmark"></span>
-                </label>
-                <label class="radio-container">Too Large
-                    <input type="radio" value=100 name="playground_init">
-                    <span class="checkmark"></span>
-                </label>
-               
-            </div>
-            <div class="viz-column-2-8 ">
-                <h3>3. Output Classification</h3>
-                <p>Train the network using the following buttons.</p>
-                <div>
-                    <button class="button-transport" id="playground_reset"><img src="img/reset.png"></button>
-                    <button class="button-transport inactive" id="playground_start"><img src="img/play.png"></button>
-                    <button class="button-transport hidden" id="playground_stop"><img src="img/pause.png"></button>
-                    <button class="button-transport inactive" id="playground_step"><img src="img/fastforward.png"></button>
-                </div>
-            </div>
-            <div class="viz-column-2-8 ">
-                <div id="playground_dataset"></div>
                 <div id="playground_legend"></div>
             </div>
             <div class="viz-column-4-8 ">
                  <div id="playground_network"></div>
             </div>
             <div class="viz-column-2-8 ">
-                 <div id="playground_loss"></div>
-                <div id="playground_pred"></div>
-            </div>
+                <div id="playground_loss"></div>
+            	<div id="playground_pred"></div>
+            </div> -->
         </div>
         <div class="container">
             <div class="column-6-8 column-align">
@@ -265,7 +279,7 @@
                     Error: <span id="accuracy">0/100</span>
                     </label>
                     <label>
-                    Loss: <span id="cost">0.00</span>
+                    Cost: <span id="cost">0.00</span>
                     </label>
                 </div>
             </div>

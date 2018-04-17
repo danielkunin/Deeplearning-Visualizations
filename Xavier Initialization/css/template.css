@@ -427,8 +427,8 @@ ol.reference li{
 .radio-container {
     display: inline-block;
     position: relative;
-    padding-left: 2.2em;
-    padding-right: 2.5em;
+    padding-left: 2em;
+    padding-right: 2.2em;
     margin-top: 0.6em;
     margin-bottom: 0.6em;
     cursor: pointer;

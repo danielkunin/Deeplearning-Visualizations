@@ -1,27 +1,13 @@
 
 
-#example_2D {
-	white-space: nowrap;
-	width: 1000px;
-	margin: auto;
-}
-#input {
-	white-space: initial;
+#playground_input {
 	width: 250px;
-	vertical-align: top;
-	display: inline-block;
 }
-#network {
-	white-space: initial;
-	width: 500px;
-	vertical-align: top;
-	display: inline-block;
+#playground_network {
+	width: 450px;
 }
-#output {
-	white-space: initial;
-	width: 250px;
-	vertical-align: top;
-	display: inline-block;
+#playground_output {
+	width: 300px;
 }
 
 
