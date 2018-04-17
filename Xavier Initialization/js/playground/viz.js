@@ -175,7 +175,7 @@ function playground_network(layers) {
   // setup dimensions
   var margin = {top: 0, right: 25, bottom: 0, left: 25},
       width = 500 - margin.left - margin.right,
-      height = 400 - margin.top - margin.bottom;
+      height = 420 - margin.top - margin.bottom;
 
   // add svg
   var svg = d3.select("#playground_network").append("svg")

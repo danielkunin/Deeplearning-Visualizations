@@ -63,7 +63,7 @@
                     </ol>
                 </ol>
                 <p>
-                Given a new image, you can then use your model (= architecture + learned parameters) to predict if there’s a cat.
+                Given a new image, you can then use your model (architecture + learned parameters) to predict if there’s a cat.
                 </p>
                 <p>
                 It is critical to initialize the parameters with the right method. To illustrate this argument, let’s consider the 3-layer neural network below. Initialize this network with different initialization methods and observe the impact on the learning.
@@ -89,7 +89,7 @@
             </div>
             <div class="viz-column-4-8" id="playground_network">
                 <h3>2. Choose initialization method</h3>
-                <p>Select an initialization scheme for the neural network<sup class="footnote-index footnote-index1">1</sup>.</p>
+                <p>Select an initialization method for the neural network<sup class="footnote-index footnote-index1">1</sup>.</p>
                 <label class="radio-container">Zero
                     <input type="radio" value=0  name="playground_init">
                     <span class="checkmark"></span>
@@ -120,41 +120,21 @@
                 <div id="playground_loss"></div>
             	<div id="playground_pred"></div>
             </div>
-            <!-- <div class="viz-column-2-8 ">
-                <div id="playground_dataset"></div>
-                <p>Select whether to visualize weights or gradients.</p>
-                <label class="radio-container">Gradients
-                    <input type="radio" value="gradient" name="playground_link">
-                    <span class="checkmark"></span>
-                </label>
-                <label class="radio-container">Weights
-                    <input type="radio" value="weight" name="playground_link" checked>
-                    <span class="checkmark"></span>
-                </label>
-                <div id="playground_legend"></div>
-            </div>
-            <div class="viz-column-4-8 ">
-                 <div id="playground_network"></div>
-            </div>
-            <div class="viz-column-2-8 ">
-                <div id="playground_loss"></div>
-            	<div id="playground_pred"></div>
-            </div> -->
         </div>
         <div class="container">
             <div class="column-6-8 column-align">
-                <p>What do you notice about the loss plot when the initialization scheme is "too small" or "too large"?  What do you notice about the gradients and weights when the initialization scheme is "zero"?</p>
+                <p>What do you notice about the loss plot when the initialization method is "too small" or "too large"?  What do you notice about the gradients and weights when the initialization method is "zero"?  What do you notice about the decision boundary when the initialization method is "appropriate"?</p>
             </div>
             <div class="column-2-8 column-align">
-                <p class="caption">This visualization is based on Daniel Smilkov's and Shan Carter's Neural Network <a href="https://playground.tensorflow.org/">playground</a>.</p>
+                <p class="caption">This visualization is inspired by Daniel Smilkov's and Shan Carter's Neural Network <a href="https://playground.tensorflow.org/">playground</a>.</p>
             </div>
             <div class="column-8-8 divider-bottom"></div>
             <div class="column-6-8 index2-target">
                 <h3>II&emsp; What are the issues with a bad initialization?</h3>
-                <p>An inappropriate initialization leads to:</p>
+                <p>An inappropriate initialization method leads to:</p>
                 <ol>
-                    <li>Vanishing gradient -> parameters values get stuck</li>
-                    <li>Exploding gradients -> parameters values diverge</li>
+                    <li>Vanishing gradient - parameters values get stuck</li>
+                    <li>Exploding gradients - parameters values diverge</li>
                 </ol>
                 <p>In both cases, parameters do not converge to “good” values. Let’s illustrate this.</p>
                 <p>Consider this 9-layer neural network just after it was initialized.</p>
@@ -181,7 +161,7 @@
             </div>
             <div class="column-2-8 column-align">
                 <img src="img/exploding.png">
-                <p class="caption">An example of the exploding gradient problem on the contour plot of the loss.</p>
+                <p class="caption">An illustration of the exploding gradient problem on the contour plot of the loss.</p>
             </div>
             <div class="column-4-8 no-margin">
                 <h3>Vanishing Gradient</h3>
@@ -196,7 +176,7 @@
             </div>
             <div class="column-2-8 column-align">
                 <img src="img/vanishing.png">
-                <p class="caption">An example of the vanishing gradient problem on the contour plot of the loss.</p>
+                <p class="caption">An illustration of the vanishing gradient problem on the contour plot of the loss.</p>
             </div>
             <div class="column-6-8 divider-bottom">
                 <p>All in all, initializing your weights with inappropriate values will lead to divergence or slow-down in the training.</p>
@@ -301,22 +281,15 @@
                 <p class="caption">For more information check out<a href="http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf?hc_location=ufi"> Glorot et al. (2010) paper which introduced Xavier initialization.</a></p>
                 
             </div>
-            <div class="column-6-8 index4-target">
+            <div class="column-6-8 index4-target column-align">
                 <h3>IV&emsp;Derivation of Xavier initialization with Tanh</h3>
                 <p>In this section, we will go over the math step by step. I think it sometimes help to understand the proof to grasp the concept, but you can get most of the intuition without the math.</p>
-                <p>Let’s work on the layer <script>document.write(katex.renderToString('l'))</script> described in “How do we fix this issue” and assume the activation functions <script>document.write(katex.renderToString('g^{[l-1]}'))</script> and <script>document.write(katex.renderToString('g^{[l]}'))</script> are <script>document.write(katex.renderToString('tanh'))</script>:</p>
-            </div>
-            <div class="column-6-8">
-                <img src="img/tanh.png">
-            </div>
-            <div class="column-6-8">
-                <p>Important properties of <script>document.write(katex.renderToString('tanh'))</script> are its parity (<script>document.write(katex.renderToString('tanh(-x) = -tanh(x)'))</script>) and its linearity around 0 (<script>document.write(katex.renderToString("tanh'(0) = 1"))</script>).</p>
-                <p>Let’s work on the right-hand side of <script>document.write(katex.renderToString("Var(a^{[l-1]}) = Var(a^{[l]})"))</script>. Using the fact that <script>document.write(katex.renderToString("g^{[l]} = tanh"))</script> and <script>document.write(katex.renderToString("tanh(z^{[l]})\\approx z^{[l]}"))</script><sup class="footnote-index footnote-index5">5</sup>. We can simplify the right-hand side to:</p>
+                <p>Let’s work on the layer <script>document.write(katex.renderToString('l'))</script> described in “How do we fix this issue” and assume the activation functions <script>document.write(katex.renderToString('g^{[l-1]}'))</script> and <script>document.write(katex.renderToString('g^{[l]}'))</script> are <script>document.write(katex.renderToString('tanh'))</script>. Using the fact that <script>document.write(katex.renderToString("g^{[l]} = tanh"))</script> and <script>document.write(katex.renderToString("tanh(z^{[l]})\\approx z^{[l]}"))</script><sup class="footnote-index footnote-index5">5</sup>, we can express <script>document.write(katex.renderToString("Var(a^{[l]})"))</script> as the following:</p>
                 <script>
                     var render = katex.renderToString("Var(a^{[l]}) = Var(tanh(z^{[l]})) = Var(z^{[l]})", {displayMode: true});
                     document.writeln(render);
                 </script>
-                <p>Moreover, <script>document.write(katex.renderToString("z^{[l]} = W^{[l]}a^{[l-1]} + b^{[l]} = vector(z_1^{[l]},z_2^{[l]},\\dots,z_{n^{[l]}}^{[l]})"))</script> where <script>document.write(katex.renderToString("z_k^{[l]} = \\sum_{j=1}^{n^{[l-1]}}w_{kj}^{[l]}a_j^{[l-1]} + b_k^{[l]}"))</script>.  For simplicity, let’s assume that <script>document.write(katex.renderToString("b^{[l]} = 0"))</script> (it will end up being true given the choice of initialization we will choose).  Thus, looking element-wise at the previous equation now gives:</p>
+                <p>Moreover, <script>document.write(katex.renderToString("z^{[l]} = W^{[l]}a^{[l-1]} + b^{[l]} = vector(z_1^{[l]},z_2^{[l]},\\dots,z_{n^{[l]}}^{[l]})"))</script> where <script>document.write(katex.renderToString("z_k^{[l]} = \\sum_{j=1}^{n^{[l-1]}}w_{kj}^{[l]}a_j^{[l-1]} + b_k^{[l]}"))</script>.  For simplicity, let’s assume that <script>document.write(katex.renderToString("b^{[l]} = 0"))</script> (it will end up being true given the choice of initialization we will choose).  Thus, looking element-wise at the previous equation <script>document.write(katex.renderToString("Var(a^{[l-1]}) = Var(a^{[l]})"))</script> now gives:</p>
                 <script>
                     var render = katex.renderToString("Var(a_k^{[l]}) = Var(z_k^{[l]}) = Var(\\sum_{j=1}^{n^{[l-1]}}w_{kj}^{[l]}a_j^{[l-1]})", {displayMode: true});
                     document.writeln(render);
@@ -367,6 +340,10 @@
                     var render = katex.renderToString("Var(a^{[l]}) = Var(z^{[l]}) = n^{[l-1]}Var(W^{[l]})Var(a^{[l-1]})", {displayMode: true});
                     document.writeln(render);
                 </script>
+            </div>
+            <div class="column-2-8 column-align">
+                <img src="img/tanh.png">
+                <p class="caption">Important properties of <script>document.write(katex.renderToString('tanh'))</script> are its parity (<script>document.write(katex.renderToString('tanh(-x)'))</script> = <script>document.write(katex.renderToString('-tanh(x)'))</script>) and its linearity around 0 (<script>document.write(katex.renderToString("tanh'(0)"))</script> = 1).</p>
             </div>
         </div>
     </div>
