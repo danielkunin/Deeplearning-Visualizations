@@ -122,27 +122,17 @@
             </div>
         </div>
         <div class="container">
-            <div class="column-6-8 column-align">
-                <p>What do you notice about the loss plot when the initialization method is "too small" or "too large"?  What do you notice about the gradients and weights when the initialization method is "zero"?  What do you notice about the decision boundary when the initialization method is "appropriate"?</p>
-                <p>
-
-                What do you notice about the gradients and weights when the initialization method is "zero"?
-                <ul>
-                    Initializing all the weights with "zeros" leads the weights to learn the same features during training. Intuitively, consider the neural network in the margin. Initialize all the weights and biases with zeros. Forward propagate an input <script>document.write(katex.renderToString('(x_1,x_2)'))</script> in the network. The output will be <script>document.write(katex.renderToString('\\hat{y} = \\sigma (0) = 0.5'))</script>. Compute the loss function that compares the output prediction with the ground truth. Noticeably, the influence of the neurons of the first hidden layer on the loss is identical. They both process <script>document.write(katex.renderToString('(x_1,x_2)'))</script> and compute the same activation value. The backpropagated gradients will thus be the same for the weights of these two neurons, and they will be updated likewise during gradient descent.
-                </ul>
-
-                What do you notice about the loss plot when you initialize your weights with "too small" or "too large" values?
-
-                <ul>
-                    Initializing all the weights with (i) "too small" or (ii) "too large" values leads respectively to (i) slow learning or (ii) divergence. An "appropriate" initialization is required to have efficient training. Let's see this into more details in the next part.
-                </ul>
-
-                </p>
+            <div class="column-6-8 divider-bottom column-align">
+            	<p> What do you notice about the gradients and weights when the initialization method is "zero"?</p>
+                <p class="inline-caption">Initializing all the weights with "zeros" leads the weights to learn the same features during training.</p>
+                <p>What do you notice about the loss plot when you initialize your weights with "too small" or "too large" values?</p>
+                <p class="inline-caption">Initializing the weights with (I) "too small" or (II) "too large" values leads respectively to (I) slow learning or (II) divergence.</p>
+                <p>An "appropriate" initialization is required to have efficient training. We will investigate this further in the next section.</p>
             </div>
             <div class="column-2-8 column-align">
-                <p class="caption">This visualization is inspired by Daniel Smilkov's and Shan Carter's Neural Network <a href="https://playground.tensorflow.org/">playground</a>.</p>
+                <img src="img/nn_margin.png">
+                <p class="caption">Consider the neural network above. Initialize all the weights and biases with zeros. Forward propagate an input <script>document.write(katex.renderToString('(x_1,x_2)'))</script> in the network. The output will be <script>document.write(katex.renderToString('\\hat{y} = \\sigma (0) = 0.5'))</script>. Compute the loss function that compares the output prediction with the ground truth. Noticeably, the influence of the neurons of the first hidden layer on the loss is identical. They both process <script>document.write(katex.renderToString('(x_1,x_2)'))</script> and compute the same activation value. The backpropagated gradients will thus be the same for the weights of these two neurons, and they will be updated likewise during gradient descent.</p>
             </div>
-            <div class="column-8-8 divider-bottom"></div>
             <div class="column-6-8 index2-target">
 
                 <h3>II&emsp; What are the issues with a bad initialization?</h3>
@@ -196,7 +186,7 @@
             <div class="column-6-8 divider-bottom">
                 <p>All in all, initializing your weights with inappropriate values will lead to divergence or slow-down in the training.</p>
             </div>
-            <div class="column-6-8 index3-target">
+            <div class="column-6-8 index3-target column-align">
                 <h3>III&emsp;What is an "appropriate" initialization?</h3>
                 <p>We will stick to this rule of thumb:</p>
                 <p class="inline-caption">The variance should stay the same across every layer to prevent the signal from vanishing or exploding.</p>
@@ -210,6 +200,13 @@
                     var render = katex.renderToString("Var(a^{[l-1]}) = Var(a^{[l]})", {displayMode: true});
                     document.writeln(render);
                 </script>
+            </div>
+            <div class="column-2-8 column-align">
+            	<p class="caption">Variance is a measure of how much a data source is spread about its mean.</p>
+                <img src="img/layerl.png">
+                <p class="caption">The goal is to keep the input variance <script>document.write(katex.renderToString('Var(a^{[l-1]})'))</script> equal to the output variance <script>document.write(katex.renderToString('Var(a^{[l]})'))</script> for every layer <script>document.write(katex.renderToString('l'))</script>.</p>
+            </div>
+            <div class="column-6-8 column-align">
                 <p>Maintaining the value of the variance of the input and the output of every layer guarantees no exploding/vanishing gradient. The recommended initialization is Xavier initialization (or one of its derived methods), for every layer <script>document.write(katex.renderToString('l'))</script>: 
                 <script>
                     var render = katex.renderToString("\\begin{aligned}W^{[l]} &\\sim \\mathcal{N}(\\mu=0,\\sigma^2 = \\frac{1}{n^{[l-1]}})\\cr b^{[l]} &\\sim 0\\end{aligned}", {displayMode: true});
@@ -218,6 +215,10 @@
                 In a sentence, it means that all the weights of layer <script>document.write(katex.renderToString('l'))</script> are picked randomly from a normal distribution with mean <script>document.write(katex.renderToString('\\mu = 0'))</script> and variance <script>document.write(katex.renderToString('\\sigma^2 = \\frac{1}{n^{[l-1]}}'))</script>. Biases are initialized with zeros.
                 <br> <br>
                 The visualization below illustrates the impact of the weights’ distribution on each layer’s activations’ distribution for a 5-layer full-connected neural network (presented below).</p>
+            </div>
+            <div class="column-2-8 column-align">
+                <img src="img/normal.png">
+                <p class="caption">This is the representation of normal distribution a normal distribution of mean 0 and variance 1. There is 40% probability that a weight picked randomly from this distribution is going to be less than ...</p>
             </div>
         </div>
         <div class="full-container" id="mnist">
@@ -231,7 +232,7 @@
                 </div>
             </div>
             <div class="viz-column-4-8">
-                <h3>2. Select an initialization method.</h3>
+                <h3>2. Select an initialization method</h3>
                 <p>Among the below distributions, select the one to use to initialize your parameters. <sup class="footnote-index footnote-index3">3</sup>.</p>
                 <label class="radio-container">Zero
                     <input type="radio" value="zero" name="mnist_init">
@@ -252,7 +253,7 @@
 
             </div>
             <div class="viz-column-2-8">
-                <h3>3. Train the network and observe.</h3>
+                <h3>3. Train the network and observe</h3>
                 <p>The grid below refers to the input images, <span class="correct bold">Blue</span> squares represent correctly classified images.  <span class="incorrect bold">Red</span> squares represent incorrectly classified images.</p>
                 <div>
                     <button class="button-transport" id="mnist_reset"><img src="img/reset.png"></button>
@@ -262,7 +263,7 @@
                 </div>
             </div>
             <div class="viz-column-2-8 ">
-                    <p>Input Layer</p>
+                    <p>Input Batch</p>
                     <div id="mnist_input"></div>
                     <label class="viz">
                     Batch: <span id="batch">0</span> </label>
@@ -275,10 +276,10 @@
             </div>
             <div class="viz-column-2-8 ">
                 <div>
-                    <p>Output Layer</p>
+                    <p>Output Predictions</p>
                     <div id="mnist_output"></div>
                     <label class="viz">
-                    Error: <span id="accuracy">0/100</span>
+                    Misclassified: <span id="accuracy">0/100</span>
                     </label>
                     <label>
                     Cost: <span id="cost">0.00</span>
@@ -292,10 +293,10 @@
         </div>
         <div class="container">
             <div class="column-6-8 column-align">
-                You can find the theory behind this visualization in Glorot et al. (2010). The next section will teach you the proof of Xavier initialization and you will understand more precisely why it is an appropriate initialization to use.
+                <p>The next section will teach you the proof of Xavier initialization and you will understand more precisely why it is an appropriate initialization to use.</p>
             </div>
             <div class="column-2-8 column-align">
-                <p class="caption">For more information check out<a href="http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf?hc_location=ufi"> Glorot et al. (2010) paper which introduced Xavier initialization.</a></p>
+                <p class="caption">You can find the theory behind this visualization in <a href="http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf?hc_location=ufi"> Glorot et al. (2010)</a>.</p>
                 
             </div>
             <div class="column-6-8 index4-target column-align">
@@ -324,12 +325,20 @@
                     var render = katex.renderToString("Var(a_k^{[l]}) = Var(z_k^{[l]}) = Var(\\sum_{j=1}^{n^{[l-1]}}w_{kj}^{[l]}a_j^{[l-1]})", {displayMode: true});
                     document.writeln(render);
                 </script>
+            </div>
+            <div class="column-2-8 column-align">
+                <img src="img/layer_tanh.png">
+                <p class="caption">Important properties of <script>document.write(katex.renderToString('tanh'))</script> are its parity (<script>document.write(katex.renderToString('tanh(-x)'))</script> = <script>document.write(katex.renderToString('-tanh(x)'))</script>) and its linearity around 0 (<script>document.write(katex.renderToString("tanh'(0)"))</script> = 1).</p>
+                <img src="img/tanh.png">
+                <p class="caption">Variance of a vector (under our assumptions) is equal to the variance of any of its entries (because we initialized all the entries with the same distribution)</p>
+            </div>
+            <div class="column-6-8 column-align">
                 <p>A common “math trick” at this point is to extract the summation outside the variance. To do this we must make the following three assumptions<sup class="footnote-index footnote-index6">6</sup>:</p>
-                <ol>
-                    <li>Weights are independent and identically distributed</li>
-                    <li>Inputs are independent and identically distributed</li>
-                    <li>Weights and inputs are mutually independent</li>
-                </ol>
+                <p class="inline-caption">
+                    1. Weights are independent and identically distributed<br>
+                    2. Inputs are independent and identically distributed<br>
+                    3. Weights and inputs are mutually independent
+                </p>
                 <p>Thus, now we have:</p>
                 <script>
                     var render = katex.renderToString("Var(a_k^{[l]}) = Var(z_k^{[l]}) = Var(\\sum_{j=1}^{n^{[l-1]}}w_{kj}^{[l]}a_j^{[l-1]}) = \\sum_{j=1}^{n^{[l-1]}}Var(w_{kj}^{[l]}a_j^{[l-1]})", {displayMode: true});
@@ -372,8 +381,7 @@
                 </script>
             </div>
             <div class="column-2-8 column-align">
-                <img src="img/tanh.png">
-                <p class="caption">Important properties of <script>document.write(katex.renderToString('tanh'))</script> are its parity (<script>document.write(katex.renderToString('tanh(-x)'))</script> = <script>document.write(katex.renderToString('-tanh(x)'))</script>) and its linearity around 0 (<script>document.write(katex.renderToString("tanh'(0)"))</script> = 1).</p>
+                <p class="caption">Inputs are not i.i.d in pictures because it is more likely that a green pixel is surrounded by green pixels. Same with time-series data. If it rains today, it is more likely that it rains tomorrow. Weights are i.i.d early in the training but later, they depend on each other more.</p>
             </div>
         </div>
     </div>
@@ -385,7 +393,7 @@
             <div class="column-6-8 column-align">
                 <ol class="reference ">
                     <li>Kian Katanforoosh - Content </li>
-                    <li>Daniel Kunin - Visualizations (created by using <a href="https://d3js.org/">D3.js</a> and <a href="https://js.tensorflow.org/">TensorFlow.js</a>)</li>
+                    <li>Daniel Kunin - Visualizations (created using <a href="https://d3js.org/">D3.js</a> and <a href="https://js.tensorflow.org/">TensorFlow.js</a>)</li>
                 </ol>
             </div>
             <div class="column-8-8 divider-bottom"></div>
@@ -394,7 +402,7 @@
             </div>
             <div class="column-6-8 column-align">
                 <ol class="reference">
-                    <li>The layout and structure of the article was designed by Jingru Guo.</li>
+                    <li>The layout and structure of the article was designed by <a href="https://www.jingru-guo.com/">Jingru Guo</a>.</li>
                     <li>The first visualization was inspired by Daniel Smilkov's and Shan Carter's Neural Network <a href="https://playground.tensorflow.org/">playground</a>.</li>
                     <li>The second visualization adapted code from Andrej Karpathy's <a href="https://cs.stanford.edu/~karpathy/mnistjs/">visualization</a> of MNIST.</li>
                 </ol>
