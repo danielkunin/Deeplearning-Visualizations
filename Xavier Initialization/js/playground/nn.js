@@ -147,7 +147,7 @@ function PLAYGROUND(layers) {
 		var variance = d3.select('input[name="playground_init"]:checked').property("value"),
 			params = {},
 			L = layers.length - 1,
-			scalar = [0, 0.001, 1, 1000];
+			scalar = [0, 0.001, 1, 100];
 
 		for (var l = 1; l <= L; l++) {
 			params['W' + l] = tf.tidy(() => { return tf.randomNormal([layers[l], layers[l-1]]).mul(tf.scalar( variance / layers[l-1]).sqrt()); });

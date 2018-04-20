@@ -98,20 +98,6 @@ text.label {
 }
 
 
-#slider label {
-    position: absolute;
-    width: 20px;
-    margin-left: -15px;
-    text-align: center;
-    margin-top: 20px;
-    font-size: 10px;
-}
-
-#slider {
-    width: 75%;
-    margin: 20px auto;
-}
-
 /* Output */
 
 canvas {
