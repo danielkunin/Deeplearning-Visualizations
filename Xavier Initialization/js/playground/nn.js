@@ -11,11 +11,11 @@ function PLAYGROUND(layers) {
 
 		// get data
 		var XY = get_data(data),
-			X = dl.tensor(XY[0]).transpose(),
-			Y = dl.tensor(XY[1]).transpose();
+			X = tf.tensor(XY[0]).transpose(),
+			Y = tf.tensor(XY[1]).transpose();
 
 		// initialize
-		var params = dl.tidy(() => { return init_params(); });
+		var params = tf.tidy(() => { return init_params(); });
 
 		
 		// iteration
@@ -23,9 +23,9 @@ function PLAYGROUND(layers) {
 			// Increment epoch
 			epoch += 1;
 			// call epoch
-			params = dl.tidy(() => { return one_epoch(X, Y, data, params, alpha, costs, network); });
+			params = tf.tidy(() => { return one_epoch(X, Y, data, params, alpha, costs, network); });
 			// Update decision boundary
-			dl.tidy(() => { return boundary(params, data, pred); });
+			tf.tidy(() => { return boundary(params, data, pred); });
 			// Update Costs
 			loss(costs)
 			// check stop
@@ -59,7 +59,7 @@ function PLAYGROUND(layers) {
 
 		function reset() {
 			stop();
-			params = dl.tidy(() => { return init_params(); });
+			params = tf.tidy(() => { return init_params(); });
 			costs = [],
 			epoch = 0,
 			training = true;
@@ -87,16 +87,16 @@ function PLAYGROUND(layers) {
 
 	function one_epoch(X, Y, data, params, alpha, costs, network_update) {
 		// Forward Propogration
-		var cache = dl.tidy(() => { return forward_propagation(X, params); });
+		var cache = tf.tidy(() => { return forward_propagation(X, params); });
 		// Backward Propogration
-		var grads = dl.tidy(() => { return backward_propagation(X, Y, cache); });
+		var grads = tf.tidy(() => { return backward_propagation(X, Y, cache); });
 		// Update Parameters
-		var params = dl.tidy(() => { return update_parameters(params, grads, alpha); });
+		var params = tf.tidy(() => { return update_parameters(params, grads, alpha); });
 		// Compute cost
-		costs.push(dl.tidy(() => { return compute_loss(cache[9], Y); }));
+		costs.push(tf.tidy(() => { return compute_loss(cache[8], Y); }));
 		// Update network weights or gradients
 		var style = d3.select('input[name="playground_link"]:checked').property("value");
-		var w = dl.tidy(() => { return get_weights(params, grads, style); });
+		var w = tf.tidy(() => { return get_weights(params, grads, style); });
 		network_update(w, style);
 		// Return parameters
 		return params;
@@ -137,7 +137,7 @@ function PLAYGROUND(layers) {
 				grid.push([j,i]);
 			}
 		}
-		grid = dl.tensor(grid).transpose();
+		grid = tf.tensor(grid).transpose();
 		cache = forward_propagation(grid, params);
 		output_update(data, cache[9].dataSync());
 	}
@@ -150,8 +150,8 @@ function PLAYGROUND(layers) {
 			scalar = [0, 0.001, 1, 1000];
 
 		for (var l = 1; l <= L; l++) {
-			params['W' + l] = dl.tidy(() => { return dl.randomNormal([layers[l], layers[l-1]]).mul(dl.scalar( variance / layers[l-1]).sqrt()); });
-			params['b' + l] = dl.zeros([layers[l], 1]);
+			params['W' + l] = tf.tidy(() => { return tf.randomNormal([layers[l], layers[l-1]]).mul(tf.scalar( variance / layers[l-1]).sqrt()); });
+			params['b' + l] = tf.zeros([layers[l], 1]);
 		}
 
 		return params;
@@ -169,12 +169,12 @@ function PLAYGROUND(layers) {
 			b3 = params["b3"];
 
 		// LINEAR -> RELU -> LINEAR -> RELU -> LINEAR -> SIGMOID
-		var z1 = dl.matMul(W1, X).add(b1),
-			a1 = dl.relu(z1),
-			z2 = dl.matMul(W2, a1).add(b2),
-			a2 = dl.relu(z2),
-			z3 = dl.matMul(W3, a2).add(b3),
-			a3 = dl.sigmoid(z3);
+		var z1 = tf.matMul(W1, X).add(b1),
+			a1 = tf.relu(z1),
+			z2 = tf.matMul(W2, a1).add(b2),
+			a2 = tf.relu(z2),
+			z3 = tf.matMul(W3, a2).add(b3),
+			a3 = tf.sigmoid(z3);
 
 		return [z1, a1, W1, b1, z2, a2, W2, b2, z3, a3, W3, b3];
 	}
@@ -195,19 +195,19 @@ function PLAYGROUND(layers) {
 			W3 = cache[10], 
 			b3 = cache[11];
 
-		var dz3 = dl.tidy(() => { return a3.sub(Y).mul(dl.scalar(1./m)); }),
-			dW3 = dl.matMul(dz3, a2.transpose()),
-			db3 = dl.sum(dz3, 1, true);
+		var dz3 = tf.tidy(() => { return a3.sub(Y).mul(tf.scalar(1./m)); }),
+			dW3 = tf.matMul(dz3, a2.transpose()),
+			db3 = tf.sum(dz3, 1, true);
 
-		var da2 = dl.matMul(W3.transpose(), dz3),
-			dz2 = dl.tidy(() => { return dl.mul(da2, a2.ceil().clipByValue(0, 1)); }),
-			dW2 = dl.matMul(dz2, a1.transpose()),
-			db2 = dl.sum(dz2, 1, true);
+		var da2 = tf.matMul(W3.transpose(), dz3),
+			dz2 = tf.tidy(() => { return tf.mul(da2, a2.ceil().clipByValue(0, 1)); }),
+			dW2 = tf.matMul(dz2, a1.transpose()),
+			db2 = tf.sum(dz2, 1, true);
 
-		var da1 = dl.matMul(W2.transpose(), dz2),
-			dz1 = dl.tidy(() => { return dl.mul(da1, a1.ceil().clipByValue(0, 1)); }),
-			dW1 = dl.matMul(dz1, X.transpose()),
-			db1 = dl.sum(dz1, 1, true);
+		var da1 = tf.matMul(W2.transpose(), dz2),
+			dz1 = tf.tidy(() => { return tf.mul(da1, a1.ceil().clipByValue(0, 1)); }),
+			dW1 = tf.matMul(dz1, X.transpose()),
+			db1 = tf.sum(dz1, 1, true);
 
 		return {"dz3": dz3, "dW3": dW3, "db3": db3,
 				"da2": da2, "dz2": dz2, "dW2": dW2, "db2": db2,
@@ -221,8 +221,8 @@ function PLAYGROUND(layers) {
 
 		// Update rule for each parameter
 		for (var k = 0; k < L; k++) {
-		    params["W" + (k+1)] = dl.tidy(() => { return params["W" + (k+1)].sub(grads["dW" + (k+1)].mul(dl.scalar(learning_rate))); });
-		    params["b" + (k+1)] = dl.tidy(() => { return params["b" + (k+1)].sub(grads["db" + (k+1)].mul(dl.scalar(learning_rate))); });
+		    params["W" + (k+1)] = tf.tidy(() => { return params["W" + (k+1)].sub(grads["dW" + (k+1)].mul(tf.scalar(learning_rate))); });
+		    params["b" + (k+1)] = tf.tidy(() => { return params["b" + (k+1)].sub(grads["db" + (k+1)].mul(tf.scalar(learning_rate))); });
 		}
 
 		return params
@@ -230,15 +230,10 @@ function PLAYGROUND(layers) {
 	}
 
 
-	function compute_loss(a3, Y) {
-		var m = Y.shape[1],
-			logprob = dl.tidy(() => { return dl.add(dl.mul(dl.log(a3).neg(),Y), dl.mul(dl.log(a3.neg().add(dl.scalar(1))).neg(), Y.neg().add(dl.scalar(1)))); }),
-			logprobs = logprob.dataSync();
-		var sum = 0;
-		for (var i = 0; i < logprobs.length; i++) {
-			sum += isNaN(logprobs[i]) ? 0 : logprobs[i];
-		}
-		return Math.min(10000, sum / m);
+	function compute_loss(z3, Y) {
+		var logprob = tf.add(tf.mul(Y,z3),tf.log(tf.sigmoid(z3.neg()))),
+			loss = tf.mul(logprob, tf.sign(logprob)).mean();
+		return loss.dataSync();
 	}
 
 	return {'train': train};

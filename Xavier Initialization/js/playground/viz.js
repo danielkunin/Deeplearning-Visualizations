@@ -356,13 +356,13 @@ function playground_loss() {
   // path function
   var line = d3.line()
     .x(function(d, i) { return x(i); })
-    .y(function(d) { return y(d); })
+    .y(function(d) { return isFinite(d) ? y(d) : y.range()[1]; })
     .curve(d3.curveBasis);
 
   // plot error curve
   function update(data) {
 
-    y.domain([0, d3.max(data)]);
+    y.domain([0, d3.max(data, function(d) { return isFinite(d) ? d : 0; })]);
     yGroup.call(d3.axisLeft(y).ticks(3, "s"));
 
     x.domain([0, data.length]);

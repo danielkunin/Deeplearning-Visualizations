@@ -3,9 +3,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="A visual introduction to probability and statistics.">
+    <meta name="description" content="Learn how to appropriately initialize parameters in your neural networks.">
     <meta name="author" content="--">
-    <title>Xavier Initialization</title>
+    <title>Network Initialization</title>
     <!-- Fonts -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Assistant:300,400,600,700" rel="stylesheet">
@@ -17,8 +17,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Load D3 -->
     <script src="https://d3js.org/d3.v5.min.js"></script>
-    <!-- Load Deeplearn -->
-    <script src="https://unpkg.com/deeplearn@latest"></script>
+    <!-- Load Tensorflow -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.9.0"> </script>
     <!-- Load Katex -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.css" integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>
@@ -33,7 +33,7 @@
         <div class="container ">
             <div class="column-6-8 column-align">
                 <h1 class="title">Initializing your neural networks</h1>
-                <h2>The lack of initialization techniques is one of the major reasons deep neural networks weren’t training properly in the past decades. Since then, new initializations schemes have been found to accelerate training. In this post, we will explain the methods to initialize the parameters of your neural network.</h2>
+                <h2>The lack of initialization techniques is one of the major reasons deep neural networks were not training properly in the past decades. Since then, new initializations schemes have been found to accelerate training. In this post, we will explain the methods to initialize the parameters of your neural network.</h2>
             </div>
             <div class="column-2-8 column-align">
                 <h3 class="tableOfContent">Table of content</h3>
@@ -50,7 +50,7 @@
         <div class="container index1-target">
             <div class="column-6-8">
                 <h3>I&emsp;The importance of an appropriate initialization</h3>
-                <p>A neural network model is defined by its <i>architecture</i> and its <i>parameters</i>. In order to build a cat classifier, you first fix an architecture (a neural network). Then, you learn the parameters using the training process:
+                <p>A neural network model is defined by its architecture and its parameters. For example, in order to build a binary classifier, <!-- In order to build a cat classifier, --> you first fix an architecture (a neural network). Then, you learn the parameters using the training process:
                 </p>
                 <ol>
                     <li>Initialize the parameters</li>
@@ -63,7 +63,7 @@
                     </ol>
                 </ol>
                 <p>
-                Given a new image, you can then use your model (architecture + learned parameters) to predict if there’s a cat.
+                Given a new data point <!-- image -->, you can then use your model (architecture + learned parameters) to predict its class. <!-- if there’s a cat. -->
                 </p>
                 <p>
                 It is critical to initialize the parameters with the right method. To illustrate this argument, let’s consider the 3-layer neural network below. Initialize this network with different initialization methods and observe the impact on the learning.
@@ -112,10 +112,10 @@
                 <h3>3. Observe the training</h3>
                 <p>Train the network using the following buttons.</p>
                 <div class="container">
-                    <button class="button-transport" id="playground_reset"><img src="img/reset.png"></button>
-                    <button class="button-transport inactive" id="playground_start"><img src="img/play.png"></button>
-                    <button class="button-transport hidden" id="playground_stop"><img src="img/pause.png"></button>
-                    <button class="button-transport inactive" id="playground_step"><img src="img/fastforward.png"></button>
+                    <button class="button-transport" id="playground_reset" title="reset"><img src="img/reset.png"></button>
+                    <button class="button-transport inactive" id="playground_start" title="start"><img src="img/play.png"></button>
+                    <button class="button-transport hidden" id="playground_stop" title="stop"><img src="img/pause.png"></button>
+                    <button class="button-transport inactive" id="playground_step" title="step"><img src="img/fastforward.png"></button>
                 </div>
                 <div id="playground_loss"></div>
             	<div id="playground_pred"></div>
@@ -131,7 +131,8 @@
             </div>
             <div class="column-2-8 column-align">
                 <img src="img/nn_margin.png">
-                <p class="caption">Consider the neural network above. Initialize all the weights and biases with zeros. Forward propagate an input <script>document.write(katex.renderToString('(x_1,x_2)'))</script> in the network. The output will be <script>document.write(katex.renderToString('\\hat{y} = \\sigma (0) = 0.5'))</script>. Compute the loss function that compares the output prediction with the ground truth. Noticeably, the influence of the neurons of the first hidden layer on the loss is identical. They both process <script>document.write(katex.renderToString('(x_1,x_2)'))</script> and compute the same activation value. The backpropagated gradients will thus be the same for the weights of these two neurons, and they will be updated likewise during gradient descent.</p>
+                <p class="caption">Any constant initialization scheme will perform very poorly. Consider the neural network above and assume we initialize all the biases to 0 and the weights with some constant <script>document.write(katex.renderToString('\\alpha'))</script>. If we forward propagate an input <script>document.write(katex.renderToString('(x_1,x_2)'))</script> in this network, the input to both hidden units will be <script>document.write(katex.renderToString('\\alpha(x_1 + x_2)'))</script>. Which, will lead to identical output activation values and gradients. Thus, throughout training both neurons will perfom identically, effectively collapsing the capacity of our network to learn.</p>
+                <!-- <p class="caption">Consider the neural network above. Initialize all the weights and biases with zeros. Forward propagate an input <script>document.write(katex.renderToString('(x_1,x_2)'))</script> in the network. The output will be <script>document.write(katex.renderToString('\\hat{y} = \\sigma (0) = 0.5'))</script>. Compute the loss function that compares the output prediction with the ground truth. Noticeably, the influence of the neurons of the first hidden layer on the loss is identical. They both process <script>document.write(katex.renderToString('(x_1,x_2)'))</script> and compute the same activation value. The backpropagated gradients will thus be the same for the weights of these two neurons, and they will be updated likewise during gradient descent.</p> -->
             </div>
             <div class="column-6-8 index2-target">
 
@@ -166,7 +167,7 @@
             </div>
             <div class="column-2-8 column-align">
                 <img src="img/exploding.png">
-                <p class="caption">An illustration of the exploding gradient problem on the contour plot of the loss. You want to end up next to the "+" (minimum of the loss) but your gradients are too big and the parameter updates make your loss oscillate around its minimum value ("+").</p>
+                <p class="caption">An illustration of the exploding gradient problem on the contour plot of the loss. The gradients are too big leading to oscilation of the loss around its mininum value (marked by "+").</p>
             </div>
             <div class="column-4-8 no-margin">
                 <h3>Case 2: "too small" initialization leads to Vanishing Gradients</h3>
@@ -181,7 +182,7 @@
             </div>
             <div class="column-2-8 column-align">
                 <img src="img/vanishing.png">
-                <p class="caption">An illustration of the vanishing gradient problem on the contour plot of the loss.</p>
+                <p class="caption">An illustration of the vanishing gradient problem on the contour plot of the loss. The gradients are too small leading to convergence of the loss before it has reached the mininum value (marked by "+").</p>
             </div>
             <div class="column-6-8 divider-bottom">
                 <p>All in all, initializing your weights with inappropriate values will lead to divergence or slow-down in the training.</p>
@@ -202,7 +203,7 @@
                 </script>
             </div>
             <div class="column-2-8 column-align">
-            	<p class="caption">Variance is a measure of how much a data source is spread about its mean.</p>
+            	<p class="caption"><a href="https://en.wikipedia.org/wiki/Variance">Variance</a> is a measure of how much a data source is spread about its mean. In this case our data source is the input or output values at a layer in our network.</p>
                 <img src="img/layerl.png">
                 <p class="caption">The goal is to keep the input variance <script>document.write(katex.renderToString('Var(a^{[l-1]})'))</script> equal to the output variance <script>document.write(katex.renderToString('Var(a^{[l]})'))</script> for every layer <script>document.write(katex.renderToString('l'))</script>.</p>
             </div>
@@ -218,7 +219,7 @@
             </div>
             <div class="column-2-8 column-align">
                 <img src="img/normal.png">
-                <p class="caption">This is the representation of normal distribution a normal distribution of mean 0 and variance 1. There is 40% probability that a weight picked randomly from this distribution is going to be less than ...</p>
+                <p class="caption">The <a href="https://en.wikipedia.org/wiki/Normal_distribution">normal</a> (or Gaussian) distribution is a very common parametric probability distribution. Above is a plot of its PDF.  Taller regions in this plot indicate a higher probability of a random sample from this region.</p>
             </div>
         </div>
         <div class="full-container" id="mnist">
@@ -254,7 +255,7 @@
             </div>
             <div class="viz-column-2-8">
                 <h3>3. Train the network and observe</h3>
-                <p>The grid below refers to the input images, <span class="correct bold">Blue</span> squares represent correctly classified images.  <span class="incorrect bold">Red</span> squares represent incorrectly classified images.</p>
+                <p>The grid below refers to the input images, <span class="correct bold">Blue</span> squares represent correctly classified images.  <span class="incorrect bold">Red</span> squares represent misclassified images.</p>
                 <div>
                     <button class="button-transport" id="mnist_reset"><img src="img/reset.png"></button>
                     <button class="button-transport inactive" id="mnist_start"><img src="img/play.png"></button>
@@ -328,17 +329,22 @@
             </div>
             <div class="column-2-8 column-align">
                 <img src="img/layer_tanh.png">
-                <p class="caption">Important properties of <script>document.write(katex.renderToString('tanh'))</script> are its parity (<script>document.write(katex.renderToString('tanh(-x)'))</script> = <script>document.write(katex.renderToString('-tanh(x)'))</script>) and its linearity around 0 (<script>document.write(katex.renderToString("tanh'(0)"))</script> = 1).</p>
-                <img src="img/tanh.png">
-                <p class="caption">Variance of a vector (under our assumptions) is equal to the variance of any of its entries (because we initialized all the entries with the same distribution)</p>
+                <p class="caption"><script>document.write(katex.renderToString('tanh'))</script>, or <a href="https://en.wikipedia.org/wiki/Hyperbolic_function#Hyperbolic_tangent">hyperbolic tangent</a>, is a non-linear function defined as:
+                <script>
+                    var render = katex.renderToString("tanh(x) = \\frac{1 - e^{-2x}}{1 + e^{-2x}}", {displayMode: true});
+                    document.writeln(render);
+                </script>
+                Important properties are its parity (<script>document.write(katex.renderToString('tanh(-x)'))</script> = <script>document.write(katex.renderToString('-tanh(x)'))</script>) and its linearity around 0 (<script>document.write(katex.renderToString("tanh'(0)"))</script> = 1).</p>
+                <!-- <img src="img/tanh.png"> -->
+                <p class="caption">Because all elements of our vector are independently and identically distributed, the variance of the vector is the same as the variance of any of its elements.</p>
             </div>
             <div class="column-6-8 column-align">
                 <p>A common “math trick” at this point is to extract the summation outside the variance. To do this we must make the following three assumptions<sup class="footnote-index footnote-index6">6</sup>:</p>
-                <p class="inline-caption">
-                    1. Weights are independent and identically distributed<br>
-                    2. Inputs are independent and identically distributed<br>
-                    3. Weights and inputs are mutually independent
-                </p>
+                <ol class="inline-caption">
+                    <li>Weights are independent and identically distributed</li>
+                    <li>Inputs are independent and identically distributed</li>
+                    <li>Weights and inputs are mutually independent</li>
+                </ol>
                 <p>Thus, now we have:</p>
                 <script>
                     var render = katex.renderToString("Var(a_k^{[l]}) = Var(z_k^{[l]}) = Var(\\sum_{j=1}^{n^{[l-1]}}w_{kj}^{[l]}a_j^{[l-1]}) = \\sum_{j=1}^{n^{[l-1]}}Var(w_{kj}^{[l]}a_j^{[l-1]})", {displayMode: true});
@@ -381,7 +387,10 @@
                 </script>
             </div>
             <div class="column-2-8 column-align">
-                <p class="caption">Inputs are not i.i.d in pictures because it is more likely that a green pixel is surrounded by green pixels. Same with time-series data. If it rains today, it is more likely that it rains tomorrow. Weights are i.i.d early in the training but later, they depend on each other more.</p>
+                <p class="caption">These assumptions are generally wrong but we use them for the theory and then validate them practically...</p>
+            </div>
+            <div class="column-6-8">
+                <p>Explain why this proof can be used by induction to show that an appropriate initialization is mandatory...</p>
             </div>
         </div>
     </div>
@@ -392,8 +401,8 @@
             </div>
             <div class="column-6-8 column-align">
                 <ol class="reference ">
-                    <li>Kian Katanforoosh - Content </li>
-                    <li>Daniel Kunin - Visualizations (created using <a href="https://d3js.org/">D3.js</a> and <a href="https://js.tensorflow.org/">TensorFlow.js</a>)</li>
+                    <li>Kian Katanforoosh - Written content. </li>
+                    <li>Daniel Kunin - Visualizations (created using <a href="https://d3js.org/">D3.js</a> and <a href="https://js.tensorflow.org/">TensorFlow.js</a>).</li>
                 </ol>
             </div>
             <div class="column-8-8 divider-bottom"></div>
@@ -415,7 +424,9 @@
                 <ol class="reference">
                     <li class="footnote-index1-target">All bias parameters are initialized to zero and weight parameters are drawn from a normal distribution with zero mean and selected variance.</li>
 
-                    <li class="footnote-index2-target">If <script>document.write(katex.renderToString("X"))</script> is a vector or a matrix, what does <script>document.write(katex.renderToString("Var(X)"))</script> concretely mean? Take this example, <script>document.write(katex.renderToString("X"))</script> is the input grayscale image of a neural network. This image comes from a distribution called “real world images”. If you select randomly 100,000 images from this distribution and each time, you collect the value of a random pixel <script>document.write(katex.renderToString("x_{ij}"))</script> in the middle of the image. What would the distribution of <script>document.write(katex.renderToString("x_{ij}"))</script> look like. Maybe something like this:<img src="img/normal.png">All in all, <script>document.write(katex.renderToString("Var(X)"))</script> means the variance of any entry of the matrix (or vector) <script>document.write(katex.renderToString("X"))</script> (it is fair to assume they’re all distributed identically.)</li>
+                    <li class="footnote-index2-target">If <script>document.write(katex.renderToString("X"))</script> is a vector or a matrix, what does <script>document.write(katex.renderToString("Var(X)"))</script> concretely mean? Take this example, <script>document.write(katex.renderToString("X"))</script> is the input grayscale image of a neural network. This image comes from a distribution called “real world images”. If you select randomly 100,000 images from this distribution and each time, you collect the value of a random pixel <script>document.write(katex.renderToString("x_{ij}"))</script> in the middle of the image. What would the distribution of <script>document.write(katex.renderToString("x_{ij}"))</script> look like. Maybe something like this:
+
+                    All in all, <script>document.write(katex.renderToString("Var(X)"))</script> means the variance of any entry of the matrix (or vector) <script>document.write(katex.renderToString("X"))</script> (it is fair to assume they’re all distributed identically.)</li>
 
                     <li class="footnote-index3-target">All bias parameters are initialized to zero and weight parameters are drawn from either "Zero" distribution (<script>document.write(katex.renderToString("w_{ij} = 0"))</script>), "Uniform" distribution (<script>document.write(katex.renderToString("w_{ij} \\sim U(\\frac{-1}{\\sqrt{n^{[l-1]}}},\\frac{1}{\\sqrt{n^{[l-1]}}})"))</script>), "Xavier" distribution (<script>document.write(katex.renderToString("w_{ij} \\sim N(0,\\frac{1}{\\sqrt{n^{[l-1]}}})"))</script>), or "Normal" distribution (<script>document.write(katex.renderToString("w_{ij} \\sim N(0,1)"))</script>).</li>
 
