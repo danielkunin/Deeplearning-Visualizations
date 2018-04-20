@@ -53,7 +53,24 @@ body {
 }
 
 
+
+
 /*grid*/
+
+.line-break-lg{
+  width: 100%;
+  height: 5em;
+}
+
+.line-break-md{
+  width: 100%;
+  height: 2em;
+}
+
+.line-break-sm{
+  width: 100%;
+  height: 1em;
+}
 
 .column-8-8,
 .column-6-8,

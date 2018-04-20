@@ -13,7 +13,7 @@
 }
 #mnist {
     white-space: initial;
-    width: 800px;
+    /*width: 800px;*/
     vertical-align: top;
     display: inline-block;
 }
