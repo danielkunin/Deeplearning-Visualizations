@@ -18,6 +18,11 @@ body {
   
 }
 
+.header-wrapper{
+  width: 80%;
+  margin: 0 auto;
+}
+
 .intro{
   padding-top:5em;
 }
@@ -77,7 +82,7 @@ body {
 .column-4-8,
 .column-3-8,
 .column-2-8 {
-    margin:2%;
+    margin:0% 2% 0% 2%;
 }
 
 .no-margin{
@@ -161,6 +166,20 @@ img{
     margin-bottom: 1.5em;
 }
 
+.full-container h3{
+  margin: 1em 0 0 0;
+}
+
+.sidenotehightlight{
+  cursor: pointer;
+}
+
+.sidenotehightlight:hover{
+  background-color: #8FDEFF;
+}
+
+
+
 
 
 
@@ -175,7 +194,7 @@ h2 {
 }
 
 h3{
-  margin: 0 0;
+  margin: 2em 0 0 0;
 }
 
 h5{
