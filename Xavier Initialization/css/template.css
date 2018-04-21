@@ -82,7 +82,8 @@ body {
 .column-4-8,
 .column-3-8,
 .column-2-8 {
-    margin:0% 2% 0% 2%;
+    margin:0% 1%;
+     padding:0 1%;
 }
 
 .no-margin{
@@ -174,12 +175,19 @@ img{
   cursor: pointer;
 }
 
+.sidenote-target{
+  border:2px solid rgba(143,222,255,0);
+}
+
 .sidenotehightlight:hover{
   background-color: #8FDEFF;
 }
 
 
+.sidenote-border{
+  border:2px solid rgba(143,222,255,1);
 
+}
 
 
 

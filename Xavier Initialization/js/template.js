@@ -10,6 +10,7 @@ $(window).load(function() {
 			target = $("."+target+"-target");
 		toSection($(target));
 	});
+	sideNoteHightlight();
 });
 
 
@@ -29,3 +30,35 @@ $.fn.inView = function() {
 	// check if any section of element in view
 	return eBottom > vTop && eTop < vBottom;
 };
+
+function sideNoteHightlight(){
+	$(".sidenotehightlight").mouseenter(function(){
+		var id = $(this).attr("id");
+		id = "#"+id+"-target";
+		console.log(id);
+		$(id).addClass("sidenote-border");
+
+		// $( "#book" ).animate({
+		//     opacity: 0.25,
+		//     left: "+=50",
+		//     height: "toggle"
+		// }, 5000, function() {
+		//     // Animation complete.
+		// });
+	})
+
+	$(".sidenotehightlight").mouseleave(function(){
+			var id = $(this).attr("id");
+		id = "#"+id+"-target";
+		console.log(id);
+		$(id).removeClass("sidenote-border");
+
+		// $( "#book" ).animate({
+		//     opacity: 0.25,
+		//     left: "+=50",
+		//     height: "toggle"
+		// }, 5000, function() {
+		//     // Animation complete.
+		// });
+	})
+}
