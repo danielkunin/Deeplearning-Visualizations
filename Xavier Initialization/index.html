@@ -79,18 +79,10 @@
                 <h3>1. Choose input dataset</h3>
                 <p>Select a training dataset.</p>
                 <div id="playground_dataset"></div>
-                <p>Select whether to visualize weights or gradients.</p>
-                <label class="radio-container">Gradient
-                    <input type="radio" value="gradient" name="playground_link">
-                    <span class="checkmark"></span>
-                </label>
-                <label class="radio-container">Weight
-                    <input type="radio" value="weight" name="playground_link" checked>
-                    <span class="checkmark"></span>
-                </label>
+                <p>This is a legened...</p>
                 <div id="playground_legend"></div>
             </div>
-            <div class="viz-column-4-8" id="playground_network">
+            <div class="viz-column-4-8">
                 <h3>2. Choose initialization method</h3>
                 <p>Select an initialization method for the neural network<sup class="footnote-index footnote-index1">1</sup>.</p>
                 <label class="radio-container">Zero
@@ -110,6 +102,15 @@
                     <span class="checkmark"></span>
                 </label>
                 <div id="playground_network"></div>
+                <p>Select whether to visualize weights or gradients of the network above.</p>
+                <label class="radio-container">Gradient
+                    <input type="radio" value="gradient" name="playground_link">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Weight
+                    <input type="radio" value="weight" name="playground_link" checked>
+                    <span class="checkmark"></span>
+                </label>
             </div>
             <div class="viz-column-2-8 " id="playground_output">
                 <h3>3. Observe the training</h3>
@@ -128,23 +129,22 @@
             <div class="column-6-8 divider-bottom column-align">
                 <p> What do you notice about the gradients and weights when the initialization method is "zero"?</p>
                 <p class="inline-caption">Initializing all the weights with "zeros" leads the weights to learn the same features during training.</p>
-                <p>What do you notice about the loss plot when you initialize your weights with "too small" or "too large" values?</p>
-                <p class="inline-caption">Initializing the weights with (I) "too small" or (II) "too large" values leads respectively to (I) slow learning or (II) divergence.</p>
-                <p>An "appropriate" initialization is required to have efficient training. We will investigate this further in the next section.</p>
-            </div>
-            <div class="column-2-8 column-align">
-                <img src="img/nn_margin.png">
-                <p class="caption">Any constant initialization scheme will perform very poorly. Consider the neural network above and assume we initialize all the biases to 0 and the weights with some constant
+                <p>In fact, any constant initialization scheme will perform very poorly. Consider the neural network above and assume we initialize all the biases to 0 and the weights with some constant
                     <script>
                     document.write(katex.renderToString('\\alpha'))
                     </script>. If we forward propagate an input
                     <script>
                     document.write(katex.renderToString('(x_1,x_2)'))
-                    </script> in this network, the input to both hidden units will be
+                    </script> in this network, the output of both hidden units will be
                     <script>
-                    document.write(katex.renderToString('\\alpha(x_1 + x_2)'))
-                    </script>. Which, will lead to identical output activation values and gradients. Thus, throughout training both neurons will perfom identically, effectively collapsing the capacity of our network to learn.</p>
-                <!-- <p class="caption">Consider the neural network above. Initialize all the weights and biases with zeros. Forward propagate an input <script>document.write(katex.renderToString('(x_1,x_2)'))</script> in the network. The output will be <script>document.write(katex.renderToString('\\hat{y} = \\sigma (0) = 0.5'))</script>. Compute the loss function that compares the output prediction with the ground truth. Noticeably, the influence of the neurons of the first hidden layer on the loss is identical. They both process <script>document.write(katex.renderToString('(x_1,x_2)'))</script> and compute the same activation value. The backpropagated gradients will thus be the same for the weights of these two neurons, and they will be updated likewise during gradient descent.</p> -->
+                    document.write(katex.renderToString('relu(\\alpha x_1 + \\alpha x_2)'))
+                    </script>. Thus, both both hidden units will have identical influence  on the loss, which, will lead to identical gradients. Thus, throughout training both neurons will evolve symmetrically, effectively collapsing the ability of our network to learn.</p>
+                <p>What do you notice about the loss plot when you initialize your weights with "too small" or "too large" values?</p>
+                <p class="inline-caption">Initializing the weights with (i) "too small" or (ii) "too large" values leads respectively to (i) slow learning or (ii) divergence.</p>
+                <p>An "appropriate" initialization is required to have efficient training. We will investigate this further in the next section.</p>
+            </div>
+            <div class="column-2-8 column-align">
+                <img src="img/nn_margin.png">
             </div>
             <div class="column-6-8 index2-target">
                 <h3>II&emsp; What are the issues with a bad initialization?</h3>
