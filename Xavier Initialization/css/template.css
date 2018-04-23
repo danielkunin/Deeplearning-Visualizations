@@ -18,6 +18,11 @@ body {
   
 }
 
+.header-wrapper{
+  width: 80%;
+  margin: 0 auto;
+}
+
 .intro{
   padding-top:5em;
 }
@@ -77,7 +82,8 @@ body {
 .column-4-8,
 .column-3-8,
 .column-2-8 {
-    margin:2%;
+    margin:0% 1%;
+     padding:0 1%;
 }
 
 .no-margin{
@@ -161,6 +167,27 @@ img{
     margin-bottom: 1.5em;
 }
 
+.full-container h3{
+  margin: 1em 0 0 0;
+}
+
+.sidenotehightlight{
+  cursor: pointer;
+}
+
+.sidenote-target{
+  border:2px solid rgba(143,222,255,0);
+}
+
+.sidenotehightlight:hover{
+  background-color: #8FDEFF;
+}
+
+
+.sidenote-border{
+  border:2px solid rgba(143,222,255,1);
+
+}
 
 
 
@@ -175,7 +202,7 @@ h2 {
 }
 
 h3{
-  margin: 0 0;
+  margin: 2em 0 0 0;
 }
 
 h5{

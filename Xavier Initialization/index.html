@@ -25,11 +25,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.css" integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>
     <!--Scroll To-->
-    <script src="js/scroll-to.js"></script>
+    <script src="js/template.js"></script>
 </head>
 
 <body>
-    <div class="header"></div>
+    <div class="header"> 
+        <div class="header-wrapper"></div>
+    </div>
     <div class="main divider-bottom intro">
         <div class="container ">
             <div class="column-6-8 column-align">
@@ -369,10 +371,10 @@
                 <p>Let’s work on the layer
                     <script>
                     document.write(katex.renderToString('l'))
-                    </script> described in part (III) and assume the activation function is
+                    </script> described in part (III) and assume the activation function is <span class="sidenotehightlight" id="sidenote-inline1">
                     <script>
                     document.write(katex.renderToString('tanh'))
-                    </script>. The forward propagation is:</p>
+                    </script> </span>. The forward propagation is:</p>
                 <script>
                 var render = katex.renderToString("\\begin{aligned} z^{[l]} &= W^{[l]}a^{[l-1]} + b^{[l]} \\cr a^{[l]} &= tanh(z^{[l]}) \\end{aligned}", { displayMode: true });
                 document.writeln(render);
@@ -419,7 +421,7 @@
                     document.writeln(render);
                     </script>
             </div>
-            <div class="column-2-8 column-align">
+            <div class="column-2-8 column-align sidenote-target" id="sidenote-inline1-target">
                 <img src="img/layer_tanh.png">
                 <p class="caption">
                     <script>
