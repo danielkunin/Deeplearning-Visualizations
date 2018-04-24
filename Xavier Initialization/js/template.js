@@ -10,7 +10,8 @@ $(window).load(function() {
 			target = $("."+target+"-target");
 		toSection($(target));
 	});
-	sideNoteHightlight();
+
+	marginSetup();
 });
 
 
@@ -31,34 +32,33 @@ $.fn.inView = function() {
 	return eBottom > vTop && eTop < vBottom;
 };
 
-function sideNoteHightlight(){
-	$(".sidenotehightlight").mouseenter(function(){
-		var id = $(this).attr("id");
-		id = "#"+id+"-target";
-		console.log(id);
-		$(id).addClass("sidenote-border");
 
-		// $( "#book" ).animate({
-		//     opacity: 0.25,
-		//     left: "+=50",
-		//     height: "toggle"
-		// }, 5000, function() {
-		//     // Animation complete.
-		// });
+function marginSetup(){
+
+	// vertically align margin body with anchor
+	$(".marginbody").each(function(){
+		var number = $(this).data("number"),
+			anchor = $("#margin-" + number + "-anchor"),
+			height = $(this).outerHeight(),
+			parent = anchor.parent().parent(),
+			offset = anchor.position().top - parent.position().top - height / 2;
+		$(this).css('top', offset + 'px');
+	});
+
+	// add highlight on mouseenter
+	$(".marginanchor").mouseenter(function(){
+		var number = $(this).data("number"),
+			body = $("#margin-" + number + "-body");
+		body.addClass("margin-border");
 	})
 
-	$(".sidenotehightlight").mouseleave(function(){
-			var id = $(this).attr("id");
-		id = "#"+id+"-target";
-		console.log(id);
-		$(id).removeClass("sidenote-border");
-
-		// $( "#book" ).animate({
-		//     opacity: 0.25,
-		//     left: "+=50",
-		//     height: "toggle"
-		// }, 5000, function() {
-		//     // Animation complete.
-		// });
+	// remove highlight on mouseleave
+	$(".marginanchor").mouseleave(function(){
+		var number = $(this).data("number"),
+			body = $("#margin-" + number + "-body");
+		body.removeClass("margin-border");
 	})
+
 }
+
+

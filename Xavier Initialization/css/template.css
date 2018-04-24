@@ -171,24 +171,32 @@ img{
   margin: 1em 0 0 0;
 }
 
-.sidenotehightlight{
+.margin {
+   position: relative;
+}
+
+.marginanchor{
   cursor: pointer;
+  font-weight: bold;
+  border-bottom: 2px rgba(255,196,0,0);/*#4DB6AC;*/
 }
 
-.sidenote-target{
-  border:2px solid rgba(143,222,255,0);
+.marginbody{
+  /*border:2px solid rgba(143,222,255,0);*/
+  border-left: 2px solid rgba(255,196,0,0);/*rgba(77,182,172,0);*/
+  position: absolute;
 }
 
-.sidenotehightlight:hover{
-  background-color: #8FDEFF;
+.marginanchor:hover{
+  /*background-or: #8FDEFF;*/
+  border-bottom: 2px solid rgba(255,196,0,1);
 }
 
-
-.sidenote-border{
-  border:2px solid rgba(143,222,255,1);
+.margin-border{
+  /*border:2px solid rgba(143,222,255,1);*/
+  border-left: 2px solid rgba(255,196,0,1);/*rgba(77,182,172,1);*/
 
 }
-
 
 
 /*Typography*/

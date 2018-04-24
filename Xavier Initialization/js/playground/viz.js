@@ -175,7 +175,7 @@ function playground_network(layers) {
   // setup dimensions
   var margin = {top: 0, right: 25, bottom: 0, left: 25},
       width = 500 - margin.left - margin.right,
-      height = 420 - margin.top - margin.bottom;
+      height = 350 - margin.top - margin.bottom;
 
   // add svg
   var svg = d3.select("#playground_network").append("svg")
@@ -506,7 +506,7 @@ function playground_pred() {
 function playground_setup() {
 
   // define layers and setup plots
-  var layers = [2, 6, 3, 1],
+  var layers = [2, 5, 3, 1],
       datasets = playground_dataset(),
       legend = playground_legend(),
       network = playground_network(layers),
