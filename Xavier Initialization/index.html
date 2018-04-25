@@ -440,7 +440,7 @@
                 var render = katex.renderToString("Var(a_k^{[l]}) = Var(z_k^{[l]}) = Var(\\sum_{j=1}^{n^{[l-1]}}w_{kj}^{[l]}a_j^{[l-1]}) = \\sum_{j=1}^{n^{[l-1]}}Var(w_{kj}^{[l]}a_j^{[l-1]})", { displayMode: true });
                 document.writeln(render);
                 </script>
-                <p>Another common “math trick” is to convert the variance of a product into product of variances, and we have a formula for it:</p>
+                <p>Another common “math trick” is to convert the variance of a product into product of variances, and we have a <span class="marginanchor" id="margin-11-anchor" data-number="11" data-align="middle">formula</span> for it:</p>
                 <script>
                 var render = katex.renderToString("Var(XY) = E[X]^2Var(Y) + Var(X)E[Y]^2 + Var(X)Var(Y)", { displayMode: true });
                 document.writeln(render);
@@ -467,7 +467,7 @@
                 var render = katex.renderToString("Var(z_k^{[l]}) = \\sum_{j=1}^{n^{[l-1]}}Var(w_{kj}^{[l]})Var(a_j^{[l-1]}) = \\sum_{j=1}^{n^{[l-1]}}Var(W^{[l]})Var(a^{[l-1]}) = n^{[l-1]}Var(W^{[l]})Var(a^{[l-1]})", { displayMode: true });
                 document.writeln(render);
                 </script>
-                <p>The equality above results from A1 stating that for any entry
+                <p>The equality above results from our first assumption stating that for any entry
                     <script>
                     document.write(katex.renderToString("(i,j)"))
                     </script> of
@@ -544,6 +544,9 @@
                 </div>
                 <div class="marginbody" id="margin-10-body" data-number="10">
                 	<p class="caption">Generally, these assumptions are not true. However, in practice the theory generalizes well.</p>
+                </div>
+                <div class="marginbody" id="margin-11-body" data-number="11">
+                	<p class="caption">This is only true for independent random variables.</p>
                 </div>
             </div>
         </div>
