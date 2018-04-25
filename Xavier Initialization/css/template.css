@@ -9,14 +9,7 @@ body {
 .header,
 .footer {
     width: 100%;
-<<<<<<< Updated upstream
-    /*height: 100px;*/
-=======
-<<<<<<< HEAD
-=======
-    /*height: 100px;*/
->>>>>>> origin/master
->>>>>>> Stashed changes
+
     background-color: white;
 }
 
@@ -26,17 +19,10 @@ body {
 
 
 .header-wrapper{
-<<<<<<< Updated upstream
-  width: 60%;
-  /*margin: 0 auto;*/
-=======
-<<<<<<< HEAD
+
   width: 95%;
   margin: 0 auto;
-=======
-  width: 60%;
-  /*margin: 0 auto;*/
->>>>>>> origin/master
+
 }
 
 ul.header-nav{
@@ -59,7 +45,6 @@ ul.header-nav li{
   margin: 1.5em auto;
   display: inline-block;
 
->>>>>>> Stashed changes
 }
 
 .intro{
