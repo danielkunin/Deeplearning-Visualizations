@@ -31,7 +31,7 @@
 <body>
     <div class="header"> 
         <div class="header-wrapper">
-        	<img src="img/deeplearning.png">
+        	<a href="https://www.deeplearning.ai/"><img src="img/deeplearning.png"></a>
         </div>
     </div>
     <div class="main divider-bottom intro">
@@ -397,7 +397,6 @@
                     document.write(katex.renderToString('Var(a^{[l-1]}) = Var(a^{[l]})'))
                     </script>.
                 </p>
-                <p>Each of these two equations is a source of information. Let's start with (1). </p>
                 <p>Assume we initialized our network with appropriate values. Early in the training, we are in the <span class="marginanchor" id="margin-8-anchor" data-number="8" data-align="middle">linear regime</span> of
                     <script>
                     document.write(katex.renderToString("tanh"))
@@ -408,7 +407,7 @@
                     <script>
                     document.write(katex.renderToString("Var(a^{[l]}) = Var(z^{[l]})"))
                     </script>.
-                    <p>Moreover,
+                    Moreover,
                         <script>
                         document.write(katex.renderToString("z^{[l]} = W^{[l]}a^{[l-1]} + b^{[l]} = vector(z_1^{[l]},z_2^{[l]},\\dots,z_{n^{[l]}}^{[l]})"))
                         </script> where
@@ -489,6 +488,23 @@
                 var render = katex.renderToString("Var(a^{[l]}) = n^{[l-1]}Var(W^{[l]})Var(a^{[l-1]})", { displayMode: true });
                 document.writeln(render);
                 </script>
+                <p>Notice that in the previous steps we did not choose a specific layer <script>
+                    document.write(katex.renderToString("l"))
+                    </script>. Thus, we have shown that this expression holds for every layer of our network.  Let <script>
+                    document.write(katex.renderToString("L"))
+                    </script> be the output layer of our network.  Using this expression we can solve for the variance of the output of our neural network as follows:</p>
+                <script>
+                var render = katex.renderToString("\\begin{aligned} Var(a^{[L]}) &= n^{[L-1]}Var(W^{[L]})Var(a^{[L-1]}) \\cr  &= n^{[L-1]}Var(W^{[L]})n^{[L-2]}Var(W^{[L-1]})Var(a^{[L-2]})\\cr &=\\dots\\cr &= [\\prod_{l=1}^L n^{[l-1]}Var(W^{[l]})]Var(x)\\end{aligned}", { displayMode: true });
+                document.writeln(render);
+                </script>
+                <p>With Xavier Initialization <script>
+                    document.write(katex.renderToString("Var(W^{[l]}) = \\frac{1}{n^{[l-1]}}"))
+                    </script>.  Thus, this expression simplifies to:</p>
+                    <script>
+                var render = katex.renderToString("Var(a^{[L]}) = Var(x)", { displayMode: true });
+                document.writeln(render);
+                </script>
+                <p>However, if we initialize our weights to anything greater than or less than </p>
             </div>
             <div class="column-2-8 column-align margin">
             	<div class="marginbody" id="margin-7-body" data-number="7">
@@ -521,9 +537,6 @@
                 <div class="marginbody" id="margin-10-body" data-number="10">
                 	<p class="caption">Generally, these assumptions are not true<sup class="footnote-index footnote-index6">6</sup>. However, in practice the theory generalizes well.</p>
                 </div>
-            </div>
-            <div class="column-6-8">
-                <p>Explain why this proof can be used by induction to show that an appropriate initialization is mandatory...TODO</p>
             </div>
         </div>
     </div>
