@@ -184,9 +184,14 @@ img{
 
 .marginbody{
   /*border:2px solid rgba(143,222,255,0);*/
+  opacity: 0;
   border-left: 2px solid rgba(255,196,0,0);/*rgba(77,182,172,0);*/
   padding-left: 1em;
   position: absolute;
+}
+
+.marginbody p{
+  margin: 0;
 }
 
 .marginanchor:hover{
@@ -196,6 +201,7 @@ img{
 
 .margin-border{
   /*border:2px solid rgba(143,222,255,1);*/
+  opacity: 1;
   border-left: 2px solid rgba(255,196,0,1);/*rgba(77,182,172,1);*/
 
 }

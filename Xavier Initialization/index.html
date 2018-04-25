@@ -80,7 +80,7 @@
                 <h3>1. Choose input dataset</h3>
                 <p>Select a training dataset.</p>
                 <div id="playground_dataset"></div>
-                <p>Below is a legend.  Data </p>
+                <p>Use the legend below for elements in this visualization.</p>
                 <div id="playground_legend"></div>
             </div>
             <div class="viz-column-4-8">
@@ -115,7 +115,7 @@
             </div>
             <div class="viz-column-2-8">
                 <h3>3. Observe the training</h3>
-                <p>Train the network using the following buttons.</p>
+                <p>Train the network.</p>
                 <div class="container">
                     <button class="button-transport" id="playground_reset" title="reset"><img src="img/reset.png"></button>
                     <button class="button-transport inactive" id="playground_start" title="start"><img src="img/play.png"></button>
@@ -130,7 +130,7 @@
             <div class="column-6-8 divider-bottom column-align">
                 <p> What do you notice about the gradients and weights when the initialization method is "zero"?</p>
                 <p class="inline-caption">Initializing all the weights with "zeros" leads the weights to learn the same features during training.</p>
-                <p>In fact, any constant initialization scheme will perform very poorly. Consider the neural network on the <span class="marginanchor" id="margin-1-anchor" data-number="1" data-align="middle">right</span> and assume we initialize all the biases to 0 and the weights with some constant
+                <p>In fact, any constant initialization scheme will perform very poorly. Consider a two hidden unit <span class="marginanchor" id="margin-1-anchor" data-number="1" data-align="middle">neural network</span> and assume we initialize all the biases to 0 and the weights with some constant
                     <script>
                     document.write(katex.renderToString('\\alpha'))
                     </script>. If we forward propagate an input
@@ -147,7 +147,7 @@
             <div class="column-2-8 column-align margin">
             	<div class="marginbody" id="margin-1-body" data-number="1">
                 	<img src="img/nn_margin.png">
-                	<p class="caption">This is...</p>
+                	<p class="caption">A neural network with two hidden relu units and a sigmoid output unit.</p>
                 </div>
             </div>
             <div class="column-6-8 divider-bottom index2-target">
@@ -270,7 +270,7 @@
             </div>
             <div class="column-2-8 column-align margin">
             	<div class="marginbody" id="margin-4-body" data-number="4">
-            		<p class="caption"><a href="https://en.wikipedia.org/wiki/Variance">Variance</a> is a measure of how much a data source is spread about its mean.</p>
+            		<p class="caption">Variance is a measure of how much a data source is spread about its mean.</p>
             	</div>
             	<div class="marginbody" id="margin-5-body" data-number="5">
                 	<img src="img/layerl.png">
@@ -287,7 +287,7 @@
 	            </div>
 	            <div class="marginbody" id="margin-6-body" data-number="6">
 	                <img src="img/normal.png">
-	                <p class="caption">Data generated from the <a href="https://en.wikipedia.org/wiki/Normal_distribution">normal</a> distribution is more likely from the taller regions in the plot above.</p>
+	                <p class="caption">Data generated from a normal distribution is symmetric about its mean.</p>
             	</div>
             </div>
         </div>
@@ -495,7 +495,7 @@
                 	<p class="caption">
                     <script>
                     document.write(katex.renderToString('tanh'))
-                    </script>, or <a href="https://en.wikipedia.org/wiki/Hyperbolic_function#Hyperbolic_tangent">hyperbolic tangent</a>, is a non-linear function defined as:
+                    </script> is a non-linear function defined as:
                     <script>
                     document.write(katex.renderToString("tanh(x) = \\frac{1 - e^{-2x}}{1 + e^{-2x}}"));
                     </script>.</p>

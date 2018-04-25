@@ -5,8 +5,8 @@
 function playground_dataset() {
   // setup dimensions
   var margin = {top: 10, right: 20, bottom: 10, left: 20},
-      width = 200 - margin.left - margin.right,
-      height = 180 - margin.top - margin.bottom
+      width = 250 - margin.left - margin.right,
+      height = 230 - margin.top - margin.bottom
       padding = 10;
 
   // add svg
