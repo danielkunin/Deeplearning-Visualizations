@@ -238,7 +238,7 @@
             </div>
             <div class="column-6-8 index3-target column-align">
                 <h3>III&emsp;What is an "appropriate" initialization?</h3>
-                <p>We will stick to this rule of thumb concerning the <span class="marginanchor" id="margin-4-anchor" data-number="4" data-align="top">variance</span> of our activations:</p>
+                <p>We will stick to the following rule of thumb concerning the <span class="marginanchor" id="margin-4-anchor" data-number="4" data-align="top">variance</span> of our activations:</p>
                 <p class="inline-caption">The variance should stay the same across every layer to prevent the signal from vanishing or exploding.</p>
                 <p>More concretely, consider a <span class="marginanchor" id="margin-5-anchor" data-number="5" data-align="top">layer
                     <script>
@@ -307,16 +307,7 @@
                         Load MNIST (<span id="percent">0%</span>)
                     </button>
                 </div>
-                <div class="line-break-lg"></div>
-
-                 <p>Input Batch</p>
-                <div id="mnist_input"></div>
-                <label class="viz">
-                    Batch: <span id="batch">0</span> </label>
-                <label>
-                    Epoch: <span id="epoch">0</span>
-                </label>
-            </div>
+ 			</div>
             <div class="viz-column-4-8">
                 <h3>2. Select an initialization method</h3>
                 <p>Among the below distributions, select the one to use to initialize your parameters. <sup class="footnote-index footnote-index3">3</sup>.</p>
@@ -336,10 +327,6 @@
                     <input type="radio" value="normal" name="mnist_init">
                     <span class="checkmark"></span>
                 </label>
-                <div class="line-break-lg"></div>
-
-
-                  <div id="mnist_network"></div>
             </div>
             <div class="viz-column-2-8">
                 <h3>3. Train the network and observe</h3>
@@ -350,9 +337,21 @@
                     <button class="button-transport hidden" id="mnist_stop"><img src="img/pause.png"></button>
                     <button class="button-transport inactive" id="mnist_step"><img src="img/fastforward.png"></button>
                 </div>
+            </div>
 
-              
-
+            <div class="viz-column-2-8">
+                 <p>Input Batch</p>
+                <div id="mnist_input"></div>
+                <label class="viz">
+                    Batch: <span id="batch">0</span> </label>
+                <label>
+                    Epoch: <span id="epoch">0</span>
+                </label>
+            </div>
+            <div class="viz-column-4-8">
+                <div id="mnist_network"></div>
+            </div>
+            <div class="viz-column-2-8">
                 <div>
                     <p>Output Predictions</p>
                     <div id="mnist_output"></div>
@@ -430,7 +429,7 @@
                     var render = katex.renderToString("Var(a_k^{[l]}) = Var(z_k^{[l]}) = Var(\\sum_{j=1}^{n^{[l-1]}}w_{kj}^{[l]}a_j^{[l-1]})", { displayMode: true });
                     document.writeln(render);
                     </script>
-                <p>A common “math trick” at this point is to extract the summation outside the variance. To do this we must make the following three <span class="marginanchor" id="margin-10-anchor" data-number="10" data-align="middle">assumptions</span>:</p>
+                <p>A common “math trick” at this point is to extract the summation outside the variance. To do this we must make the following three <span class="marginanchor" id="margin-10-anchor" data-number="10" data-align="middle">assumptions</span><sup class="footnote-index footnote-index6">6</sup>:</p>
                 <ol class="inline-caption">
                     <li>Weights are independent and identically distributed</li>
                     <li>Inputs are independent and identically distributed</li>
@@ -503,14 +502,17 @@
                 var render = katex.renderToString("\\begin{aligned} Var(a^{[L]}) &= n^{[L-1]}Var(W^{[L]})Var(a^{[L-1]}) \\cr  &= n^{[L-1]}Var(W^{[L]})n^{[L-2]}Var(W^{[L-1]})Var(a^{[L-2]})\\cr &=\\dots\\cr &= [\\prod_{l=1}^L n^{[l-1]}Var(W^{[l]})]Var(x)\\end{aligned}", { displayMode: true });
                 document.writeln(render);
                 </script>
-                <p>With Xavier Initialization <script>
-                    document.write(katex.renderToString("Var(W^{[l]}) = \\frac{1}{n^{[l-1]}}"))
-                    </script>.  Thus, this expression simplifies to:</p>
-                    <script>
-                var render = katex.renderToString("Var(a^{[L]}) = Var(x)", { displayMode: true });
+                <p>Depending on how we initialize our weights the relationship between the variance of our output and input will vary dramatically.  Notice the following three cases.</p>
+                <script>
+                var render = katex.renderToString("n^{[l-1]}Var(W^{[l]})  \\begin{cases} < 1 &\\implies \\text{Vanishing Gradient}\\cr  = 1 & \\implies Var(a^{[L]}) = Var(x)\\cr  > 1 & \\implies \\text{Exploding Gradient}\\end{cases}", { displayMode: true });
                 document.writeln(render);
                 </script>
-                <p>However, if we initialize our weights to anything greater than or less than </p>
+                <p>Thus, in order to avoid the Vanishing or Exploding Gradient problem, we must set <script>
+                    document.write(katex.renderToString("n^{[l-1]}Var(W^{[l]}) = 1"))
+                    </script> by initializing <script>
+                    document.write(katex.renderToString("Var(W^{[l]}) = \\frac{1}{n^{[l-1]}}"))
+                    </script>. This is Xavier Initialization!</p>
+
             </div>
             <div class="column-2-8 column-align margin">
             	<div class="marginbody" id="margin-7-body" data-number="7">
@@ -541,7 +543,7 @@
                 	<p class="caption">The variance of the vector is the same as the variance of any of its elements because of independence.</p>
                 </div>
                 <div class="marginbody" id="margin-10-body" data-number="10">
-                	<p class="caption">Generally, these assumptions are not true<sup class="footnote-index footnote-index6">6</sup>. However, in practice the theory generalizes well.</p>
+                	<p class="caption">Generally, these assumptions are not true. However, in practice the theory generalizes well.</p>
                 </div>
             </div>
         </div>
@@ -553,7 +555,7 @@
             </div>
             <div class="column-6-8 column-align">
                 <ol class="reference ">
-                    <li>Kian Katanforoosh - Written content. </li>
+                    <li>Kian Katanforoosh - Written content and structure. </li>
                     <li>Daniel Kunin - Visualizations (created using <a href="https://d3js.org/">D3.js</a> and <a href="https://js.tensorflow.org/">TensorFlow.js</a>).</li>
                 </ol>
             </div>
@@ -562,7 +564,7 @@
             </div>
             <div class="column-6-8 column-align">
                 <ol class="reference">
-                    <li>The layout and structure of the article was designed by <a href="https://www.jingru-guo.com/">Jingru Guo</a>.</li>
+                    <li>The layout of the article was designed by <a href="https://www.jingru-guo.com/">Jingru Guo</a>.</li>
                     <li>The first visualization was inspired by Daniel Smilkov's and Shan Carter's Neural Network <a href="https://playground.tensorflow.org/">playground</a>.</li>
                     <li>The second visualization adapted code from Andrej Karpathy's <a href="https://cs.stanford.edu/~karpathy/mnistjs/">visualization</a> of MNIST.</li>
                 </ol>
