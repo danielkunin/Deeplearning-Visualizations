@@ -57,7 +57,6 @@ function marginSetup(){
 		var number = $(this).data("number"),
 			body = $("#margin-" + number + "-body");
 		body.removeClass("margin-border");
-	})
 
 }
 

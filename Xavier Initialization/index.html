@@ -148,7 +148,7 @@
                 	<p class="caption">This is...</p>
                 </div>
             </div>
-            <div class="column-6-8 index2-target">
+            <div class="column-6-8 divider-bottom index2-target">
                 <h3>II&emsp; What are the issues with a bad initialization?</h3>
                 <p>Consider this 9-layer neural network just after it was initialized.</p>
                 <img src="img/9layer.png">
@@ -173,9 +173,9 @@
             </div>
         </div>
         <div class="container">
-            <div class="column-6-8 divider-bottom"></div>
             <div class="column-4-8 no-margin">
-                <h3>Case 1: "too large" initialization leads to Exploding Gradients.</h3></div>
+                <h3>Case 1: "too large" initialization leads to Exploding Gradients.</h3>
+            </div>
             <div class="column-6-8 column-align">
                 <p>Consider the case where every weight is initialized slightly larger than the identity matrix.</p>
                 <script>
@@ -191,11 +191,13 @@
                     </script> increase exponentially with
                     <script>
                     document.write(katex.renderToString('l'))
-                    </script>. When these activations are used in backward propagation, this leads to the <span class="sidenotehightlight" id="sidenote-inline1">exploding gradient problem</span>.</p>
+                    </script>. When these activations are used in backward propagation, this leads to the <span class="marginanchor" id="margin-2-anchor" data-number="2">exploding gradient problem</span>.</p>
             </div>
-            <div class="column-2-8 column-align sidenote-target" id="sidenote-inline1-target">
-                <img src="img/exploding.png">
-                <p class="caption">The gradients are too big leading to oscilation of the loss around its mininum value (marked by "+").</p>
+            <div class="column-2-8 column-align margin">
+            	<div class="marginbody" id="margin-2-body" data-number="2">
+                	<img src="img/exploding.png">
+                	<p class="caption">The gradients are too big leading to oscilation of the loss around its mininum value (marked by "+").</p>
+                </div>
             </div>
             <div class="column-4-8 no-margin">
                 <h3>Case 2: "too small" initialization leads to Vanishing Gradients</h3>
@@ -215,11 +217,13 @@
                     </script> decreases exponentially with
                     <script>
                     document.write(katex.renderToString('l'))
-                    </script>. When these activations are used in backward propagation, this leads to the <span class="sidenotehightlight" id="sidenote-inline2">vanishing gradient problem</span>.</p>
+                    </script>. When these activations are used in backward propagation, this leads to the <span class="marginanchor" id="margin-3-anchor" data-number="3">vanishing gradient problem</span>.</p>
             </div>
-            <div class="column-2-8 column-align sidenote-target" id="sidenote-inline2-target">
-                <img src="img/vanishing.png">
-                <p class="caption">The gradients are too small leading to convergence of the loss before it has reached the mininum value (marked by "+").</p>
+            <div class="column-2-8 column-align margin">
+            	<div class="marginbody" id="margin-3-body" data-number="3">
+                	<img src="img/vanishing.png">
+                	<p class="caption">The gradients are too small leading to convergence of the loss before it has reached the mininum value (marked by "+").</p>
+                </div>
             </div>
             <div class="column-6-8 divider-bottom">
                 <p>All in all, initializing your weights with inappropriate values will lead to divergence or slow-down in the training.</p>
@@ -227,38 +231,38 @@
             <div class="column-6-8 index3-target column-align">
                 <h3>III&emsp;What is an "appropriate" initialization?</h3>
                 <p>We will stick to this rule of thumb:</p>
-                <p class="inline-caption">The <span class="sidenotehightlight" id="margin-0-anchor">variance</span> should stay the same across every layer to prevent the signal from vanishing or exploding.</p>
-            </div>
-            <div class="column-2-8 column-align sidenote-target" id="sidenote-inline3-target">
-                <p class="caption margin" id="margin-0"><a href="https://en.wikipedia.org/wiki/Variance">Variance</a> is a measure of how much a data source is spread about its mean. In this case our data source is the input or output values at a layer in our network.</p>
-            </div>
-            <div class="column-6-8 index3-target column-align">
-                <p>More concretely, consider a <span class="sidenotehightlight" id="sidenote-inline4">layer
+                <p class="inline-caption">The <span class="marginanchor" id="margin-4-anchor" data-number="4">variance</span> should stay the same across every layer to prevent the signal from vanishing or exploding.</p>
+                <p>More concretely, consider a layer
                     <script>
                     document.write(katex.renderToString('l'))
-                    </script></span>. Its forward propagation is:</p>
+                    </script>. Its forward propagation is:</p>
                 <script>
                 var render = katex.renderToString("\\begin{aligned}a^{[l-1]} &= g^{[l-1]}(z^{[l-1]})\\cr z^{[l]} &= W^{[l]}a^{[l-1]} + b^{[l]}\\cr a^{[l]} &= g^{[l]}(z^{[l]})\\end{aligned}", { displayMode: true });
                 document.writeln(render);
                 </script>
-                <p>We would like the following to hold:<sup class="footnote-index footnote-index2">2</sup></p>
+                <p>We would like the following to <span class="marginanchor" id="margin-5-anchor" data-number="5">hold</span>:<sup class="footnote-index footnote-index2">2</sup></p>
                 <script>
                 var render = katex.renderToString("Var(a^{[l-1]}) = Var(a^{[l]})", { displayMode: true });
                 document.writeln(render);
                 </script>
             </div>
-            <div class="column-2-8 column-align sidenote-target" id="sidenote-inline4-target">
-                <img src="img/layerl.png">
-                <p class="caption">The goal is to keep the input variance
-                    <script>
-                    document.write(katex.renderToString('Var(a^{[l-1]})'))
-                    </script> equal to the output variance
-                    <script>
-                    document.write(katex.renderToString('Var(a^{[l]})'))
-                    </script> for every layer
-                    <script>
-                    document.write(katex.renderToString('l'))
-                    </script>.</p>
+            <div class="column-2-8 column-align margin">
+            	<div class="marginbody" id="margin-4-body" data-number="4">
+            		<p class="caption"><a href="https://en.wikipedia.org/wiki/Variance">Variance</a> is a measure of how much a data source is spread about its mean. In this case our data source is the input or output values at a layer in our network.</p>
+            	</div>
+            	<div class="marginbody" id="margin-5-body" data-number="5">
+                	<img src="img/layerl.png">
+	                <p class="caption">The goal is to keep the input variance
+	                    <script>
+	                    document.write(katex.renderToString('Var(a^{[l-1]})'))
+	                    </script> equal to the output variance
+	                    <script>
+	                    document.write(katex.renderToString('Var(a^{[l]})'))
+	                    </script> for every layer
+	                    <script>
+	                    document.write(katex.renderToString('l'))
+	                    </script>.</p>
+	            </div>
             </div>
             <div class="column-6-8 column-align">
                 <p>Maintaining the value of the variance of the input and the output of every layer guarantees no exploding/vanishing gradient. The recommended initialization is Xavier initialization (or one of its derived methods), for every layer

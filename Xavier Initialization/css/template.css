@@ -177,7 +177,8 @@ img{
 
 .marginanchor{
   cursor: pointer;
-  font-weight: bold;
+  /*font-weight: bold;*/
+  font-style: italic;
   border-bottom: 2px rgba(255,196,0,0);/*#4DB6AC;*/
 }
 
