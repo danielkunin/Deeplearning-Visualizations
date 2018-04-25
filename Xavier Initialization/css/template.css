@@ -192,64 +192,35 @@ img{
   margin: 1em 0 0 0;
 }
 
-/*.margin {
-   position: relative;
-}
-
-.marginanchor{
-  cursor: pointer;
-  font-style: italic;
-  border-bottom: 2px rgba(255,196,0,0);
-}
-
-.marginbody{
-  border: 2px solid rgba(255,196,0,0);
-  position: absolute;
-  padding:0 1em;
-}
-
-.marginanchor:hover{
-  background-color: rgba(255,196,0,1);
-  border-bottom: 2px solid rgba(255,196,0,1);
-
-}
-
-.margin-border{
-  border: 2px solid rgba(255,196,0,1);
-}*/
 
 .margin {
    position: relative;
 }
 
-.marginanchor{
+.marginanchor {
   cursor: pointer;
-  /*font-weight: bold;*/
   font-style: italic;
-  border-bottom: 2px solid rgba(255,196,0,1);/*#4DB6AC;*/
+  border-bottom: 2px solid rgba(255,196,0,1);
 }
 
-.marginbody{
-  /*border:2px solid rgba(143,222,255,0);*/
+.marginbody {
   opacity: 0;
-  border-left: 2px solid rgba(255,196,0,0);/*rgba(77,182,172,0);*/
+  border-left: 2px solid rgba(255,196,0,0);
   padding-left: 1em;
   position: absolute;
 }
 
-.marginbody p{
+.marginbody p {
   margin: 0;
 }
 
-.marginanchor:hover{
-  background-color: rgba(255,196,0,0.5);/*#8FDEFF;*/
-  /*border-bottom: 2px solid rgba(255,196,0,1);*/
+.marginanchor:hover {
+  background-color: rgba(255,196,0,0.5);
 }
 
-.margin-border{
-  /*border:2px solid rgba(143,222,255,1);*/
+.margin-border {
   opacity: 1;
-  border-left: 2px solid rgba(255,196,0,1);/*rgba(77,182,172,1);*/
+  border-left: 2px solid rgba(255,196,0,1);
 
 }
 
