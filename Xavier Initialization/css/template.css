@@ -190,6 +190,11 @@ img{
 
 .full-container h3{
   margin: 1em 0 0 0;
+  font-size: 16px;
+}
+
+.full-container p{
+  font-size: 14px;
 }
 
 
@@ -333,7 +338,7 @@ p.inline-caption{
     font-size: 20px;
     font-style: italic;
     border-left: 2px solid #03A9F4;
-    padding-left: 1em;
+    padding-left: 1.5em;
 
 }
 
