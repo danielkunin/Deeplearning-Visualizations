@@ -30,7 +30,9 @@
 
 <body>
     <div class="header"> 
-        <div class="header-wrapper"></div>
+        <div class="header-wrapper">
+        	<img src="img/deeplearning.png">
+        </div>
     </div>
     <div class="main divider-bottom intro">
         <div class="container ">
@@ -128,7 +130,7 @@
             <div class="column-6-8 divider-bottom column-align">
                 <p> What do you notice about the gradients and weights when the initialization method is "zero"?</p>
                 <p class="inline-caption">Initializing all the weights with "zeros" leads the weights to learn the same features during training.</p>
-                <p>In fact, any constant initialization scheme will perform very poorly. Consider the neural network on the <span class="marginanchor" id="margin-1-anchor" data-number="1">right</span> and assume we initialize all the biases to 0 and the weights with some constant
+                <p>In fact, any constant initialization scheme will perform very poorly. Consider the neural network on the <span class="marginanchor" id="margin-1-anchor" data-number="1" data-align="middle">right</span> and assume we initialize all the biases to 0 and the weights with some constant
                     <script>
                     document.write(katex.renderToString('\\alpha'))
                     </script>. If we forward propagate an input
@@ -191,7 +193,7 @@
                     </script> increase exponentially with
                     <script>
                     document.write(katex.renderToString('l'))
-                    </script>. When these activations are used in backward propagation, this leads to the <span class="marginanchor" id="margin-2-anchor" data-number="2">exploding gradient problem</span>.</p>
+                    </script>. When these activations are used in backward propagation, this leads to the <span class="marginanchor" id="margin-2-anchor" data-number="2" data-align="bottom">exploding gradient problem</span>.</p>
             </div>
             <div class="column-2-8 column-align margin">
             	<div class="marginbody" id="margin-2-body" data-number="2">
@@ -217,7 +219,7 @@
                     </script> decreases exponentially with
                     <script>
                     document.write(katex.renderToString('l'))
-                    </script>. When these activations are used in backward propagation, this leads to the <span class="marginanchor" id="margin-3-anchor" data-number="3">vanishing gradient problem</span>.</p>
+                    </script>. When these activations are used in backward propagation, this leads to the <span class="marginanchor" id="margin-3-anchor" data-number="3" data-align="bottom">vanishing gradient problem</span>.</p>
             </div>
             <div class="column-2-8 column-align margin">
             	<div class="marginbody" id="margin-3-body" data-number="3">
@@ -230,41 +232,21 @@
             </div>
             <div class="column-6-8 index3-target column-align">
                 <h3>III&emsp;What is an "appropriate" initialization?</h3>
-                <p>We will stick to this rule of thumb:</p>
-                <p class="inline-caption">The <span class="marginanchor" id="margin-4-anchor" data-number="4">variance</span> should stay the same across every layer to prevent the signal from vanishing or exploding.</p>
-                <p>More concretely, consider a layer
+                <p>We will stick to this rule of thumb concerning the <span class="marginanchor" id="margin-4-anchor" data-number="4" data-align="top">variance</span> of our activations:</p>
+                <p class="inline-caption">The variance should stay the same across every layer to prevent the signal from vanishing or exploding.</p>
+                <p>More concretely, consider a <span class="marginanchor" id="margin-5-anchor" data-number="5" data-align="top">layer
                     <script>
                     document.write(katex.renderToString('l'))
-                    </script>. Its forward propagation is:</p>
+                    </script></span>. Its forward propagation is:</p>
                 <script>
                 var render = katex.renderToString("\\begin{aligned}a^{[l-1]} &= g^{[l-1]}(z^{[l-1]})\\cr z^{[l]} &= W^{[l]}a^{[l-1]} + b^{[l]}\\cr a^{[l]} &= g^{[l]}(z^{[l]})\\end{aligned}", { displayMode: true });
                 document.writeln(render);
                 </script>
-                <p>We would like the following to <span class="marginanchor" id="margin-5-anchor" data-number="5">hold</span>:<sup class="footnote-index footnote-index2">2</sup></p>
+                <p>We would like the following to hold:<sup class="footnote-index footnote-index2">2</sup></p>
                 <script>
                 var render = katex.renderToString("Var(a^{[l-1]}) = Var(a^{[l]})", { displayMode: true });
                 document.writeln(render);
                 </script>
-            </div>
-            <div class="column-2-8 column-align margin">
-            	<div class="marginbody" id="margin-4-body" data-number="4">
-            		<p class="caption"><a href="https://en.wikipedia.org/wiki/Variance">Variance</a> is a measure of how much a data source is spread about its mean. In this case our data source is the input or output values at a layer in our network.</p>
-            	</div>
-            	<div class="marginbody" id="margin-5-body" data-number="5">
-                	<img src="img/layerl.png">
-	                <p class="caption">The goal is to keep the input variance
-	                    <script>
-	                    document.write(katex.renderToString('Var(a^{[l-1]})'))
-	                    </script> equal to the output variance
-	                    <script>
-	                    document.write(katex.renderToString('Var(a^{[l]})'))
-	                    </script> for every layer
-	                    <script>
-	                    document.write(katex.renderToString('l'))
-	                    </script>.</p>
-	            </div>
-            </div>
-            <div class="column-6-8 column-align">
                 <p>Maintaining the value of the variance of the input and the output of every layer guarantees no exploding/vanishing gradient. The recommended initialization is Xavier initialization (or one of its derived methods), for every layer
                     <script>
                     document.write(katex.renderToString('l'))
@@ -276,7 +258,7 @@
                     In a sentence, it means that all the weights of layer
                     <script>
                     document.write(katex.renderToString('l'))
-                    </script> are picked randomly from a normal distribution with mean
+                    </script> are picked randomly from a <span class="marginanchor" id="margin-6-anchor" data-number="6" data-align="middle">normal distribution</span> with mean
                     <script>
                     document.write(katex.renderToString('\\mu = 0'))
                     </script> and variance
@@ -286,9 +268,27 @@
                     <br>
                     <br> The visualization below illustrates the impact of the weights’ distribution on each layer’s activations’ distribution for a 5-layer full-connected neural network (presented below).</p>
             </div>
-            <div class="column-2-8 column-align">
-                <img src="img/normal.png">
-                <p class="caption">The <a href="https://en.wikipedia.org/wiki/Normal_distribution">normal</a> (or Gaussian) distribution is a very common probability distribution, parameterized by a mean and variance parameter. Above is a plot of its PDF. Taller regions in this plot indicate a higher probability of a random sample from this region.</p>
+            <div class="column-2-8 column-align margin">
+            	<div class="marginbody" id="margin-4-body" data-number="4">
+            		<p class="caption"><a href="https://en.wikipedia.org/wiki/Variance">Variance</a> is a measure of how much a data source is spread about its mean.</p>
+            	</div>
+            	<div class="marginbody" id="margin-5-body" data-number="5">
+                	<img src="img/layerl.png">
+	                <p class="caption">
+	                    <script>
+	                    document.write(katex.renderToString('a^{[l-1]}'))
+	                    </script> represents the input to layer 
+	                    <script>
+	                    document.write(katex.renderToString('l'))
+	                    </script> and 
+	                    <script>
+	                    document.write(katex.renderToString('a^{[l]}'))
+	                    </script> represents the output.</p>
+	            </div>
+	            <div class="marginbody" id="margin-6-body" data-number="6">
+	                <img src="img/normal.png">
+	                <p class="caption">Data generated from the <a href="https://en.wikipedia.org/wiki/Normal_distribution">normal</a> distribution is more likely from the taller regions in the plot above.</p>
+            	</div>
             </div>
         </div>
 
@@ -368,10 +368,7 @@
         </div>
         <div class="container">
             <div class="column-6-8 column-align">
-                <p>The next section will teach you the proof of Xavier initialization and you will understand more precisely why it is an appropriate initialization to use.</p>
-            </div>
-            <div class="column-2-8 column-align">
-                <p class="caption">You can find the theory behind this visualization in <a href="http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf?hc_location=ufi"> Glorot et al. (2010)</a>.</p>
+                <p>You can find the theory behind this visualization in <a href="http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf?hc_location=ufi"> Glorot et al. (2010)</a>.  The next section will teach you the proof of Xavier initialization and you will understand more precisely why it is an appropriate initialization to use.</p>
             </div>
             <div class="column-6-8 index4-target column-align">
                 <h3>IV&emsp;Proof of Xavier initialization</h3>
@@ -379,10 +376,10 @@
                 <p>Let’s work on the layer
                     <script>
                     document.write(katex.renderToString('l'))
-                    </script> described in part (III) and assume the activation function is <span class="sidenotehightlight" id="sidenote-inline5">
+                    </script> described in part (III) and assume the activation function is <span class="marginanchor" id="margin-7-anchor" data-number="7" data-align="middle">
                     <script>
                     document.write(katex.renderToString('tanh'))
-                    </script> </span>. The forward propagation is:</p>
+                    </script></span>. The forward propagation is:</p>
                 <script>
                 var render = katex.renderToString("\\begin{aligned} z^{[l]} &= W^{[l]}a^{[l-1]} + b^{[l]} \\cr a^{[l]} &= tanh(z^{[l]}) \\end{aligned}", { displayMode: true });
                 document.writeln(render);
@@ -401,7 +398,7 @@
                     </script>.
                 </p>
                 <p>Each of these two equations is a source of information. Let's start with (1). </p>
-                <p>Assume we initialized our network with appropriate values. Early in the training, we are in the linear regime of
+                <p>Assume we initialized our network with appropriate values. Early in the training, we are in the <span class="marginanchor" id="margin-8-anchor" data-number="8" data-align="middle">linear regime</span> of
                     <script>
                     document.write(katex.renderToString("tanh"))
                     </script>. Values are small enough and thus
@@ -420,7 +417,7 @@
                         </script>. For simplicity, let’s assume that
                         <script>
                         document.write(katex.renderToString("b^{[l]} = 0"))
-                        </script> (it will end up being true given the choice of initialization we will choose). Thus, looking element-wise at the previous equation
+                        </script> (it will end up being true given the choice of initialization we will choose). Thus, looking <span class="marginanchor" id="margin-9-anchor" data-number="9" data-align="middle">element-wise</span> at the previous equation
                         <script>
                         document.write(katex.renderToString("Var(a^{[l-1]}) = Var(a^{[l]})"))
                         </script> now gives:</p>
@@ -428,31 +425,7 @@
                     var render = katex.renderToString("Var(a_k^{[l]}) = Var(z_k^{[l]}) = Var(\\sum_{j=1}^{n^{[l-1]}}w_{kj}^{[l]}a_j^{[l-1]})", { displayMode: true });
                     document.writeln(render);
                     </script>
-            </div>
-            <div class="column-2-8 column-align sidenote-target" id="sidenote-inline5-target">
-                <!-- <img src="img/layer_tanh.png"> -->
-                <p class="caption">
-                    <script>
-                    document.write(katex.renderToString('tanh'))
-                    </script>, or <a href="https://en.wikipedia.org/wiki/Hyperbolic_function#Hyperbolic_tangent">hyperbolic tangent</a>, is a non-linear function defined as:
-                    <!-- <script>
-                    var render = katex.renderToString("tanh(x) = \\frac{1 - e^{-2x}}{1 + e^{-2x}}", { displayMode: true });
-                    document.writeln(render);
-                    </script>
-                    Important properties are its parity (
-                    <script>
-                    document.write(katex.renderToString('tanh(-x)'))
-                    </script> =
-                    <script>
-                    document.write(katex.renderToString('-tanh(x)'))
-                    </script>) and its linearity around 0 (
-                    <script>
-                    document.write(katex.renderToString("tanh'(0)"))
-                    </script> = 1).</p>
-                <p class="caption">Because all elements of our vector are independently and identically distributed, the variance of the vector is the same as the variance of any of its elements.</p> -->
-            </div>
-            <div class="column-6-8 column-align">
-                <p>A common “math trick” at this point is to extract the summation outside the variance. To do this we must make the following three assumptions:</p>
+                <p>A common “math trick” at this point is to extract the summation outside the variance. To do this we must make the following three <span class="marginanchor" id="margin-10-anchor" data-number="10" data-align="middle">assumptions</span>:</p>
                 <ol class="inline-caption">
                     <li>Weights are independent and identically distributed</li>
                     <li>Inputs are independent and identically distributed</li>
@@ -517,8 +490,37 @@
                 document.writeln(render);
                 </script>
             </div>
-            <div class="column-2-8 column-align">
-                <p class="caption">Generally, these assumptions are not true<sup class="footnote-index footnote-index6">6</sup>. However, in practice the theory generalizes well.</p>
+            <div class="column-2-8 column-align margin">
+            	<div class="marginbody" id="margin-7-body" data-number="7">
+                	<p class="caption">
+                    <script>
+                    document.write(katex.renderToString('tanh'))
+                    </script>, or <a href="https://en.wikipedia.org/wiki/Hyperbolic_function#Hyperbolic_tangent">hyperbolic tangent</a>, is a non-linear function defined as:
+                    <script>
+                    document.write(katex.renderToString("tanh(x) = \\frac{1 - e^{-2x}}{1 + e^{-2x}}"));
+                    </script>.</p>
+                </div>
+                <div class="marginbody" id="margin-8-body" data-number="8">
+                	<p class="caption">
+                    Important properties of <script>
+                    document.write(katex.renderToString('tanh'))
+                    </script> are its parity (
+                    <script>
+                    document.write(katex.renderToString('tanh(-x)'))
+                    </script> =
+                    <script>
+                    document.write(katex.renderToString('-tanh(x)'))
+                    </script>) and its linearity around 0 (
+                    <script>
+                    document.write(katex.renderToString("tanh'(0)"))
+                    </script> = 1).</p>
+                </div>
+                <div class="marginbody" id="margin-9-body" data-number="9">
+                	<p class="caption">The variance of the vector is the same as the variance of any of its elements because of independence.</p>
+                </div>
+                <div class="marginbody" id="margin-10-body" data-number="10">
+                	<p class="caption">Generally, these assumptions are not true<sup class="footnote-index footnote-index6">6</sup>. However, in practice the theory generalizes well.</p>
+                </div>
             </div>
             <div class="column-6-8">
                 <p>Explain why this proof can be used by induction to show that an appropriate initialization is mandatory...TODO</p>

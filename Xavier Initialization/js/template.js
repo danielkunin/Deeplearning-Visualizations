@@ -40,8 +40,10 @@ function marginSetup(){
 		var number = $(this).data("number"),
 			anchor = $("#margin-" + number + "-anchor"),
 			height = $(this).outerHeight(),
+			style = {'top': 0, 'middle': height / 2, 'bottom': height},
+			align = anchor.data("align"),
 			parent = anchor.parent().parent(),
-			offset = anchor.position().top - parent.position().top - height / 2;
+			offset = anchor.position().top - parent.position().top - style[align];
 		$(this).css('top', offset + 'px');
 	});
 
@@ -58,6 +60,6 @@ function marginSetup(){
 			body = $("#margin-" + number + "-body");
 		body.removeClass("margin-border");
 
+	})
 }
-
 

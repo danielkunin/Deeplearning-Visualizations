@@ -179,18 +179,19 @@ img{
   cursor: pointer;
   /*font-weight: bold;*/
   font-style: italic;
-  border-bottom: 2px rgba(255,196,0,0);/*#4DB6AC;*/
+  border-bottom: 2px solid rgba(255,196,0,1);/*#4DB6AC;*/
 }
 
 .marginbody{
   /*border:2px solid rgba(143,222,255,0);*/
   border-left: 2px solid rgba(255,196,0,0);/*rgba(77,182,172,0);*/
+  padding-left: 1em;
   position: absolute;
 }
 
 .marginanchor:hover{
-  /*background-or: #8FDEFF;*/
-  border-bottom: 2px solid rgba(255,196,0,1);
+  background-color: rgba(255,196,0,0.5);/*#8FDEFF;*/
+  /*border-bottom: 2px solid rgba(255,196,0,1);*/
 }
 
 .margin-border{
