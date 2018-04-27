@@ -65,7 +65,7 @@
                 </p>
                 <ol>
                     <li>Initialize the parameters</li>
-                    <li>Use an optimization algorithm (such as Gradient Descent), repeat:</li>
+                    <li>Use an <span class="marginanchor" id="margin-12-anchor" data-number="12" data-align="middle">optimization algorithm</span>, repeat:</li>
                     <ol type="a">
                         <li>Forward propagate an input image</li>
                         <li>Compute the cost function</li>
@@ -77,7 +77,7 @@
                     Given a new data point, you can then use your model (architecture + learned parameters) to predict its class.
                 </p>
                 <p>
-                    It is critical to initialize the parameters with the right method. To illustrate this argument, let’s consider the 3-layer neural network below. Initialize this network with different initialization methods and observe the impact on the learning.
+                    It is critical to initialize the parameters with the right method. To illustrate this argument, consider the 3-layer neural network below. Initialize this network with different initialization methods and observe the impact on the learning.
                 </p>
             </div>
         </div>
@@ -86,7 +86,7 @@
                 <h3>1. Choose input dataset</h3>
                 <p>Select a training dataset.</p>
                 <div id="playground_dataset"></div>
-                <p>Use the legend below to determine the value for elements in this visualization.</p>
+                <p>This legend details the color scheme for labels, and the values of the weights/gradients.</p>
                 <div id="playground_legend"></div>
             </div>
             <div class="viz-column-4-8">
@@ -120,8 +120,8 @@
                 </label>
             </div>
             <div class="viz-column-2-8">
-                <h3>3. Observe the training</h3>
-                <p>Train the network.</p>
+                <h3>3. Train the network.</h3>
+                <p>Observe the cost function and the decision boundary.</p>
                 <button class="button-transport" id="playground_reset" title="reset"><img src="img/reset.png"></button>
                 <button class="button-transport inactive" id="playground_start" title="start"><img src="img/play.png"></button>
                 <button class="button-transport hidden" id="playground_stop" title="stop"><img src="img/pause.png"></button>
@@ -160,7 +160,7 @@
                 <h3>II&emsp; What are the issues with a bad initialization?</h3>
                 <p>Consider this 9-layer neural network just after it was initialized.</p>
                 <img src="img/9layer.png">
-                <p>At every iteration of the optimization loop (forward, cost, backward, update), we observe that backpropagated gradients are either amplified or minified as we move from the output layer towards the input layer. This makes sense if you recall the following.
+                <p>At every iteration of the optimization loop (forward, cost, backward, update), we observe that backpropagated gradients are either amplified or minified as you move from the output layer towards the input layer. This makes sense if you recall the following.
                     <br>
                     <br> Assume all the activation functions are linear (identity function). Then, the output activation is:</p>
                 <script>
@@ -177,7 +177,7 @@
                     <script>
                     document.write(katex.renderToString('(2,2)'))
                     </script> because layers [1] to [L-1] have 2 neurons and receive 2 inputs.</p>
-                <p>Let's see what would be the outcome of a "too small", "too large" or "appropriate" initialization.</p>
+                <p>What would be the outcome of a "too small", "too large" or "appropriate" initialization?</p>
             </div>
         </div>
         <div class="container">
@@ -240,7 +240,7 @@
                 <h3>III&emsp;What is an "appropriate" initialization?</h3>
                 <p>We will stick to the following rule of thumb concerning the <span class="marginanchor" id="margin-4-anchor" data-number="4" data-align="top">variance</span> of our activations:</p>
                 <p class="inline-caption">The variance should stay the same across every layer to prevent the signal from vanishing or exploding.</p>
-                <p>More concretely, consider a <span class="marginanchor" id="margin-5-anchor" data-number="5" data-align="top">layer
+                <p>More concretely, consider a <span class="marginanchor" id="margin-5-anchor" data-number="5" data-align="top">layer 
                     <script>
                     document.write(katex.renderToString('l'))
                     </script></span>. Its forward propagation is:</p>
@@ -293,7 +293,11 @@
 	            </div>
 	            <div class="marginbody" id="margin-6-body" data-number="6">
 	                <img src="img/normal.png">
-	                <p class="caption">Data generated from a normal distribution is symmetric about its mean.</p>
+	                <p class="caption">Data generated from a normal distribution <script>
+                    document.write(katex.renderToString('\\mathcal{N}(\\mu,\\sigma^2)'))
+                    </script> is symmetric around its mean <script>
+                    document.write(katex.renderToString('\\mu'))
+                    </script>.</p>
             	</div>
             </div>
         </div>
@@ -323,7 +327,7 @@
                     <input type="radio" value="xe" name="mnist_init" checked>
                     <span class="checkmark"></span>
                 </label>
-                <label class="radio-container">Normal
+                <label class="radio-container">Normal(0,1)
                     <input type="radio" value="normal" name="mnist_init">
                     <span class="checkmark"></span>
                 </label>
@@ -340,7 +344,7 @@
             </div>
 
             <div class="viz-column-2-8">
-                 <p>Input Batch</p>
+                 <p>Input batch of 100 images</p>
                 <div id="mnist_input"></div>
                 <label class="viz">
                     Batch: <span id="batch">0</span> </label>
@@ -353,7 +357,7 @@
             </div>
             <div class="viz-column-2-8">
                 <div>
-                    <p>Output Predictions</p>
+                    <p>Output predictions of 100 images</p>
                     <div id="mnist_output"></div>
                     <label class="viz">
                         Misclassified: <span id="accuracy">0/100</span>
@@ -408,10 +412,11 @@
                     </script>. Values are small enough and thus
                     <script>
                     document.write(katex.renderToString("tanh(z^{[l]})\\approx z^{[l]}"))
-                    </script><sup class="footnote-index footnote-index5">5</sup>, meaning that
-                    <script>
-                    document.write(katex.renderToString("Var(a^{[l]}) = Var(z^{[l]})"))
-                    </script>.
+                    </script><sup class="footnote-index footnote-index5">5</sup>, meaning that:
+                                    <script>
+                var render = katex.renderToString("Var(a^{[l]}) = Var(z^{[l]})", { displayMode: true });
+                document.writeln(render);
+                </script>
                     Moreover,
                         <script>
                         document.write(katex.renderToString("z^{[l]} = W^{[l]}a^{[l-1]} + b^{[l]} = vector(z_1^{[l]},z_2^{[l]},\\dots,z_{n^{[l]}}^{[l]})"))
@@ -493,11 +498,21 @@
                 var render = katex.renderToString("Var(a^{[l]}) = n^{[l-1]}Var(W^{[l]})Var(a^{[l-1]})", { displayMode: true });
                 document.writeln(render);
                 </script>
+
+                <p>
+                Voilà! If we want the variance to stay the same across layers (<script>
+                    document.write(katex.renderToString("Var(a^{[l]}) = Var(a^{[l-1]})"))
+                    </script>), we need <script>
+                    document.write(katex.renderToString("Var(W^{[l]}) = \\frac{1}{n^{[l-1]}}"))
+                    </script>. This justifies the choice of variance for Xavier initialization.
+                </p>
+
+
                 <p>Notice that in the previous steps we did not choose a specific layer <script>
                     document.write(katex.renderToString("l"))
                     </script>. Thus, we have shown that this expression holds for every layer of our network.  Let <script>
                     document.write(katex.renderToString("L"))
-                    </script> be the output layer of our network.  Using this expression we can solve for the variance of the output of our neural network as follows:</p>
+                    </script> be the output layer of our network.  Using this expression at every layer, we can link the output layer's variance to the input layer's variance:</p>
                 <script>
                 var render = katex.renderToString("\\begin{aligned} Var(a^{[L]}) &= n^{[L-1]}Var(W^{[L]})Var(a^{[L-1]}) \\cr  &= n^{[L-1]}Var(W^{[L]})n^{[L-2]}Var(W^{[L-1]})Var(a^{[L-2]})\\cr &=\\dots\\cr &= [\\prod_{l=1}^L n^{[l-1]}Var(W^{[l]})]Var(x)\\end{aligned}", { displayMode: true });
                 document.writeln(render);
@@ -511,7 +526,7 @@
                     document.write(katex.renderToString("n^{[l-1]}Var(W^{[l]}) = 1"))
                     </script> by initializing <script>
                     document.write(katex.renderToString("Var(W^{[l]}) = \\frac{1}{n^{[l-1]}}"))
-                    </script>. This is Xavier Initialization!</p>
+                    </script>. This is a theoretical justification for Xavier Initialization!</p>
 
             </div>
             <div class="column-2-8 column-align margin">
@@ -540,10 +555,10 @@
                     </script> = 1).</p>
                 </div>
                 <div class="marginbody" id="margin-9-body" data-number="9">
-                	<p class="caption">The variance of the vector is the same as the variance of any of its elements because of independence.</p>
+                	<p class="caption">The variance of the vector is the same as the variance of any of its entries, because all its entries are drawn independently from the same distribution (i.i.d.).</p>
                 </div>
                 <div class="marginbody" id="margin-10-body" data-number="10">
-                	<p class="caption">Generally, these assumptions are not true. However, in practice the theory generalizes well.</p>
+                	<p class="caption">These assumptions are not always true, but they are necessary to approach the problem theoretically at this point.</p>
                 </div>
                 <div class="marginbody" id="margin-11-body" data-number="11">
                 	<p class="caption">This is only true for independent random variables.</p>
@@ -558,7 +573,7 @@
             </div>
             <div class="column-6-8 column-align">
                 <ol class="reference ">
-                    <li>Kian Katanforoosh - Written content and structure. </li>
+                    <li><a href="https://twitter.com/kiankatan">Kian Katanforoosh</a> - Written content and structure. </li>
                     <li>Daniel Kunin - Visualizations (created using <a href="https://d3js.org/">D3.js</a> and <a href="https://js.tensorflow.org/">TensorFlow.js</a>).</li>
                 </ol>
             </div>
@@ -578,28 +593,21 @@
             <div class="column-6-8 column-align">
                 <ol class="reference">
                     <li class="footnote-index1-target">All bias parameters are initialized to zero and weight parameters are drawn from a normal distribution with zero mean and selected variance.</li>
-                    <li class="footnote-index2-target">If
-                        <script>
-                        document.write(katex.renderToString("X"))
-                        </script> is a vector or a matrix, what does
-                        <script>
-                        document.write(katex.renderToString("Var(X)"))
-                        </script> concretely mean? Take this example,
-                        <script>
-                        document.write(katex.renderToString("X"))
-                        </script> is the input grayscale image of a neural network. This image comes from a distribution called “real world images”. If you select randomly 100,000 images from this distribution and each time, you collect the value of a random pixel
-                        <script>
-                        document.write(katex.renderToString("x_{ij}"))
-                        </script> in the middle of the image. What would the distribution of
-                        <script>
-                        document.write(katex.renderToString("x_{ij}"))
-                        </script> look like. Maybe something like this: All in all,
-                        <script>
-                        document.write(katex.renderToString("Var(X)"))
-                        </script> means the variance of any entry of the matrix (or vector)
-                        <script>
-                        document.write(katex.renderToString("X"))
-                        </script> (it is fair to assume they’re all distributed identically.)</li>
+                    <li class="footnote-index2-target">
+                        
+
+                        Under the hypothesis that all entries of the weight matrix <script>
+                        document.write(katex.renderToString("W^{[l]}"))</script> are picked from the same distribution, <script>
+                        document.write(katex.renderToString("Var(w_{11}) = Var(w_{12}) = ... = Var(w_{n^{[l]}n^{[l-1]}})"))</script>. Thus, <script>
+                        document.write(katex.renderToString("Var(W^{[l]})"))</script> indicates the variance of any entry of <script>
+                        document.write(katex.renderToString("W^{[l]}"))</script> (they're all the same!). <br>
+                        Similarly, we will denote <script>
+                        document.write(katex.renderToString("Var(x)"))</script> (resp. <script>
+                        document.write(katex.renderToString("Var(a^{[l]})"))</script>) the variance of any entry of <script>
+                        document.write(katex.renderToString("x"))</script> (resp. <script>
+                        document.write(katex.renderToString("a^{[l]}"))</script>). It is a fair approximation to consider that every pixel of a "real-world image" <script>
+                        document.write(katex.renderToString("x"))</script> is distributed according to the same distribution.
+                    </li>    
                     <li class="footnote-index3-target">All bias parameters are initialized to zero and weight parameters are drawn from either "Zero" distribution (
                         <script>
                         document.write(katex.renderToString("w_{ij} = 0"))
@@ -639,7 +647,7 @@
                         <script>
                         document.write(katex.renderToString("tanh(Z^{[l]}) \\approx Z^{[l]}"))
                         </script>.</li>
-                    <li class="footnote-index6-target">The first assumption will end up being true given our initialization scheme (we pick weights randomly according to a normal distribution centered at zero). The second assumption is not always true. For instance in images, inputs are pixel values, and pixel values in the same region are highly correlated with each other. On average, it’s more likely that a green pixel is surrounded by green pixels than by any other pixel color, because this pixel might be representing a grass field, or a green object. Although it’s not always true, we assume that inputs are distributed identically (let’s say from a normal distribution centered at zero.) The third assumption is generally true at initialization, given that our initialization scheme makes our weights independent and identically distributed (i.i.d.) The fact that these assumptions are not always true doesn’t end up being a problem. The theory generalizes well to practical application.</li>
+                    <li class="footnote-index6-target">The first assumption will end up being true given our initialization scheme (we pick weights randomly according to a normal distribution centered at zero). The second assumption is not always true. For instance in images, inputs are pixel values, and pixel values in the same region are highly correlated with each other. On average, it’s more likely that a green pixel is surrounded by green pixels than by any other pixel color, because this pixel might be representing a grass field, or a green object. Although it’s not always true, we assume that inputs are distributed identically (let’s say from a normal distribution centered at zero.) The third assumption is generally true at initialization, given that our initialization scheme makes our weights independent and identically distributed (i.i.d.).</li>
                 </ol>
             </div>
         </div>
