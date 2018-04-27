@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Learn how to appropriately initialize parameters in your neural networks.">
+    <meta name="author" content="--">
+    <title>Adversarial Attacks</title>
+    <!-- Fonts -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Assistant:300,400,600,700" rel="stylesheet">
+    <!-- Home Page CSS -->
+    <link rel="stylesheet" type="text/css" href="css/template.css">
+    <!--Favicon-->
+    <link rel="shortcut icon" type="image/png" href="img/favicon.png" />
+    <!-- Load jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Load D3 -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <!-- Load Tensorflow -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.9.0">
+    </script>
+    <!-- Load Katex -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.css" integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>
+    <!--Scroll To-->
+    <script src="js/template.js"></script>
+</head>
+
+<body>
+    <div class="header"> 
+        <div class="header-wrapper">
+
+        	<a href="https://www.deeplearning.ai/"><img id="header-logo" src="img/deeplearning.png"></a>
+            <ul class="header-nav">
+                <li>list item3</li>
+                <li>list item2</li>
+                <li>list item1</li>
+            </ul>
+        </div>
+    </div>
+    <div class="main divider-bottom intro">
+        <div class="container ">
+            <div class="column-6-8 column-align">
+                <h1 class="title">Adversarial Attacks</h1>
+                <h2>...</h2>
+            </div>
+            <div class="column-2-8 column-align">
+                <h3 class="tableOfContent">Table of content</h3>
+                <ol class="tableOfContent" type="I">
+                    <li class="index index1">Generating Attacks</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="container index1-target">
+            <div class="column-6-8">
+                <h3>I&emsp;Attacks...</h3>
+                <p>...</p>
+            </div>
+        </div>
+        <div class="full-container" id="mnist">
+            <div class="viz-column-2-8">
+                <h3>1. Load your dataset</h3>
+                <p>Load 10,000 handwritten digits images (<a href="http://yann.lecun.com/exdb/mnist/">MNIST</a>).</p>
+                <div>
+                    <button class="button emphasized" id="mnist_load">
+                        Load MNIST (<span id="percent">0%</span>)
+                    </button>
+                </div>
+ 			</div>
+            <div class="viz-column-4-8">
+                <h3>2. Select an initialization method</h3>
+                <p>Among the below distributions, select the one to use to initialize your parameters. <sup class="footnote-index footnote-index3">3</sup>.</p>
+                <label class="radio-container">Zero
+                    <input type="radio" value="zero" name="mnist_init">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Uniform
+                    <input type="radio" value="uniform" name="mnist_init">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Xavier
+                    <input type="radio" value="xe" name="mnist_init" checked>
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Normal
+                    <input type="radio" value="normal" name="mnist_init">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <div class="viz-column-2-8">
+                <h3>3. Train the network and observe</h3>
+                <p>The grid below refers to the input images, <span class="correct bold">Blue</span> squares represent correctly classified images. <span class="incorrect bold">Red</span> squares represent misclassified images.</p>
+                <div>
+                    <button class="button-transport" id="mnist_reset"><img src="img/reset.png"></button>
+                    <button class="button-transport inactive" id="mnist_start"><img src="img/play.png"></button>
+                    <button class="button-transport hidden" id="mnist_stop"><img src="img/pause.png"></button>
+                    <button class="button-transport inactive" id="mnist_step"><img src="img/fastforward.png"></button>
+                </div>
+            </div>
+
+            <div class="viz-column-2-8">
+                 <p>Input Batch</p>
+                <div id="mnist_input"></div>
+                <label class="viz">
+                    Batch: <span id="batch">0</span> </label>
+                <label>
+                    Epoch: <span id="epoch">0</span>
+                </label>
+            </div>
+            <div class="viz-column-4-8">
+                <div id="mnist_network"></div>
+            </div>
+            <div class="viz-column-2-8">
+                <div>
+                    <p>Output Predictions</p>
+                    <div id="mnist_output"></div>
+                    <label class="viz">
+                        Misclassified: <span id="accuracy">0/100</span>
+                    </label>
+                    <label>
+                        Cost: <span id="cost">0.00</span>
+                    </label>
+                </div>
+            </div>
+
+        </div>
+    </div>  
+    <div class="footer">
+        <div class="container">
+            <div class="column-2-8 column-align">
+                <h4 class="reference">Authors</h4>
+            </div>
+            <div class="column-6-8 column-align">
+                <ol class="reference ">
+                    <li>Kian Katanforoosh - Written content and structure. </li>
+                    <li>Daniel Kunin - Visualizations (created using <a href="https://d3js.org/">D3.js</a> and <a href="https://js.tensorflow.org/">TensorFlow.js</a>).</li>
+                </ol>
+            </div>
+            <div class="column-2-8 column-align">
+                <h4 class="reference">Acknowledgments</h4>
+            </div>
+            <div class="column-6-8 column-align">
+                <ol class="reference">
+                    <li>The layout of the article was designed by <a href="https://www.jingru-guo.com/">Jingru Guo</a>.</li>
+                    <li>The first visualization was inspired by Daniel Smilkov's and Shan Carter's Neural Network <a href="https://playground.tensorflow.org/">playground</a>.</li>
+                    <li>The second visualization adapted code from Andrej Karpathy's <a href="https://cs.stanford.edu/~karpathy/mnistjs/">visualization</a> of MNIST.</li>
+                </ol>
+            </div>
+            <div class="column-2-8 column-align">
+                <h4 class="reference">Footnotes</h4>
+            </div>
+            <div class="column-6-8 column-align">
+                <ol class="reference">
+                    <li class="footnote-index1-target">....</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</body>
+<!-- MNIST -->
+<!-- Main CSS -->
+<link rel="stylesheet" href="css/mnist.css">
+<!-- Neural Network Code -->
+<script src="js/mnist/nn.js"></script>
+<!-- Data Zip Reader -->
+<script src="js/mnist/zip/zip.js"></script>
+<!-- Data Generattion Code -->
+<script src="js/mnist/data.js"></script>
+<!-- Visualization Code -->
+<script src="js/mnist/viz.js"></script>

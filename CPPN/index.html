@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Compositional Pattern-Producing Network</title>
+</head>
+
+<body>
+    <div id="background">
+    </div>
+</body>
+
+<!-- TensorFlow.js -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.9.0"></script>
+<!-- CPPN Code -->
+<script src="js/cppn.js"></script>
+
+<script>
+	layers = [784,300,300,300,300,10];
+	cppn = new CPPN(layers);
+	cppn.initialize();
+	cppn.start();
+</script>
