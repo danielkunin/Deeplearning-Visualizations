@@ -58,6 +58,7 @@ ul.header-nav li{
     padding-bottom: 2em;
 }
 
+
 .main {
     width: 100%;
     height: auto;
@@ -259,6 +260,10 @@ p i{
   font-size: 16px;
 }
 
+a{
+  color: #03A9F4;
+}
+
 li{
   line-height: 1.8em;
   font-size: 18px;
@@ -292,6 +297,12 @@ ol.tableOfContent li{
   cursor: pointer;
   font-size: 16px;
 }
+
+
+.footer ol{
+  padding-left: 1em;
+}
+
 
 .footnote-index{
   cursor: pointer;
