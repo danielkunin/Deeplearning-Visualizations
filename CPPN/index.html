@@ -11,12 +11,28 @@
 
 <!-- TensorFlow.js -->
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.9.0"></script>
+<!-- Load D3 -->
+<script src="https://d3js.org/d3.v5.min.js"></script>
 <!-- CPPN Code -->
 <script src="js/cppn.js"></script>
 
 <script>
-	layers = [784,300,300,300,300,10];
-	cppn = new CPPN(layers);
+
+	var margin = {top: 0, right: 0, bottom: 0, left: 0},
+	  width = 200 - margin.left - margin.right,
+	  height = 200 - margin.top - margin.bottom;
+
+
+	// add canvas
+	const canvas = d3.select("#background").append("canvas")
+		.style("width", function(){ return width + "px"; })
+		.style("height", function(){ return height + "px"; })
+		.attr("width", 128)
+		.attr("height", 128);
+
+	layers = [5,30,30,3];
+	cppn = new CPPN(layers, 'tanh', 20, 20, canvas.node());
 	cppn.initialize();
 	cppn.start();
+	cppn.stop();
 </script>
