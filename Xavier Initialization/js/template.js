@@ -42,7 +42,7 @@ function marginSetup(){
 			height = $(this).outerHeight(),
 			style = {'top': 0, 'middle': height / 2, 'bottom': height},
 			align = anchor.data("align"),
-			parent = anchor.parent().parent(),
+			parent = anchor.parents('div').eq(0),
 			offset = anchor.position().top - parent.position().top - style[align];
 		$(this).css('top', offset + 'px');
 	});

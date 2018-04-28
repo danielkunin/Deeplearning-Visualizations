@@ -59,13 +59,13 @@
     </div>
     <div class="main">
         <div class="container index1-target">
-            <div class="column-6-8">
+            <div class="column-6-8 column-align">
                 <h3>I&emsp;The importance of an appropriate initialization</h3>
                 <p>A neural network model is defined by its architecture and its parameters. For example, in order to build a binary classifier, you first fix an architecture (a neural network). Then, you learn the parameters using the training process:
                 </p>
                 <ol>
                     <li>Initialize the parameters</li>
-                    <li>Use an optimization algorithm (such as Gradient Descent), repeat:</li>
+                    <li>Use an <span class="marginanchor" id="margin-0-anchor" data-number="0" data-align="middle">optimization algorithm</span>, repeat:</li>
                     <ol type="a">
                         <li>Forward propagate an input image</li>
                         <li>Compute the cost function</li>
@@ -79,6 +79,11 @@
                 <p>
                     It is critical to initialize the parameters with the right method. To illustrate this argument, let’s consider the 3-layer neural network below. Initialize this network with different initialization methods and observe the impact on the learning.
                 </p>
+            </div>
+            <div class="column-2-8 column-align margin">
+            	<div class="marginbody" id="margin-0-body" data-number="0">
+                	<p class="caption">Examples include Adam, Momentum, RMSProp, Stochastic and Batch Gradient Descent methods.</p>
+                </div>
             </div>
         </div>
         <div class="full-container" id="playground">
@@ -110,12 +115,12 @@
                 </label>
                 <div id="playground_network"></div>
                 <p>Select whether to visualize the weights or gradients of the network above.</p>
-                <label class="radio-container">Gradient
-                    <input type="radio" value="gradient" name="playground_link">
-                    <span class="checkmark"></span>
-                </label>
                 <label class="radio-container">Weight
                     <input type="radio" value="weight" name="playground_link" checked>
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Gradient
+                    <input type="radio" value="gradient" name="playground_link">
                     <span class="checkmark"></span>
                 </label>
             </div>
@@ -240,7 +245,7 @@
                 <h3>III&emsp;What is an "appropriate" initialization?</h3>
                 <p>We will stick to the following rule of thumb concerning the <span class="marginanchor" id="margin-4-anchor" data-number="4" data-align="top">variance</span> of our activations:</p>
                 <p class="inline-caption">The variance should stay the same across every layer to prevent the signal from vanishing or exploding.</p>
-                <p>More concretely, consider a <span class="marginanchor" id="margin-5-anchor" data-number="5" data-align="top">layer
+                <p>More concretely, consider a <span class="marginanchor" id="margin-5-anchor" data-number="5" data-align="middle">layer
                     <script>
                     document.write(katex.renderToString('l'))
                     </script></span>. Its forward propagation is:</p>
@@ -378,10 +383,10 @@
             <div class="column-6-8 index4-target column-align">
                 <h3>IV&emsp;Proof of Xavier initialization</h3>
                 <p>In this section, we will prove Xavier Initialization. I believe it sometimes help to understand the proof to grasp the concept, but you can get most of the intuition without the math.</p>
-                <p>Let’s work on the layer
+                <p>Let’s work on the <span class="marginanchor" id="margin-7-anchor" data-number="7" data-align="middle">layer
                     <script>
                     document.write(katex.renderToString('l'))
-                    </script> described in part (III) and assume the activation function is <span class="marginanchor" id="margin-7-anchor" data-number="7" data-align="middle">
+                    </script></span> described in part (III) and assume the activation function is <span class="marginanchor" id="margin-8-anchor" data-number="8" data-align="middle">
                     <script>
                     document.write(katex.renderToString('tanh'))
                     </script></span>. The forward propagation is:</p>
@@ -402,7 +407,7 @@
                     document.write(katex.renderToString('Var(a^{[l-1]}) = Var(a^{[l]})'))
                     </script>.
                 </p>
-                <p>Assume we initialized our network with appropriate values. Early in the training, we are in the <span class="marginanchor" id="margin-8-anchor" data-number="8" data-align="middle">linear regime</span> of
+                <p>Assume we initialized our network with appropriate values. Early in the training, we are in the <span class="marginanchor" id="margin-9-anchor" data-number="9" data-align="middle">linear regime</span> of
                     <script>
                     document.write(katex.renderToString("tanh"))
                     </script>. Values are small enough and thus
@@ -421,7 +426,7 @@
                         </script>. For simplicity, let’s assume that
                         <script>
                         document.write(katex.renderToString("b^{[l]} = 0"))
-                        </script> (it will end up being true given the choice of initialization we will choose). Thus, looking <span class="marginanchor" id="margin-9-anchor" data-number="9" data-align="middle">element-wise</span> at the previous equation
+                        </script> (it will end up being true given the choice of initialization we will choose). Thus, looking <span class="marginanchor" id="margin-10-anchor" data-number="10" data-align="middle">element-wise</span> at the previous equation
                         <script>
                         document.write(katex.renderToString("Var(a^{[l-1]}) = Var(a^{[l]})"))
                         </script> now gives:</p>
@@ -429,7 +434,7 @@
                     var render = katex.renderToString("Var(a_k^{[l]}) = Var(z_k^{[l]}) = Var(\\sum_{j=1}^{n^{[l-1]}}w_{kj}^{[l]}a_j^{[l-1]})", { displayMode: true });
                     document.writeln(render);
                     </script>
-                <p>A common “math trick” at this point is to extract the summation outside the variance. To do this we must make the following three <span class="marginanchor" id="margin-10-anchor" data-number="10" data-align="middle">assumptions</span><sup class="footnote-index footnote-index6">6</sup>:</p>
+                <p>A common “math trick” at this point is to extract the summation outside the variance. To do this we must make the following three <span class="marginanchor" id="margin-11-anchor" data-number="11" data-align="middle">assumptions</span><sup class="footnote-index footnote-index6">6</sup>:</p>
                 <ol class="inline-caption">
                     <li>Weights are independent and identically distributed</li>
                     <li>Inputs are independent and identically distributed</li>
@@ -440,7 +445,7 @@
                 var render = katex.renderToString("Var(a_k^{[l]}) = Var(z_k^{[l]}) = Var(\\sum_{j=1}^{n^{[l-1]}}w_{kj}^{[l]}a_j^{[l-1]}) = \\sum_{j=1}^{n^{[l-1]}}Var(w_{kj}^{[l]}a_j^{[l-1]})", { displayMode: true });
                 document.writeln(render);
                 </script>
-                <p>Another common “math trick” is to convert the variance of a product into product of variances, and we have a <span class="marginanchor" id="margin-11-anchor" data-number="11" data-align="middle">formula</span> for it:</p>
+                <p>Another common “math trick” is to convert the variance of a product into product of variances, and we have a <span class="marginanchor" id="margin-12-anchor" data-number="12" data-align="middle">formula</span> for it:</p>
                 <script>
                 var render = katex.renderToString("Var(XY) = E[X]^2Var(Y) + Var(X)E[Y]^2 + Var(X)Var(Y)", { displayMode: true });
                 document.writeln(render);
@@ -516,6 +521,19 @@
             </div>
             <div class="column-2-8 column-align margin">
             	<div class="marginbody" id="margin-7-body" data-number="7">
+                	<img src="img/layerl.png">
+	                <p class="caption">
+	                    <script>
+	                    document.write(katex.renderToString('a^{[l-1]}'))
+	                    </script> represents the input to layer 
+	                    <script>
+	                    document.write(katex.renderToString('l'))
+	                    </script> and 
+	                    <script>
+	                    document.write(katex.renderToString('a^{[l]}'))
+	                    </script> represents the output.</p>
+	            </div>
+            	<div class="marginbody" id="margin-8-body" data-number="8">
                 	<p class="caption">
                     <script>
                     document.write(katex.renderToString('tanh'))
@@ -524,7 +542,7 @@
                     document.write(katex.renderToString("tanh(x) = \\frac{1 - e^{-2x}}{1 + e^{-2x}}"));
                     </script>.</p>
                 </div>
-                <div class="marginbody" id="margin-8-body" data-number="8">
+                <div class="marginbody" id="margin-9-body" data-number="9">
                 	<p class="caption">
                     Important properties of <script>
                     document.write(katex.renderToString('tanh'))
@@ -539,13 +557,13 @@
                     document.write(katex.renderToString("tanh'(0)"))
                     </script> = 1).</p>
                 </div>
-                <div class="marginbody" id="margin-9-body" data-number="9">
+                <div class="marginbody" id="margin-10-body" data-number="10">
                 	<p class="caption">The variance of the vector is the same as the variance of any of its elements because of independence.</p>
                 </div>
-                <div class="marginbody" id="margin-10-body" data-number="10">
+                <div class="marginbody" id="margin-11-body" data-number="11">
                 	<p class="caption">Generally, these assumptions are not true. However, in practice the theory generalizes well.</p>
                 </div>
-                <div class="marginbody" id="margin-11-body" data-number="11">
+                <div class="marginbody" id="margin-12-body" data-number="12">
                 	<p class="caption">This is only true for independent random variables.</p>
                 </div>
             </div>

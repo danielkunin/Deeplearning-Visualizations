@@ -72,7 +72,7 @@ function playground_legend() {
   // scales
   var x = d3.scaleLinear()
     .domain([0,1])
-    .range([40,width])
+    .range([80,width])
   var y = d3.scaleLinear()
     .domain([0,1])
     .range([0,height])
@@ -108,7 +108,7 @@ function playground_legend() {
       .attr("y", height)
       .attr("dy", "2.5")
       .style("text-anchor", "start")
-      .text("Node:")
+      .text("Node Type:")
       .attr("class", "label");
   }
   
@@ -138,7 +138,7 @@ function playground_legend() {
       .attr('stroke','black')
       .attr("x", x(x_cord))
       .attr("y", y(y_cord))
-      .attr("width", width - 40)
+      .attr("width", width - 80)
       .attr("height", 10);
 
     svg.append("g")
@@ -159,8 +159,8 @@ function playground_legend() {
 
   // load legend
   add(['Input', 'Relu', 'Sigmoid']);
-  gradient(c1, "Data", 0, 0.1, ["0", "0.5", "1"]);
-  gradient(c2, "Link", 0, 0.5, ["neg", "zero", "pos"]);
+  gradient(c1, "Label/Prediction", 0, 0.1, ["0", "0.5", "1"]);
+  gradient(c2, "Weight/Gradient", 0, 0.5, ["neg", "zero", "pos"]);
 
   return true;
 }
