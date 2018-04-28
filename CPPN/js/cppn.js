@@ -220,7 +220,7 @@ class CPPN {
   // Method
   initialize() {
 	for (var l = 1; l < layers.length; l++) {
-		this.parameters['w' + l] = tf.variable(tf.randomNormal([layers[l-1],layers[l]], 0, 1));
+		this.parameters['w' + l] = tf.variable(tf.randomNormal([layers[l-1],layers[l]], 0, 0.6));
 	}
   }
 
@@ -265,6 +265,7 @@ class CPPN {
     });
 
     await this.visualize(output);
+    output.dispose();
     await tf.nextFrame();
     this.train();
   }

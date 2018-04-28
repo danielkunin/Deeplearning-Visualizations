@@ -19,8 +19,8 @@
 <script>
 
 	var margin = {top: 0, right: 0, bottom: 0, left: 0},
-	  width = 200 - margin.left - margin.right,
-	  height = 200 - margin.top - margin.bottom;
+	  width = 400 - margin.left - margin.right,
+	  height = 400 - margin.top - margin.bottom;
 
 
 	// add canvas
@@ -30,9 +30,8 @@
 		.attr("width", 128)
 		.attr("height", 128);
 
-	layers = [5,30,30,3];
-	cppn = new CPPN(layers, 'tanh', 20, 20, canvas.node());
+	layers = [5,30,3];
+	cppn = new CPPN(layers, 'tanh', 40, 30, canvas.node());
 	cppn.initialize();
 	cppn.start();
-	cppn.stop();
 </script>
