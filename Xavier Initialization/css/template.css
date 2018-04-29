@@ -1,5 +1,11 @@
+html{
+/*  max-width: 1080px;
+  min-width: 720px;*/
+}
+
 body {
     width: 100%;
+
     margin: 0;
     font-family: "Assistant";
     background-color: #FFFFFF;
@@ -80,10 +86,11 @@ ul.header-nav li{
 
 h1.title{
   margin: 0 auto;
+  font-size: 52px;
 }
 
 .vis-background{
-  margin-top: 12%;
+  margin-top: 8%;
 }
 
 
@@ -97,7 +104,12 @@ h2.title{
 
 p.title{
   color:rgba(0,0,0,0.6);
+  margin-top: 0.5em;
 
+}
+
+p.title a{
+  text-decoration: none;
 }
 
 p.citation{
@@ -500,7 +512,7 @@ ol.reference li{
 
 /*Responsive*/
 
-@media screen and (max-width: 680px) {
+@media screen and (max-width: 720px) {
 
     .column-align {
         display: block;
@@ -519,10 +531,21 @@ ol.reference li{
     ol{
     padding-left: 1em;
     } 
+     h3.tableOfContent{
+      margin-top: 2em;
+    }
+
+    ul.header-nav{
+      display: none;
+    }
+
+    .intro{
+      padding-top: 5em;
+    }
 
 }
 
-@media screen and (min-width: 680px) {
+@media screen and (min-width: 720px) {
     .column-8-8 {
         width: 84%;
     }
@@ -553,6 +576,8 @@ ol.reference li{
 
     ol{
     padding-left: 4em;}
+
+
 
   
 }
