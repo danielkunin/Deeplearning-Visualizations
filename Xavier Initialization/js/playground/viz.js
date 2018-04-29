@@ -407,7 +407,8 @@ function playground_pred() {
     .style("height", function(){ return height + "px"; })
     .style("position", "absolute")
     .style("left", margin.left + "px")
-    .style("top", 0 + "px");
+    .style("top", 0 + "px")
+    .style("border", "2px solid black");
 
   // add svg
   var svg = output.append("svg")

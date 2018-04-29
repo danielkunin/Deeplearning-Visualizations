@@ -164,8 +164,18 @@ ul.header-nav li{
   width: 250px;
 }
 
+
+.cppn {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: -1;
+}
+
+
 img{
-	width: 100%;}
+	width: 100%;
+}
 
 .column-align {
     display: inline-block;

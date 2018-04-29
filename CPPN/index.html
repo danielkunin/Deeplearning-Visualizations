@@ -5,33 +5,15 @@
 </head>
 
 <body>
-    <div id="background">
-    </div>
+	<h1 class="cppnControl">Compositional Pattern-Producing Network</h1>
+    <div id="background"></div>
 </body>
 
 <!-- TensorFlow.js -->
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.9.0"></script>
 <!-- Load D3 -->
 <script src="https://d3js.org/d3.v5.min.js"></script>
+<!-- Load jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <!-- CPPN Code -->
 <script src="js/cppn.js"></script>
-
-<script>
-
-	var margin = {top: 0, right: 0, bottom: 0, left: 0},
-	  width = 1000 - margin.left - margin.right,
-	  height = 400 - margin.top - margin.bottom;
-
-
-	// add canvas
-	const canvas = d3.select("#background").append("canvas")
-		.style("width", function(){ return width + "px"; })
-		.style("height", function(){ return height + "px"; })
-		.attr("width", 128)
-		.attr("height", 128);
-
-	layers = [5,30,30,30,3];
-	cppn = new CPPN(layers, 'relu', 40, 30, canvas.node());
-	cppn.initialize();
-	cppn.start();
-</script>
