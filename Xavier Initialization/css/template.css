@@ -58,7 +58,7 @@ ul.header-nav li{
 }
 
 .intro{
-  padding-top:3em;
+  padding-top:5em;
   padding-bottom: 2em;
 }
 
@@ -100,7 +100,6 @@ h2.title{
   color: #9B9B9B;
   margin: 0%;
   font-size: 24px;
-  padding-top: 1em;
 }
 
 p.title{
@@ -543,7 +542,7 @@ ol.reference li{
     }
 
     .intro{
-      padding-top: 5em;
+      padding-top: 6em;
     }
 
 }
