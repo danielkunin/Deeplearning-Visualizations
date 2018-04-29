@@ -112,7 +112,7 @@ p.title{
 
 p.title a{
   text-decoration: none;
-  color: white;
+  color: rgba(255,255,255,0.8);
 }
 
 p.citation{
