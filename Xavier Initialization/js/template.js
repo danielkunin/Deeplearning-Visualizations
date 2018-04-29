@@ -11,6 +11,15 @@ $(window).load(function() {
 		toSection($(target));
 	});
 
+	$(".reference > li").click(function(){
+		var target = $(this).attr('class');
+			target = target.split("-");
+			
+			target = "."+target[0]+"-"+target[1];
+			console.log(target);
+		toSection($(target));
+	})
+
 	marginSetup();
 });
 
