@@ -229,12 +229,13 @@ img{
 .marginanchor {
   cursor: pointer;
   font-style: italic;
-  background-color: rgba(255,196,0,0.3);
+  /*background-color: rgba(255,196,0,0.3);*/
+  background-color: rgba(3,196,244,0.3);
 }
 
 .marginbody {
   opacity: 0;
-  border-left: 2px solid rgba(255,196,0,0);
+  border-left: 2px solid rgba(3,196,244,0);
   padding-left: 1em;
   position: absolute;
 }
@@ -244,12 +245,12 @@ img{
 }
 
 .marginanchor:hover {
-  background-color: rgba(255,196,0,0.8);
+  background-color: rgba(3,196,244,0.6);
 }
 
 .margin-border {
   opacity: 1;
-  border-left: 2px solid rgba(255,196,0,1);
+  border-left: 2px solid rgba(3,196,244,1);
 
 }
 
@@ -416,7 +417,7 @@ p.img-caption{
 }
 
 p.inline-caption{
-  color: #9B9B9B;
+  color: rgba(0,0,0,0.5);
     font-weight: 200;
     margin-top: 2.5em;
     margin-bottom: 2.5em;

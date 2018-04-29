@@ -45,6 +45,7 @@ $.fn.inView = function() {
 function marginSetup(){
 
 	// vertically align margin body with anchor
+
 	$(".marginbody").each(function(){
 		var number = $(this).data("number"),
 			anchor = $("#margin-" + number + "-anchor"),
