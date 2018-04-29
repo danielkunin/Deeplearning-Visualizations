@@ -6,17 +6,21 @@ body {
 
 }
 
-.header,
-.footer {
+.header{
     width: 100%;
+    height: auto;
 
-    background-color: white;
 }
 
 .header {
    /* border-bottom: 1px solid #D0D0D0;*/
 }
 
+
+.footer{
+  width: 100%;
+  background-color: #F0F0F0;
+}
 
 .header-wrapper{
 
@@ -48,7 +52,7 @@ ul.header-nav li{
 }
 
 .intro{
-  padding-top:5em;
+  padding-top:10em;
 }
 
 .footer {
@@ -299,6 +303,7 @@ ol.tableOfContent{
   padding-left: 3em;
   padding-top: 0em;
   padding-bottom: 0em;
+
 }
 
 ol.tableOfContent li{
@@ -307,6 +312,50 @@ ol.tableOfContent li{
   cursor: pointer;
   font-size: 16px;
 }
+
+.tableOfContentNav{
+  background-color: white;
+
+}
+
+.fixedTableOfContent{
+   position: fixed;
+  top: 0;
+}
+
+ol.tableOfContent2{
+  border-left: 1px solid #767676;
+  color:#767676;
+  padding-left: 0em;
+  padding-top: 0em;
+  padding-bottom: 0em;
+  margin: 0.5em auto;
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+ 
+}
+
+
+
+
+ol.tableOfContent2 li{
+  text-align: left;
+  line-height: 1em;
+  margin:0.5em 0.5em;
+  cursor: pointer;
+  font-size: 14px;
+ 
+  display: inline-block;
+  width: 20%;
+  vertical-align: top;
+  cursor: pointer;
+}
+
+ol.tableOfContent2 li:hover{
+  color: black;
+}
+
 
 
 .footer ol{
