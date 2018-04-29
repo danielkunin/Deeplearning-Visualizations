@@ -87,6 +87,7 @@ ul.header-nav li{
 h1.title{
   margin: 0 auto;
   font-size: 52px;
+  color: white;
 }
 
 .vis-background{
@@ -105,11 +106,13 @@ h2.title{
 p.title{
   color:rgba(0,0,0,0.6);
   margin-top: 0.5em;
+  color: white;
 
 }
 
 p.title a{
   text-decoration: none;
+  color: white;
 }
 
 p.citation{
