@@ -99,6 +99,17 @@ p.title{
 
 }
 
+p.citation{
+  font-family: monospace;
+  font-size: 12px;
+  color:rgba(0,0,0,0.6);
+  padding: 1.5em 2em;
+  display: block;
+  background-color: rgba(0,0,0,0.05);
+  line-height: 1em;
+
+}
+
 
 
 /*grid*/
