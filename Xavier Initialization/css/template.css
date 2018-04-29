@@ -52,7 +52,8 @@ ul.header-nav li{
 }
 
 .intro{
-  padding-top:10em;
+  padding-top:12em;
+  padding-bottom: 2em;
 }
 
 .footer {
@@ -76,16 +77,24 @@ ul.header-nav li{
     height: auto;
 }
 
-.container h1 {
-    margin: 0%;
+
+h1.title{
+  margin: 0% 0% 0.5em 0%;
+  padding-top: 0.5em;
+
 }
 
-.container h2 {
-    color: #9B9B9B;
-    margin-top: 0;
-    margin-bottom: 5%;
+
+h2.title{
+  color: #9B9B9B;
+  margin: 0%;
+  font-size: 18px;
 }
 
+p.title{
+  color:rgba(0,0,0,0.6);
+
+}
 
 
 
@@ -248,7 +257,8 @@ img{
 /*Typography*/
 
 h1 {
-    font-size: 48px;
+    font-size: 42px;
+    line-height: 1em;
 }
 
 h2 {
@@ -275,7 +285,8 @@ p i{
 }
 
 a{
-  color: #03A9F4;
+  color: black;
+  cursor: pointer;
 }
 
 li{
@@ -298,9 +309,9 @@ ol{
 }
 
 ol.tableOfContent{
-  border-left: 1px solid #767676;
+  border-left: 1.5px solid #D0D0D0;
   color:#767676;
-  padding-left: 3em;
+  padding-left: 2em;
   padding-top: 0em;
   padding-bottom: 0em;
 
@@ -311,6 +322,11 @@ ol.tableOfContent li{
   margin:1em 0;
   cursor: pointer;
   font-size: 16px;
+}
+
+h3.tableOfContent{
+  padding-top: 0;
+  margin-top: 0;
 }
 
 .tableOfContentNav{
@@ -406,7 +422,7 @@ p.inline-caption{
     margin-bottom: 2.5em;
     font-size: 20px;
     font-style: italic;
-    border-left: 2px solid #03A9F4;
+    border-left: 2px solid black;
     padding-left: 1.5em;
 
 }
