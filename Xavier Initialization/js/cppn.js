@@ -126,8 +126,8 @@ class CPPN {
           i++;
           // color extreme points
           var c1 = [255,139,34],
-              c2 = [255,104,89],
-              c3 = [252,77,119];
+              c2 = [255,87,87],
+              c3 = [255,31,103];
           // define convex combination
           var r = Math.floor(c1[0] * data[k + 0] + c2[0] * data[k + 1] + c3[0] * data[k + 2]),
               g = Math.floor(c1[1] * data[k + 0] + c2[1] * data[k + 1] + c3[1] * data[k + 2]),
@@ -159,7 +159,7 @@ function cppnSetup() {
 
     // make cppn
     layers = [5,30,30,30,3];
-    var cppn = new CPPN(layers, 'sin', 100, 70, canvas.node());
+    var cppn = new CPPN(layers, 'sin', 200, 150, canvas.node());
 
     // start
     cppn.initialize();
