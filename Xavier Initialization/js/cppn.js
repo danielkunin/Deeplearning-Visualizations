@@ -154,7 +154,7 @@ function cppnSetup() {
     // add canvas
     const canvas = d3.select(".vis-background").append("canvas")
         .style("width", "100%")
-        .style("height", "400px")
+        .style("height", "50%")
         .attr("class", "cppn");
 
     // make cppn

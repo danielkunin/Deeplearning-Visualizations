@@ -52,7 +52,7 @@ ul.header-nav li{
 }
 
 .intro{
-  padding-top:12em;
+  padding-top:4em;
   padding-bottom: 2em;
 }
 
@@ -79,10 +79,13 @@ ul.header-nav li{
 
 
 h1.title{
-  margin: 0% 0% 0.5em 0%;
-  padding-top: 0.5em;
-
+  margin: 0 auto;
 }
+
+.vis-background{
+  margin-top: 12%;
+}
+
 
 
 h2.title{
@@ -328,6 +331,7 @@ ol.tableOfContent li{
 h3.tableOfContent{
   padding-top: 0;
   margin-top: 0;
+    color:rgba(0,0,0,0.8);
 }
 
 .tableOfContentNav{
@@ -384,10 +388,7 @@ ol.tableOfContent2 li:hover{
   cursor: pointer;
 }
 
-h3.tableOfContent{
-  color:rgba(0,0,0,0.8);
-  padding-top: 1em;
-}
+
 
 
 ol.tableOfContent li:hover{
