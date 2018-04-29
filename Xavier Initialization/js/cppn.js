@@ -39,14 +39,13 @@ class CPPN {
 
     this.z1Counter = 0;
     this.z2Counter = 0;
-
     this.parameters = {};
     this.isTraining = false;
 
 
-    const canvasSize = 128;
+    const canvasSize = 64;
     const NUM_IMAGE_SPACE_VARIABLES = 3;  // x, y, r
-  const NUM_LATENT_VARIABLES = 2;
+    const NUM_LATENT_VARIABLES = 2;
     this.canvas.width = canvasSize;
     this.canvas.height = canvasSize;
 
@@ -73,9 +72,9 @@ class CPPN {
 
   // Method
   initialize() {
-  for (var l = 1; l < layers.length; l++) {
-    this.parameters['w' + l] = tf.variable(tf.randomNormal([layers[l-1],layers[l]], 0, 0.6));
-  }
+    for (var l = 1; l < layers.length; l++) {
+      this.parameters['w' + l] = tf.variable(tf.randomNormal([layers[l-1],layers[l]], 0, 0.6));
+    }
   }
 
 
@@ -88,6 +87,7 @@ class CPPN {
     this.z2Counter += 1 / this.z2Scale;
 
     const output = tf.tidy(() => {
+
       const z1 = tf.scalar(Math.sin(this.z1Counter));
       const z2 = tf.scalar(Math.cos(this.z2Counter));
       const z1Mat = z1.mul(this.ones);
@@ -96,14 +96,13 @@ class CPPN {
       const concatAxis = 1;
       const latentVars = z1Mat.concat(z2Mat, concatAxis);
 
-      const activation = (x) =>
-          activationFunctionMap[this.activation](x);
+      const activation = (x) => activationFunctionMap[this.activation](x);
 
       let output = this.data.concat(latentVars, concatAxis);
 
       for (var l = 1; l < layers.length; l++) {
-    output = activation(output.matMul(this.parameters['w' + l]));
-    }
+        output = activation(output.matMul(this.parameters['w' + l]));
+      }
 
       return output.sigmoid().reshape([this.canvas.height, this.canvas.width, 3]);
     });
@@ -115,27 +114,29 @@ class CPPN {
   }
 
   async visualize(output) {
-  const [height, width] = output.shape;
-  const ctx = this.canvas.getContext('2d');
-  const data = await output.data();
-  var i = 0;
-  for (var y = 0; y < height; y++) {
-      for (var x = 0; x < width; x++) {
-        var k = i * 3;
-        var c1 = [255,139,34];
-        var c2 = [255,104,89];
-        var c3 = [252,77,119];
-        
-      var r = Math.floor(c1[0] * data[k + 0] + c2[0] * data[k + 1] + c3[0] * data[k + 2]);
-      var g = Math.floor(c1[1] * data[k + 0] + c2[1] * data[k + 1] + c3[1] * data[k + 2]);
-      var b = Math.floor(c1[2] * data[k + 0] + c2[2] * data[k + 1] + c3[2] * data[k + 2]);
+    var [height, width] = output.shape,
+        ctx = this.canvas.getContext('2d'),
+        data = await output.data();
 
-        var color= 'rgb(' + r + ',' + g + ',' + b + ')';
-        ctx.fillStyle = color;
-        ctx.fillRect(x, y, 1, 1);
-        i++;
+    var i = 0;
+    for (var y = 0; y < height; y++) {
+        for (var x = 0; x < width; x++) {
+          // indexing
+          var k = i * 3;
+          i++;
+          // color extreme points
+          var c1 = [255,139,34],
+              c2 = [255,104,89],
+              c3 = [252,77,119];
+          // define convex combination
+          var r = Math.floor(c1[0] * data[k + 0] + c2[0] * data[k + 1] + c3[0] * data[k + 2]),
+              g = Math.floor(c1[1] * data[k + 0] + c2[1] * data[k + 1] + c3[1] * data[k + 2]),
+              b = Math.floor(c1[2] * data[k + 0] + c2[2] * data[k + 1] + c3[2] * data[k + 2]);
+          // add color
+          ctx.fillStyle = 'rgb(' + r + ',' + g + ',' + b + ')';
+          ctx.fillRect(x, y, 1, 1);
+      }
     }
-  }
   }
 
   start() {
@@ -147,11 +148,6 @@ class CPPN {
     this.isTraining = false;
   }
 
-  step() {
-    this.start();
-    this.stop();
-  }
-
 }
 
 function cppnSetup() {
@@ -159,19 +155,26 @@ function cppnSetup() {
     const canvas = d3.select(".vis-background").append("canvas")
         .style("width", "100%")
         .style("height", "400px")
-        .attr("width", 128)
-        .attr("height", 128)
         .attr("class", "cppn");
 
+    // make cppn
     layers = [5,30,30,30,3];
-    var cppn = new CPPN(layers, 'sin', 40, 30, canvas.node());
+    var cppn = new CPPN(layers, 'sin', 100, 70, canvas.node());
+
+    // start
     cppn.initialize();
-    cppn.step();
-    $(".cppnControl").mouseenter(function() {
-      cppn.start();
-    });
-    $(".cppnControl").mouseleave(function() {
-      cppn.stop();
+    cppn.start();
+
+    // toggle start/stop if in view
+    $(window).on('resize scroll', function() {
+      // in view
+      if($('.cppn').inView() & !cppn.isTraining) {
+          cppn.start();
+      }
+      // out of view 
+      if(!$('.cppn').inView()) {
+        cppn.stop();
+      }
     });
 }
 

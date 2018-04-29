@@ -122,7 +122,8 @@ function mnist_input() {
     .style("width", function(){ return width + "px"; })
     .style("height", function(){ return height + "px"; })
     .attr("width", n * 28)
-    .attr("height", m * 28);
+    .attr("height", m * 28)
+    .style("border", "2px solid black");
 
   // get context
   var ctx = canvas.node().getContext("2d")
@@ -173,7 +174,8 @@ function mnist_output() {
     .style("width", function(){ return width + "px"; })
     .style("height", function(){ return height + "px"; })
     .attr("width", n * 28)
-    .attr("height", m * 28);
+    .attr("height", m * 28)
+    .style("border", "2px solid black");
 
   // get context
   var ctx = canvas.node().getContext("2d")
