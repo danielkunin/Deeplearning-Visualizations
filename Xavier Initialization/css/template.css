@@ -95,7 +95,8 @@ ul.header-nav li{
   border-radius: 2px;
   z-index: 1000;
   cursor: pointer;
-  display: none;
+  display: block;
+  visibility: hidden;
 }
 
 

@@ -21,7 +21,6 @@ $(window).load(function() {
 	})
 
 	marginSetup();
-	backToTopButton();
 	backToTop();
 });
 
@@ -75,47 +74,23 @@ function marginSetup(){
 	})
 }
 
-function backToTopButton(){
-	var section1_pos = $(".index1-target").offset().top;
-	var show_pos = [section1_pos];
-	var hide_pos = [0];
 
-	$( ".full-container" ).each(function( index ) {
-	   var pos = $(this).offset().top-$(window).height()/2;
-	   hide_pos.push(pos);
+function backToTop() {
 
-	   pos = pos + $(this).height()+$(window).height()/2;
-	   show_pos.push(pos);
-	});
-
-	$(window).scroll(function(){
-	    var scrollPos = $(document).scrollTop();
-
-	    var i;
-	     var num = 0;
-	    for (i=0; i < show_pos.length;i++ ){    	
-	    	if((scrollPos>=hide_pos[i])&&(scrollPos < show_pos[i])){
-	    		num = num+1;
-
-	    	}
-
-	    }
-
-	    if(num!==0){
-	    	$(".backToTop").css({"display":"none"});
-	    }else{
-	    	$(".backToTop").css({"display":"block"});
-	    }
-	});
-	console.log(show_pos,hide_pos);
-}
-
-function backToTop(){
+	// add click functionality
 	$(".backToTop").click(function() {
 		$('html,body').animate( { 'scrollTop': 0 }, 'slow');
-		console.log("clicke");
-	})
+	});
+
+	// toggle visability
+	$(window).scroll(function(){
+		var eTop = $(".backToTop").offset().top,
+			eBottom = eTop + $(".backToTop").outerHeight();
+		var count = $(".intro").inView();
+		$(".full-container").each(function(i) {
+			count += (eBottom > $(this).offset().top && eTop < $(this).offset().top + $(this).outerHeight());
+		})
+		$(".backToTop").css({"visibility":(count ? "hidden" : "visible")});
+	});
 }
-
-
 
