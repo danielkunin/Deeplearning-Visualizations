@@ -33,11 +33,12 @@
         <div class="header-wrapper">
 
         	<a href="https://www.deeplearning.ai/"><img id="header-logo" class="cppnControl" src="img/deeplearning.png"></a>
-            <ul class="header-nav">
-                <li>list item3</li>
-                <li>list item2</li>
-                <li>list item1</li>
-            </ul>
+            <!-- Uncomment below to add links to other articles -->
+            <!-- <ul class="header-nav">
+                <li>link 1</li>
+                <li>link 2</li>
+                <li>link 3</li>
+            </ul> -->
         </div>
     </div>
     <div class="main vis-background">
@@ -68,20 +69,6 @@
             </div>
         </div>
     </div>
-  
-        
-    </div>
-<!--     <div class="main tableOfContentNav">
-        
-                <ol class="tableOfContent2" >
-                    <li class="index index1">The importance of an appropriate initialization</li>
-                    <li class="index index2">What are the issues with a bad initialization?</li>
-                    <li class="index index3">What is an "appropriate" initialization?</li>
-                    <li class="index index4">Proof of Xavier initialization</li>
-                </ol>
-        
-    </div> -->
- 
 
     <div class="main">
         <div class="container index1-target">
@@ -358,7 +345,7 @@
                     <input type="radio" value="xe" name="mnist_init" checked>
                     <span class="checkmark"></span>
                 </label>
-                <label class="radio-container">Normal(0,1)
+                <label class="radio-container">Standard Normal
                     <input type="radio" value="normal" name="mnist_init">
                     <span class="checkmark"></span>
                 </label>
@@ -620,10 +607,10 @@
             </div>
             <div class="column-6-8 column-align">
                 <ol class="reference">
-                    <li>The layout of the article was designed by <a href="https://www.jingru-guo.com/">Jingru Guo</a>.</li>
+                    <li>The template for the article was designed by <a href="https://www.jingru-guo.com/">Jingru Guo</a> and inspired by <a href="https://distill.pub/">Distill</a>.</li>
                     <li>The first visualization was inspired by Daniel Smilkov's and Shan Carter's Neural Network <a href="https://playground.tensorflow.org/">playground</a>.</li>
                     <li>The second visualization adapted code from Andrej Karpathy's <a href="https://cs.stanford.edu/~karpathy/mnistjs/">visualization</a> of MNIST.</li>
-                    <li>The banner visualization adapted code from deeplearn.js's <a href="https://deeplearnjs.org/demos/nn-art/">CPPN</a>.</li>
+                    <li>The banner visualization adapted code from deeplearn.js's implementation of a <a href="https://deeplearnjs.org/demos/nn-art/">CPPN</a>.</li>
                 </ol>
             </div>
             <div class="column-2-8 column-align">
@@ -656,7 +643,7 @@
                         </script>), "Xavier" distribution (
                         <script>
                         document.write(katex.renderToString("w_{ij} \\sim N(0,\\frac{1}{\\sqrt{n^{[l-1]}}})"))
-                        </script>), or "Normal" distribution (
+                        </script>), or "Standard Normal" distribution (
                         <script>
                         document.write(katex.renderToString("w_{ij} \\sim N(0,1)"))
                         </script>).</li>
@@ -690,17 +677,17 @@
                 </ol>
             </div>
             <div class="column-2-8 column-align">
-                <h4>Citation</h4>
+                <h4 class="reference">Reference</h4>
             </div>
             <div class="column-6-8 column-align">
-                <p class="reference">For attribution in academic contexts, please cite this work as:</p>
-                <p class="citation">Katanforoosh, et al., "Initializing your neural networks", deeplearning.ai, 2018.</p>
-                <p class="reference">BibTeX citation:</p>
+                <p class="reference">To reference this article in an academic context, please cite this work as:</p>
+                <p class="citation">Katanforoosh & Kunin, "Initializing your neural networks", deeplearning.ai, 2018.</p>
+                <!-- <p class="reference">BibTeX citation:</p>
                 <p class="citation">@article{kiank+dkunin,<br>
                   &emsp;author = {Katanforoosh, Kian and Kunin, Daniel},<br>
                   &emsp;title = {Initializing your neural networks},<br>
                   &emsp;journal = {deeplearning.ai},<br>
-                  &emsp;year = {2018}}</p>
+                  &emsp;year = {2018}}</p> -->
             </div>
         </div>
     </div>
