@@ -105,7 +105,7 @@ ul.header-nav li{
   font-size: 12px;
 }
 
-.backToTop p:hover{
+.backToTop:hover p{
   color: #03A9F4;
 }
 
