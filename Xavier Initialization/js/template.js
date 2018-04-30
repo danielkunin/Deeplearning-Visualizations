@@ -21,6 +21,8 @@ $(window).load(function() {
 	})
 
 	marginSetup();
+	backToTopButton();
+	backToTop();
 });
 
 
@@ -70,6 +72,26 @@ function marginSetup(){
 			body = $("#margin-" + number + "-body");
 		body.removeClass("margin-border");
 
+	})
+}
+
+function backToTopButton(){
+	var section1_pos = $(".index1-target").offset().top;
+	$(window).scroll(function(){
+	    var scrollPos = $(document).scrollTop();
+	    if( scrollPos > section1_pos){
+	    	console.log("!!!");
+	    	$(".backToTop").css({"display":"block"});
+	    }else{
+	    	$(".backToTop").css({"display":"none"});
+	    }
+	});
+}
+
+function backToTop(){
+	$(".backToTop").click(function() {
+		$('html,body').animate( { 'scrollTop': 0 }, 'slow');
+		console.log("clicke");
 	})
 }
 

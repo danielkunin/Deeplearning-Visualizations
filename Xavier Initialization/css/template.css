@@ -50,7 +50,7 @@ ul.header-nav li{
 }
 
 #header-logo{
-  width: 12em;
+  width: 8em;
   vertical-align: center;
   margin: 1.5em auto;
   display: inline-block;
@@ -63,7 +63,7 @@ ul.header-nav li{
 }
 
 .footer {
-    border-top: 1px solid #D0D0D0;
+    border-top: 1px solid #F0F0F0;
     margin-top: 200px;
     padding-top:2em;
     padding-bottom: 2em;
@@ -81,6 +81,32 @@ ul.header-nav li{
     width: 75%;
     margin: 0 auto;
     height: auto;
+}
+
+.backToTop{
+  width: auto;
+  height: auto;
+  padding: 0.5em 1em;
+  margin: 0 auto;
+  position: fixed;
+  bottom:1.5em;
+  right: 2em;
+  background-color: #F0F0F0;
+  border-radius: 2px;
+  z-index: 1000;
+  cursor: pointer;
+  display: none;
+}
+
+
+.backToTop p{
+  margin: 0 auto;
+  color: rgba(0,0,0,0.4);
+  font-size: 12px;
+}
+
+.backToTop p:hover{
+  color: #03A9F4;
 }
 
 
