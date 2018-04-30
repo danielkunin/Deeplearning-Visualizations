@@ -503,13 +503,7 @@
                 var render = katex.renderToString("Var(z_k^{[l]}) = \\sum_{j=1}^{n^{[l-1]}}Var(w_{kj}^{[l]})Var(a_j^{[l-1]}) = \\sum_{j=1}^{n^{[l-1]}}Var(W^{[l]})Var(a^{[l-1]}) = n^{[l-1]}Var(W^{[l]})Var(a^{[l-1]})", { displayMode: true });
                 document.writeln(render);
                 </script>
-                <p>The equality above results from our first assumption stating that for any entry
-                    <script>
-                    document.write(katex.renderToString("(i,j)"))
-                    </script> of
-                    <script>
-                    document.write(katex.renderToString("W^{[l]}"))
-                    </script>:</p>
+                <p>The equality above results from our first assumption stating that:</p>
                 <script>
                 var render = katex.renderToString("Var(w_{kj}^{[l]}) = Var(w_{11}^{[l]}) = Var(w_{12}^{[l]})=\\dots = Var(W^{[l]})", { displayMode: true });
                 document.writeln(render);
