@@ -77,15 +77,37 @@ function marginSetup(){
 
 function backToTopButton(){
 	var section1_pos = $(".index1-target").offset().top;
+	var show_pos = [section1_pos];
+	var hide_pos = [0];
+
+	$( ".full-container" ).each(function( index ) {
+	   var pos = $(this).offset().top-$(window).height()/2;
+	   hide_pos.push(pos);
+
+	   pos = pos + $(this).height()+$(window).height()/2;
+	   show_pos.push(pos);
+	});
+
 	$(window).scroll(function(){
 	    var scrollPos = $(document).scrollTop();
-	    if( scrollPos > section1_pos){
-	    	console.log("!!!");
-	    	$(".backToTop").css({"display":"block"});
-	    }else{
+
+	    var i;
+	     var num = 0;
+	    for (i=0; i < show_pos.length;i++ ){    	
+	    	if((scrollPos>=hide_pos[i])&&(scrollPos < show_pos[i])){
+	    		num = num+1;
+
+	    	}
+
+	    }
+
+	    if(num!==0){
 	    	$(".backToTop").css({"display":"none"});
+	    }else{
+	    	$(".backToTop").css({"display":"block"});
 	    }
 	});
+	console.log(show_pos,hide_pos);
 }
 
 function backToTop(){
@@ -94,4 +116,6 @@ function backToTop(){
 		console.log("clicke");
 	})
 }
+
+
 
