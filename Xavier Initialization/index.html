@@ -533,12 +533,12 @@
                 var render = katex.renderToString("\\begin{aligned} Var(a^{[L]}) &= n^{[L-1]}Var(W^{[L]})Var(a^{[L-1]}) \\cr  &= n^{[L-1]}Var(W^{[L]})n^{[L-2]}Var(W^{[L-1]})Var(a^{[L-2]})\\cr &=\\dots\\cr &= [\\prod_{l=1}^L n^{[l-1]}Var(W^{[l]})]Var(x)\\end{aligned}", { displayMode: true });
                 document.writeln(render);
                 </script>
-                <p>Depending on how we initialize our weights the relationship between the variance of our output and input will vary dramatically.  Notice the following three cases.</p>
+                <p>Depending on how we initialize our weights, the relationship between the variance of our output and input will vary dramatically.  Notice the following three cases.</p>
                 <script>
                 var render = katex.renderToString("n^{[l-1]}Var(W^{[l]})  \\begin{cases} < 1 &\\implies \\text{Vanishing Gradient}\\cr  = 1 & \\implies Var(a^{[L]}) = Var(x)\\cr  > 1 & \\implies \\text{Exploding Gradient}\\end{cases}", { displayMode: true });
                 document.writeln(render);
                 </script>
-                <p>Thus, in order to avoid the Vanishing or Exploding Gradient problem, we must set <script>
+                <p>Thus, in order to avoid the vanishing or exploding gradient problem, we must set <script>
                     document.write(katex.renderToString("n^{[l-1]}Var(W^{[l]}) = 1"))
                     </script> by initializing <script>
                     document.write(katex.renderToString("Var(W^{[l]}) = \\frac{1}{n^{[l-1]}}"))
