@@ -54,7 +54,7 @@
         <div class="container divider-bottom" >
             <div class="column-6-8 column-align" >
                
-                <h2 class="title">The lack of initialization techniques is one of the major reasons deep neural networks were not training properly in the past decades. Since then, new initializations schemes have been found to accelerate training. In this post, we will explain the methods to initialize the parameters of your neural network.</h2>
+                <h2 class="title">The lack of initialization techniques is one of the major reasons deep neural networks were not training properly in the past decades. Since then, new initialization schemes have been found to accelerate training. In this post, we will explain the methods to initialize the parameters of your neural network.</h2>
                
             </div>
 
@@ -78,7 +78,7 @@
                 </p>
                 <ol>
                     <li>Initialize the parameters</li>
-                    <li>Use an <span class="marginanchor" id="margin-0-anchor" data-number="0" data-align="middle">optimization algorithm</span>, repeat:</li>
+                    <li>Use an <span class="marginanchor" id="margin-0-anchor" data-number="0" data-align="middle">optimization algorithm</span>, then repeat these steps:</li>
                     <ol type="a">
                         <li>Forward propagate an input image</li>
                         <li>Compute the cost function</li>
@@ -90,7 +90,7 @@
                     Given a new data point, you can then use your model (architecture + learned parameters) to predict its class.
                 </p>
                 <p>
-                    It is critical to initialize the parameters with the right method. To illustrate this argument, consider the 3-layer neural network below. Initialize this network with different initialization methods and observe the impact on the learning.
+                    It is critical to initialize the parameters with the right method. To illustrate this argument, consider the 3-layer neural network below. You can try initializing this network with different initializations and observe for yourself the impact on the learning.
                 </p>
             </div>
             <div class="column-2-8 column-align margin">
@@ -163,7 +163,7 @@
                     </script> in this network, the output of both hidden units will be
                     <script>
                     document.write(katex.renderToString('relu(\\alpha x_1 + \\alpha x_2)'))
-                    </script>. Thus, both both hidden units will have identical influence  on the loss, which, will lead to identical gradients. Thus, throughout training both neurons will evolve symmetrically, effectively collapsing the ability of our network to learn.</p>
+                    </script>. Thus, both hidden units will have identical influence  on the loss, which will lead to identical gradients. Thus, both neurons will evolve symmetrically throughout training, effectively collapsing the ability of our network to learn.</p>
                 <p>What do you notice about the loss plot when you initialize your weights with "too small" or "too large" values?</p>
                 <p class="inline-caption">Initializing the weights with (i) "too small" or (ii) "too large" values leads respectively to (i) slow learning or (ii) divergence.</p>
                 <p>An "appropriate" initialization is required to have efficient training. We will investigate this further in the next section.</p>
@@ -178,9 +178,9 @@
                 <h3>II&emsp; What are the issues with a bad initialization?</h3>
                 <p>Consider this 9-layer neural network just after it was initialized.</p>
                 <img src="img/9layer.png">
-                <p>At every iteration of the optimization loop (forward, cost, backward, update), we observe that backpropagated gradients are either amplified or minified as you move from the output layer towards the input layer. This makes sense if you recall the following.
+                <p>At every iteration of the optimization loop (forward, cost, backward, update), we observe that backpropagated gradients are either amplified or minimized as you move from the output layer towards the input layer. This result makes sense if you recall the following example.
                     <br>
-                    <br> Assume all the activation functions are linear (identity function). Then, the output activation is:</p>
+                    <br> Assume all the activation functions are linear (identity function). Then the output activation is:</p>
                 <script>
                 var render = katex.renderToString("\\hat{y} = a^{[L]} = W^{[L]}W^{[L-1]}W^{[L-2]}\\dots W^{[3]}W^{[2]}W^{[1]}X", { displayMode: true });
                 document.writeln(render);
@@ -200,7 +200,7 @@
         </div>
         <div class="container">
             <div class="column-4-8">
-                <h3>Case 1: "too large" initialization leads to Exploding Gradients.</h3>
+                <h3>Case 1: a "too large" initialization leads to Exploding Gradients.</h3>
             </div>
             <div class="column-6-8 column-align">
                 <p>Consider the case where every weight is initialized slightly larger than the identity matrix.</p>
@@ -222,11 +222,11 @@
             <div class="column-2-8 column-align margin">
             	<div class="marginbody" id="margin-2-body" data-number="2">
                 	<img src="img/exploding.png">
-                	<p class="caption">The gradients are too big leading to oscilation of the loss around its minimum value (marked by "+").</p>
+                	<p class="caption">The gradients are too big, leading to oscillation of the loss around its minimum value (marked by "+").</p>
                 </div>
             </div>
             <div class="column-4-8">
-                <h3>Case 2: "too small" initialization leads to Vanishing Gradients</h3>
+                <h3>Case 2: a "too small" initialization leads to Vanishing Gradients</h3>
             </div>
             <div class="column-6-8 column-align">
                 <p>Similarly, consider the case where every weight is initialized slightly smaller than the identity matrix.</p>
@@ -240,7 +240,7 @@
                     </script>, and the values of the activation
                     <script>
                     document.write(katex.renderToString('a^{[l]}'))
-                    </script> decreases exponentially with
+                    </script> decrease exponentially with
                     <script>
                     document.write(katex.renderToString('l'))
                     </script>. When these activations are used in backward propagation, this leads to the <span class="marginanchor" id="margin-3-anchor" data-number="3" data-align="bottom">vanishing gradient problem</span>.</p>
@@ -248,11 +248,11 @@
             <div class="column-2-8 column-align margin">
             	<div class="marginbody" id="margin-3-body" data-number="3">
                 	<img src="img/vanishing.png">
-                	<p class="caption">The gradients are too small leading to convergence of the loss before it has reached the mininum value (marked by "+").</p>
+                	<p class="caption">The gradients are too small, leading to convergence of the loss before it has reached the minimum value (marked by "+").</p>
                 </div>
             </div>
             <div class="column-6-8 divider-bottom">
-                <p>All in all, initializing your weights with inappropriate values will lead to divergence or slow-down in the training.</p>
+                <p>All in all, initializing your weights with inappropriate values will lead to divergence or a slow-down in the training of your neural network.</p>
             </div>
             <div class="column-6-8 index3-target column-align">
                 <h3>III&emsp;What is an "appropriate" initialization?</h3>
@@ -279,7 +279,7 @@
                     var render = katex.renderToString("\\begin{aligned}W^{[l]} &\\sim \\mathcal{N}(\\mu=0,\\sigma^2 = \\frac{1}{n^{[l-1]}})\\cr b^{[l]} &\\sim 0\\end{aligned}", { displayMode: true });
                     document.writeln(render);
                     </script>
-                    In a sentence, it means that all the weights of layer
+                    In other words, all the weights of layer
                     <script>
                     document.write(katex.renderToString('l'))
                     </script> are picked randomly from a <span class="marginanchor" id="margin-6-anchor" data-number="6" data-align="middle">normal distribution</span> with mean
@@ -290,7 +290,7 @@
                     document.write(katex.renderToString('\\sigma^2 = \\frac{1}{n^{[l-1]}}'))
                     </script>. Biases are initialized with zeros.
                     <br>
-                    <br> The visualization below illustrates the impact of the weights’ distribution on each layer’s activations’ distribution for a 5-layer fully-connected neural network (presented below).</p>
+                    <br> The visualization below illustrates the influence of the weights’ initialization on each layer’s activations for a 5-layer fully-connected neural network (presented below).</p>
             </div>
             <div class="column-2-8 column-align margin">
             	<div class="marginbody" id="margin-4-body" data-number="4">
@@ -399,7 +399,7 @@
             </div>
             <div class="column-6-8 index4-target column-align">
                 <h3>IV&emsp;Proof of Xavier initialization</h3>
-                <p>In this section, we will prove Xavier Initialization. I believe it sometimes help to understand the proof to grasp the concept, but you can get most of the intuition without the math.</p>
+                <p>In this section, we will prove Xavier Initialization. Sometimes it helps to understand the proof to grasp the concept, but you can understand the fundamental idea without the math.</p>
                 <p>Let’s work on the <span class="marginanchor" id="margin-7-anchor" data-number="7" data-align="middle">layer
                     <script>
                     document.write(katex.renderToString('l'))
@@ -424,7 +424,7 @@
                     document.write(katex.renderToString('Var(a^{[l-1]}) = Var(a^{[l]})'))
                     </script>.
                 </p>
-                <p>Assume we initialized our network with appropriate values. Early in the training, we are in the <span class="marginanchor" id="margin-9-anchor" data-number="9" data-align="middle">linear regime</span> of
+                <p>Assume we initialized our network with appropriate values. Early on in the training, we are in the <span class="marginanchor" id="margin-9-anchor" data-number="9" data-align="middle">linear regime</span> of
                     <script>
                     document.write(katex.renderToString("tanh"))
                     </script>. Values are small enough and thus
@@ -452,7 +452,7 @@
                     var render = katex.renderToString("Var(a_k^{[l]}) = Var(z_k^{[l]}) = Var(\\sum_{j=1}^{n^{[l-1]}}w_{kj}^{[l]}a_j^{[l-1]})", { displayMode: true });
                     document.writeln(render);
                     </script>
-                <p>A common “math trick” at this point is to extract the summation outside the variance. To do this we must make the following three <span class="marginanchor" id="margin-11-anchor" data-number="11" data-align="middle">assumptions</span><sup class="footnote-index footnote-index6">6</sup>:</p>
+                <p>A common “math trick” is to extract the summation outside the variance. To do this, we must make the following three <span class="marginanchor" id="margin-11-anchor" data-number="11" data-align="middle">assumptions</span><sup class="footnote-index footnote-index6">6</sup>:</p>
                 <ol class="inline-caption">
                     <li>Weights are independent and identically distributed</li>
                     <li>Inputs are independent and identically distributed</li>
@@ -463,7 +463,7 @@
                 var render = katex.renderToString("Var(a_k^{[l]}) = Var(z_k^{[l]}) = Var(\\sum_{j=1}^{n^{[l-1]}}w_{kj}^{[l]}a_j^{[l-1]}) = \\sum_{j=1}^{n^{[l-1]}}Var(w_{kj}^{[l]}a_j^{[l-1]})", { displayMode: true });
                 document.writeln(render);
                 </script>
-                <p>Another common “math trick” is to convert the variance of a product into product of variances, and we have a <span class="marginanchor" id="margin-12-anchor" data-number="12" data-align="middle">formula</span> for it:</p>
+                <p>Another common “math trick” is to convert the variance of a product into a product of variances. Here is the <span class="marginanchor" id="margin-12-anchor" data-number="12" data-align="middle">formula</span> for it:</p>
                 <script>
                 var render = katex.renderToString("Var(XY) = E[X]^2Var(Y) + Var(X)E[Y]^2 + Var(X)Var(Y)", { displayMode: true });
                 document.writeln(render);
