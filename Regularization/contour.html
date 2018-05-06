@@ -1,114 +1,73 @@
 <!DOCTYPE html>
-<svg width="960" height="500" stroke="#fff" stroke-width="0.5"></svg>
+
+<!-- Home Page CSS -->
+<link rel="stylesheet" type="text/css" href="css/landscape.css">
+
+<svg width="1000" height="500" stroke="#fff" stroke-width="0.5"></svg>
+<div class="lossFunctions">
+	<label>
+	  <input type="radio" name="loss" value="beale" />
+	  <img src="./img/beale.png">
+	</label>
+	<label>
+	  <input type="radio" name="loss" value="bukin" />
+	  <img src="./img/bukin.png">
+	</label>
+	<label>
+	  <input type="radio" name="loss" value="goldsteinPrice" />
+	  <img src="./img/goldsteinPrice.png">
+	</label>
+	<label>
+	  <input type="radio" name="loss" value="himmelblaus" />
+	  <img src="./img/himmelblaus.png">
+	</label>
+	<label>
+	  <input type="radio" name="loss" value="levi" />
+	  <img src="./img/levi.png">
+	</label>
+	<label>
+	  <input type="radio" name="loss" value="matyas" />
+	  <img src="./img/matyas.png">
+	</label>
+	<label>
+	  <input type="radio" name="loss" value="mcCormick" />
+	  <img src="./img/mcCormick.png">
+	</label>
+	<label>
+	  <input type="radio" name="loss" value="rastrigin" />
+	  <img src="./img/rastrigin.png">
+	</label>
+	<label>
+	  <input type="radio" name="loss" value="rosenbrock" />
+	  <img src="./img/rosenbrock.png">
+	</label>
+	<label>
+	  <input type="radio" name="loss" value="styblinskiTang" />
+	  <img src="./img/styblinskiTang.png">
+	</label>
+</div>
+
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://d3js.org/d3-contour.v1.min.js"></script>
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<!-- Load jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="js/loss.js"></script>
 <script>
+	var lossObject = new loss('goldsteinPrice', 0, 0, d3.select("svg"));
+	lossObject.plot();
 
-// Populate a grid of n×m values where -2 ≤ x ≤ 2 and -2 ≤ y ≤ 1.
-var x_range = [-10,10],
-    y_range = [-10,10];
-var n = 240, 
-    m = 125
-var values = new Array(n * m);
-for (var j = 0.5, k = 0; j < m; ++j) {
-  for (var i = 0.5; i < n; ++i, ++k) {
+	$("input[name='loss']").on("change", function () {
+		lossObject.func = this.value;
+	    lossObject.plot(150);
+	});
 
-    var x = i / n * (x_range[1] - x_range[0]) + x_range[0],
-        y = j / m * (y_range[1] - y_range[0]) + y_range[0];
-
-    // values[k] = goldsteinPrice(x, y) + 100 * L2(x,y);
-    // values[k] = beale(x,y);
-    values[k] = himmelblaus(x,y) + 5 * L2(x,y);
-    // values[k] = square(x,y);
-    // values[k] = McCormick(x, y);
-    // values[k] = Matyas(x, y);
-    // values[k] = Rosenbrock(x, y) + 100 * L2(x,y);
-    // values[k] = rastrigin(x,y) + 10 * L1(x,y);
-    // values[k] = bukin(x,y);
-    // values[k] = levi(x,y);
-    // values[k] = styblinski_tang(x,y);
-  }
-}
-
-var svg = d3.select("svg"),
-    width = +svg.attr("width"),
-    height = +svg.attr("height");
-
-var thresholds = d3.range(0, Math.log2(d3.max(values)), 0.5)
-    .map(function(p) { return Math.pow(2, p); });
-
-var contours = d3.contours()
-    .size([n, m])
-    .thresholds(thresholds);
-
-var color = d3.scaleLog()
-    .domain(d3.extent(thresholds))
-    .interpolate(function() { return d3.interpolateYlGnBu; });
-
-svg.selectAll("path")
-  .data(contours(values))
-  .enter().append("path")
-    .attr("d", d3.geoPath(d3.geoIdentity().scale(width / n)))
-    .attr("fill", function(d) { return color(d.value); });
-
-// See https://en.wikipedia.org/wiki/Test_functions_for_optimization
-function goldsteinPrice(x, y) {
-  return (1 + Math.pow(x + y + 1, 2) * (19 - 14 * x + 3 * x * x - 14 * y + 6 * x * x + 3 * y * y))
-      * (30 + Math.pow(2 * x - 3 * y, 2) * (18 - 32 * x + 12 * x * x + 48 * y - 36 * x * y + 27 * y * y));
-}
-
-function beale(x, y) {
-  return Math.pow(1.5 - x + x * y, 2) + Math.pow(2.25 - x + x * y * y, 2) + 
-         Math.pow(2.625 - x + x * y * y * y, 2) + Math.pow(2.625 - x + x * y * y * y, 2);
-}
-
-function himmelblaus(x, y) {
-  return Math.pow(x * x + y - 11, 2) + Math.pow(x + y * y - 7, 2); 
-}
-
-function McCormick(x, y) {
-  return Math.sin(x + y) + Math.pow(x - y, 2) - 1.5 * x + 2.5 * y + 1
-}
-
-function Matyas(x, y) {
-  return 0.26 * (x * x + y * y) - 0.48 * x * y;
-}
-
-function Rosenbrock(x, y) {
-  return 100 * Math.pow(y - x * x, 2) + Math.pow(1 - x, 2);
-}
-
-function square(x, y) {
-  return Math.pow(x - 3, 2) + Math.pow(y + 5, 2);
-}
-
-function L1(x, y) {
-  return Math.abs(x) + Math.abs(y);
-}
-
-function L2(x, y) {
-  return Math.pow(x, 2) + Math.pow(y, 2);
-}
-
-function rastrigin(x, y) {
-  var A = 10, 
-      n = 2;
-  return A * n + x * x + y * y - A *  (Math.cos(2 * Math.PI * x) + Math.cos(2 * Math.PI * y));
-}
-
-function bukin(x, y) {
-  return 100 * Math.sqrt(Math.abs(y - 0.01 * x * x)) + 0.01 * Math.abs(x + 10);
-}
-
-function levi(x,y) {
-  return Math.pow(Math.sin(3 * Math.PI * x), 2) + Math.pow(x - 1, 2) * 
-         (1 + Math.pow(Math.sin(3 * Math.PI * y), 2)) + Math.pow(y - 1, 2) * 
-         (1 + Math.pow(Math.sin(3 * Math.PI * x), 2));
-}
-
-function styblinski_tang(x,y) {
-  return (Math.pow(x, 4) - 16 * Math.pow(x, 2) + 5 * x) / 2 +
-         (Math.pow(y, 4) - 16 * Math.pow(y, 2) + 5 * y) / 2; 
-} 
 </script>
+
+
+
+<!-- TO DO -->
+<!-- Create Main for viz which calls following: -->
+<!-- Put into css template -->
+<!-- Create Optimizer class -->
+<!-- Loss class - gradients -->
