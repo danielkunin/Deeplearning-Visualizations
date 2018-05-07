@@ -10,8 +10,8 @@ class loss {
     this.width = +svg.attr("width"),
     this.height = +svg.attr("height");
 
-    this.n = 240; 
-    this.m = 125;
+    this.n = 250; 
+    this.m = 250;
 
     this.thresholds = [];
     this.contours = d3.contours().size([this.n, this.m]);
@@ -90,7 +90,7 @@ function elasticNet_grad(x, y, alpha) {
 var lossFunctions = {
   'goldsteinPrice':   {'val': goldsteinPrice_val,
                        'grad': goldsteinPrice_grad,
-                       'range': [-3, 1.5]},
+                       'range': [-3, 1]},
   'beale':            {'val': beale_val,
                        'grad': beale_grad,
                        'range': [-4.5, 4.5]},
@@ -99,7 +99,7 @@ var lossFunctions = {
                        'range': [-5, 5]},
   'mcCormick':        {'val': mcCormick_val, 
                        'grad': mcCormick_grad,
-                       'range': [-2, 4]},
+                       'range': [-3, 5]},
   'matyas':           {'val': matyas_val,
                        'grad': matyas_grad,
                        'range': [-10, 10]},
