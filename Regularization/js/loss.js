@@ -19,11 +19,14 @@ class loss {
   }
 
   value(x, y) {
-    return lossFunctions[this.func].val(x, y) + this.lambda * elasticNet(x, y, this.alpha);
+    return lossFunctions[this.func].val(x, y) + this.lambda * elasticNet_val(x, y, this.alpha);
   }
 
   gradient(x, y) {
-
+    var loss_grad = lossFunctions[this.func].grad(x, y),
+        reg_grad = elasticNet_grad(x, y, this.alpha);
+    return {'x': loss_grad.x + this.lambda * reg_grad.x,
+            'y': loss_grad.y + this.lambda * reg_grad.y };
   }
 
   plot(time) {
@@ -44,7 +47,7 @@ class loss {
     }
 
     // update scales
-    this.thresholds = d3.range(0, Math.log2(d3.max(values)), 0.5)
+    this.thresholds = d3.range(-10, Math.log2(d3.max(values)), 0.5)
       .map(function(p) { return Math.pow(2, p); });
     this.contours.thresholds(this.thresholds);
     this.color.domain(d3.extent(this.thresholds));
@@ -63,18 +66,31 @@ class loss {
 
 }
 
+
+function toGrad(x,y) {
+  return {'x': x, 'y': y};
+}
+
 // Elastic Net Regularization
-function elasticNet(x, y, alpha) {
+function elasticNet_val(x, y, alpha) {
   var L1 = (x,y) => { return Math.abs(x) + Math.abs(y); },
       L2 = (x,y) => { return Math.pow(x, 2) + Math.pow(y, 2); };
   return alpha * L1(x, y) + (1 - alpha) * L2(x, y);
+}
+function elasticNet_grad(x, y, alpha) {
+  var L1 = {'x': alpha * Math.sign(x),
+            'y': alpha * Math.sign(y) }; 
+  var L2 = {'x': (1 - alpha) * 2 * x,
+            'y': (1 - alpha) * 2 * y };
+  return {'x': L1.x + L2.x,
+          'y': L1.y + L2.y };
 }
 
 // See https://en.wikipedia.org/wiki/Test_functions_for_optimization
 var lossFunctions = {
   'goldsteinPrice':   {'val': goldsteinPrice_val,
                        'grad': goldsteinPrice_grad,
-                       'range': [-2, 2]},
+                       'range': [-3, 1.5]},
   'beale':            {'val': beale_val,
                        'grad': beale_grad,
                        'range': [-4.5, 4.5]},
@@ -130,9 +146,9 @@ function himmelblaus_grad(x, y) {
   return 0; 
 }
 
-// McCormick Function
+// McCormick Function (modified)
 function mcCormick_val(x, y) {
-  return Math.sin(x + y) + Math.pow(x - y, 2) - 1.5 * x + 2.5 * y + 1;
+  return Math.sin(x + y) + Math.pow(x - y, 2) - 1.5 * x + 2.5 * y + 1 + 1.9133;
 }
 function mcCormick_grad(x, y) {
   return 0;
