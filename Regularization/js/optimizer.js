@@ -80,3 +80,8 @@ function adam() {
   vt = v / (1-beta2**t)
   x += - learning_rate * mt / (np.sqrt(vt) + eps)
 }
+
+
+// Add noise to simulate Stochastic Batch?
+// Add second/quasi-newton methods? (L-BFGS)
+// Visualizing acutal Loss space with random weight matrix...(CS231n notes)
