@@ -67,10 +67,6 @@ class loss {
 }
 
 
-function toGrad(x,y) {
-  return {'x': x, 'y': y};
-}
-
 // Elastic Net Regularization
 function elasticNet_val(x, y, alpha) {
   var L1 = (x,y) => { return Math.abs(x) + Math.abs(y); },

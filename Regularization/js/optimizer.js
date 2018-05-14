@@ -1,25 +1,26 @@
 class optimizer {
 
   // constructor
-  constructor(rule) {
+  constructor(rule, loss, svg) {
     this.rule = rule;
-    this.param = {
-      'lRate': ,
-      'lDecay': ,
-      'v': ,
-      'm': ,
-      'cache': ,
-      'beta1': ,
-      'beta2': 
+    this.config = {
+      'lrate': 1e-3,
+      'ldecay': 1,
+      'v': 0,
+      'm': 0,
+      'cache': 0,
+      'beta1': 0.9,
+      'beta2': 0.999,
+      'eps': 1e-8,
+      't': 0
     }
 
     this.training = false;
-    this.epoch = 0;
-    this.loss = [];
+    this.pos = 0;
+    this.paths = [];
+    this.costs = [];
 
-    this.landscape = landscape
-    this.width = +landscape.attr("width"),
-    this.height = +landscape.attr("height");
+    this.loss = loss;
 
     this.svg = svg
     this.width = +svg.attr("width"),
@@ -27,58 +28,109 @@ class optimizer {
   }
 
   reset() {
-
+	this.config = {
+		'lrate': 1e-3,
+		'ldecay': 1,
+		'v': Zero(),
+		'm': Zero(),
+		'cache': Zero(),
+		'beta1': 0.9,
+		'beta2': 0.999,
+		'eps': 1e-8,
+		't': 0
+	}
+	this.training = false;
+	this.pos = Zero();
+	this.paths = [];
+	this.costs = [];
   }
 
   init() {
 
   }
 
-  step() {
+  update() {
 
+  }
+
+  step() {
+  	var dx = loss.gradient(this.x),
+  		update = algorithms[this.rule](this.x, dx, this.config);
+  	this.x = update[0];
+  	this.config = update[1];
   }
 
   train() {
+  	if (!this.training) {
+  		return;
+  	}
+  	this.config['t'] += 1;
+  	this.step();
+  	this.path.push(this.x);
+  	this.cost.push(this.loss.value(this.x));
+  	this.plot();
+  	this.train();
+  }
+
+  plot() {
 
   }
 
 }
 
-function sgd() {
-  x += - lRate * dx;
+// Gradient Descent Algorithms
+var algorithms = {
+	'sgd': sgd,
+	'momentum': momentum,
+	'nesterov': nesterov,
+	'adagrad': adagrad,
+	'rmsprop': rmsprop,
+	'adam': adam
 }
 
-function momentum() {
-  v = mu * v - learning_rate * dx;
-  x += v
+// Stochastic Gradient Descent
+function sgd(x, dx, config) {
+  x += - config['lrate'] * dx;
+  return (x, config);
 }
 
-function nesterov() {
-  v_prev = v
-  v = mu * v - learning_rate * dx
-  x += -mu * v_prev + (1 + mu) * v
+// Stochastic Gradient Descent with Momentum
+function momentum(x, dx, config) {
+  config['v'] = config['mu'] * config['v'] - config['lrate'] * dx;
+  x += config['v'];
+  return (x, config);
 }
 
-function newton() {
-  
+// Nesterov Accelerated Gradient
+function nesterov(x, dx, config) {
+  var v_prev = config['v'];
+  config['v'] = config['mu'] * config['v'] - config['lrate'] * dx;
+  x += - config['mu'] * v_prev + (1 + config['mu']) * config['v'];
+  return (x, config);
 }
 
-function adagrad() {
-  cache += dx**2
-  x += - learning_rate * dx / (np.sqrt(cache) + eps)
+// Adagrad
+function adagrad(x, dx, config) {
+  config['cache'] += dx**2
+  x += - config['lrate'] * dx / (sqrt(config['cache']) + config['eps']);
+  return (x, config);
 }
 
-function rmsprop() {
-  cache = decay_rate * cache + (1 - decay_rate) * dx**2
-  x += - learning_rate * dx / (np.sqrt(cache) + eps)
+// RMSprop
+function rmsprop(x, dx, config) {
+  config['cache'] = config['drate'] * config['cache'] + (1 - config['drate']) * dx**2;
+  x += - config['lrate'] * dx / (np.sqrt(config['cache']) + config['eps']);
+  return (x, config);
 }
 
-function adam() {
-  m = beta1*m + (1-beta1)*dx
-  mt = m / (1-beta1**t)
-  v = beta2*v + (1-beta2)*(dx**2)
-  vt = v / (1-beta2**t)
-  x += - learning_rate * mt / (np.sqrt(vt) + eps)
+// Adam
+function adam(x, dx, config) {
+  config['m'] = config['beta1'] * config['m'] + (1 - config['beta1']) * dx;
+  var mt = config['m'] / (1 - config['beta1']**config['t']);
+  config['v'] = config['beta2'] * config['v'] + (1 - config['beta2']) * (dx**2);
+  var vt = config['v'] / (1 - config['beta2']**config['t']);
+  x += - config['lrate'] * mt / (np.sqrt(vt) + config['eps']);
+  return (x, config);
 }
 
 
