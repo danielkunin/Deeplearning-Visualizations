@@ -2,30 +2,24 @@
 
 <!-- Home Page CSS -->
 <link rel="stylesheet" type="text/css" href="css/landscape.css">
-
-<svg width="500" height="500" stroke="#fff" stroke-width="0.5"></svg>
+<div style="width: 500px; display:inline-block;">
+	<svg id="contour" width="500" height="500" stroke="#fff" stroke-width="0.5"></svg>
+	<svg id="loss" width="500" height="100" stroke="#fff" stroke-width="0.5"></svg>
+</div>
 <div style="display:inline-block;">
-	<p>Select an <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization">artificial landscape</a> to explore:</p>
 	<div class="lossFunctions">
+		<p>Select an <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization">artificial landscape</a> to explore:</p>
 		<label>
 		  <input type="radio" name="loss" value="beale" />
 		  <img src="./img/beale.png">
 		</label>
 		<label>
-		  <input type="radio" name="loss" value="bukin" />
-		  <img src="./img/bukin.png">
-		</label>
-		<label>
-		  <input type="radio" name="loss" value="goldsteinPrice" checked/>
+		  <input type="radio" name="loss" value="goldsteinPrice"/>
 		  <img src="./img/goldsteinPrice.png">
 		</label>
 		<label>
-		  <input type="radio" name="loss" value="himmelblaus" />
+		  <input type="radio" name="loss" value="himmelblaus" checked/>
 		  <img src="./img/himmelblaus.png">
-		</label>
-		<label>
-		  <input type="radio" name="loss" value="levi" />
-		  <img src="./img/levi.png">
 		</label>
 		<label>
 		  <input type="radio" name="loss" value="matyas" />
@@ -58,15 +52,34 @@
 		<input type="range" value="0" min="0" max="40" step="any" id="lambda">
 		<label>Lambda = <span id="lambda_val">0.00</span></label>
 	</div>
+	<div class="lossFunctions">
+		<p>Choose an optimizer:</p>
+		<label>SGD </label>
+		<input type="radio" name="opt" value="sgd" checked/>
+		<label>Momentum </label>
+		<input type="radio" name="opt" value="momentum"/>
+		<label>Nesterov </label>
+		<input type="radio" name="opt" value="nesterov"/>
+		<label>Adagrad </label>
+		<input type="radio" name="opt" value="adagrad"/>
+		<label>RMSprop </label>
+		<input type="radio" name="opt" value="rmsprop"/>
+		<label>Adam </label>
+		<input type="radio" name="opt" value="adam"/>
+	</div>
+	<button id="init">Init</button>
+	<button id="train">Train</button>
 </div>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://d3js.org/d3-contour.v1.min.js"></script>
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 <!-- Load jquery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="js/point.js"></script>
 <script src="js/loss.js"></script>
+<script src="js/optimizer.js"></script>
 <script>
-	var lossObject = new loss('goldsteinPrice', 0, 0, d3.select("svg"));
+	var lossObject = new loss('himmelblaus', 0, 0, d3.select("#contour"));
 	lossObject.plot();
 
 	$("input[name='loss']").on("change", function () {
@@ -83,6 +96,21 @@
 		$("#lambda_val").html(this.value)
 		lossObject.lambda = this.value;
 	    lossObject.plot(0);
+	});
+
+	var optObject = new optimizer('sgd', lossObject, d3.select("#loss"));
+
+	$("input[name='opt']").on("change", function () {
+		optObject.reset();
+		optObject.rule = this.value;
+	});
+
+	$("#init").on("click", function () {
+		optObject.init();
+	});
+
+	$("#train").on("click", function () {
+		optObject.train();
 	});
 
 </script>

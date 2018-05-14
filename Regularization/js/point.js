@@ -1,56 +1,39 @@
-class Point {
-
-	constructor(x, y) {
-		this.x = x;
-		this.y = y;
-	}
-
-	scale(scalar) {
-		this.x *= scalar;
-		this.y *= scalar;
-	}
-
-	shift(scalar) {
-		this.x += scalar;
-		this.y += scalar;
-	}
-
-	add(point) {
-		this.x += point.x;
-		this.y += point.y;
-	}
-
-	sub(point) {
-		this.x -= point.x;
-		this.y -= point.y;
-	}
-
-	mult(point) {
-		this.x *= point.x;
-		this.y *= point.y;
-	}
-
-	div(point) {
-		this.x /= point.x;
-		this.y /= point.y;
-	}
-
-	sqrt() {
-		this.x = this.x**0.5;
-		this.y = this.y**0.5;
-	}
-
-	square() {
-		this.x = this.x**2;
-		this.y = this.y**2;
-	}
-
+function point(x, y) {
+	return {'x': x, 'y': y};
 }
 
-function Zero() {
-	return new Point(0,0);
+function scale(a, scalar) {
+	return point(a.x * scalar, a.y * scalar);
 }
 
-function One() {
-	return new Point(1,1);
+function shift(a, scalar) {
+	return point(a.x + scalar, a.y + scalar);
+}
+
+function add(a, b) {
+	return point(a.x + b.x, a.y + b.y);
+}
+
+function sub(a, b) {
+	return point(a.x - b.x, a.y - b.y);
+}
+
+function mult(a, b) {
+	return point(a.x * b.x, a.y * b.y);
+}
+
+function div(a, b) {
+	return point(a.x / b.x, a.y / b.y);
+}
+
+function sqrt(a) {
+	return point(a.x**0.5, a.y**0.5);
+}
+
+function square(a) {
+	return point(a.x**2, a.y**2);
+}
+
+function l2norm(a) {
+	return (a.x**2 + a.y**2)**0.5;
 }
