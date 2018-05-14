@@ -6,9 +6,9 @@ class optimizer {
     this.config = {
       'lrate': 1e-3,
       'ldecay': 1,
-      'v': 0,
-      'm': 0,
-      'cache': 0,
+      'v': Zero(),
+      'm': Zero(),
+      'cache': Zero(),
       'beta1': 0.9,
       'beta2': 0.999,
       'eps': 1e-8,
@@ -16,7 +16,7 @@ class optimizer {
     }
 
     this.training = false;
-    this.pos = 0;
+    this.pos = Zero();
     this.paths = [];
     this.costs = [];
 
@@ -46,11 +46,28 @@ class optimizer {
   }
 
   init() {
+  	var x = Math.random() * ,
+  		y = Math.random() * ;
+  	this.pos = Point(x, y);
+
+  	var circle = this.loss.svg.selectAll("circle")
+  	  .data([this.pos]);
+
+    circle.enter().append("circle")
+      .attr("cx", function(d) { return x(d.x); })
+      .attr("cy", function(d) { return y(d.y); })
+      .attr("r", 4)
+      .style("fill", "black")
+      .style("stroke-width", 2)
+      .style("stroke", "white");
+      // TODO:  Add drag and drop feature
+
+    circle.exit().remove();
 
   }
 
   update() {
-
+  	// update parameter configurations
   }
 
   step() {
@@ -68,11 +85,58 @@ class optimizer {
   	this.step();
   	this.path.push(this.x);
   	this.cost.push(this.loss.value(this.x));
-  	this.plot();
+  	this.plotCost();
+  	this.plotPath();
   	this.train();
   }
 
-  plot() {
+  plotCost() {
+
+	var line = d3.line()
+	  .x(function(d, i) { return x(i); })
+	  .y(function(d) { return y(d); })
+	  .curve(d3.curveBasis);
+
+	y.domain([0, d3.max(this.cost, function(d) { return d; })]);
+    yGroup.call(d3.axisLeft(y).ticks(3, "s"));
+
+    x.domain([0, this.cost.length]);
+    xGroup.call(d3.axisBottom(x).ticks(3, "s"));
+
+    var path = this.svg.selectAll("path.loss")
+      .data([this.cost]);
+
+    path.enter().append("path")
+      .attr("class", "loss");
+
+    path.attr("d", line)
+      .attr("stroke", function(d, i) { return color(i); })
+      .attr("stroke-width", "2px")
+      .attr("fill", "none");
+
+    path.exit().remove();
+
+  }
+
+  plotPath() {
+
+	var line = d3.line()
+	  .x(function(d) { return x(d.x); })
+	  .y(function(d) { return y(d.y); })
+	  .curve(d3.curveBasis);
+
+    var path = this.loss.svg.selectAll("path.trajectory")
+      .data([this.path]);
+
+    path.enter().append("path")
+      .attr("class", "trajectory");
+
+    path.attr("d", line)
+      .attr("stroke", function(d, i) { return color(i); })
+      .attr("stroke-width", "2px")
+      .attr("fill", "none");
+
+    path.exit().remove();
 
   }
 
@@ -132,6 +196,13 @@ function adam(x, dx, config) {
   x += - config['lrate'] * mt / (np.sqrt(vt) + config['eps']);
   return (x, config);
 }
+
+
+
+// TODO:
+// 1) algos => point logic
+// 2) Loss => scales
+// 3) Opt => scales
 
 
 // Add noise to simulate Stochastic Batch?
