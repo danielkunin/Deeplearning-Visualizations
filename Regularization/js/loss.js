@@ -57,12 +57,14 @@ class loss {
     this.color.domain(d3.extent(this.thresholds));
 
     // plot contours
-    var contours = this.svg.selectAll("path")
+    var contours = this.svg.selectAll("path.contour")
       .data(this.contours(values));
     contours.transition().duration(time)
+      .attr("class", "contour")
       .attr("d", d3.geoPath(d3.geoIdentity().scale(this.width / this.n)))
       .attr("fill", (d) => { return this.color(d.value); });
     contours.enter().append("path")
+      .attr("class", "contour")
       .attr("d", d3.geoPath(d3.geoIdentity().scale(this.width / this.n)))
       .attr("fill", (d) => { return this.color(d.value); });
     contours.exit().remove();

@@ -37,3 +37,8 @@ function square(a) {
 function l2norm(a) {
 	return (a.x**2 + a.y**2)**0.5;
 }
+
+function clamp(a, x, y) {
+	return point(Math.max(x[0], Math.min(a.x, x[1])), 
+				 Math.max(y[0], Math.min(a.y, y[1])));
+}

@@ -69,6 +69,7 @@
 	</div>
 	<button id="init">Init</button>
 	<button id="train">Train</button>
+	<button id="reset">Reset</button>
 </div>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://d3js.org/d3-contour.v1.min.js"></script>
@@ -106,11 +107,16 @@
 	});
 
 	$("#init").on("click", function () {
+		optObject.reset();
 		optObject.init();
 	});
 
 	$("#train").on("click", function () {
 		optObject.train();
+	});
+
+	$("#reset").on("click", function () {
+		optObject.reset();
 	});
 
 </script>

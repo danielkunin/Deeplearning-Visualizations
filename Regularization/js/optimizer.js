@@ -5,7 +5,7 @@ class optimizer {
     this.rule = rule;
     this.config = {
       'lrate': 1e-3,
-      'ldecay': 1,
+      'ldecay': 1e-6,
       'v': point(0,0),
       'm': point(0,0),
       'mu': 0.9,
@@ -16,8 +16,8 @@ class optimizer {
       't': 0
     }
 
-    this.training = false;
-    this.pos = point(0,0);
+    this.training;
+    this.initial = point(0,0);
     this.paths = [];
     this.costs = [];
 
@@ -35,7 +35,7 @@ class optimizer {
   reset() {
 	this.config = {
       'lrate': 1e-3,
-      'ldecay': 1,
+      'ldecay': 1e-6,
       'v': point(0,0),
       'm': point(0,0),
       'mu': 0.9,
@@ -45,20 +45,40 @@ class optimizer {
       'eps': 1e-8,
       't': 0
     }
-	this.training = false;
-	this.pos = point(0,0);
+	// this.training.stop();
+	this.pos = this.initial;
 	this.paths = [];
 	this.costs = [];
 	this.plotPath();
   }
 
   init() {
+
+    var xscale = this.loss.x;
+    var yscale = this.loss.y;
+
+    // drag functions
+    function dragstart(d) {
+      d3.select(this).raise().classed("active", true);
+    }
+
+    function dragged(d) {
+      d3.select(this)
+      .attr("cx", xscale.invert(d.x = d3.event.x))
+      .attr("cy", yscale.invert(d.y = d3.event.y));
+    }
+
+    function dragend(d) {
+      d3.select(this).classed("active", false);
+    }
+
+
   	var x = Math.random() * (this.loss.x.domain()[1] - this.loss.x.domain()[0]) + this.loss.x.domain()[0],
-  		y = Math.random() * (this.loss.y.domain()[1] - this.loss.y.domain()[0]) + this.loss.y.domain()[0];
-  	this.pos = point(x, y);
+  		  y = Math.random() * (this.loss.y.domain()[1] - this.loss.y.domain()[0]) + this.loss.y.domain()[0];
+  	this.initial = point(x, y);
 
   	var circle = this.loss.svg.selectAll("circle")
-  	  .data([this.pos]);
+  	  .data([this.initial]);
 
     circle.enter().append("circle")
       .attr("cx", (d) => { return this.loss.x(d.x); })
@@ -66,13 +86,19 @@ class optimizer {
       .attr("r", 4)
       .style("fill", "black")
       .style("stroke-width", 2)
-      .style("stroke", "white");
+      .style("stroke", "white")
+      .call(d3.drag()
+        .on("start", dragstart)
+        .on("drag", dragged)
+        .on("end", dragend));
 
     circle.attr("cx", (d) => { return this.loss.x(d.x); })
       .attr("cy", (d) => { return this.loss.y(d.y); })
-      // TODO:  Add drag and drop feature
+      .raise();
 
     circle.exit().remove();
+
+    this.pos = this.initial;
 
   }
 
@@ -83,35 +109,23 @@ class optimizer {
   step() {
   	var dx = this.loss.gradient(this.pos.x, this.pos.y),
   		update = algorithms[this.rule](this.pos, dx, this.config);
-  	this.pos = update[0];
+  	this.pos = clamp(update[0], this.loss.x.domain(), this.loss.y.domain());
   	this.config = update[1];
+    return dx;
   }
 
   train() {
-  	// if (!this.training) {
-  	// 	return;
-  	// }
-  	// this.paths.push(new Point(this.pos.x, this.pos.y));
-  	// this.costs.push(this.loss.value(this.pos));
-  	// // this.plotCost();
-  	// this.plotPath();
-  	// this.config['t'] += 1;
-  	// this.step();
-  	// this.train();
-  	this.training = true;
-
-  	var t = d3.timer(() => {
+  	this.training = d3.timer(() => {
 	  	this.paths.push(this.pos);
 	  	this.costs.push(this.loss.value(this.pos.x, this.pos.y));
 	  	this.plotCost();
 	  	this.plotPath();
 	  	this.config['t'] += 1;
-	  	var dx = this.loss.gradient(this.pos.x, this.pos.y),
-  		update = algorithms[this.rule](this.pos, dx, this.config);
-	  	this.pos = update[0];
-	  	this.config = update[1];
-	  if (!this.training || l2norm(dx) < 1e-5) t.stop();
-	}, 200);
+      var dx = this.step();
+  	  if (l2norm(dx) < 1e-2) {
+        this.training.stop();
+      }
+  	}, 200);
   }
 
   plotCost() {
@@ -159,7 +173,8 @@ class optimizer {
       .attr("stroke-width", "2px")
       .attr("fill", "none");
 
-    path.attr("d", line);
+    path.attr("d", line)
+      .raise();
 
     path.exit().remove();
 
