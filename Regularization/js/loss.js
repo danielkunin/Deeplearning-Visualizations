@@ -6,9 +6,10 @@ class loss {
     this.alpha = alpha;
     this.lambda = lambda;
 
-    this.svg = svg
-    this.width = +svg.attr("width"),
-    this.height = +svg.attr("height");
+    this.margin = {top: 50, right: 50, bottom: 50, left: 50};
+    this.svg = svg.append('g').attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
+    this.width = +svg.attr("width") - this.margin.left - this.margin.right,
+    this.height = +svg.attr("height") - this.margin.top - this.margin.bottom;
 
     this.n = 250; 
     this.m = 250;
@@ -18,6 +19,8 @@ class loss {
     this.color = d3.scaleLog().interpolate(function() { return d3.interpolateYlGnBu; });
     this.x = d3.scaleLinear().domain([]).range([0, this.width]);
     this.y = d3.scaleLinear().domain([]).range([this.height, 0]);
+
+    this.setup();
   }
 
   value(x, y) {
@@ -35,9 +38,6 @@ class loss {
     var x_range = lossFunctions[this.func].range,
         y_range = lossFunctions[this.func].range;
 
-    this.x.domain(x_range);
-    this.y.domain(y_range);
-
     // sample loss landscape
     var values = new Array(this.n * this.m);
     for (var j = 0.5, k = 0; j < this.m; ++j) {
@@ -51,10 +51,23 @@ class loss {
     }
 
     // update scales
+    this.x.domain(x_range);
+    this.y.domain(y_range);
+
     this.thresholds = d3.range(-10, Math.log2(d3.max(values)), 0.5)
       .map(function(p) { return Math.pow(2, p); });
     this.contours.thresholds(this.thresholds);
     this.color.domain(d3.extent(this.thresholds));
+
+    this.xaxis.call(d3.axisBottom(this.x).ticks(6, "s"));
+    this.yaxis.call(d3.axisLeft(this.y).ticks(6, "s"));
+
+    var logLegend = this.legend
+      .cells(this.thresholds.filter(function(e,i) { return i % 4 == 0; }))
+      .scale(this.color);
+
+    this.svg.select(".legend").call(logLegend);
+
 
     // plot contours
     var contours = this.svg.selectAll("path.contour")
@@ -68,6 +81,34 @@ class loss {
       .attr("d", d3.geoPath(d3.geoIdentity().scale(this.width / this.n)))
       .attr("fill", (d) => { return this.color(d.value); });
     contours.exit().remove();
+
+  }
+
+  setup() {
+    this.xaxis = this.svg.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + this.height + ")");
+
+    this.yaxis = this.svg.append("g")
+      .attr("class", "axis axis--y")
+      .attr("transform", "translate(" + 0 + ",0)");
+
+    this.svg.append("text")
+      .text("X")
+      .attr("class", "label")
+      .attr("transform", "translate(" + this.width / 2 + "," + (this.height + this.margin.bottom) + ")");              
+    this.svg.append("text")
+      .text("Y")
+      .attr("class", "label")
+      .attr("transform", "translate(" + -this.margin.left / 2 + "," + this.height / 2 + ")rotate(-90)");
+
+    this.svg.append("g")
+    .attr("class", "legend")
+    .attr("transform", "translate(" + this.width + ",0)"); 
+
+    this.legend = d3.legendColor()
+      .labelFormat(d3.format(".2s"))
+      .title("Loss");
   }
 
 }
@@ -89,7 +130,7 @@ function elasticNet_grad(x, y, alpha) {
 var lossFunctions = {
   'goldsteinPrice':   {'val': goldsteinPrice_val,
                        'grad': goldsteinPrice_grad,
-                       'range': [-3, 1]},
+                       'range': [-1.5, 0.5]},
   'beale':            {'val': beale_val,
                        'grad': beale_grad,
                        'range': [-4.5, 4.5]},
@@ -119,8 +160,13 @@ function goldsteinPrice_val(x, y) {
       * (30 + Math.pow(2 * x - 3 * y, 2) * (18 - 32 * x + 12 * x * x + 48 * y - 36 * x * y + 27 * y * y));
 }
 function goldsteinPrice_grad(x, y) {
-  // TODO: FILL THIS IN... (UGLY)
-  return point(0, 0); 
+  var dx = 24*(8*x**3 - 4*x**2*(9*y + 4) + 6*x*(9*y**2 + 8*y + 1) - 9*y*(3*y**2 + 4*y + 1))*((3*x**2 + 2*x*(3*y - 7) 
+           + 3*y**2 - 14*y + 19)*(x + y + 1)**2 + 1) + 12*(x**3 + x**2*(3*y - 2) + x*(3*y**2 - 4*y - 1) + y**3 - 2*y**2 - y 
+           + 2)*((12*x**2 - 4*x*(9*y + 8) + 3*(9*y**2 + 16**y + 6))*(2*x - 3*y)**2 + 30),
+      dy = 12*(x**3 + x**2*(3*y - 2) + x*(3*y**2 - 4*y - 1) + y**3 - 2*y**2 - y + 2)*((12*x**2 - 4*x*(9*y + 8) 
+           + 3*(9*y**2 + 16*y + 6))*(2*x - 3*y)**2 + 30) - 36*(8*x**3 - 4*x**2*(9*y + 4) + 6*x*(9*y**2 + 8*y + 1) 
+           - 9*y*(3*y**2 + 4*y + 1))*((3*x**2 + 2*x*(3*y - 7) + 3*y**2 - 14*y + 19)*(x + y + 1)**2 + 1);
+  return point(dx, dy); 
 }
 
 // Beale Function

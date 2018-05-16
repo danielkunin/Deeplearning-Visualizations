@@ -3,8 +3,8 @@
 <!-- Home Page CSS -->
 <link rel="stylesheet" type="text/css" href="css/landscape.css">
 <div style="width: 500px; display:inline-block;">
-	<svg id="contour" width="500" height="500" stroke="#fff" stroke-width="0.5"></svg>
-	<svg id="loss" width="500" height="100" stroke="#fff" stroke-width="0.5"></svg>
+	<svg id="contour" width="500" height="500"></svg>
+	<svg id="loss" width="500" height="200"></svg>
 </div>
 <div style="display:inline-block;">
 	<div class="lossFunctions">
@@ -74,32 +74,36 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://d3js.org/d3-contour.v1.min.js"></script>
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
 <!-- Load jquery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="js/point.js"></script>
 <script src="js/loss.js"></script>
 <script src="js/optimizer.js"></script>
 <script>
+
 	var lossObject = new loss('himmelblaus', 0, 0, d3.select("#contour"));
+	var optObject = new optimizer('sgd', lossObject, d3.select("#loss"));
 	lossObject.plot();
 
 	$("input[name='loss']").on("change", function () {
+		optObject.reset();
 		lossObject.func = this.value;
 	    lossObject.plot(0);
 	});
 
 	$("input[name='reg']").on("change", function () {
+		optObject.reset();
 		lossObject.alpha = this.value;
 	    lossObject.plot(0);
 	});
 
 	$("#lambda").on("input", function () {
+		optObject.reset();
 		$("#lambda_val").html(this.value)
 		lossObject.lambda = this.value;
 	    lossObject.plot(0);
 	});
-
-	var optObject = new optimizer('sgd', lossObject, d3.select("#loss"));
 
 	$("input[name='opt']").on("change", function () {
 		optObject.reset();

@@ -6,3 +6,8 @@ svg {
 img {
 	width: 100px;
 }
+
+#contour {
+	stroke: #fff;
+	stroke-width: 0.25;
+}

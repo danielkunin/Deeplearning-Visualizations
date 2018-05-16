@@ -5,7 +5,8 @@ class optimizer {
     this.rule = rule;
     this.config = {
       'lrate': 1e-3,
-      'ldecay': 1e-6,
+      'ldecay': 1,
+      'drate': 0.9,
       'v': point(0,0),
       'm': point(0,0),
       'mu': 0.9,
@@ -16,26 +17,30 @@ class optimizer {
       't': 0
     }
 
-    this.training;
+    this.training = null;
     this.initial = point(0,0);
     this.paths = [];
     this.costs = [];
 
     this.loss = loss;
 
-    this.svg = svg
-    this.width = +svg.attr("width"),
-    this.height = +svg.attr("height");
+    this.margin = {top: 40, right: 40, bottom: 40, left: 40};
+    this.svg = svg.append('g').attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
+    this.width = +svg.attr("width") - this.margin.left - this.margin.right,
+    this.height = +svg.attr("height") - this.margin.top - this.margin.bottom;
 
     this.x = d3.scaleLinear().domain([]).range([0, this.width]);
     this.y = d3.scaleLinear().domain([]).range([this.height, 0]);
     this.color = d3.scaleOrdinal(d3.schemeAccent);
+
+    this.setup();
   }
 
   reset() {
 	this.config = {
       'lrate': 1e-3,
-      'ldecay': 1e-6,
+      'ldecay': 1,
+      'drate': 0.9,
       'v': point(0,0),
       'm': point(0,0),
       'mu': 0.9,
@@ -45,11 +50,15 @@ class optimizer {
       'eps': 1e-8,
       't': 0
     }
-	// this.training.stop();
+	if (this.training != null) {
+    this.training.stop();
+    d3.timerFlush();
+  }
 	this.pos = this.initial;
 	this.paths = [];
 	this.costs = [];
 	this.plotPath();
+  this.plotCost();
   }
 
   init() {
@@ -57,17 +66,14 @@ class optimizer {
     var xscale = this.loss.x;
     var yscale = this.loss.y;
 
-    // drag functions
     function dragstart(d) {
       d3.select(this).raise().classed("active", true);
     }
-
     function dragged(d) {
       d3.select(this)
       .attr("cx", xscale.invert(d.x = d3.event.x))
       .attr("cy", yscale.invert(d.y = d3.event.y));
     }
-
     function dragend(d) {
       d3.select(this).classed("active", false);
     }
@@ -108,7 +114,7 @@ class optimizer {
 
   step() {
   	var dx = this.loss.gradient(this.pos.x, this.pos.y),
-  		update = algorithms[this.rule](this.pos, dx, this.config);
+  		  update = algorithms[this.rule](this.pos, dx, this.config);
   	this.pos = clamp(update[0], this.loss.x.domain(), this.loss.y.domain());
   	this.config = update[1];
     return dx;
@@ -136,10 +142,10 @@ class optimizer {
 	  .curve(d3.curveBasis);
 
 	this.y.domain([0, d3.max(this.costs, function(d) { return d; })]);
-    // yGroup.call(d3.axisLeft(y).ticks(3, "s"));
+  this.yaxis.call(d3.axisLeft(this.y).ticks(3, "s"));
 
-    this.x.domain([0, this.costs.length]);
-    // xGroup.call(d3.axisBottom(x).ticks(3, "s"));
+  this.x.domain([0, this.costs.length]);
+  this.xaxis.call(d3.axisBottom(this.x).ticks(3, "s"));
 
     var path = this.svg.selectAll("path.loss")
       .data([this.costs]);
@@ -180,6 +186,28 @@ class optimizer {
 
   }
 
+  setup() {
+    this.xaxis = this.svg.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + this.height + ")")
+      .call(d3.axisBottom(this.x).ticks(3, "s"));
+
+    this.yaxis = this.svg.append("g")
+      .attr("class", "axis axis--y")
+      .attr("transform", "translate(0,0)")
+      .call(d3.axisLeft(this.y).ticks(3, "s"));
+
+    this.svg.append("text")
+      .text("Epoch")
+      .attr("class", "label")
+      .attr("transform", "translate(" + this.width / 2 + "," + (this.height + this.margin.bottom / 2) + ")");
+
+    this.svg.append("text")
+      .text("Cost")
+      .attr("class", "label")
+      .attr("transform", "translate(" + -this.margin.left / 2 + "," + this.height / 2 + ")rotate(-90)");
+
+  }
 }
 
 // Gradient Descent Algorithms
