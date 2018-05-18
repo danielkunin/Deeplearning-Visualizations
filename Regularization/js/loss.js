@@ -6,7 +6,7 @@ class loss {
     this.alpha = alpha;
     this.lambda = lambda;
 
-    this.margin = {top: 50, right: 50, bottom: 50, left: 50};
+    this.margin = {top: 60, right: 60, bottom: 60, left: 60};
     this.svg = svg.append('g').attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
     this.width = +svg.attr("width") - this.margin.left - this.margin.right,
     this.height = +svg.attr("height") - this.margin.top - this.margin.bottom;
@@ -107,7 +107,7 @@ class loss {
     .attr("transform", "translate(" + this.width + ",0)"); 
 
     this.legend = d3.legendColor()
-      .labelFormat(d3.format(".2s"))
+      .labelFormat(d3.format(".2"))
       .title("Loss");
   }
 

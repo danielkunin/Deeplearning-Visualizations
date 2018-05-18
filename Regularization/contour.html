@@ -66,6 +66,9 @@
 		<input type="radio" name="opt" value="rmsprop"/>
 		<label>Adam </label>
 		<input type="radio" name="opt" value="adam"/>
+		<br>
+		<input type="range" value="-3" min="-8" max="0" step="any" id="lrate">
+		<label>Learning Rate = <span id="lrate_val">0.001</span></label>
 	</div>
 	<button id="init">Init</button>
 	<button id="train">Train</button>
@@ -100,7 +103,7 @@
 
 	$("#lambda").on("input", function () {
 		optObject.reset();
-		$("#lambda_val").html(this.value)
+		$("#lambda_val").html(d3.format(".2")(this.value));
 		lossObject.lambda = this.value;
 	    lossObject.plot(0);
 	});
@@ -108,6 +111,12 @@
 	$("input[name='opt']").on("change", function () {
 		optObject.reset();
 		optObject.rule = this.value;
+	});
+
+	$("#lrate").on("input", function () {
+		optObject.reset();
+		$("#lrate_val").html(d3.format(".2")(10**this.value));
+		optObject.lrate = 10**this.value;
 	});
 
 	$("#init").on("click", function () {

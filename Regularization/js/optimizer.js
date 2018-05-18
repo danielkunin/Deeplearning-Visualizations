@@ -3,6 +3,7 @@ class optimizer {
   // constructor
   constructor(rule, loss, svg) {
     this.rule = rule;
+    this.lrate = 1e-3;
     this.config = {
       'lrate': 1e-3,
       'ldecay': 1,
@@ -51,14 +52,14 @@ class optimizer {
       't': 0
     }
 	if (this.training != null) {
-    this.training.stop();
-    d3.timerFlush();
-  }
+		this.training.stop();
+		d3.timerFlush();
+	}
 	this.pos = this.initial;
 	this.paths = [];
 	this.costs = [];
 	this.plotPath();
-  this.plotCost();
+  	this.plotCost();
   }
 
   init() {
@@ -113,20 +114,26 @@ class optimizer {
   }
 
   step() {
+  	this.config["lrate"] = this.lrate;
   	var dx = this.loss.gradient(this.pos.x, this.pos.y),
-  		  update = algorithms[this.rule](this.pos, dx, this.config);
-  	this.pos = clamp(update[0], this.loss.x.domain(), this.loss.y.domain());
+  		update = algorithms[this.rule](this.pos, dx, this.config);
+  	this.pos = update[0];//clamp(this.loss.x.domain(), this.loss.y.domain());
   	this.config = update[1];
     return dx;
   }
 
   train() {
   	this.training = d3.timer(() => {
-	  	this.paths.push(this.pos);
-	  	this.costs.push(this.loss.value(this.pos.x, this.pos.y));
-	  	this.plotCost();
-	  	this.plotPath();
-	  	this.config['t'] += 1;
+		var pos = this.pos,
+			loss = this.loss.value(this.pos.x, this.pos.y);
+		if (!inrange(pos,[-1e4,1e4],[-1e4,1e4]) || !isFinite(loss)) {
+			this.training.stop();
+		}
+		this.paths.push(pos);
+		this.costs.push(loss);
+		this.plotCost();
+		this.plotPath();
+		this.config['t'] += 1;
       var dx = this.step();
   	  if (l2norm(dx) < 1e-2) {
         this.training.stop();
@@ -138,14 +145,14 @@ class optimizer {
 
 	var line = d3.line()
 	  .x((d, i) => { return this.x(i); })
-	  .y((d) => { return this.y(d); })
+	  .y((d, i) => { return isFinite(d) ? this.y(d) : this.y.range()[1]; })
 	  .curve(d3.curveBasis);
 
-	this.y.domain([0, d3.max(this.costs, function(d) { return d; })]);
-  this.yaxis.call(d3.axisLeft(this.y).ticks(3, "s"));
+	this.y.domain([0, d3.max(this.costs, function(d) { return isFinite(d) ? d : 0; })]);
+	this.yaxis.call(d3.axisLeft(this.y).ticks(3, "s"));
 
-  this.x.domain([0, this.costs.length]);
-  this.xaxis.call(d3.axisBottom(this.x).ticks(3, "s"));
+	this.x.domain([0, this.costs.length]);
+	this.xaxis.call(d3.axisBottom(this.x).ticks(3, "s"));
 
     var path = this.svg.selectAll("path.loss")
       .data([this.costs]);

@@ -38,6 +38,11 @@ function l2norm(a) {
 	return (a.x**2 + a.y**2)**0.5;
 }
 
+function inrange(a, x, y) {
+	return (x[0] < a.x) && (a.x < x[1]) && 
+		   (y[0] < a.y) && (a.y < y[1]);
+}
+
 function clamp(a, x, y) {
 	return point(Math.max(x[0], Math.min(a.x, x[1])), 
 				 Math.max(y[0], Math.min(a.y, y[1])));
