@@ -1,63 +1,53 @@
 class optimizer {
 
-  // constructor
-  constructor(rule, loss, svg) {
-    this.rule = rule;
-    this.lrate = 1e-3;
-    this.config = {
-      'lrate': 1e-3,
-      'ldecay': 1,
-      'drate': 0.9,
-      'v': point(0,0),
-      'm': point(0,0),
-      'mu': 0.9,
-      'cache': point(0,0),
-      'beta1': 0.9,
-      'beta2': 0.999,
-      'eps': 1e-8,
-      't': 0
-    }
+  constructor(loss, svg) {
 
+  	// global parameters
+    this.lrate = 0;
+    this.epoch = 0;
+
+    // location and loss data
     this.training = null;
     this.initial = point(0,0);
+    this.rule = [];
+    this.config = [];
+    this.pos = [];
     this.paths = [];
     this.costs = [];
 
+    // loss landscape
     this.loss = loss;
 
+    // cost plot
     this.margin = {top: 40, right: 40, bottom: 40, left: 40};
     this.svg = svg.append('g').attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
     this.width = +svg.attr("width") - this.margin.left - this.margin.right,
     this.height = +svg.attr("height") - this.margin.top - this.margin.bottom;
 
+    // scales
     this.x = d3.scaleLinear().domain([]).range([0, this.width]);
     this.y = d3.scaleLinear().domain([]).range([this.height, 0]);
     this.color = d3.scaleOrdinal(d3.schemeAccent);
 
+    // setup axes
     this.setup();
   }
 
   reset() {
-	this.config = {
-      'lrate': 1e-3,
-      'ldecay': 1,
-      'drate': 0.9,
-      'v': point(0,0),
-      'm': point(0,0),
-      'mu': 0.9,
-      'cache': point(0,0),
-      'beta1': 0.9,
-      'beta2': 0.999,
-      'eps': 1e-8,
-      't': 0
-    }
+  	// stop training
 	if (this.training != null) {
 		this.training.stop();
 		d3.timerFlush();
 	}
-	this.pos = this.initial;
+
+	// reset parameters
+	this.epoch = 0;
+	this.config = []
+	this.pos = [];
 	this.paths = [];
 	this.costs = [];
+
+	// update plots
 	this.plotPath();
   	this.plotCost();
   }
@@ -80,8 +70,8 @@ class optimizer {
     }
 
 
-  	var x = Math.random() * (this.loss.x.domain()[1] - this.loss.x.domain()[0]) + this.loss.x.domain()[0],
-  		  y = Math.random() * (this.loss.y.domain()[1] - this.loss.y.domain()[0]) + this.loss.y.domain()[0];
+  	var x = Math.random() * (xscale.domain()[1] - xscale.domain()[0]) + xscale.domain()[0],
+  		y = Math.random() * (yscale.domain()[1] - yscale.domain()[0]) + yscale.domain()[0];
   	this.initial = point(x, y);
 
   	var circle = this.loss.svg.selectAll("circle")
@@ -105,116 +95,161 @@ class optimizer {
 
     circle.exit().remove();
 
-    this.pos = this.initial;
-
   }
+
 
   update() {
-  	// update parameter configurations
+	// update parameter configurations
   }
 
-  step() {
-  	this.config["lrate"] = this.lrate;
-  	var dx = this.loss.gradient(this.pos.x, this.pos.y),
-  		update = algorithms[this.rule](this.pos, dx, this.config);
-  	this.pos = update[0];//clamp(this.loss.x.domain(), this.loss.y.domain());
-  	this.config = update[1];
+
+  step(pos,config,rule,i) {
+
+  	// get gradient and apply update
+  	var dx = this.loss.gradient(pos.x, pos.y),
+  		update = algorithms[rule](pos, dx, config);
+
+  	// update position and configuration
+  	this.pos[i] = update[0];
+  	this.config[i] = update[1];
+
     return dx;
   }
 
   train() {
-  	this.training = d3.timer(() => {
-		var pos = this.pos,
-			loss = this.loss.value(this.pos.x, this.pos.y);
-		if (!inrange(pos,[-1e4,1e4],[-1e4,1e4]) || !isFinite(loss)) {
-			this.training.stop();
-		}
-		this.paths.push(pos);
-		this.costs.push(loss);
+
+  	// initialize positions and configurations
+  	this.rule.forEach((e,i) => {
+  		this.config.push(Object.assign({}, parameters));
+  		this.pos.push(this.initial);
+  		this.paths.push([]);
+		this.costs.push([]);
+  	});
+
+  	// iterate positions and configurations
+	this.training = d3.timer(() => {
+
+		var done = true;
+		this.epoch += 1;
+		this.rule.forEach((e,i) => {
+
+			var config = this.config[i],
+				pos = this.pos[i],
+				loss = this.loss.value(pos.x, pos.y);
+
+			config['t'] = this.epoch;
+			config["lrate"] = learningRates[e];
+			var dx = this.step(pos,config,e,i);
+
+			if (inrange(pos,[-1e4,1e4],[-1e4,1e4]) && isFinite(loss)) {
+				this.paths[i].push(pos);
+				this.costs[i].push(loss);
+				done = done && (l2norm(dx) < 1e-2);
+			} else {
+				done = true;
+			}
+		});
 		this.plotCost();
 		this.plotPath();
-		this.config['t'] += 1;
-      var dx = this.step();
-  	  if (l2norm(dx) < 1e-2) {
-        this.training.stop();
-      }
-  	}, 200);
+		if (done) {
+			this.training.stop();
+		}
+
+	}, 200);
   }
 
   plotCost() {
 
+  	// line function
 	var line = d3.line()
 	  .x((d, i) => { return this.x(i); })
 	  .y((d, i) => { return isFinite(d) ? this.y(d) : this.y.range()[1]; })
 	  .curve(d3.curveBasis);
 
-	this.y.domain([0, d3.max(this.costs, function(d) { return isFinite(d) ? d : 0; })]);
+	// update y axis
+	var maxLoss = 0;
+	this.costs.forEach((cost) => {
+		maxLoss = Math.max(maxLoss, d3.max(cost, function(d) { return isFinite(d) ? d : 0; }));
+	})
+	this.y.domain([0,maxLoss])
 	this.yaxis.call(d3.axisLeft(this.y).ticks(3, "s"));
 
-	this.x.domain([0, this.costs.length]);
+	// update x axis
+	this.x.domain([0, this.epoch]);
 	this.xaxis.call(d3.axisBottom(this.x).ticks(3, "s"));
 
+	// bind
     var path = this.svg.selectAll("path.loss")
-      .data([this.costs]);
+      .data(this.costs);
 
+    // add
     path.enter().append("path")
       .attr("class", "loss");
 
+    // update
     path.attr("d", line)
-      .attr("stroke", 'black')//(d, i) => { return this.color(i); })
+      .attr("stroke", (d, i) => { return this.color(i); })
       .attr("stroke-width", "2px")
       .attr("fill", "none");
 
+    // remove
     path.exit().remove();
 
   }
 
   plotPath() {
 
+  	// line function
 	var line = d3.line()
 	  .x((d) => { return this.loss.x(d.x); })
 	  .y((d) => { return this.loss.y(d.y); })
 	  .curve(d3.curveBasis);
 
+	// bind
     var path = this.loss.svg.selectAll("path.trajectory")
-      .data([this.paths]);
+      .data(this.paths);
 
+    // add
     path.enter().append("path")
       .attr("class", "trajectory")
       .attr("d", line)
-      .attr("stroke", 'black')//(d, i) => { return this.color(i); })
+      .attr("stroke", (d, i) => { return this.color(i); })
       .attr("stroke-width", "2px")
       .attr("fill", "none");
 
+    // update
     path.attr("d", line)
       .raise();
 
+    // remove
     path.exit().remove();
 
   }
 
   setup() {
+
+  	// add axis
     this.xaxis = this.svg.append("g")
       .attr("class", "axis axis--x")
       .attr("transform", "translate(0," + this.height + ")")
       .call(d3.axisBottom(this.x).ticks(3, "s"));
-
     this.yaxis = this.svg.append("g")
       .attr("class", "axis axis--y")
       .attr("transform", "translate(0,0)")
       .call(d3.axisLeft(this.y).ticks(3, "s"));
 
+    // add label
     this.svg.append("text")
       .text("Epoch")
       .attr("class", "label")
       .attr("transform", "translate(" + this.width / 2 + "," + (this.height + this.margin.bottom / 2) + ")");
-
     this.svg.append("text")
       .text("Cost")
       .attr("class", "label")
       .attr("transform", "translate(" + -this.margin.left / 2 + "," + this.height / 2 + ")rotate(-90)");
 
   }
+
 }
 
 // Gradient Descent Algorithms
@@ -225,6 +260,29 @@ var algorithms = {
 	'adagrad': adagrad,
 	'rmsprop': rmsprop,
 	'adam': adam
+}
+// Gradient Descent Learning Rates
+var learningRates = {
+	'sgd': 1e-3,
+	'momentum': 1e-3,
+	'nesterov': 1e-3,
+	'adagrad': 5e-1,
+	'rmsprop': 8e-1,
+	'adam': 1e-2
+}
+// Default Parameters
+var parameters = {
+	'lrate': 1e-3,
+	'ldecay': 1,
+	'drate': 0.9,
+	'v': point(0,0),
+	'm': point(0,0),
+	'mu': 0.9,
+	'cache': point(0,0),
+	'beta1': 0.9,
+	'beta2': 0.999,
+	'eps': 1e-8,
+	't': 0
 }
 
 // Stochastic Gradient Descent

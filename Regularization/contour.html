@@ -53,19 +53,19 @@
 		<label>Lambda = <span id="lambda_val">0.00</span></label>
 	</div>
 	<div class="lossFunctions">
-		<p>Choose an optimizer:</p>
+		<p>Choose an optimizer(s):</p>
 		<label>SGD </label>
-		<input type="radio" name="opt" value="sgd" checked/>
+		<input type="checkbox" name="opt" value="sgd"/>
 		<label>Momentum </label>
-		<input type="radio" name="opt" value="momentum"/>
+		<input type="checkbox" name="opt" value="momentum"/>
 		<label>Nesterov </label>
-		<input type="radio" name="opt" value="nesterov"/>
+		<input type="checkbox" name="opt" value="nesterov"/>
 		<label>Adagrad </label>
-		<input type="radio" name="opt" value="adagrad"/>
+		<input type="checkbox" name="opt" value="adagrad"/>
 		<label>RMSprop </label>
-		<input type="radio" name="opt" value="rmsprop"/>
+		<input type="checkbox" name="opt" value="rmsprop"/>
 		<label>Adam </label>
-		<input type="radio" name="opt" value="adam"/>
+		<input type="checkbox" name="opt" value="adam"/>
 		<br>
 		<input type="range" value="-3" min="-8" max="0" step="any" id="lrate">
 		<label>Learning Rate = <span id="lrate_val">0.001</span></label>
@@ -86,7 +86,7 @@
 <script>
 
 	var lossObject = new loss('himmelblaus', 0, 0, d3.select("#contour"));
-	var optObject = new optimizer('sgd', lossObject, d3.select("#loss"));
+	var optObject = new optimizer(lossObject, d3.select("#loss"));
 	lossObject.plot();
 
 	$("input[name='loss']").on("change", function () {
@@ -110,7 +110,12 @@
 
 	$("input[name='opt']").on("change", function () {
 		optObject.reset();
-		optObject.rule = this.value;
+		var index = optObject.rule.indexOf(this.value);
+		if (index == -1) {
+			optObject.rule.push(this.value);
+		} else {
+			optObject.rule.splice(index, 1);
+		}
 	});
 
 	$("#lrate").on("input", function () {
@@ -125,6 +130,7 @@
 	});
 
 	$("#train").on("click", function () {
+		optObject.reset();
 		optObject.train();
 	});
 
