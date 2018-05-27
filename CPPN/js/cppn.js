@@ -26,27 +26,39 @@ function imagePixelToNormalizedCoord(x, y, imageWidth, imageHeight,zSize) {
   return result;
 }
 
+function convexCombination(coef, colors) {
+
+  var comb = [0,0,0];
+  for (var i = 0; i < colors.length; i++) {
+    for (var j = 0; j < 3; j++) {
+      comb[j] += colors[i][j] * coef[i]; 
+    }
+  }
+
+  return 'rgb(' + Math.floor(comb[0]) + ',' + Math.floor(comb[1]) + ',' + Math.floor(comb[2]) + ')';
+}
+
 
 class CPPN {
 
   // constructor
-  constructor(layers, activation, z1Scale, z2Scale, canvas) {
+  constructor(layers, activation, zScale, colors, canvas) {
     this.layers = layers;
     this.activation = activation;
-    this.z1Scale = z1Scale;
-    this.z2Scale = z2Scale;
+    this.z1Scale = zScale[0];
+    this.z2Scale = zScale[1];
+    this.colors = colors,
     this.canvas = canvas
 
     this.z1Counter = 0;
     this.z2Counter = 0;
-
     this.parameters = {};
     this.isTraining = false;
 
 
-    const canvasSize = 128;
+    const canvasSize = 64;
     const NUM_IMAGE_SPACE_VARIABLES = 3;  // x, y, r
-  const NUM_LATENT_VARIABLES = 2;
+    const NUM_LATENT_VARIABLES = 2;
     this.canvas.width = canvasSize;
     this.canvas.height = canvasSize;
 
@@ -73,9 +85,9 @@ class CPPN {
 
   // Method
   initialize() {
-  for (var l = 1; l < layers.length; l++) {
-    this.parameters['w' + l] = tf.variable(tf.randomNormal([layers[l-1],layers[l]], 0, 0.6));
-  }
+    for (var l = 1; l < this.layers.length; l++) {
+      this.parameters['w' + l] = tf.variable(tf.randomNormal([this.layers[l-1],this.layers[l]], 0, 0.6));
+    }
   }
 
 
@@ -88,6 +100,7 @@ class CPPN {
     this.z2Counter += 1 / this.z2Scale;
 
     const output = tf.tidy(() => {
+
       const z1 = tf.scalar(Math.sin(this.z1Counter));
       const z2 = tf.scalar(Math.cos(this.z2Counter));
       const z1Mat = z1.mul(this.ones);
@@ -96,14 +109,13 @@ class CPPN {
       const concatAxis = 1;
       const latentVars = z1Mat.concat(z2Mat, concatAxis);
 
-      const activation = (x) =>
-          activationFunctionMap[this.activation](x);
+      const activation = (x) => activationFunctionMap[this.activation](x);
 
       let output = this.data.concat(latentVars, concatAxis);
 
-      for (var l = 1; l < layers.length; l++) {
-    output = activation(output.matMul(this.parameters['w' + l]));
-    }
+      for (var l = 1; l < this.layers.length; l++) {
+        output = activation(output.matMul(this.parameters['w' + l]));
+      }
 
       return output.sigmoid().reshape([this.canvas.height, this.canvas.width, 3]);
     });
@@ -115,27 +127,23 @@ class CPPN {
   }
 
   async visualize(output) {
-  const [height, width] = output.shape;
-  const ctx = this.canvas.getContext('2d');
-  const data = await output.data();
-  var i = 0;
-  for (var y = 0; y < height; y++) {
-      for (var x = 0; x < width; x++) {
-        var k = i * 3;
-        var c1 = [255,139,34];
-        var c2 = [255,104,89];
-        var c3 = [252,77,119];
-        
-      var r = Math.floor(c1[0] * data[k + 0] + c2[0] * data[k + 1] + c3[0] * data[k + 2]);
-      var g = Math.floor(c1[1] * data[k + 0] + c2[1] * data[k + 1] + c3[1] * data[k + 2]);
-      var b = Math.floor(c1[2] * data[k + 0] + c2[2] * data[k + 1] + c3[2] * data[k + 2]);
+    var [height, width] = output.shape,
+        ctx = this.canvas.getContext('2d'),
+        data = await output.data();
 
-        var color= 'rgb(' + r + ',' + g + ',' + b + ')';
-        ctx.fillStyle = color;
-        ctx.fillRect(x, y, 1, 1);
-        i++;
+    var i = 0;
+    for (var y = 0; y < height; y++) {
+        for (var x = 0; x < width; x++) {
+          // indexing
+          var k = i * 3;
+          i++;
+          // create color
+          var color = convexCombination(data.slice(k, k + 3), this.colors)
+          // add color
+          ctx.fillStyle = color;
+          ctx.fillRect(x, y, 1, 1);
+      }
     }
-  }
   }
 
   start() {
@@ -163,10 +171,25 @@ function cppnSetup() {
         .attr("height", 128)
         .attr("class", "cppn");
 
-    layers = [5,30,30,30,3];
-    var cppn = new CPPN(layers, 'sin', 40, 30, canvas.node());
+    // create colors
+    var c1 = [255,139,34],
+        c2 = [255,87,87],
+        c3 = [255,31,103];
+    var colors = [c1, c2, c3];
+
+    // define architecture
+    var layers = [5,30,30,30,3],
+        activation = 'sin',
+        zScale = [200, 150];
+
+    // make cppn
+    var cppn = new CPPN(layers, activation, zScale, colors, canvas.node());
+
+    // start
     cppn.initialize();
     cppn.step();
+
+    // toggle start/stop
     $(".cppnControl").mouseenter(function() {
       cppn.start();
     });
