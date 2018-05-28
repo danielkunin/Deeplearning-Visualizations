@@ -38,6 +38,12 @@ $("#lrate").on("input", function () {
 	optObject.lrate = 10**this.value;
 });
 
+$("#ldecay").on("input", function () {
+	optObject.reset();
+	$("#ldecay_val").html(d3.format(".2")(this.value));
+	optObject.ldecay = this.value;
+});
+
 $("#init").on("click", function () {
 	optObject.reset();
 	optObject.init();

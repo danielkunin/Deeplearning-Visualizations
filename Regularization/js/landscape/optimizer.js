@@ -4,6 +4,7 @@ class optimizer {
 
   	// global parameters
     this.lrate = 0;
+    this.ldecay = 1;
     this.epoch = 0;
 
     // location and loss data
