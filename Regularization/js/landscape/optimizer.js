@@ -19,7 +19,7 @@ class optimizer {
     this.loss = loss;
 
     // cost plot
-    this.margin = {top: 40, right: 40, bottom: 40, left: 40};
+    this.margin = {top: 40, right: 60, bottom: 40, left: 60};
     this.svg = svg.append('g').attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
     this.width = +svg.attr("width") - this.margin.left - this.margin.right,
     this.height = +svg.attr("height") - this.margin.top - this.margin.bottom;
@@ -27,7 +27,7 @@ class optimizer {
     // scales
     this.x = d3.scaleLinear().domain([]).range([0, this.width]);
     this.y = d3.scaleLinear().domain([]).range([this.height, 0]);
-    this.color = d3.scaleOrdinal(d3.schemeAccent);
+    this.color = d3.scaleOrdinal().domain([]).range(d3.schemeAccent);
 
     // setup axes
     this.setup();
@@ -100,6 +100,13 @@ class optimizer {
 
   update() {
 	// update parameter configurations
+    // update color scale
+    this.color.domain(this.rule);
+
+    // update legend
+    var logLegend = this.legend
+      .scale(this.color);
+    this.svg.select(".legend").call(logLegend);
   }
 
 
@@ -123,7 +130,7 @@ class optimizer {
   		this.config.push(Object.assign({}, parameters));
   		this.pos.push(this.initial);
   		this.paths.push([]);
-		this.costs.push([]);
+		  this.costs.push([]);
   	});
 
   	// iterate positions and configurations
@@ -144,7 +151,7 @@ class optimizer {
 			if (inrange(pos,[-1e4,1e4],[-1e4,1e4]) && isFinite(loss)) {
 				this.paths[i].push(pos);
 				this.costs[i].push(loss);
-				done = done && (l2norm(dx) < 1e-2);
+				done = done && (l2norm(dx) < 1e-1);
 			} else {
 				done = true;
 			}
@@ -154,7 +161,6 @@ class optimizer {
 		if (done) {
 			this.training.stop();
 		}
-
 	}, 200);
   }
 
@@ -188,7 +194,7 @@ class optimizer {
 
     // update
     path.attr("d", line)
-      .attr("stroke", (d, i) => { return this.color(i); })
+      .attr("stroke", (d, i) => { return this.color(this.rule[i]); })
       .attr("stroke-width", "2px")
       .attr("fill", "none");
 
@@ -213,7 +219,7 @@ class optimizer {
     path.enter().append("path")
       .attr("class", "trajectory")
       .attr("d", line)
-      .attr("stroke", (d, i) => { return this.color(i); })
+      .attr("stroke", (d, i) => { return this.color(this.rule[i]); })
       .attr("stroke-width", "2px")
       .attr("fill", "none");
 
@@ -248,6 +254,12 @@ class optimizer {
       .attr("class", "label")
       .attr("transform", "translate(" + -this.margin.left / 2 + "," + this.height / 2 + ")rotate(-90)");
 
+    // add legend
+    this.svg.append("g")
+      .attr("class", "legend")
+      .attr("transform", "translate(" + this.width + ",0)"); 
+    this.legend = d3.legendColor()
+      .title("Optimizer");
   }
 
 }
@@ -267,7 +279,7 @@ var learningRates = {
 	'momentum': 1e-3,
 	'nesterov': 1e-3,
 	'adagrad': 5e-1,
-	'rmsprop': 8e-1,
+	'rmsprop': 1e-2,
 	'adam': 1e-2
 }
 // Default Parameters

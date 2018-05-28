@@ -29,6 +29,7 @@ $("input[name='opt']").on("change", function () {
 	} else {
 		optObject.rule.splice(index, 1);
 	}
+	optObject.update();
 });
 
 $("#lrate").on("input", function () {
