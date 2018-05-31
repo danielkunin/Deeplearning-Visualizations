@@ -20,7 +20,8 @@ class optimizer {
     this.loss = loss;
 
     // cost plot
-    this.margin = {top: 40, right: 60, bottom: 40, left: 60};
+    this.pad = 30;
+    this.margin = {top: 20, right: 80, bottom: 50, left: 40};
     this.svg = svg.append('g').attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
     this.width = +svg.attr("width") - this.margin.left - this.margin.right,
     this.height = +svg.attr("height") - this.margin.top - this.margin.bottom;
@@ -62,9 +63,10 @@ class optimizer {
       d3.select(this).raise().classed("active", true);
     }
     function dragged(d) {
-      d3.select(this)
-      .attr("cx", xscale.invert(d.x = d3.event.x))
-      .attr("cy", yscale.invert(d.y = d3.event.y));
+      console.log(d.x, d3.event.x)
+      // d3.select(this)
+      // .attr("cx", xscale.invert(d.x = d3.event.x))
+      // .attr("cy", yscale.invert(d.y = d3.event.y));
     }
     function dragend(d) {
       d3.select(this).classed("active", false);
@@ -202,7 +204,7 @@ class optimizer {
 
     // add
     path.enter().append("path")
-      .attr("class", "loss");
+      .attr("class", (d, i) => { return "loss " + this.rule[i]; });
 
     // update
     path.attr("d", line)
@@ -229,7 +231,7 @@ class optimizer {
 
     // add
     path.enter().append("path")
-      .attr("class", "trajectory")
+      .attr("class", (d, i) => { return "trajectory " + this.rule[i]; })
       .attr("d", line)
       .attr("stroke", (d, i) => { return this.color(this.rule[i]); })
       .attr("stroke-width", "2px")
@@ -259,19 +261,30 @@ class optimizer {
     // add label
     this.svg.append("text")
       .text("Epoch")
-      .attr("class", "label")
-      .attr("transform", "translate(" + this.width / 2 + "," + (this.height + this.margin.bottom / 2) + ")");
+      .attr("class", "titles")
+      .attr("transform", "translate(" + this.width / 2 + "," + (this.height + this.pad) + ")")
+      .attr("alignment-baseline","hanging"); 
     this.svg.append("text")
       .text("Cost")
-      .attr("class", "label")
-      .attr("transform", "translate(" + -this.margin.left / 2 + "," + this.height / 2 + ")rotate(-90)");
+      .attr("class", "titles")
+      .attr("transform", "translate(" + -this.pad + "," + this.height / 2 + ")rotate(-90)")
+      .attr("alignment-baseline","baseline");  
 
     // add legend
     this.svg.append("g")
       .attr("class", "legend")
-      .attr("transform", "translate(" + this.width + ",0)"); 
+      .attr("transform", "translate(" + (this.width + this.pad / 2) + ",0)"); 
     this.legend = d3.legendColor()
-      .title("Optimizer");
+      .title("Optimizer")
+      .on("cellover", function(d) {
+        d3.selectAll(".trajectory").style("display", "none");
+        d3.selectAll(".loss").style("display", "none");
+        d3.selectAll("." + d).style("display", "initial");
+      })
+      .on("cellout", function(d) {
+        d3.selectAll(".trajectory").style("display", "initial");
+        d3.selectAll(".loss").style("display", "initial");
+      });
   }
 
 }

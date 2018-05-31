@@ -23,4 +23,8 @@
 }
 .titles {
 	text-anchor: middle;
+	font-size: 10px;
+}
+.label {
+	font-size: 10px;
 }
