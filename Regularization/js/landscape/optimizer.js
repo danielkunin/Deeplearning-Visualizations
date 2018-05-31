@@ -50,7 +50,7 @@ class optimizer {
 
 	// update plots
 	this.plotPath();
-  	this.plotCost();
+  this.plotCost();
   }
 
   init() {
@@ -122,6 +122,17 @@ class optimizer {
   	this.config[i] = update[1];
 
     return dx;
+  }
+
+  stop() {
+    if (this.training != null) {
+      this.training.stop();
+    }
+  }
+  start() {
+    if (this.training != null) {
+      this.training.start();
+    }
   }
 
   train() {

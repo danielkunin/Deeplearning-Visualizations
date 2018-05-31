@@ -1,13 +1,26 @@
-svg {
-}
-.lossFunctions { 
-	width: 500px;
-}
-.lossFunctions img {
-	width: 100px;
-}
 
-#contour {
+.lossFunctions img {
+	width: 20%;
+}
+.lossFunctions label input {
+	display: none;
+}
+.lossFunctions label input + img {
+	cursor: pointer;
+	opacity: 0.5;
+	border: 1px solid transparent;
+}
+.lossFunctions label input + img:hover {
+	opacity: 1;
+}
+.lossFunctions label input:checked + img {
+	opacity: 1;
+	border: 1px solid black;
+}
+.contour {
 	stroke: #fff;
 	stroke-width: 0.25;
+}
+.titles {
+	text-anchor: middle;
 }

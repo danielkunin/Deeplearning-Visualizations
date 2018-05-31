@@ -6,7 +6,8 @@ class loss {
     this.alpha = alpha;
     this.lambda = lambda;
 
-    this.margin = {top: 60, right: 60, bottom: 60, left: 60};
+    this.pad = 30;
+    this.margin = {top: 40, right: 80, bottom: 80, left: 40};
     this.svg = svg.append('g').attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
     this.width = +svg.attr("width") - this.margin.left - this.margin.right,
     this.height = +svg.attr("height") - this.margin.top - this.margin.bottom;
@@ -34,6 +35,10 @@ class loss {
   }
 
   plot(time) {
+
+    // update title
+    this.title.text(lossTitles[this.func] + " Function");
+
     // get view for current loss function
     var x_range = lossFunctions[this.func].range,
         y_range = lossFunctions[this.func].range;
@@ -95,20 +100,27 @@ class loss {
 
     this.svg.append("text")
       .text("X")
-      .attr("class", "label")
-      .attr("transform", "translate(" + this.width / 2 + "," + (this.height + this.margin.bottom) + ")");              
+      .attr("class", "titles")
+      .attr("transform", "translate(" + this.width / 2 + "," + (this.height + this.pad) + ")")
+      .attr("alignment-baseline","hanging");              
     this.svg.append("text")
       .text("Y")
-      .attr("class", "label")
-      .attr("transform", "translate(" + -this.margin.left / 2 + "," + this.height / 2 + ")rotate(-90)");
+      .attr("class", "titles")
+      .attr("transform", "translate(" + -this.pad + "," + this.height / 2 + ")rotate(-90)")
+      .attr("alignment-baseline","baseline");   
 
     this.svg.append("g")
     .attr("class", "legend")
-    .attr("transform", "translate(" + this.width + ",0)"); 
+    .attr("transform", "translate(" + (this.width + this.pad / 2) + ",0)"); 
 
     this.legend = d3.legendColor()
-      .labelFormat(d3.format(".2"))
+      .labelFormat(d3.format(".2g"))
       .title("Loss");
+
+    this.title = this.svg.append("text")
+      .attr("class", "titles")
+      .attr("transform", "translate(" + this.width / 2 + "," + -this.pad + ")")
+      .attr("alignment-baseline","central");
   }
 
 }
@@ -151,7 +163,21 @@ var lossFunctions = {
                        'range': [-5.12, 5.12]},
   'styblinskiTang':   {'val': styblinskiTang_val,
                        'grad': styblinskiTang_grad,
-                       'range': [-5, 5]}
+                       'range': [-5, 5]},
+  'monkeySaddle':     {'val': monkeySaddle_val,
+                       'grad': monkeySaddle_grad,
+                       'range': [-2, 2]}
+}
+
+var lossTitles = {
+  'goldsteinPrice':   'Goldstein Price',
+  'beale':            'Beale',
+  'himmelblaus':      'Himmelblaus',
+  'mcCormick':        'McCormick',
+  'matyas':           'Matyas',
+  'rosenbrock':       'Rosenbrock',
+  'rastrigin':        'Rastrigin',
+  'styblinskiTang':   'Styblinski Tang'
 }
 
 // Goldstein Price Function
@@ -241,5 +267,19 @@ function styblinskiTang_val(x,y) {
 function styblinskiTang_grad(x,y) {
   var dx = (4 * Math.pow(x, 3) - 32 * x + 5) / 2,
   	  dy = (4 * Math.pow(y, 3) - 32 * y + 5) / 2;
+  return point(dx, dy);
+} 
+
+
+// Monkey Saddle Function (modified to be non-negative and with mininum)
+function monkeySaddle_val(x,y) {
+  return x * x * x - 3 * x * y * y + y**4 + x**4 + 135/256; 
+  // return x * x * x - 3 * x * y * y + 1; 
+}
+function monkeySaddle_grad(x,y) {
+  var dx = 3 * x**2 - 3 * y**2 + 4 * x**3,
+      dy = -6 * x * y + 4 * y**3;
+  // var dx = 3 * x**2 - 3 * y**2,
+  //     dy = -6 * x * y;
   return point(dx, dy);
 }  
