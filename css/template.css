@@ -172,28 +172,37 @@ p.citation{
 }
 
 .column-8-8,
+.column-7-8,
 .column-6-8,
+.column-5-8,
 .column-4-8,
 .column-3-8,
-.column-2-8 {
+.column-2-8,
+.column-1-8 {
     margin:0% 1%;
     padding:0 1%;
 }
 
 
 .footer .column-8-8,
+.footer .column-7-8,
 .footer .column-6-8,
+.footer .column-5-8,
 .footer .column-4-8,
 .footer .column-3-8,
-.footer .column-2-8 {
+.footer .column-2-8,
+.footer .column-1-8 
+ {
     margin:0% 2%;
 }
 
-
+.column-1-8 img,
 .column-2-8 img,
 .column-3-8 img,
 .column-4-8 img,
+.column-5-8 img,
 .column-6-8 img,
+.column-7-8 img,
 .column-8-8 img {
     width: 100%;
     margin-top: 1.5em;
@@ -560,8 +569,8 @@ ol.reference li {
     }
 
 
-    .column-8-8,.column-6-8,.column-4-8,
-    .column-3-8,.column-2-8 {
+    .column-8-8,.column-7-8,.column-6-8,.column-5-8,.column-4-8,
+    .column-3-8,.column-2-8,.column-1-8 {
         width: 100%;
     }
 
@@ -591,8 +600,16 @@ ol.reference li {
         width: 84%;
     }
 
+    .column-7-8 {
+        width: 73.5%;
+    }
+
     .column-6-8 {
         width: 67%;
+    }
+
+    .column-5-8 {
+        width: 52.5%;
     }
 
     .column-4-8 {
@@ -600,11 +617,15 @@ ol.reference li {
     }
 
     .column-3-8{
-    	width: 31.5%;
+    	  width: 31.5%;
     }
 
     .column-2-8 {
         width: 21%;
+    }
+
+    .column-1-8 {
+        width: 10.5%;
     }
 
     .sm-screen-img{
