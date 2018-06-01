@@ -212,7 +212,7 @@
                       <img src="./img/loss/.png">
                     </label>
                 </div>
-                <h3>2. Choose regularization</h3>
+                <h3>2. Add regularization</h3>
                 <div>
                     <p>Select regularization method <script>document.write(katex.renderToString('r(x,y)'))</script> and penalization parameter <script>document.write(katex.renderToString('\\lambda'))</script>.</p>
                     <label>L1:</label>
@@ -223,31 +223,35 @@
                     <input type="range" value="0" min="0" max="40" step="any" id="lambda">
                     <label>Lambda = <span id="lambda_val">0.00</span></label>
                 </div>
-                <h3>3. Choose Optimization</h3>
+                <h3>3. Select Starting Point</h3>
+                <p>Select a starting point <script>document.write(katex.renderToString('(x_0,y_0)'))</script> either randomly or input specific coordinates.</p>
+                <button id="init">Random</button>
+                <button id="">Select</button>
+                <form>
+                  X: <input type="text" name="x">
+                  Y: <input type="text" name="y">
+                </form>
+                <h3>4. Determine Optimization</h3>
                 <div class="lossFunctions">
-                    <p>Select optimization methods, learning rate <script>document.write(katex.renderToString('\\alpha'))</script>, and decay rate <script>document.write(katex.renderToString('\\delta'))</script>.</p>
-                    <label>SGD </label>
-                    <input type="checkbox" name="opt" value="sgd"/>
+                    <p>Select which optimization methods to use.</p>
+                    <label>Gradient Descent </label>
+                    <input type="checkbox" name="opt" value="gd"/>
                     <label>Momentum </label>
                     <input type="checkbox" name="opt" value="momentum"/>
-                    <label>Nesterov </label>
-                    <input type="checkbox" name="opt" value="nesterov"/>
-                    <label>Adagrad </label>
-                    <input type="checkbox" name="opt" value="adagrad"/>
                     <label>RMSprop </label>
                     <input type="checkbox" name="opt" value="rmsprop"/>
                     <label>Adam </label>
                     <input type="checkbox" name="opt" value="adam"/>
-                    <br>
+                </div>
+                <h3>5. Update Parameters</h3>
+                <p>Select learning rate <script>document.write(katex.renderToString('\\alpha'))</script>, and decay rate <script>document.write(katex.renderToString('\\delta'))</script>.</p>
+                <div>
                     <input type="range" value="-3" min="-8" max="0" step="any" id="lrate">
                     <label>Learning Rate = <span id="lrate_val">0.001</span></label>
                     <input type="range" value="1" min="0" max="1" step="any" id="ldecay">
                     <label>Learning Rate Decay = <span id="ldecay_val">1</span></label>
                 </div>
-                <h3>4. Choose Starting Point</h3>
-                <p>Select a starting point <script>document.write(katex.renderToString('(x_0,y_0)'))</script> either randomly or input specific coordinates.</p>
-                <button id="init">Random</button>
-                <h3>5. Minimize</h3>
+                <h3>6. Minimize</h3>
                 <button class="button-transport" id="reset" title="reset">
                     <img src="img/reset.png">
                 </button>
@@ -263,9 +267,9 @@
 
             </div>
             <div class="viz-column-4-8">
-                <!-- <h3>Loss Landscape: <script>document.write(katex.renderToString('(x_{t+1},y_{t+1}) = (x_{t},y_{t}) + \\delta^{t}\\alpha g(x,y)'))</script></h3> -->
+                <h3>Loss Landscape: <script>document.write(katex.renderToString('(x_{t+1},y_{t+1}) = (x_{t},y_{t}) + \\delta^{t}\\alpha g(x,y)'))</script></h3>
                 <svg id="contour" width="550" height="520"></svg>
-                <!-- <h3>Loss Plot: <script>document.write(katex.renderToString('L(x,y) = f(x,y) + \\lambda r(x,y)'))</script></h3> -->
+                <h3>Loss Plot: <script>document.write(katex.renderToString('L(x,y) = f(x,y) + \\lambda r(x,y)'))</script></h3>
                 <svg id="loss" width="550" height="200"></svg>
             </div>
         </div>

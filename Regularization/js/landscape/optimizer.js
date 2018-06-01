@@ -59,22 +59,13 @@ class optimizer {
     var xscale = this.loss.x;
     var yscale = this.loss.y;
 
-    function dragstart(d) {
-      d3.select(this).raise().classed("active", true);
-    }
-    function dragged(d) {
-      console.log(d.x, d3.event.x)
-      // d3.select(this)
-      // .attr("cx", xscale.invert(d.x = d3.event.x))
-      // .attr("cy", yscale.invert(d.y = d3.event.y));
-    }
-    function dragend(d) {
-      d3.select(this).classed("active", false);
-    }
-
 
   	var x = Math.random() * (xscale.domain()[1] - xscale.domain()[0]) + xscale.domain()[0],
-  		y = Math.random() * (yscale.domain()[1] - yscale.domain()[0]) + yscale.domain()[0];
+  		  y = Math.random() * (yscale.domain()[1] - yscale.domain()[0]) + yscale.domain()[0];
+
+    $("input[name='x']").val(x);
+    $("input[name='y']").val(y);
+
   	this.initial = point(x, y);
 
   	var circle = this.loss.svg.selectAll("circle")
@@ -86,11 +77,7 @@ class optimizer {
       .attr("r", 4)
       .style("fill", "black")
       .style("stroke-width", 2)
-      .style("stroke", "white")
-      .call(d3.drag()
-        .on("start", dragstart)
-        .on("drag", dragged)
-        .on("end", dragend));
+      .style("stroke", "white");
 
     circle.attr("cx", (d) => { return this.loss.x(d.x); })
       .attr("cy", (d) => { return this.loss.y(d.y); })
@@ -102,7 +89,7 @@ class optimizer {
 
 
   update() {
-	// update parameter configurations
+	 // update parameter configurations
     // update color scale
     this.color.domain(this.rule);
 
@@ -187,10 +174,11 @@ class optimizer {
 	  .curve(d3.curveBasis);
 
 	// update y axis
-	var maxLoss = 0;
-	this.costs.forEach((cost) => {
-		maxLoss = Math.max(maxLoss, d3.max(cost, function(d) { return isFinite(d) ? d : 0; }));
-	})
+	// var maxLoss = 0;
+	// this.costs.forEach((cost) => {
+	// 	maxLoss = Math.max(maxLoss, d3.max(cost, function(d) { return isFinite(d) ? d : 0; }));
+	// })
+  var maxLoss = this.costs.length != 0 ? this.costs[0][0] : 0;
 	this.y.domain([0,maxLoss])
 	this.yaxis.call(d3.axisLeft(this.y).ticks(3, "s"));
 
@@ -291,16 +279,24 @@ class optimizer {
 
 // Gradient Descent Algorithms
 var algorithms = {
-	'sgd': sgd,
+	'gd': gd,
 	'momentum': momentum,
 	'nesterov': nesterov,
 	'adagrad': adagrad,
 	'rmsprop': rmsprop,
 	'adam': adam
 }
+var algorithmTitles = {
+  'gd': 'Gradient Descent',
+  'momentum': 'Momentum',
+  'nesterov': 'Nesterov',
+  'adagrad': 'Adagrad',
+  'rmsprop': 'RMSprop',
+  'adam': 'Adam'
+}
 // Gradient Descent Learning Rates
 var learningRates = {
-	'sgd': 1e-3,
+	'gd': 1e-3,
 	'momentum': 1e-3,
 	'nesterov': 1e-3,
 	'adagrad': 5e-1,
@@ -323,7 +319,7 @@ var parameters = {
 }
 
 // Stochastic Gradient Descent
-function sgd(x, dx, config) {
+function gd(x, dx, config) {
   x = add(x, scale(dx, -config['lrate']));
   return [x, config];
 }
