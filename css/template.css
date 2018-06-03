@@ -20,6 +20,7 @@ body {
 
 .header {
    /* border-bottom: 1px solid #D0D0D0;*/
+   position: absolute;
 }
 
 
@@ -32,6 +33,7 @@ body {
 
   width: 95%;
   margin: 0 auto;
+
 
 }
 
@@ -117,10 +119,20 @@ h1.title{
   color: white;
 }
 
-.vis-background{
-  margin-top: 8%;
+
+
+.vis-background {
+  position: relative;
+  margin-top: 0%;
+  height: 50%;
 }
 
+.main.vis-background .container{
+  position: absolute;
+  bottom:5%;
+  left: 12.5%;
+
+}
 
 
 h2.title{
@@ -244,9 +256,9 @@ p.citation{
 
 
 .cppn {
-    position: absolute;
-    left: 0px;
-    top: 0px;
+    /*position: absolute;*/
+   /* left: 0px;
+    top: 0px;*/
     z-index: -1;
 }
 
