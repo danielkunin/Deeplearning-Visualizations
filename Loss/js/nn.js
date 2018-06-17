@@ -52,7 +52,8 @@ function FC(layers, datapath) {
 
 	// loss function
 	const loss = (logits, labels) => tf.losses.softmaxCrossEntropy(labels, logits).mean();
-	// const loss = (logits, labels) => tf.losses.absoluteDifference(labels, logits).mean();
+	// const loss = (logits, labels) => tf.losses.meanSquaredError(labels, logits).mean();
+	// const loss = (logits, labels) => tf.losses.hingeLoss(labels, logits).mean();
 
 	// train model for 100 epochs
 	async function train() {
@@ -65,17 +66,21 @@ function FC(layers, datapath) {
 			// assign batch
 			tf.tidy(() => {
 				activations['a0'].assign(tf.tensor2d(DATA["images"].slice(index,index + batch)));
-				labels.assign(tf.oneHot(tf.tensor(DATA["labels"].slice(index,index + batch)),10));
+				labels.assign(tf.cast(tf.oneHot(tf.tensor1d(DATA["labels"].slice(index,index + batch),'int32'),10),'float32'));
 			});
 			// minimize
-			optimizer.minimize(() => loss(forward(activations['a0']), labels), true);
+			const cost = optimizer.minimize(() => loss(forward(activations['a0']), labels), true);
+			// print
+			if (index == 0) {
+				console.log("Epoch: " + epoch + " Cost: " + cost);
+			}
+			cost.dispose();
 			// increment
 			index = (index + batch) % DATA['size'];
 			epoch += (index == 0);
 		}
 		// create timer
 		while (epoch < 10) {
-			console.log(epoch);
 			await iteration();
 		}
 	}
@@ -114,7 +119,7 @@ function FC(layers, datapath) {
 			tf.tidy(() => {
 				var index = 0;
 				activations['a0'].assign(tf.tensor2d(DATA["images"].slice(index,index + batch)));
-				labels.assign(tf.oneHot(tf.tensor(DATA["labels"].slice(index,index + batch)),10));
+				labels.assign(tf.cast(tf.oneHot(tf.tensor1d(DATA["labels"].slice(index,index + batch),'int32'),10),'float32'));
 				sample = loss(forward(activations['a0']), labels).dataSync()[0];
 			});
 			// dispose scalars
