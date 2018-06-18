@@ -96,7 +96,7 @@ var geometry, object, material;
 function removeLandscape() {
 
 	scene.remove(object); 
-	
+
 }
 
 function addLandscape() {
@@ -116,3 +116,55 @@ function addLandscape() {
 
 	scene.add( object );
 }
+
+
+var mnist = FC();
+
+THREE.ParametricGeometries = {
+
+	mnist: function ( width, height ) {
+		var loss = mnist.landscape();
+		return function ( u, v, target ) {
+
+			u -= 0.5;
+			v -= 0.5;
+
+			var x = u * width;
+			var y = v * height;
+			var z = loss(u, v);
+
+			target.set( x, y, z );
+		};
+	}
+
+};
+
+$("#load").on("click", function() {
+	mnist.load('data/mnist_test.csv.zip');
+});
+
+$('#layers').change(function(){ 
+    var val = $(this).val();
+    if (val == "zero") {
+    	mnist.setLayers([784, 10]);
+    } else if (val == "one") {
+    	mnist.setLayers([784, 300, 10]);
+    } else if (val == "two") {
+    	mnist.setLayers([784, 300, 300, 10]);
+    }
+});
+
+$('#loss').change(function(){ 
+    var val = $(this).val();
+    mnist.setLoss(val);
+});
+
+$("#train").on("click", function() {
+	mnist.train();
+});
+
+$("#landscape").on("click", function() {
+	removeLandscape();
+	addLandscape();
+});
+

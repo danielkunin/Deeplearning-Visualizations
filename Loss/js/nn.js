@@ -1,30 +1,34 @@
 // creates Fully Connected Neural Network
-function FC(layers, datapath) {
+function FC() {
 
 	// constants of network
 	const DATA = {"images": [], "labels": [], "size": 0};
 	const batch = 100;
 	const learningRate = 0.1;
 	const optimizer = tf.train.sgd(learningRate);
-	      
-	// declare parameters for weights and biases
-	const parameters = {};
-	for (var l = 1; l < layers.length; l++) {
-		parameters['w' + l] = tf.variable(tf.zeros([layers[l-1],layers[l]]));
-		parameters['b' + l] = tf.variable(tf.zeros([1,layers[l]]));
-	}
 
-	// declare variables for hidden layer activations
+	var layers;
+	const parameters = {};
 	const activations = {};
-	for (var l = 0; l < layers.length - 1; l++) {
-		activations['a' + l] = tf.variable(tf.zeros([batch,layers[l]]), false)
+	function setLayers(x) {
+		layers = x;
+		// declare parameters for weights and biases
+		for (var l = 1; l < layers.length; l++) {
+			parameters['w' + l] = tf.variable(tf.zeros([layers[l-1],layers[l]]));
+			parameters['b' + l] = tf.variable(tf.zeros([1,layers[l]]));
+		}
+		// declare variables for hidden layer activations
+		for (var l = 0; l < layers.length - 1; l++) {
+			activations['a' + l] = tf.variable(tf.zeros([batch,layers[l]]), false)
+		}
+		console.log(layers)
 	}
 
 	// declare output label variable
 	const labels = tf.variable(tf.zeros([batch,10]));
 
 	// load data
-	function load() {
+	function load(datapath) {
 		extract(datapath, DATA);
 	}
 
@@ -51,9 +55,22 @@ function FC(layers, datapath) {
 	}
 
 	// loss function
-	const loss = (logits, labels) => tf.losses.softmaxCrossEntropy(labels, logits).mean();
-	// const loss = (logits, labels) => tf.losses.meanSquaredError(labels, logits).mean();
-	// const loss = (logits, labels) => tf.losses.hingeLoss(labels, logits).mean();
+	var lossFunction;
+	function setLoss(x) {
+		lossFunction = x;
+		console.log(lossFunction)
+	}
+	function loss (logits, labels) {
+		if (lossFunction == "entropy") {
+			return tf.losses.softmaxCrossEntropy(labels, logits).mean();
+		} else if (lossFunction == "square") {
+			return tf.losses.meanSquaredError(labels, logits).mean();
+		} else if (lossFunction == "hinge") {
+			return tf.losses.hingeLoss(labels, logits).mean();
+		} else if (lossFunction == "huber") {
+			return tf.losses.huberLoss(labels, logits).mean();
+		}
+	}
 
 	// train model for 100 epochs
 	async function train() {
@@ -132,7 +149,9 @@ function FC(layers, datapath) {
 
 
 
-	return {'load': load, 
+	return {'load': load,
+			'setLayers': setLayers,
+			'setLoss': setLoss, 
 			'train': train,
 			'landscape': landscape};
 }
