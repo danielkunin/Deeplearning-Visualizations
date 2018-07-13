@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Learn how to appropriately initialize parameters in your neural networks.">
+    <meta name="author" content="--">
+    <title>Regularization</title>
+    <!-- Fonts -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Assistant:300,400,600,700" rel="stylesheet">
+    <!-- Home Page CSS -->
+    <link rel="stylesheet" type="text/css" href="../css/template.css">
+    <!--Favicon-->
+    <!-- <link rel="shortcut icon" type="image/png" href="img/favicon.png" /> -->
+    <!-- Load jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Load D3 -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <!-- Load Tensorflow -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.9.0">
+    </script>
+    <!-- Load Katex -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.css" integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>
+    <!--Scroll To-->
+    <script src="../js/template.js"></script>
+</head>
+
+<body>
+    <div class="header"> 
+        <div class="header-wrapper">
+
+        	<!-- <a href="https://www.deeplearning.ai/"><img id="header-logo" class="cppnControl" src="img/deeplearning.png"></a> -->
+            <a><img id="header-logo" class="cppnControl"></a>
+            <!-- Uncomment below to add links to other articles -->
+            <!-- <ul class="header-nav">
+                <li>link 1</li>
+                <li>link 2</li>
+                <li>link 3</li>
+            </ul> -->
+        </div>
+    </div>
+    <div class="main vis-background">
+        <div class="container" >
+            <div class="column-6-8 column-align" >
+                <h1 class="title">Regularizing your neural networks</h1>
+                 <p class="title" > <a href="https://twitter.com/kiankatan">Kian Katanforoosh</a> & <a href="http://daniel-kunin.com">Daniel Kunin</a></p>
+            </div>
+        </div>
+        
+    </div>
+    <div class="main intro ">
+        <div class="container divider-bottom" >
+            <div class="column-6-8 column-align" >
+               
+                <h2 class="title">Abstract...</h2>
+               
+            </div>
+
+            <div class="column-2-8 column-align">
+                <h3 class="tableOfContent">Table of content</h3>
+                <ol class="tableOfContent" type="I">
+                    <li class="index index1">The importance of regularization</li>
+                    <li class="index index2">Early stopping</li>
+                    <li class="index index3">L2 and L1 regularizations</li>
+                    <li class="index index4">Dropout regularization</li>
+                    <li class="index index5">Methodology to train generalizable models</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="container index1-target">
+            <div class="column-6-8 column-align">
+                <h3>I&emsp;The importance of regularization</h3>
+                <p>The ultimate goal for your neural network is to generalize to “unseen data”. The ability of a neural network to generalize to unseen data depends on two factors:
+                </p>
+                <ol>
+                    <li>the information in the training data</li>
+                    <li>the complexity of the network</li>
+                </ol>
+            </div>
+            <div class="column-4-8">
+                <h3>Case 1: the network is not complex enough, and the training data contains a lot of information.</h3>
+            </div>
+            <div class="column-6-8 column-align">
+                <p>Your network is too simple to understand the training data’s salient features. This is called <span class="marginanchor" id="margin-0-anchor" data-number="0" data-align="middle">underfitting</span> the training set. A common trick to avoid underfitting is to deepen your neural network by adding more layers.</p>
+            </div>
+            <div class="column-2-8 column-align margin">
+            	<div class="marginbody" id="margin-0-body" data-number="0">
+                    <img src="img/underfit.png">
+                	<p class="caption">Caption...</p>
+                </div>
+            </div>
+            <div class="column-4-8">
+                <h3>Case 2: the network is very complex, but the training data doesn’t contain too much information.</h3>
+            </div>
+            <div class="column-6-8 column-align">
+                <p>You network is complex enough to understand the training data in a “hard-coded” way. It won’t generalize because it didn’t need to understand the salient features of the dataset to perform well on the training set. This is called <span class="marginanchor" id="margin-1-anchor" data-number="1" data-align="middle">overfitting</span> the training set.</p>
+            </div>
+            <div class="column-2-8 column-align margin">
+                <div class="marginbody" id="margin-1-body" data-number="1">
+                    <img src="img/overfit.png">
+                    <p class="caption">Caption...</p>
+                </div>
+            </div>
+            <div class="column-6-8">
+                <p>The best way to make your model generalize is to gather a larger dataset, but this is not always possible. Regularization methods are designed to help your model generalize, and not overfit the training data. In this post, you will learn various methods we use in order to regularize our models. Our recommendations will be accompanied by intuitive explanations.</p>
+            </div>
+            <div class="column-4-8">
+                <h3>Data Split: partioning a data set.</h3>
+            </div>
+            <div class="column-6-8 divider-bottom column-align">
+                <p>In order to estimate the ability of your model to generalize, you will split your dataset into three (or sometimes more) sets: training, validation (dev) and test. Your model is able to generalize if it was trained on the training set, tuned on the validation set, and still performs well on the test set.</p>
+                <table>
+                  <tr>
+                    <th>Training</th>
+                    <th>Validation</th> 
+                    <th>Test</th>
+                  </tr>
+                  <tr>
+                    <td>...</td>
+                    <td>...</td>
+                    <td>...</td>
+                  </tr>
+                </table>
+                <p>Let’s delve into the methods to help get the test set performance closer to the dev and train set performances.</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="column-6-8 index2-target column-align">
+                <h3>II&emsp; Early stopping</h3>
+                <p>The easiest but widely used method is called early stopping. During the iterative optimization process of finding the correct parameters for your model, if you evaluate your model’s error on the training and validation set, you might see such curves:</p>
+                <img src="img/curves.png">
+                <p>Based on this observation, you can state that after the 30,000th epoch, your model starts overfitting to the training set. Early stopping means “saving the model’s parameters at the 30,000th epoch”. The saved model is the best performing model on the dev set and will likely <span class="marginanchor" id="margin-2-anchor" data-number="2" data-align="middle">generalize</span> better to the test set.</p>
+            </div>
+            <div class="column-2-8 column-align margin">
+                <div class="marginbody" id="margin-2-body" data-number="2">
+                    <p class="caption">Consider a concrete example such as “day vs. night image classification”. Rather than understanding the inherent features of the data, your model learned the training images by heart. You do not want this.</p>
+                </div>
+            </div>
+            <div class="column-4-8">
+                <h3>What are the main advantages of early stopping?</h3>
+            </div>
+            <div class="column-6-8 divider-bottom column-align">
+                <p>It is easy to do. Deep learning frameworks, such as Tensorflow, Pytorch and Keras, offer options to save your model’s parameters regularly during training. Here are the corresponding lines of code:</p>
+                <p class="citation">Code...</p>
+                <p>It is quicker than other regularization methods, because you do not have any regularization hyperparameter to tune. As a comparison, L2 regularization (resp. dropout) requires you to tune a regularization hyperparameter  (resp. keep probability.) It might take you several experiments to regularize your model with L2, but only one run to do so with early stopping.</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="column-6-8 index3-target">
+                <h3>III&emsp; L2 and L1 regularizations</h3>
+                <p>In order to avoid overfitting the training set, one can try to reduce the complexity of the model by removing layers, and consequently decreasing the number of parameters. Another way to constrain a network and lower its complexity is to:</p>
+                <p class="inline-caption">Limit the growth of the weights through some kind of weight decay.</p>
+                <p>The goal is to prevent the weights from growing too large, unless it is really necessary.</p>
+            </div>
+            <div class="column-4-8">
+                <h3>How does this help the model generalize?</h3>
+            </div>
+            <div class="column-6-8 divider-bottom column-align">
+                <p>"Often the number of free parameters, i. e. the number of weights and thresholds, is used as a measure of the network complexity, and algorithms have been developed, which minimizes the number of weights while still keeping the error on the training examples small [4,5,6]. This minimization of the number of free parameters is not always what is needed"</p>
+                <p>"A different way to constrain a network, and thus decrease its complexity, is to limit the growth of the weights through some kind of weight decay. It should prevent the weights from growing too large unless it is really necessary. It can be realized by adding a term to the cost function that penalizes large weights,"</p>
+                <p>"We conclude that a weight decay has two positive effects on generalization in a linear network: 1) It suppresses any irrelevant components of the weight vector by choosing the smallest vector that solves the learning problem. 2) If the size is chosen right, it can suppress some of the effect of static noise on the targets."</p>
+                <p>"This can often boosts generalization a lot, because it stops the weight from fitting the sampling error". "It makes a smoother model such that the output changes more slowly, as the input changes."</p>
+            </div>
+        </div>
+
+        <div class="full-container" id="landscape">
+            <div class="viz-column-4-8">
+                <h3>1. Choose loss</h3>
+                <div class="lossFunctions">
+                    <p>Select an <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization">artificial landscape</a> <script>document.write(katex.renderToString('f(x,y)'))</script>.</p>
+                    <label>
+                      <input type="radio" name="loss" value="beale" />
+                      <img src="./img/loss/beale.png">
+                    </label>
+                    <label>
+                      <input type="radio" name="loss" value="goldsteinPrice"/>
+                      <img src="./img/loss/goldsteinPrice.png">
+                    </label>
+                    <label>
+                      <input type="radio" name="loss" value="himmelblaus" checked/>
+                      <img src="./img/loss/himmelblaus.png">
+                    </label>
+                    <label>
+                      <input type="radio" name="loss" value="matyas" />
+                      <img src="./img/loss/matyas.png">
+                    </label>
+                    <label>
+                      <input type="radio" name="loss" value="mcCormick" />
+                      <img src="./img/loss/mcCormick.png">
+                    </label>
+                    <label>
+                      <input type="radio" name="loss" value="rastrigin" />
+                      <img src="./img/loss/rastrigin.png">
+                    </label>
+                    <label>
+                      <input type="radio" name="loss" value="rosenbrock" />
+                      <img src="./img/loss/rosenbrock.png">
+                    </label>
+                    <label>
+                      <input type="radio" name="loss" value="styblinskiTang" />
+                      <img src="./img/loss/styblinskiTang.png">
+                    </label>
+                    <label>
+                      <input type="radio" name="loss" value="monkeySaddle" />
+                      <img src="./img/loss/.png">
+                    </label>
+                </div>
+                <h3>2. Add regularization</h3>
+                <div>
+                    <p>Select regularization method <script>document.write(katex.renderToString('r(x,y)'))</script> and penalization parameter <script>document.write(katex.renderToString('\\lambda'))</script>.</p>
+                    <label>L1:</label>
+                    <input type="radio" name="reg" value="1" />
+                    <label>L2</label>
+                    <input type="radio" name="reg" value="0" checked/>
+                    <br>
+                    <input type="range" value="0" min="0" max="40" step="any" id="lambda">
+                    <label>Lambda = <span id="lambda_val">0.00</span></label>
+                </div>
+                <h3>3. Select Starting Point</h3>
+                <p>Select a starting point <script>document.write(katex.renderToString('(x_0,y_0)'))</script> either randomly or input specific coordinates.</p>
+                <button id="init">Random</button>
+                <button id="">Select</button>
+                <form>
+                  X: <input type="text" name="x">
+                  Y: <input type="text" name="y">
+                </form>
+                <h3>4. Determine Optimization</h3>
+                <div class="lossFunctions">
+                    <p>Select which optimization methods to use.</p>
+                    <label>Gradient Descent </label>
+                    <input type="checkbox" name="opt" value="gd"/>
+                    <label>Momentum </label>
+                    <input type="checkbox" name="opt" value="momentum"/>
+                    <label>RMSprop </label>
+                    <input type="checkbox" name="opt" value="rmsprop"/>
+                    <label>Adam </label>
+                    <input type="checkbox" name="opt" value="adam"/>
+                </div>
+                <h3>5. Update Parameters</h3>
+                <p>Select learning rate <script>document.write(katex.renderToString('\\alpha'))</script>, and decay rate <script>document.write(katex.renderToString('\\delta'))</script>.</p>
+                <div>
+                    <input type="range" value="-3" min="-8" max="0" step="any" id="lrate">
+                    <label>Learning Rate = <span id="lrate_val">0.001</span></label>
+                    <input type="range" value="1" min="0" max="1" step="any" id="ldecay">
+                    <label>Learning Rate Decay = <span id="ldecay_val">1</span></label>
+                </div>
+                <h3>6. Minimize</h3>
+                <button class="button-transport" id="reset" title="reset">
+                    <img src="img/reset.png">
+                </button>
+                <button class="button-transport" id="train" title="start">
+                    <img src="img/play.png">
+                </button>
+                <button class="button-transport" id="stop" title="stop">
+                    <img src="img/pause.png">
+                </button>
+                <button class="button-transport" id="step" title="step">
+                    <img src="img/fastforward.png">
+                </button>
+
+            </div>
+            <div class="viz-column-4-8">
+                <h3>Loss Landscape: <script>document.write(katex.renderToString('(x_{t+1},y_{t+1}) = (x_{t},y_{t}) + \\delta^{t}\\alpha g(x,y)'))</script></h3>
+                <svg id="contour" width="550" height="520"></svg>
+                <h3>Loss Plot: <script>document.write(katex.renderToString('L(x,y) = f(x,y) + \\lambda r(x,y)'))</script></h3>
+                <svg id="loss" width="550" height="200"></svg>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="column-6-8 divider-bottom index4-target">
+                <h3>IV&emsp; Dropout regularization</h3>
+                <p>Dropout...</p>
+                <img src="img/dropout.png">
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="column-6-8 divider-bottom index5-target">
+                <h3>V&emsp; Methodology to train generalizable models</h3>
+                <p>Given a complex speech (audio) dataset to perform trigger word detection, this is roughly how we would find the best model:</p>
+                <ol>
+                    <li>Find a model that is able to overfit a single training example: the model can perfectly detect the trigger word in the training audio clip.</li>
+                    <li>Tweak the previous model to be able to overfit a large pool of training example: the model can perfectly detect the trigger words in the large pool of training audio clips.</li>
+                    <li>Overfit the training dataset (or the maximum number of training examples you can overfit).</li>
+                    <li>Use regularization techniques to make your model generalize to unseen data: the model can detect the trigger word for voices and backgrounds that are not in the training dataset.</li>
+                </ol>
+                <p>Successfully training a model on complex tasks is complicated. You need to find the appropriate model architecture able to understand the complexity of the dataset. Once you found such an architecture, make it generalize using regularization.</p>
+            </div>
+        </div>
+
+    </div>
+        
+    <div class="footer">
+        <div class="container">
+            <div class="column-2-8 column-align">
+                <h4 class="reference">Authors</h4>
+            </div>
+            <div class="column-6-8 column-align">
+                <ol class="reference ">
+                    <li><a href="https://twitter.com/kiankatan">Kian Katanforoosh</a> - Written content and structure. </li>
+                    <li><a href="http://daniel-kunin.com">Daniel Kunin</a> - Visualizations (created using <a href="https://d3js.org/">D3.js</a> and <a href="https://js.tensorflow.org/">TensorFlow.js</a>).</li>
+                </ol>
+            </div>
+            <div class="column-2-8 column-align">
+                <h4 class="reference">Acknowledgments</h4>
+            </div>
+            <div class="column-6-8 column-align">
+                <ol class="reference">
+                    <li>The template for the article was designed by <a href="https://www.jingru-guo.com/">Jingru Guo</a> and inspired by <a href="https://distill.pub/">Distill</a>.</li>
+                    <li>The first visualization adapted code from Mike Bostock's <a href="https://bl.ocks.org/mbostock/f48ff9c1af4d637c9a518727f5fdfef5">visualization</a> of the Goldstein-Price function.</li>
+                    <li>The banner visualization adapted code from deeplearn.js's implementation of a <a href="https://deeplearnjs.org/demos/nn-art/">CPPN</a>.</li>
+                </ol>
+            </div>
+            <div class="column-2-8 column-align">
+                <h4 class="reference">Footnotes</h4>
+            </div>
+            <div class="column-6-8 column-align">
+                <ol class="reference footnote">
+                    <li class="footnote-index1-target"><a href="https://papers.nips.cc/paper/563-a-simple-weight-decay-can-improve-generalization.pdf">A Simple Weight Decay Can Improve Generalization</a></li>
+                    <li class="footnote-index2-target"><a href="https://www.coursera.org/learn/neural-networks/lecture/n6TUy/the-bayesian-interpretation-of-weight-decay-11-min">The Bayesian interpretation of weight decay</a></li>
+                    <li class="footnote-index3-target"><a href="https://www.cs.toronto.edu/~hinton/absps/JMLRdropout.pdf">Dropout: A Simple Way to Prevent Neural Networks from Overfitting</a></li>
+                </ol>
+            </div>
+            <div class="column-2-8 column-align">
+                <h4 class="reference">Reference</h4>
+            </div>
+            <div class="column-6-8 column-align">
+                <p class="reference">To reference this article in an academic context, please cite this work as:</p>
+                <p class="citation">Katanforoosh & Kunin, "Regularizing your neural networks", deeplearning.ai, 2018.</p>
+                <!-- <p class="reference">BibTeX citation:</p>
+                <p class="citation">@article{kiank+dkunin,<br>
+                  &emsp;author = {Katanforoosh, Kian and Kunin, Daniel},<br>
+                  &emsp;title = {Initializing your neural networks},<br>
+                  &emsp;journal = {deeplearning.ai},<br>
+                  &emsp;year = {2018}}</p> -->
+            </div>
+        </div>
+    </div>
+    <div class="backToTop">
+        <p>↑ Back to top</p>
+    </div>
+</body>
+
+<!-- LANDSCAPE -->
+<!-- Additional JS -->
+<script src="https://d3js.org/d3-contour.v1.min.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
+<!-- Main CSS -->
+<link rel="stylesheet" href="css/landscape.css">
+<!-- Point Code -->
+<script src="js/landscape/point.js"></script>
+<!-- Loss Code -->
+<script src="js/landscape/loss.js"></script>
+<!-- Optimizer Code -->
+<script src="js/landscape/optimizer.js"></script>
+<!-- Visualization Setup Code -->
+<script src="js/landscape/viz.js"></script>
+
+<!-- CPPN -->
+<script src="js/cppn.js"></script>
