@@ -27,21 +27,45 @@ function mnist_network(layers) {
     .range([height - pad, pad]);
 
 
+  function merge(data) {
+    var length = 0;
+    for (var i = 0; i < data.length; i++) {
+      length += data[i].length;
+    }
+    var result = new Float32Array(length),
+        start = 0;
+    for (var i = 0; i < data.length; i++) {
+      result.set(data[i], start);
+      start += data[i].length;
+    }
+    return result;
+  }
+
   // histogram function
   function histogram(data) {
 
-    // histogram data
-    var activations = [],
-        max = 0;
-      for (var i = 0; i < data.length; i++) {
-          var num = 200,
-              bins = d3.histogram()
-              .domain(x.domain())
-              .thresholds(x.ticks(num))
-              (data[i]);
-          activations.push(bins);
-          max = d3.max(bins, function(d) { return Math.max(max, d.length); });
-      }
+    // // histogram data
+    // var activations = [],
+    //     max = 0;
+    //   for (var i = 0; i < data.length; i++) {
+    //       var num = 200,
+    //           bins = d3.histogram()
+    //           .domain(x.domain())
+    //           .thresholds(x.ticks(num))
+    //           (data[i]);
+    //       activations.push(bins);
+    //       max = d3.max(bins, function(d) { return Math.max(max, d.length); });
+    //   }
+      // histogram data
+      merged_data = merge(data);
+      var num = 200,
+          bins = d3.histogram()
+            .domain(x.domain())
+            .thresholds(x.ticks(num))
+            (merged_data);
+      activations = [bins]
+      max = d3.max(bins, function(d) { return d.length; });
+      // console.log(bins)
 
       // update y scale
       y.domain([0, 1.1 * max]);
@@ -61,7 +85,7 @@ function mnist_network(layers) {
 
 
   // number of layers
-  var L = layers.length;
+  var L = 1;//layers.length;
 
   // setup x scale 
   x.rangeRound([pad, width / L - pad]);
@@ -87,7 +111,7 @@ function mnist_network(layers) {
     .attr('x', x(0))
     .attr('y', 0)
     .attr('text-anchor', 'middle')
-    .text(function(d,i) { return "W[" + (i + 1) + "]"; });
+    .text("Weights");
   
   // add histogram path
   newlayers.append("path")
@@ -219,12 +243,22 @@ function mnist_setup() {
 
   // create MNIST object
   var mnist = MNIST(layers),
-      train = mnist.train("xe", histogram, batch, softmax);
+      alpha = 1,
+      lambda = 0,
+      train = mnist.train(alpha, lambda, histogram, batch, softmax);
 
   // bind initialization buttons
   $("input[name='mnist_init']").on("change", function () {
     $("#mnist_reset").click();
-    train = mnist.train(this.value, histogram, batch, softmax);
+    alpha = this.value
+    train = mnist.train(alpha, lambda, histogram, batch, softmax);
+  });
+
+  $("#lambda_sparsity").on("input", function () {
+    $("#mnist_reset").click();
+    $("#lambda_sparsity_val").html(d3.format(".2")(this.value));
+    lambda = this.value
+    train = mnist.train(alpha, lambda, histogram, batch, softmax);
   });
 
   // reset training button

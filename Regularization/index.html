@@ -166,13 +166,15 @@
                 <h3>2. Select a regularization method</h3>
                 <p>Among the below distributions, select the one to use to initialize your parameters. <sup class="footnote-index footnote-index3">3</sup>.</p>
                 <label class="radio-container">L1
-                    <input type="radio" value="zero" name="mnist_init">
+                    <input type="radio" value="1" name="mnist_init" checked>
                     <span class="checkmark"></span>
                 </label>
                 <label class="radio-container">L2
-                    <input type="radio" value="uniform" name="mnist_init">
+                    <input type="radio" value="0" name="mnist_init">
                     <span class="checkmark"></span>
                 </label>
+                <input type="range" value="0" min="0" max="1" step="any" id="lambda_sparsity">
+                <label>Lambda = <span id="lambda_sparsity_val">0.00</span></label>
             </div>
             <div class="viz-column-2-8">
                 <h3>3. Train the network and observe</h3>

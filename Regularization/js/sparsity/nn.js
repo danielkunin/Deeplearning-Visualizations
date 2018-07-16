@@ -36,33 +36,27 @@ function MNIST(layers) {
 	}
 
 	// loss function
-	const loss = (logits, labels) => {
+	const loss = (logits, labels, a, l) => {
+		alpha = tf.scalar(a)
+		lambda = tf.scalar(l)
 		total = tf.losses.softmaxCrossEntropy(labels, logits).mean();
 		for (var l = 1; l < layers.length; l++) {
-			// total = total.add(parameters['w' + l].abs().sum().mul(tf.scalar(0.001)));
-			total = total.add(parameters['w' + l].square().sum().mul(tf.scalar(0.1)));
+			l1 = total.add(parameters['w' + l].abs().sum().mul(lambda));
+			l2 = total.add(parameters['w' + l].square().sum().mul(lambda));
+			total = l1.mul(alpha).add(l2.mul(tf.scalar(1.0).sub(alpha)))
 		}
 		return total
 	}
 
 
 	// initialize parameters
-	function initialize(style) {
+	function initialize() {
 		tf.tidy(() => {
 			for (var l = 1; l < layers.length; l++) {
-				if (style == "xe") {
-					// Xe-Initialization
-					parameters['w' + l].assign(tf.randomNormal([layers[l-1],layers[l]],0,Math.sqrt(1/layers[l-1])));
-				} else if (style == "uniform"){
-					// Uniform
-					parameters['w' + l].assign(tf.randomUniform([layers[l-1],layers[l]],-Math.sqrt(1/layers[l-1]),Math.sqrt(1/layers[l-1])));
-				} else if (style == "normal") {
-					// Standard Normal
-					parameters['w' + l].assign(tf.randomNormal([layers[l-1],layers[l]],0,1));
-				} else {
-					// Zeros
-					parameters['w' + l].assign(tf.variable(tf.zeros([layers[l-1],layers[l]])));
-				}
+				// Xe-Initialization
+				parameters['w' + l].assign(tf.randomNormal([layers[l-1],layers[l]],0,Math.sqrt(1/layers[l-1])));
+				// // Standard Normal
+				// parameters['w' + l].assign(tf.randomNormal([layers[l-1],layers[l]],0, 1));
 				// Zero Bias
 				parameters['b' + l].assign(tf.variable(tf.zeros([1,layers[l]])));
 			}
@@ -70,9 +64,9 @@ function MNIST(layers) {
 	}
 
 	// train model
-	function train(initialization, histogram, draw, softmax) {
+	function train(alpha, lambda, histogram, draw, softmax) {
 		// initialize
-		initialize(initialization);
+		initialize();
 
 		var index = 0,
 			epoch = 0,
@@ -84,7 +78,7 @@ function MNIST(layers) {
 				labels.assign(tf.oneHot(tf.tensor(DATA["labels"].slice(index,index + batch)),10));
 			});
 			// minimize
-			const cost = optimizer.minimize(() => loss(f(activations['a0']), labels), true);
+			const cost = optimizer.minimize(() => loss(f(activations['a0']), labels, alpha, lambda), true);
 			tf.tidy(() => {
 				var images = DATA["images"].slice(index,index + batch),
 					digits = tf.equal(activations['a' + (layers.length - 1)].argMax(1), labels.argMax(1)).dataSync();
@@ -125,7 +119,7 @@ function MNIST(layers) {
 		}
 		function reset() {
 			t.stop();
-			initialize(initialization);
+			initialize();
 			index = 0,
 			epoch = 0,
 			iterate = true;
