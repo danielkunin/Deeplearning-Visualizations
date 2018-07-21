@@ -64,7 +64,7 @@ function MNIST(layers) {
 	}
 
 	// train model
-	function train(alpha, lambda, histogram, draw, softmax) {
+	function train(alpha, lambda, histogram, summary) {//, draw, softmax) {
 		// initialize
 		initialize();
 
@@ -79,12 +79,14 @@ function MNIST(layers) {
 			});
 			// minimize
 			const cost = optimizer.minimize(() => loss(f(activations['a0']), labels, alpha, lambda), true);
-			tf.tidy(() => {
-				var images = DATA["images"].slice(index,index + batch),
-					digits = tf.equal(activations['a' + (layers.length - 1)].argMax(1), labels.argMax(1)).dataSync();
-				draw(images, index / batch, epoch);
-				softmax(digits, 1 - d3.mean(digits), cost.dataSync()[0]);
-			});
+			summary(index/batch, epoch, cost.dataSync()[0]);
+			// tf.tidy(() => {
+			// 	var images = DATA["images"].slice(index,index + batch),
+			// 		digits = tf.equal(activations['a' + (layers.length - 1)].argMax(1), labels.argMax(1)).dataSync();
+			// 	// draw(images, index / batch, epoch);
+			// 	// softmax(digits, 1 - d3.mean(digits), cost.dataSync()[0]);
+			// 	summary(index/batch, epoch, cost.dataSync()[0]);
+			// });
 			cost.dispose();
 			// update histograms
 			var data = [];
@@ -129,8 +131,9 @@ function MNIST(layers) {
 			}
 			// update plots
 			histogram(data);
-			draw([], 0, 0);
-			softmax([], 0, 0);
+			summary(0, 0, 0);
+			// draw([], 0, 0);
+			// softmax([], 0, 0);
 		}
 		return {'stop':stop, 'start':start, 'step':step, 'reset':reset};
 	}

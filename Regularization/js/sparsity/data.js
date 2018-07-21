@@ -3,7 +3,7 @@
 zip.workerScriptsPath = window.location.pathname.slice(0, -10) + "/js/sparsity/zip/";
 
 // Download the .zip file, Extract the .csv file, Load into RAM
-function extract(file, data, draw) {
+function extract(file, data) {//, draw) {
   zip.createReader(new zip.HttpReader(file), function(reader) {
 
     reader.getEntries(function(entries) {
@@ -14,7 +14,11 @@ function extract(file, data, draw) {
 
         reader.close(function() {
           // onclose callback
-          draw(data["images"].slice(0,100), 0, 0);
+          // draw(data["images"].slice(0,100), 0, 0);
+          	// change button activations
+			d3.select("#mnist_load").classed("inactive", true)
+			d3.select("#mnist_start").classed("inactive", false)
+			d3.select("#mnist_step").classed("inactive", false)
         });
       }, function(current, total) {
         // onprogress callback

@@ -155,17 +155,27 @@
         <div class="full-container" id="mnist">
             <div class="viz-column-4-8">
             	<h3>1. Select a regularization method</h3>
-            	<label class="radio-container">L1
+            	<label class="radio-container">Lasso (L1)
                     <input type="radio" value="1" name="mnist_init" checked>
                     <span class="checkmark"></span>
                 </label>
-                <label class="radio-container">L2
+                <label class="radio-container">Ridge (L2)
                     <input type="radio" value="0" name="mnist_init">
                     <span class="checkmark"></span>
                 </label>
                 <h3>2. Choose a value for the regularization constant</h3>
-                <input type="range" value="0" min="0" max="1" step="any" id="lambda_sparsity">
-                <label>Lambda = <span id="lambda_sparsity_val">0.00</span></label>
+                <label class="radio-container">Too small
+                    <input type="radio" value="0.0001" name="lambda_sparsity">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Appropriate
+                    <input type="radio" value="0.01" name="lambda_sparsity" checked>
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Too large
+                    <input type="radio" value="1" name="lambda_sparsity">
+                    <span class="checkmark"></span>
+                </label>
                 <h3>3. Load your dataset and train the network</h3>
                 <p>Load 10,000 handwritten digits images (<a href="http://yann.lecun.com/exdb/mnist/">MNIST</a>). The grid below refers to the input images, <span class="correct bold">Blue</span> squares represent correctly classified images. <span class="incorrect bold">Red</span> squares represent misclassified images.</p>
                 <div>
@@ -178,33 +188,19 @@
                     <button class="button-transport inactive" id="mnist_step"><img src="img/fastforward.png"></button>
                 </div>
                 <label class="viz">
-                    Batch: <span id="batch">0</span> </label>
-                <label>
-                    Epoch: <span id="epoch">0</span>
+                    Unregularized Cost: <span id="cost">0.00</span>
                 </label>
                 <label class="viz">
-                    Misclassified: <span id="accuracy">0/100</span>
-                </label>
-                <label>
-                    Cost: <span id="cost">0.00</span>
+                    Regularized Cost: <span id="cost">0.00</span>
                 </label>
             </div>
             <div class="viz-column-4-8">
                 <div id="mnist_network"></div>
-                <p>Input batch of 100 images</p>
-                <div id="mnist_input"></div>
                 <label class="viz">
-                    Batch: <span id="batch">0</span> </label>
-                <label>
+                    Batch: <span id="batch">0</span>
+                </label>
+                <label class="viz">
                     Epoch: <span id="epoch">0</span>
-                </label>
-                <p>Output predictions of 100 images</p>
-                <div id="mnist_output"></div>
-                <label class="viz">
-                    Misclassified: <span id="accuracy">0/100</span>
-                </label>
-                <label>
-                    Cost: <span id="cost">0.00</span>
                 </label>
             </div>
         </div>
