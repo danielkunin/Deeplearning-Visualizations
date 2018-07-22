@@ -21,50 +21,51 @@ function mnist_network(layers) {
     .domain([0,1])
     .rangeRound([0, width]);
   var x = d3.scaleLinear()
-    .domain([-0.2,0.2]);
+    .domain([-0.2,0.2])
+    .range([pad, width - pad]);
   var y = d3.scaleLinear()
     .domain([0,1])
     .range([height - pad, pad]);
 
 
-  function merge(data) {
-    var length = 0;
-    for (var i = 0; i < data.length; i++) {
-      length += data[i].length;
-    }
-    var result = new Float32Array(length),
-        start = 0;
-    for (var i = 0; i < data.length; i++) {
-      result.set(data[i], start);
-      start += data[i].length;
-    }
-    return result;
-  }
+  // function merge(data) {
+  //   var length = 0;
+  //   for (var i = 0; i < data.length; i++) {
+  //     length += data[i].length;
+  //   }
+  //   var result = new Float32Array(length),
+  //       start = 0;
+  //   for (var i = 0; i < data.length; i++) {
+  //     result.set(data[i], start);
+  //     start += data[i].length;
+  //   }
+  //   return result;
+  // }
 
   // histogram function
   function histogram(data) {
 
-    // // histogram data
-    // var activations = [],
-    //     max = 0;
-    //   for (var i = 0; i < data.length; i++) {
-    //       var num = 200,
-    //           bins = d3.histogram()
-    //           .domain(x.domain())
-    //           .thresholds(x.ticks(num))
-    //           (data[i]);
-    //       activations.push(bins);
-    //       max = d3.max(bins, function(d) { return Math.max(max, d.length); });
-    //   }
-      // histogram data
-      merged_data = merge(data);
-      var num = 200,
-          bins = d3.histogram()
-            .domain(x.domain())
-            .thresholds(x.ticks(num))
-            (merged_data);
-      activations = [bins]
-      max = d3.max(bins, function(d) { return d.length; });
+    // histogram data
+    var activations = [],
+        max = 0;
+      for (var i = 0; i < data.length; i++) {
+          var num = 200,
+              bins = d3.histogram()
+              .domain(x.domain())
+              .thresholds(x.ticks(num))
+              (data[i]);
+          activations.push(bins);
+          max = d3.max(bins, function(d) { return Math.max(max, d.length); });
+      }
+      // // histogram data
+      // // merged_data = merge(data);
+      // var num = 200,
+      //     bins = d3.histogram()
+      //       .domain(x.domain())
+      //       .thresholds(x.ticks(num))
+      //       (merged_data);
+      // activations = [bins]
+      // max = d3.max(bins, function(d) { return d.length; });
       // console.log(bins)
 
       // update y scale
@@ -77,54 +78,42 @@ function mnist_network(layers) {
         .y(function(d) { return y(d.length); });
 
       // bind data to activation paths
-      var lines = svg.selectAll("path.activations")
+      var lines = svg.selectAll("path.sparsity")
         .data(activations);
 
       // update path
       lines.attr("d", valueline);
   }
 
-
-  // number of layers
-  var L = 1;//layers.length;
-
-  // setup x scale 
-  x.rangeRound([pad, width / L - pad]);
-
-  // add plots
-  var plots = svg.selectAll("g.layer")
-    .data(layers);
-
-  // enter new plots
-  var newlayers = plots.enter().append("g")
-    .attr("class", function(d,i) { return "layer layer-" + i; })
-    .attr("transform",  function(d,i) { return "translate(" + layout(i / L) + ",0)"; });
+  // add histogram paths
+  svg.append("path")
+    .attr('class', 'sparsity')
+    .attr('id', 'regularized');
+  svg.append("path")
+    .attr('class', 'sparsity')
+    .attr('id', 'unregularized');
 
   // add bounding box
-  newlayers.append("rect")
+  svg.append("rect")
     .attr('x', pad)
     .attr('y', pad)
-    .attr('width', width / L - 2 * pad)
-    .attr('height', height - 2 * pad);
+    .attr('width', width - 2 * pad)
+    .attr('height', height - 2 * pad)
+    .attr('class', 'sparsity');
 
   // add title
-  newlayers.append('text')
+  svg.append('text')
     .attr('x', x(0))
     .attr('y', 0)
     .attr('text-anchor', 'middle')
     .text("Weights");
-  
-  // add histogram path
-  newlayers.append("path")
-    .attr("class", "activations");
 
   // add axes
-  newlayers.append("g")
+  var xaxis = svg.append("g")
     .attr("class", "axis axis--x")
     .attr("transform", "translate(0," + y.range()[0] + ")")
     .call(d3.axisBottom(x).ticks(3, "s"));
-
-  var yaxis = newlayers.append("g")
+  var yaxis = svg.append("g")
 	.attr("class", "axis axis--y")
 	.attr("transform", "translate(" + (width - pad) + ", 0)");
 
@@ -132,112 +121,13 @@ function mnist_network(layers) {
 }
 
 
-// //////////////////////////
-// // setup MNIST plot
-// //////////////////////////
-// function mnist_input() {
 
-//   // setup dimensions
-//   var margin = {top: 0, right: 0, bottom: 0, left: 0},
-//       width = 200 - margin.left - margin.right,
-//       height = 200 - margin.top - margin.bottom;
-
-//   // setup size for batch
-//   var n = 10,
-//       m = 10;
-
-//   // add canvas
-//   var canvas = d3.select("#mnist_input").append("canvas")
-//     .style("width", function(){ return width + "px"; })
-//     .style("height", function(){ return height + "px"; })
-//     .attr("width", n * 28)
-//     .attr("height", m * 28)
-//     .style("border", "2px solid black");
-
-//   // get context
-//   var ctx = canvas.node().getContext("2d")
-
-//   // add mnist image
-//   function draw_digit(xoff, yoff, pixels) {
-//     var i = 0;
-//     for (var y = 0; y < 28; y++) {
-//       for (var x = 0; x < 28; x++) {
-//         var c = Math.floor(255 * pixels[i]);
-//         var color= 'rgb(' + c + ',' + c + ',' + c + ')';
-//         ctx.fillStyle = color;
-//         ctx.fillRect(xoff * 28 + x, yoff * 28 + y, 1, 1);
-//         i++;
-//       }
-//     }
-//   }
-
-//   // draw input
-//   function draw(digits, batch, epoch) {
-//     for (var i = 0; i < digits.length; i++) {
-//       draw_digit(i % n, Math.floor(i / n), digits[i]);
-//     }
-//     $('#batch').html(batch);
-//     $('#epoch').html(epoch);
-//   }
-
-//   return draw;
-// }
-
-
-// //////////////////////////
-// // setup softmax plot
-// //////////////////////////
-// function mnist_output() {
-
-//   // setup dimensions
-//   var margin = {top: 0, right: 0, bottom: 0, left: 0},
-//       width = 200 - margin.left - margin.right,
-//       height = 200 - margin.top - margin.bottom;
-
-//   // setup bacth size
-//   var n = 10,
-//       m = 10;
-
-//   // add canvas
-//   var canvas = d3.select("#mnist_output").append("canvas")
-//     .style("width", function(){ return width + "px"; })
-//     .style("height", function(){ return height + "px"; })
-//     .attr("width", n * 28)
-//     .attr("height", m * 28)
-//     .style("border", "2px solid black");
-
-//   // get context
-//   var ctx = canvas.node().getContext("2d")
-
-//   // add image classification
-//   function draw_error(xoff, yoff, label) {
-//     var i = 0;
-//     for (var y = 0; y < 28; y++) {
-//       for (var x = 0; x < 28; x++) {
-//         var color = label ? "#009CDE" : "#FF8686"; 
-//         ctx.fillStyle = color;
-//         ctx.fillRect(xoff * 28 + x, yoff * 28 + y, 1, 1);
-//         i++;
-//       }
-//     }
-//   }
-
-//   // draw output
-//   function draw(labels, error, cost) {
-//     for (var i = 0; i < labels.length; i++) {
-//       draw_error(i % n, Math.floor(i / n), labels[i]);
-//     }
-//     $('#accuracy').html(d3.format(".2r")(100 * error) + '/' + (n * m));
-//     $('#cost').html(d3.format(".2f")(cost));
-//   }
-
-//   return draw;
-// }
-
-function summary(batch, epoch, cost) {
+//////////////////////////
+// sumarrize training
+//////////////////////////
+function summary(batch, epoch) {
 	$('#batch').html(batch);
 	$('#epoch').html(epoch);
-	$('#cost').html(d3.format(".2f")(cost));
 }
 
 
@@ -247,28 +137,26 @@ function summary(batch, epoch, cost) {
 function mnist_setup() {
 
   // define layers and setup plots
-  var layers = [784,300,300,300,300,10],
-      // batch = mnist_input(),
-      histogram = mnist_network(layers.slice(1,-1));//,
-      //softmax = mnist_output();
+  var layers = [784,100,50,10],
+      histogram = mnist_network();
 
   // create MNIST object
   var mnist = MNIST(layers),
       alpha = 1,
-      lambda = 0.01,
-      train = mnist.train(alpha, lambda, histogram, summary);//, batch, softmax);
+      lambda = 0.001,
+      train = mnist.train(alpha, lambda, histogram, summary);
 
   // bind initialization buttons
   $("input[name='mnist_init']").on("change", function () {
     $("#mnist_reset").click();
     alpha = this.value
-    train = mnist.train(alpha, lambda, histogram, summary);//, batch, softmax);
+    train = mnist.train(alpha, lambda, histogram, summary);
   });
 
   $("input[name='lambda_sparsity']").on("change", function () {
     $("#mnist_reset").click();
-    lambda = this.value
-    train = mnist.train(alpha, lambda, histogram, summary);//, batch, softmax);
+    lambda = this.value / 10**alpha
+    train = mnist.train(alpha, lambda, histogram, summary);
   });
 
   // reset training button
@@ -299,8 +187,7 @@ function mnist_setup() {
 
   // load mnist
   d3.select("#mnist_load").on("click", function() {
-    // extract zip
-    extract('data/mnist_test.csv.zip', mnist.data);//, batch);
+    extract('data/mnist_test.csv.zip', mnist.data);
   });
 
 }

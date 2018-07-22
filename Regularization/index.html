@@ -177,7 +177,7 @@
                     <span class="checkmark"></span>
                 </label>
                 <h3>3. Load your dataset and train the network</h3>
-                <p>Load 10,000 handwritten digits images (<a href="http://yann.lecun.com/exdb/mnist/">MNIST</a>). The grid below refers to the input images, <span class="correct bold">Blue</span> squares represent correctly classified images. <span class="incorrect bold">Red</span> squares represent misclassified images.</p>
+                <p>Load 10,000 handwritten digits images (<a href="http://yann.lecun.com/exdb/mnist/">MNIST</a>). The grid below refers to the input images, <span id="regularized" class="bold">Blue</span> squares represent correctly classified images. <span id="unregularized" class="bold">Red</span> squares represent misclassified images.</p>
                 <div>
                 	<button class="button emphasized" id="mnist_load">
                         Load MNIST (<span id="percent">0%</span>)
@@ -188,20 +188,14 @@
                     <button class="button-transport inactive" id="mnist_step"><img src="img/fastforward.png"></button>
                 </div>
                 <label class="viz">
-                    Unregularized Cost: <span id="cost">0.00</span>
-                </label>
-                <label class="viz">
-                    Regularized Cost: <span id="cost">0.00</span>
-                </label>
-            </div>
-            <div class="viz-column-4-8">
-                <div id="mnist_network"></div>
-                <label class="viz">
                     Batch: <span id="batch">0</span>
                 </label>
                 <label class="viz">
                     Epoch: <span id="epoch">0</span>
                 </label>
+            </div>
+            <div class="viz-column-4-8">
+                <div id="mnist_network"></div>
             </div>
         </div>
 

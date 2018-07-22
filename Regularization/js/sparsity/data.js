@@ -14,11 +14,9 @@ function extract(file, data) {//, draw) {
 
         reader.close(function() {
           // onclose callback
-          // draw(data["images"].slice(0,100), 0, 0);
-          	// change button activations
-			d3.select("#mnist_load").classed("inactive", true)
-			d3.select("#mnist_start").classed("inactive", false)
-			d3.select("#mnist_step").classed("inactive", false)
+    			d3.select("#mnist_load").classed("inactive", true)
+    			d3.select("#mnist_start").classed("inactive", false)
+    			d3.select("#mnist_step").classed("inactive", false)
         });
       }, function(current, total) {
         // onprogress callback
