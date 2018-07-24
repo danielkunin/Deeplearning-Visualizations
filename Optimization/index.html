@@ -32,14 +32,14 @@
     <div class="header"> 
         <div class="header-wrapper">
 
-        	<!-- <a href="https://www.deeplearning.ai/"><img id="header-logo" class="cppnControl" src="img/deeplearning.png"></a> -->
+        	<a href="https://www.deeplearning.ai/"><img id="header-logo" class="cppnControl" src="../img/deeplearning.png"></a>
             <a><img id="header-logo" class="cppnControl"></a>
             <!-- Uncomment below to add links to other articles -->
-            <!-- <ul class="header-nav">
-                <li>link 1</li>
-                <li>link 2</li>
-                <li>link 3</li>
-            </ul> -->
+            <ul class="header-nav">
+                 <li><a href="../Regularization/index.html">Regularization</a></li>
+                <li><strong>Optimization</strong></li>
+                <li><a href="../Initialization/index.html">Initialization</a></li>
+            </ul>
         </div>
     </div>
     <div class="main vis-background">
@@ -69,7 +69,7 @@
 
     <div class="main">
         <div class="full-container" id="landscape">
-            <div class="viz-column-4-8">
+            <div class="viz-column-3-8">
                 <h3>1. Choose loss</h3>
                 <div class="lossFunctions">
                     <p>Select an <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization">artificial landscape</a> <script>document.write(katex.renderToString('f(x,y)'))</script>.</p>
@@ -110,46 +110,78 @@
                       <img src="./img/loss/.png">
                     </label>
                 </div>
+                </br>
+
                 <h3>2. Add regularization</h3>
                 <div>
                     <p>Select regularization method <script>document.write(katex.renderToString('r(x,y)'))</script> and penalization parameter <script>document.write(katex.renderToString('\\lambda'))</script>.</p>
-                    <label>L1:</label>
-                    <input type="radio" name="reg" value="1" />
-                    <label>L2</label>
-                    <input type="radio" name="reg" value="0" checked/>
-                    <br>
+                    <label class="radio-container">L1:
+                        <input type="radio" name="reg" value="1" />
+                        <span class="checkmark"></span>
+                    </label>
+                        
+
+                    <label class="radio-container">L2
+                        <input type="radio" name="reg" value="0" checked/>
+                        <span class="checkmark"></span>
+                    </label>
+                    
+                    </br></br>
                     <input type="range" value="0" min="0" max="40" step="any" id="lambda">
+                    </br></br>
+
                     <label>Lambda = <span id="lambda_val">0.00</span></label>
                 </div>
+                </br>
+
                 <h3>3. Select Starting Point</h3>
                 <p>Select a starting point <script>document.write(katex.renderToString('(x_0,y_0)'))</script> either randomly or input specific coordinates.</p>
-                <button id="init">Random</button>
-                <button id="">Select</button>
+                <button class="button" id="init">Random</button>
+                <button class="button"  id="">Select</button>
+                </br></br>
                 <form>
                   X: <input type="text" name="x">
+                  </br>
                   Y: <input type="text" name="y">
                 </form>
+                </br>
+
                 <h3>4. Determine Optimization</h3>
                 <div class="lossFunctions">
                     <p>Select which optimization methods to use.</p>
-                    <label>Gradient Descent </label>
+                    
                     <input type="checkbox" name="opt" value="gd"/>
-                    <label>Momentum </label>
+                    <label class="check-box">Gradient Descent</label>
+
+                    </br>
                     <input type="checkbox" name="opt" value="momentum"/>
-                    <label>RMSprop </label>
+                    <label class="check-box">Momentum </label>
+
+                    </br>
                     <input type="checkbox" name="opt" value="rmsprop"/>
-                    <label>Adam </label>
+                    <label class="check-box">RMSprop </label>
+
+                    </br>
                     <input type="checkbox" name="opt" value="adam"/>
+                    <label class="check-box">Adam </label>
                 </div>
+                </br>
+
                 <h3>5. Update Parameters</h3>
                 <p>Select learning rate <script>document.write(katex.renderToString('\\alpha'))</script>, and decay rate <script>document.write(katex.renderToString('\\delta'))</script>.</p>
                 <div>
                     <input type="range" value="-3" min="-8" max="0" step="any" id="lrate">
+                    </br>
                     <label>Learning Rate = <span id="lrate_val">0.001</span></label>
+                    </br></br>
                     <input type="range" value="1" min="0" max="1" step="any" id="ldecay">
+                    </br>
                     <label>Learning Rate Decay = <span id="ldecay_val">1</span></label>
                 </div>
+                </br>
+
                 <h3>6. Minimize</h3>
+                </br>
                 <button class="button-transport" id="reset" title="reset">
                     <img src="img/reset.png">
                 </button>
@@ -162,6 +194,7 @@
                 <button class="button-transport" id="step" title="step">
                     <img src="img/fastforward.png">
                 </button>
+                </br>
 
             </div>
             <div class="viz-column-4-8">

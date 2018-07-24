@@ -20,6 +20,7 @@ body {
 
 .header {
    /* border-bottom: 1px solid #D0D0D0;*/
+   z-index: 100;
    position: absolute;
 }
 
@@ -42,7 +43,14 @@ ul.header-nav{
   float: right;
   margin: 2em 1em;
   cursor: pointer;
+  color: white;
 
+}
+
+
+ul.header-nav a {
+  color: white;
+  text-decoration: none;
 }
 
 ul.header-nav li{
@@ -222,6 +230,7 @@ p.citation{
 }
 .viz-column-8-8,
 .viz-column-4-8,
+.viz-column-3-8,
 .viz-column-2-8{
   margin:0% 2%;
 }
@@ -239,6 +248,7 @@ p.citation{
 }
 .viz-column-8-8,
 .viz-column-4-8,
+.viz-column-3-8,
 .viz-column-2-8{
   display: inline-block;
   vertical-align: text-top;
@@ -248,6 +258,10 @@ p.citation{
 }
 .viz-column-4-8{
   width: 500px;
+}
+
+.viz-column-3-8{
+  width: 375px;
 }
 
 .viz-column-2-8{
@@ -787,7 +801,7 @@ ol.reference li {
 /*slider*/
 input[type=range] {
   -webkit-appearance: none;
-  width: 100%;
+  width: 80%;
   margin: 7.5px 0;
 }
 input[type=range]:focus {
@@ -869,4 +883,15 @@ input[type=range]:focus::-ms-fill-lower {
 }
 input[type=range]:focus::-ms-fill-upper {
   background: rgba(221, 221, 221, 0.78);
+}
+
+
+input[type=text] {
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+.check-box{
+  padding-right: 5%;
 }

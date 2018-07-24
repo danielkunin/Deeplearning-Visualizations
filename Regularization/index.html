@@ -32,14 +32,14 @@
     <div class="header"> 
         <div class="header-wrapper">
 
-        	<!-- <a href="https://www.deeplearning.ai/"><img id="header-logo" class="cppnControl" src="img/deeplearning.png"></a> -->
+        	<a href="https://www.deeplearning.ai/"><img id="header-logo" class="cppnControl" src="../img/deeplearning.png"></a>
             <a><img id="header-logo" class="cppnControl"></a>
             <!-- Uncomment below to add links to other articles -->
-            <!-- <ul class="header-nav">
-                <li>link 1</li>
-                <li>link 2</li>
-                <li>link 3</li>
-            </ul> -->
+            <ul class="header-nav">
+                <li><strong>Regularization</strong></li>
+                <li><a href="../Optimization/index.html">Optimization</a></li>
+                <li><a href="../Initialization/index.html">Initialization</a></li>
+            </ul>
         </div>
     </div>
     <div class="main vis-background">
@@ -217,10 +217,14 @@
                 <p>Let’s play with the visualization below to see the impact of L1 and L2 regularization on the weights during training.</p>
             </div>
         </div>
+
         <div class="full-container" id="mnist">
             <div class="viz-column-4-8">
+                <div id="mnist_network"></div>
+            </div>
+            <div class="viz-column-3-8">
+                </br></br>
             	<h3>1. Select a regularization method</h3>
-            	<p></p>
             	<label class="radio-container">L1 regularization
                     <input type="radio" value="1" name="mnist_init" checked>
                     <span class="checkmark"></span>
@@ -230,7 +234,6 @@
                     <span class="checkmark"></span>
                 </label>
                 <h3>2. Choose a value for the regularization constant</h3>
-                <p></p>
                 <label class="radio-container">Too small
                     <input type="radio" value="0.0001" name="lambda_sparsity">
                     <span class="checkmark"></span>
@@ -254,6 +257,7 @@
                     <button class="button-transport hidden" id="mnist_stop"><img src="img/pause.png"></button>
                     <button class="button-transport inactive" id="mnist_step"><img src="img/fastforward.png"></button>
                 </div>
+                </br>
                 <label class="viz">
                     Batch: <span id="batch">0</span>
                 </label>
@@ -261,9 +265,7 @@
                     Epoch: <span id="epoch">0</span>
                 </label>
             </div>
-            <div class="viz-column-4-8">
-                <div id="mnist_network"></div>
-            </div>
+            
         </div>
         <div class="container">
 	        <div class="column-6-8">
@@ -295,9 +297,9 @@
             <div class="viz-column-4-8">
                 <svg id="contour" width="550" height="520"></svg>
             </div>
-            <div class="viz-column-4-8">
+            <div class="viz-column-3-8" style="padding-left: 5%;">
                 <h3>1. Choose an <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization">artificial</a> loss landscape</h3>
-                <p></p>
+                </br>
                 <div class="lossFunctions">
                     <label>
                       <input type="radio" name="loss" value="beale" />
@@ -332,8 +334,9 @@
                       <img src="./img/loss/styblinskiTang.png">
                     </label>
                 </div>
+                </br>
                 <h3>2. Select a regularization method</h3>
-                <p></p>
+                </br>
                 <label class="radio-container">L1 regularization
                     <input type="radio" value="1" name="reg">
                     <span class="checkmark"></span>
@@ -342,9 +345,11 @@
                     <input type="radio" value="0" name="reg" checked>
                     <span class="checkmark"></span>
                 </label>
+                </br></br>
 	            <h3>3. Choose a value for the regularization constant</h3>
-	            <p></p>
+                </br>
                 <input type="range" value="0" min="0" max="40" step="any" id="lambda">
+                </br></br>
                 <label>Lambda = <span id="lambda_val">0.00</span></label>
             </div>
         </div>
