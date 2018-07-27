@@ -66,7 +66,7 @@
                     <li class="index index2">Early stopping</li>
                     <li class="index index3">L2 and L1 regularizations</li>
                     <li class="index index4">Dropout regularization</li>
-                    <li class="index index5">Methodology to train generalizable models</li>
+                    <!-- <li class="index index5">Methodology to train generalizable models</li> -->
                 </ol>
             </div>
         </div>
@@ -78,37 +78,38 @@
                 <h3>I&emsp;The importance of regularization</h3>
                 <p>The ultimate goal for your neural network is to generalize to “unseen data”, in order to be used in the real world. The ability of a neural network to generalize to unseen data depends on two factors:
                 </p>
-                <ol>
+                <ul>
                     <li>The information in the training data. A dataset of images taken from the front-facing camera of a car contains, for example, much more information than a dataset of images of clouds in the sky.</li>
                     <li>The complexity of the network. By complexity, we mean how complex is the function your neural network can mimic. Usually, the more parameters your network uses, the more complex it is.</li>
-                </ol>
+                </ul>
             </div>
-            <div class="column-4-8">
+            <div class="column-6-8">
                 <h3>Case 1: the network is not complex enough, and the training data contains a lot of information.</h3>
             </div>
             <div class="column-6-8 column-align">
-                <p>Your network is too simple to understand the training data’s salient features. This is called <span class="marginanchor" id="margin-0-anchor" data-number="0" data-align="middle">underfitting</span> the training set. A common trick to avoid underfitting is to deepen your neural network by adding more layers.</p>
+                <p>Your network is too simple to understand the training data’s salient features. This is called <span class="marginanchor" id="margin-0-anchor" data-number="0" data-align="middle">underfitting</span> the training set.</p>
+                <p class="inline-caption"><b>Example:</b> You train a 2-layer convolutional neural network on an ImageNet classification task (1000 classes, that are very different from each other.)</p>
+                <p>A common trick to avoid underfitting is to deepen your neural network by adding more layers.</p>
             </div>
             <div class="column-2-8 column-align margin">
             	<div class="marginbody" id="margin-0-body" data-number="0">
                     <img src="img/underfit.png">
-                	<p class="caption">You train a 2-layer convolutional neural network on an ImageNet classification task (1000 classes, that are very different from each other.)</p>
+                	<p class="caption">As shown above the network underfit the training data</p>
                 </div>
             </div>
-            <div class="column-4-8">
+            <div class="column-6-8">
                 <h3>Case 2: the network is very complex, but the training data doesn’t contain too much information.</h3>
             </div>
             <div class="column-6-8 column-align">
                 <p>You network is complex enough to fully memorize the mapping between the training data and the training labels. It won’t generalize because it didn’t need to understand the salient features of the dataset to perform well on the training set. This is called <span class="marginanchor" id="margin-1-anchor" data-number="1" data-align="middle">overfitting</span> the training set.</p>
+                <p class="inline-caption"><b>Example:</b> You train a 20-layer convolutional neural network to detect if there’s a cloud (label 1) or no clouds (label 0) in the sky.</p>
+                <p>The best way to make your model generalize is to gather a larger dataset, but this is not always possible. Regularization methods are designed to help your model generalize, and not overfit the training data. Let’s learn the methods we use in order to regularize our models, and the intuition behind it.</p>
             </div>
             <div class="column-2-8 column-align margin">
                 <div class="marginbody" id="margin-1-body" data-number="1">
                     <img src="img/overfit.png">
                     <p class="caption">You train a 20-layer convolutional neural network to detect if there’s a cloud (label 1) or no clouds (label 0) in the sky.</p>
                 </div>
-            </div>
-            <div class="column-6-8">
-                <p>The best way to make your model generalize is to gather a larger dataset, but this is not always possible. Regularization methods are designed to help your model generalize, and not overfit the training data. Let’s learn the methods we use in order to regularize our models, and the intuition behind it.</p>
             </div>
             <div class="column-4-8">
                 <h3>Data Split: partioning a data set.</h3>
@@ -150,26 +151,29 @@
                 <p>The easiest but widely used method is called early stopping. During the iterative optimization process of finding the correct parameters for your model, if you evaluate your model’s error on the training and validation set, you might see such curves:</p>
                 <img src="img/curves.png">
                 <p>Based on this observation, you can state that after the 30,000th epoch, your model starts overfitting to the training set. Early stopping means “saving the model’s parameters at the 30,000th epoch”. The saved model is the best performing model on the dev set and will likely <span class="marginanchor" id="margin-2-anchor" data-number="2" data-align="middle">generalize</span> better to the test set.</p>
+                <p class="inline-caption"><b>Example:</b> Consider a “day vs. night image classification”. Rather than understanding the inherent features of the data such as the brightness, the colors or the presence of a blue sky, your model learned mapping between training images and training labels by heart. You do not want this.</p>
             </div>
             <div class="column-2-8 column-align margin">
                 <div class="marginbody" id="margin-2-body" data-number="2">
-                    <p class="caption">Consider a concrete example such as “day vs. night image classification”. Rather than understanding the inherent features of the data such as the brightness, the colors or the presence of a blue sky, your model learned mapping between training images and training labels by heart. You do not want this.</p>
+                    <p class="caption">Consider a concrete example such as “day vs. night" image classifier. Rather than understanding the inherent features of the data such as the brightness, the colors or the presence of a blue sky, your model learned mapping between training images and training labels by heart. You do not want this.</p>
                 </div>
             </div>
-            <div class="column-4-8">
+            <div class="column-6-8">
                 <h3>What are the main advantages of early stopping?</h3>
             </div>
             <div class="column-6-8 divider-bottom column-align">
-                <p>It is easy to do. Deep learning frameworks, such as Keras, offer options to save your model’s parameters regularly during training. Here is the corresponding lines of code and <a href="https://keras.io/callbacks/#earlystopping">documentation</a> on Keras to stop training when a chosen quantity has stopped improving.</p>
-                <p class="citation">keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0, patience=0, verbose=0, mode='auto', baseline=None)</p>
-                <p>It is quicker than other regularization methods, because you do not have any regularization hyperparameter to tune. As a comparison, L2 regularization requires you to tune a regularization hyperparameter. It might take you several experiments to regularize your model with L2, but only one run to do so with early stopping.</p>
+                <ul>
+                    <li>It is easy to do. Deep learning frameworks, such as Keras, offer options to save your model’s parameters regularly during training. Here is the corresponding lines of code and <a href="https://keras.io/callbacks/#earlystopping" target="_blank">documentation</a> on Keras to stop training when a chosen quantity has stopped improving.</li>
+                    <p class="citation">keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0, patience=0, verbose=0, mode='auto', baseline=None)</p>
+                    <li>It is quicker than other regularization methods, because you do not have any regularization hyperparameter to tune. As a comparison, L2 regularization requires you to tune a regularization hyperparameter. It might take you several experiments to regularize your model with L2, but only one run to do so with early stopping.</li>
+                </ul>
             </div>
         </div>
 
         <div class="container">
             <div class="column-6-8 index3-target">
                 <h3>III&emsp; L2 and L1 regularizations</h3>
-                <p>In order to avoid overfitting the training set, one can try to reduce the complexity of the model by removing layers, and consequently decreasing the number of parameters. Another way to constrain a network and lower its complexity is to:</p>
+                <p>In order to avoid overfitting the training set, one can try to reduce the complexity of the model by removing layers, and consequently decreasing the number of parameters. As shown by the work of <a href="https://papers.nips.cc/paper/563-a-simple-weight-decay-can-improve-generalization.pdf" target="_blank">Krogh and Hertz (1992)</a>, another way to constrain a network and lower its complexity is to:</p>
                 <p class="inline-caption">Limit the growth of the weights through some kind of weight decay.</p>
                 <p>The goal is to prevent the weights from growing too large, unless it is really necessary.</p>
             </div>
@@ -177,41 +181,41 @@
                 <h3>How does this work?</h3>
             </div>
             <div class="column-6-8 divider-bottom column-align">
-                <p>L1 and L2 regularizations can be achieved by simply adding a term that penalizes large weights to the cost function. If you were training a network to minimize the cost <script> document.write(katex.renderToString('J_{cross-entropy} = - \\sum_{i=1}^m y^{(i)}log(\\hat{y}^{(i)})'))</script> with (let’s say) gradient descent, your weight update rule would be:</p>
+                <p>L1 and L2 regularizations can be achieved by simply adding a term that penalizes large weights to the cost function. If you were training a network to minimize the cost <script> document.write(katex.renderToString('J_{cross-entropy} = - \\frac{1}{m}\\sum_{i=1}^m y^{(i)}log(\\hat{y}^{(i)})'))</script> with (let’s say) gradient descent, your weight update rule would be:</p>
                 <script>
 	                var render = katex.renderToString("w = w - \\alpha \\frac{\\partial J_{cross-entropy}}{\\partial w}", { displayMode: true });
 	                document.writeln(render);
                 </script>
-                <p>Instead, you would now train a network to minimize the cost <script> document.write(katex.renderToString('J_{regularized} = J_{cross-entropy} + \\lambda J_{L1 or L2}'))</script> where <script> document.write(katex.renderToString('J_{L1} = \\sum_{i} |w_i|'))</script> and <script> document.write(katex.renderToString('J_{L2} = \\sum_i ||w_i||_2^2'))</script>. Your weight update rule would be:</p>
+                <p>Instead, you would now train a network to minimize the cost <script> document.write(katex.renderToString('J_{regularized} = J_{cross-entropy} + \\lambda J_{\\text{L1 or L2}}'))</script> where <script> document.write(katex.renderToString('J_{L1} = \\sum_{\\text{all weights } w_k} |w_k|'))</script> and <script> document.write(katex.renderToString('J_{L2} = \\sum_{\\text{all weights } w_k} ||w_k||_2^2'))</script>. Your weight update rule would be:</p>
                 <script>
 	                var render = katex.renderToString("w = w - \\alpha \\frac{\\partial J_{regularized}}{\\partial w} = w - \\alpha ( \\frac{\\partial J_{cross-entropy}}{\\partial w} + \\lambda \\frac{\\partial J_{L1 or L2}}{\\partial w} )", { displayMode: true });
 	                document.writeln(render);
                 </script>
                 <p>For <span class="marginanchor" id="margin-3-anchor" data-number="3" data-align="middle">L2 regularization</span>, this would lead to the update rule:</p>
                 <script>
-	                var render = katex.renderToString("w = (1 - \\alpha \\lambda)w - \\alpha \\frac{\\partial J_{cross-entropy}}{\\partial w}", { displayMode: true });
+	                var render = katex.renderToString("w = w - \\underbrace{\\alpha \\lambda w}_\\text{L2 penalty} - \\underbrace{\\alpha \\frac{\\partial J_{cross-entropy}}{\\partial w}}_\\text{Gradient penalty}", { displayMode: true });
 	                document.writeln(render);
                 </script>
                 <p>For <span class="marginanchor" id="margin-4-anchor" data-number="4" data-align="middle">L1 regularization</span>, this would lead to the update rule:</p>
             	<script>
-	                var render = katex.renderToString("w = w - \\alpha \\lambda sign(w) - \\alpha \\frac{\\partial J_{cross-entropy}}{\\partial w}", { displayMode: true });
+	                var render = katex.renderToString("w = w - \\underbrace{\\alpha \\lambda sign(w)}_\\text{L1 penalty} - \\underbrace{\\alpha \\frac{\\partial J_{cross-entropy}}{\\partial w}}_\\text{Gradient penalty}", { displayMode: true });
 	                document.writeln(render);
                 </script>
                 <p>As you can see, with L2 and L1 regularization, at every step, the weight is pushed to a slightly lower value because <script> document.write(katex.renderToString('\\alpha \\lambda << 1'))</script>, causing “weight decay”.</p>
             </div>
             <div class="column-2-8 column-align margin">
                 <div class="marginbody" id="margin-3-body" data-number="3">
-                    <p class="caption">In statistics, L2 regularization of a linear neural network is refered to as ridge regression.</p>
+                    <p class="caption">In statistics, L2 regularization is sometimes refered to as ridge regression.</p>
                 </div>
                 <div class="marginbody" id="margin-4-body" data-number="4">
-                    <p class="caption">In statistics, L1 regularization of a linear neural network is refered to as Lasso regression.</p>
+                    <p class="caption">In statistics, L1 regularization is sometimes refered to as Lasso regression.</p>
                 </div>
             </div>
-            <div class="column-4-8">
+            <div class="column-6-8">
                 <h3>What’s the difference between L1 and L2?</h3>
             </div>
             <div class="column-6-8 column-align">
-                <p>The update rules are different. While the L2 “weight decay” <script> document.write(katex.renderToString('(1-\\alpha\\lambda)w'))</script> penalty is proportional to the value of the weight to be updated, the L1 “weight decay” <script> document.write(katex.renderToString('w -\\alpha\\lambda sign(w)'))</script> is not.</p>
+                <p>The update rules are different. While the L2 “weight decay” <script> document.write(katex.renderToString('\\alpha\\lambda w'))</script> penalty is proportional to the value of the weight to be updated, the L1 “weight decay” <script> document.write(katex.renderToString('\\alpha\\lambda sign(w)'))</script> is not.</p>
                 <p>For L2, it means the smaller <script> document.write(katex.renderToString('w'))</script>, the smaller the penalty during the update of <script> document.write(katex.renderToString('w'))</script> and vice-versa for larger <script> document.write(katex.renderToString('w'))</script>.</p>
                 <p>For L1, the penalty is independent on the value of <script> document.write(katex.renderToString('w'))</script>, but the direction of the penalty (positive or negative) depends on the sign of <script> document.write(katex.renderToString('w'))</script>. This results in an effect called “feature selection” or “weight sparsity”.</p>
                 <p>Let’s play with the visualization below to see the impact of L1 and L2 regularization on the weights during training.</p>
@@ -219,6 +223,7 @@
         </div>
         <div class="full-container" id="mnist">
             <div class="viz-column-4-8">
+                <p>Use the following selections to view a histogram of the weight values during training of a network <span id="regularized" class="bold">with</span> and <span id="unregularized" class="bold">without</span> regularization. 
             	<h3>1. Select a regularization method</h3>
             	<p></p>
             	<label class="radio-container">L1 regularization
@@ -244,10 +249,10 @@
                     <span class="checkmark"></span>
                 </label>
                 <h3>3. Load your dataset and train the network</h3>
-                <p>Train a <span id="regularized" class="bold">regularized</span> and <span id="unregularized" class="bold">unregularized</span> classifier on 10,000 handwritten digits images (<a href="http://yann.lecun.com/exdb/mnist/">MNIST</a>) and construct a histogram of the weight values during training.</p>
+                <p>Train a <span id="regularized" class="bold">regularized</span> and <span id="unregularized" class="bold">unregularized</span> neural network and construct a histogram of the weight values during training.</p>
                 <div>
                 	<button class="button emphasized" id="mnist_load">
-                        Load MNIST (<span id="percent">0%</span>)
+                        Load Data (<span id="percent">0%</span>)
                     </button>
                     <button class="button-transport" id="mnist_reset"><img src="img/reset.png"></button>
                     <button class="button-transport inactive" id="mnist_start"><img src="img/play.png"></button>
@@ -268,26 +273,26 @@
         <div class="container">
 	        <div class="column-6-8">
 	            <p>As you can see, L1 and L2 regularizations have a dramatic effect on the weights values:</p>
-	            <ol>
+	            <ul>
                     <li>For the L2 regularization: the weight values decrease following a normal distribution that becomes more and more peaked throughout training.</li>
-                    <li>For the L1 regularization: many of the weights become null. This is called “sparsity of the weights”. Because the weight penalty is independent of the weight values, weights with value 0.001 are penalized as much as weights with value 1000. The value of the penalty is  (generally very small), and constrains a subset weights that are “less useful to the model” to be equal to 0. For example, you could effectively end up with 200 non-zero weights out of 1,000, meaning that 800 weights were “less useful to learn the task”.</li>
+                    <li>For the L1 regularization: many of the weights become null. This is called “sparsity of the weights”. Because the weight penalty is independent of the weight values, weights with value 0.001 are penalized as much as weights with value 1000. The value of the penalty is <script> document.write(katex.renderToString('\\alpha\\lambda'))</script> (generally very small), and constrains a subset weights that are “less useful to the model” to be equal to 0. For example, you could effectively end up with 200 non-zero weights out of 1,000, meaning that 800 weights were “less useful to learn the task”.</li>
                     <li>The weight sparsity effect resulting of L1 regularization makes your model more compact in theory, and leads to storage efficient compact models that are commonly used in smart mobile devices.</li>
-                </ol>
+                </ul>
 	        </div>
             <div class="column-4-8">
                 <h3>How to implement L1 and L2 regularization?</h3>
             </div>
             <div class="column-6-8">
-	            <p>Deep learning frameworks such as Keras allow you to add L1 or L2 regularization to your network in one line of code. The difference in the optimization process is implemented automatically, here’s an example: <a href="https://keras.io/regularizers/">L1 and L2 regularization in Keras</a>.</p>
+	            <p>Deep learning frameworks such as Keras allow you to add L1 or L2 regularization to your network in one line of code. The difference in the optimization process is implemented automatically, here’s an example: <a href="https://keras.io/regularizers/" target="_blank">L1 and L2 regularization in Keras</a>.</p>
 	        </div>
-	        <div class="column-4-8">
+	        <div class="column-6-8">
                 <h3>How does this help the model generalize?</h3>
             </div>
 	        <div class="column-6-8">
-	            <ol>
+	            <ul>
                     <li>Weight decay suppresses any irrelevant components of the weight vector by driving the optimization to find the smallest vector that solves the learning problem.</li>
                     <li>It attenuates the influence of outliers on the weight optimization, by constraining the weight values. There’s less risk for the weights to learn the sampling error (for example when a subset of your data points comes from a wrong distribution, or is mislabelled.) In other words, the output of the model is less affected by changes in the input.</li>
-                </ol>
+                </ul>
                 <p>In order to build some intuition about what L1 and L2 regularization do. Let’s play with the visualization below to observe variations of the cost landscape subject to regularization from a top view.</p>
 	        </div>
         </div>
@@ -296,7 +301,7 @@
                 <svg id="contour" width="550" height="520"></svg>
             </div>
             <div class="viz-column-4-8">
-                <h3>1. Choose an <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization">artificial</a> loss landscape</h3>
+                <h3>1. Choose an <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization" target="_blank">artificial</a> loss landscape</h3>
                 <p></p>
                 <div class="lossFunctions">
                     <label>
@@ -351,10 +356,10 @@
         <div class="container">
 	        <div class="column-6-8">
 	            <p>As you can see, L1 and L2 regularizations have a dramatic effect on the geometry of the cost function:</p>
-	            <ol>
-                    <li>Using the 5th landscape (Rastrigin Function), we see that adding regularization results in a more convex cost landscape and diminishes the chance of falling into a non-desired minimum.</li>
-                    <li>Using the 3rd landscape (Himmelblaus Function), we see that adding L2 regularization prevents the network to converge in a local minimum.</li>
-                </ol>
+	            <ul>
+                    <li>Using the 6th landscape (Rastrigin Function), notice that adding regularization results in a more convex cost landscape and diminishes the chance of falling into a non-desired minimum.</li>
+                    <li>Using the 3rd landscape (Himmelblaus Function), notice that adding L2 regularization prevents the network to converge in a local minimum.</li>
+                </ul>
 	        </div>
         </div>
 
@@ -369,29 +374,25 @@
              	</ol>
                 <p>Dropout is a regularization technique that allows you to combine many different architectures efficiently by randomly dropping some of the neurons of your network during training.</p>
             	<!-- <img src="img/dropout.png"> -->
-            	<video width="45%" height="auto" controls>
+            	<video width="70%" height="auto" controls>
 					<source src="img/dropout1.mp4" type="video/mp4">
 					Your browser does not support the video tag.
 				</video>
-				<video width="45%" height="auto" controls>
-					<source src="img/dropout2.mp4" type="video/mp4">
-					Your browser does not support the video tag.
-				</video>
-            	<p>Dropout is discussed in details in our <a href="https://www.coursera.org/specializations/deep-learning">Deep Learning Specialization</a> (Course 2: “Improving Neural Networks”, Week 2: “Practical aspects of deep learning”) and we invite you to check it out to understand the intuition behind its usage. </p>
+            	<p>Dropout is discussed in details in our <a href="https://www.coursera.org/specializations/deep-learning" target="_blank">Deep Learning Specialization</a> (<a href="https://www.coursera.org/learn/deep-neural-network" target="_blank">Course 2: “Improving Neural Networks”</a>, Week 2: “Practical aspects of deep learning”) and we invite you to check it out to understand the intuition behind its usage. </p>
             </div>
         </div>
 
         <div class="container">
             <div class="column-6-8 index5-target">
-                <h3>V&emsp; Our methodology to train generalizable models at deeplearning.ai</h3>
+                <!-- <h3>V&emsp; Our methodology to train generalizable models at deeplearning.ai</h3>
                 <p>Here’s a concrete example of how we would tackle a deep learning task and try to make our model generalize.</p>
                 <p>Given a complex speech (audio) dataset to perform trigger word detection, this is roughly how we would find the best model:</p>
-                <ol>
+                <ul>
                     <li>Find a model that is able to overfit a single training example: the model can perfectly detect the trigger word in the training audio clip<sup class="footnote-index footnote-index1">1</sup>.</li>
                     <li>Tweak the previous model to be able to overfit a larger pool of training example: the model can perfectly detect the trigger words in the large pool of training audio clips.</li>
                     <li>Overfit the entire training dataset (or the maximum number of training examples you can overfit).</li>
                     <li>Use the regularization techniques discussed above to make your model generalize to unseen data: the model can detect the trigger word for voices and backgrounds that are not in the training dataset<sup class="footnote-index footnote-index2">2</sup>.</li>
-                </ol>
+                </ul> -->
                 <p>Successfully training a model on complex tasks is complicated. You need to find the appropriate model architecture able to understand the complexity of the dataset. Once you found such an architecture, make it generalize using regularization.</p>
             </div>
         </div>
@@ -422,8 +423,8 @@
             <div class="column-6-8 column-align">
                 <h4 class="reference">Footnotes</h4>
                 <ol class="reference footnote">
-                	<li class="footnote-index1-target">Intuitively, neural networks mimic functions. But not all functions can map an audio clip to the correct sequence of labels. You need to search extensively for an architecture that understands the underlying mapping between an audio clip and the sequence of labels. You might think that a very deep model with high capacity (i.e. a lot of parameters) should always be able to overfit a single example. It is true, but deep models are super hard to train, and you may struggle a lot to overfit even a single training example.</li>
-                	<li class="footnote-index2-target">You will need to collect large validation (dev) and test sets in order to track the ability of your model to generalize.</li>
+                	<!-- <li class="footnote-index1-target">Intuitively, neural networks mimic functions. But not all functions can map an audio clip to the correct sequence of labels. You need to search extensively for an architecture that understands the underlying mapping between an audio clip and the sequence of labels. You might think that a very deep model with high capacity (i.e. a lot of parameters) should always be able to overfit a single example. It is true, but deep models are super hard to train, and you may struggle a lot to overfit even a single training example.</li>
+                	<li class="footnote-index2-target">You will need to collect large validation (dev) and test sets in order to track the ability of your model to generalize.</li> -->
                 </ol>
             </div>
             <div class="column-6-8 column-align">
