@@ -93,7 +93,7 @@
             <div class="column-2-8 column-align margin">
             	<div class="marginbody" id="margin-0-body" data-number="0">
                     <img src="img/underfit.png">
-                	<p class="caption">As shown above the network underfit the training data</p>
+                	<p class="caption">An underfit classifier will learn a simple decision boundary (red line) that fails to capture the structure of the training data resulting in many misclassified training points.</p>
                 </div>
             </div>
             <div class="column-6-8">
@@ -110,18 +110,18 @@
                 </div>
                 <div class="marginbody" id="margin-2-body" data-number="2">
                     <img src="img/overfit.png">
-                    <p class="caption">You train a 20-layer convolutional neural network to detect if there’s a cloud (label 1) or no clouds (label 0) in the sky.</p>
+                    <p class="caption">An overfit classifier will learn a complex decision boundary (red line) that correctly classifies most of the training data, but will not generalize to unseen data.</p>
                 </div>
             </div>
             <div class="column-6-8">
                 <h3>Data Split: partioning a data set.</h3>
             </div>
             <div class="column-6-8 divider-bottom column-align">
-                <p>In order to estimate the ability of your model to generalize, you will split your dataset into three (or sometimes more) sets: <span class="marginanchor" id="margin-3-anchor" data-number="3" data-align="middle">training</span>, <span class="marginanchor" id="margin-4-anchor" data-number="4" data-align="middle">validation (dev)</span> and <span class="marginanchor" id="margin-5-anchor" data-number="5" data-align="middle">test</span>. Your model is able to generalize if it was trained on the training set, tuned on the validation set, and still performs well on the test set.</p>
+                <p>In order to estimate the ability of your model to generalize, you will split your dataset into three (or sometimes more) sets: <span class="marginanchor" id="margin-3-anchor" data-number="3" data-align="middle">training</span>, <span class="marginanchor" id="margin-4-anchor" data-number="4" data-align="middle">validation</span> and <span class="marginanchor" id="margin-5-anchor" data-number="5" data-align="middle">test</span>. Your model is able to generalize if it was trained on the training set, tuned on the validation set, and still performs well on the test set.</p>
                 <table>
                   <tr>
                     <th>Train Accuracy</th>
-                    <th>Dev Accuracy</th> 
+                    <th>Validation Accuracy</th> 
                     <th>Test Accuracy</th>
                     <th>Conclusion</th>
                   </tr>
@@ -151,7 +151,7 @@
                     <p class="caption">The data used to train your model.</p>
                 </div>
                 <div class="marginbody" id="margin-4-body" data-number="4">
-                    <p class="caption">The data used to tune the hyperparameters of your model.</p>
+                    <p class="caption">The data used to tune the hyperparameters of your model. This is sometimes referred to as a "dev" set.</p>
                 </div>
                 <div class="marginbody" id="margin-5-body" data-number="5">
                     <p class="caption">The data used to evaluate the performance of your model in real life.</p>
@@ -196,7 +196,7 @@
                 <p class="inline-caption">Limit the growth of the weights through some kind of weight decay.</p>
                 <p>The goal is to prevent the weights from growing too large, unless it is really necessary.</p>
             </div>
-            <div class="column-4-8">
+            <div class="column-6-8">
                 <h3>How does this work?</h3>
             </div>
             <div class="column-6-8 divider-bottom column-align">
@@ -210,12 +210,12 @@
 	                var render = katex.renderToString("w = w - \\alpha \\frac{\\partial J_{regularized}}{\\partial w} = w - \\alpha ( \\frac{\\partial J_{cross-entropy}}{\\partial w} + \\lambda \\frac{\\partial J_{L1 or L2}}{\\partial w} )", { displayMode: true });
 	                document.writeln(render);
                 </script>
-                <p>For <span class="marginanchor" id="margin-4-anchor" data-number="4" data-align="middle">L1 regularization</span>, this would lead to the update rule:</p>
+                <p>For <span class="marginanchor" id="margin-9-anchor" data-number="9" data-align="middle">L1 regularization</span>, this would lead to the update rule:</p>
             	<script>
 	                var render = katex.renderToString("w = w - \\underbrace{\\alpha \\lambda sign(w)}_\\text{L1 penalty} - \\underbrace{\\alpha \\frac{\\partial J_{cross-entropy}}{\\partial w}}_\\text{Gradient penalty}", { displayMode: true });
 	                document.writeln(render);
                 </script>
-                <p>For <span class="marginanchor" id="margin-3-anchor" data-number="3" data-align="middle">L2 regularization</span>, this would lead to the update rule:</p>
+                <p>For <span class="marginanchor" id="margin-10-anchor" data-number="10" data-align="middle">L2 regularization</span>, this would lead to the update rule:</p>
                 <script>
                     var render = katex.renderToString("w = w - \\underbrace{\\alpha \\lambda w}_\\text{L2 penalty} - \\underbrace{\\alpha \\frac{\\partial J_{cross-entropy}}{\\partial w}}_\\text{Gradient penalty}", { displayMode: true });
                     document.writeln(render);
@@ -223,10 +223,10 @@
                 <p>As you can see, with L1 and L2 regularization, at every step, the weight is pushed to a slightly lower value because <script> document.write(katex.renderToString('\\alpha \\lambda << 1'))</script>, causing “weight decay”.</p>
             </div>
             <div class="column-2-8 column-align margin">
-                <div class="marginbody" id="margin-4-body" data-number="4">
+                <div class="marginbody" id="margin-9-body" data-number="9">
                     <p class="caption">In statistics, L1 regularization is sometimes refered to as Lasso regression.</p>
                 </div>
-                <div class="marginbody" id="margin-3-body" data-number="3">
+                <div class="marginbody" id="margin-10-body" data-number="10">
                     <p class="caption">In statistics, L2 regularization is sometimes refered to as ridge regression.</p>
                 </div>
             </div>
@@ -245,9 +245,10 @@
             <div class="viz-column-4-8">
                 <div id="mnist_network"></div>
             </div>
-            <div class="viz-column-3-8">
+            <div class="viz-column-4-8">
                 <p>Use the following selections to view a histogram of the weight values during training of a network <span id="regularized" class="bold">with</span> and <span id="unregularized" class="bold">without</span> regularization.</p>
             	<h3>1. Select a regularization method</h3>
+                <p></p>
             	<label class="radio-container">L1 regularization
                     <input type="radio" value="1" name="mnist_init" checked>
                     <span class="checkmark"></span>
@@ -257,6 +258,7 @@
                     <span class="checkmark"></span>
                 </label>
                 <h3>2. Choose a value for the regularization constant</h3>
+                <p>Choose a value for <script> document.write(katex.renderToString('\\lambda'))</script> in the update equations above.</p>
                 <label class="radio-container">Too small
                     <input type="radio" value="0.0001" name="lambda_sparsity">
                     <span class="checkmark"></span>
@@ -270,7 +272,7 @@
                     <span class="checkmark"></span>
                 </label>
                 <h3>3. Load your dataset and train the network</h3>
-                <p>Train a <span id="regularized" class="bold">regularized</span> and <span id="unregularized" class="bold">unregularized</span> neural network and construct a histogram of the weight values during training.</p>
+                <p>Load data and train both <span id="regularized" class="bold">regularized</span> and <span id="unregularized" class="bold">unregularized</span> networks.</p>
                 <div>
                 	<button class="button emphasized" id="mnist_load">
                         Load Data (<span id="percent">0%</span>)
@@ -299,7 +301,7 @@
                     <li>The weight sparsity effect resulting of L1 regularization makes your model more compact in theory, and leads to storage efficient compact models that are commonly used in smart mobile devices.</li>
                 </ul>
 	        </div>
-            <div class="column-4-8">
+            <div class="column-6-8">
                 <h3>How to implement L1 and L2 regularization?</h3>
             </div>
             <div class="column-6-8">
@@ -395,9 +397,8 @@
              		<li>Training the networks requires a lot of computations.</li>
              		<li>You need a large amount of data to train the models on different subsets of the data.</li>
              	</ol>
-                <p>Dropout is a regularization technique that allows you to combine many different architectures efficiently by randomly dropping some of the neurons of your network during training.</p>
-            	<!-- <img src="img/dropout.png"> -->
-            	<video width="70%" height="auto" controls>
+                <p>Dropout is a regularization technique, introduced in <a href="http://jmlr.org/papers/volume15/srivastava14a.old/srivastava14a.pdf" target="_blank">Srivastava et al. (2014)</a>, that allows you to combine many different architectures efficiently by randomly dropping some of the neurons of your network during training.</p>
+            	<video width="70%" height="auto" style="margin:0% 15%" controls>
 					<source src="img/dropout1.mp4" type="video/mp4">
 					Your browser does not support the video tag.
 				</video>
