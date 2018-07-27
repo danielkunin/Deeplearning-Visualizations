@@ -13,7 +13,7 @@
     <!-- Home Page CSS -->
     <link rel="stylesheet" type="text/css" href="../css/template.css">
     <!--Favicon-->
-    <!-- <link rel="shortcut icon" type="image/png" href="img/favicon.png" /> -->
+    <link rel="shortcut icon" type="image/png" href="../img/favicon.png" />
     <!-- Load jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Load D3 -->
@@ -34,7 +34,6 @@
 
         	<a href="https://www.deeplearning.ai/"><img id="header-logo" class="cppnControl" src="../img/deeplearning.png"></a>
             <a><img id="header-logo" class="cppnControl"></a>
-            <!-- Uncomment below to add links to other articles -->
             <ul class="header-nav">
                 <li><strong>Regularization</strong></li>
                 <li><a href="../Optimization/index.html">Optimization</a></li>
@@ -64,7 +63,7 @@
                 <ol class="tableOfContent" type="I">
                     <li class="index index1">The importance of regularization</li>
                     <li class="index index2">Early stopping</li>
-                    <li class="index index3">L2 and L1 regularizations</li>
+                    <li class="index index3">L1 and L2 regularizations</li>
                     <li class="index index4">Dropout regularization</li>
                     <!-- <li class="index index5">Methodology to train generalizable models</li> -->
                 </ol>
@@ -101,21 +100,24 @@
                 <h3>Case 2: the network is very complex, but the training data doesn’t contain too much information.</h3>
             </div>
             <div class="column-6-8 column-align">
-                <p>You network is complex enough to fully memorize the mapping between the training data and the training labels. It won’t generalize because it didn’t need to understand the salient features of the dataset to perform well on the training set. This is called <span class="marginanchor" id="margin-1-anchor" data-number="1" data-align="middle">overfitting</span> the training set.</p>
+                <p>Your network is <span class="marginanchor" id="margin-1-anchor" data-number="1" data-align="middle">complex</span> enough to fully memorize the mapping between the training data and the training labels. It won’t generalize because it didn’t need to understand the salient features of the dataset to perform well on the training set. This is called <span class="marginanchor" id="margin-2-anchor" data-number="2" data-align="middle">overfitting</span> the training set.</p>
                 <p class="inline-caption"><b>Example:</b> You train a 20-layer convolutional neural network to detect if there’s a cloud (label 1) or no clouds (label 0) in the sky.</p>
                 <p>The best way to make your model generalize is to gather a larger dataset, but this is not always possible. Regularization methods are designed to help your model generalize, and not overfit the training data. Let’s learn the methods we use in order to regularize our models, and the intuition behind it.</p>
             </div>
             <div class="column-2-8 column-align margin">
                 <div class="marginbody" id="margin-1-body" data-number="1">
+                    <p class="caption">The number of parameter (weights) is usually a proxy to measure the complexity of a network.</p>
+                </div>
+                <div class="marginbody" id="margin-2-body" data-number="2">
                     <img src="img/overfit.png">
                     <p class="caption">You train a 20-layer convolutional neural network to detect if there’s a cloud (label 1) or no clouds (label 0) in the sky.</p>
                 </div>
             </div>
-            <div class="column-4-8">
+            <div class="column-6-8">
                 <h3>Data Split: partioning a data set.</h3>
             </div>
             <div class="column-6-8 divider-bottom column-align">
-                <p>In order to estimate the ability of your model to generalize, you will split your dataset into three (or sometimes more) sets: training, validation (dev) and test. Your model is able to generalize if it was trained on the training set, tuned on the validation set, and still performs well on the test set.</p>
+                <p>In order to estimate the ability of your model to generalize, you will split your dataset into three (or sometimes more) sets: <span class="marginanchor" id="margin-3-anchor" data-number="3" data-align="middle">training</span>, <span class="marginanchor" id="margin-4-anchor" data-number="4" data-align="middle">validation (dev)</span> and <span class="marginanchor" id="margin-5-anchor" data-number="5" data-align="middle">test</span>. Your model is able to generalize if it was trained on the training set, tuned on the validation set, and still performs well on the test set.</p>
                 <table>
                   <tr>
                     <th>Train Accuracy</th>
@@ -144,18 +146,35 @@
                 </table>
                 <p>Let’s delve into the methods to help get the test set performance closer to the dev and train set performances as in the third row of the table above.</p>
             </div>
+            <div class="column-2-8 column-align margin">
+                <div class="marginbody" id="margin-3-body" data-number="3">
+                    <p class="caption">The data used to train your model.</p>
+                </div>
+                <div class="marginbody" id="margin-4-body" data-number="4">
+                    <p class="caption">The data used to tune the hyperparameters of your model.</p>
+                </div>
+                <div class="marginbody" id="margin-5-body" data-number="5">
+                    <p class="caption">The data used to evaluate the performance of your model in real life.</p>
+                </div>
+            </div>
         </div>
         <div class="container">
             <div class="column-6-8 index2-target column-align">
                 <h3>II&emsp; Early stopping</h3>
-                <p>The easiest but widely used method is called early stopping. During the iterative optimization process of finding the correct parameters for your model, if you evaluate your model’s error on the training and validation set, you might see such curves:</p>
+                <p>The easiest but widely used method is called early stopping. During the iterative <span class="marginanchor" id="margin-6-anchor" data-number="6" data-align="middle">optimization</span> process of finding the correct parameters for your model, if you evaluate your model’s error on the training and validation set, you might see such curves:</p>
                 <img src="img/curves.png">
-                <p>Based on this observation, you can state that after the 30,000th epoch, your model starts overfitting to the training set. Early stopping means “saving the model’s parameters at the 30,000th epoch”. The saved model is the best performing model on the dev set and will likely <span class="marginanchor" id="margin-2-anchor" data-number="2" data-align="middle">generalize</span> better to the test set.</p>
-                <p class="inline-caption"><b>Example:</b> Consider a “day vs. night image classification”. Rather than understanding the inherent features of the data such as the brightness, the colors or the presence of a blue sky, your model learned mapping between training images and training labels by heart. You do not want this.</p>
+                <p>Based on this observation, you can state that after the 30,000th <span class="marginanchor" id="margin-7-anchor" data-number="7" data-align="middle">epoch</span>, your model starts overfitting to the training set. Early stopping means “saving the model’s parameters at the 30,000th epoch”. The saved model is the best performing model on the dev set and will likely generalize better to the test set.</p>
+                <p class="inline-caption"><b>Example:</b> Consider a “day vs. night image classification”. Rather than understanding the <span class="marginanchor" id="margin-8-anchor" data-number="8" data-align="middle">inherent features</span> of the data such as the brightness, the colors or the presence of a blue sky, your model learned mapping between training images and training labels by heart. You do not want this.</p>
             </div>
             <div class="column-2-8 column-align margin">
-                <div class="marginbody" id="margin-2-body" data-number="2">
-                    <p class="caption">Consider a concrete example such as “day vs. night" image classifier. Rather than understanding the inherent features of the data such as the brightness, the colors or the presence of a blue sky, your model learned mapping between training images and training labels by heart. You do not want this.</p>
+                <div class="marginbody" id="margin-6-body" data-number="6">
+                    <p class="caption">Examples of optimizations are Stochastic Gradient Descent, Adam, Momentum or RMS Prop.</p>
+                </div>
+                <div class="marginbody" id="margin-7-body" data-number="7">
+                    <p class="caption">An epoch is one optimization pass over the entire dataset. In full-batch gradient descent, one epoch is one iteration, but in stochastic gradient descent, one epoch is multiple iterations.</p>
+                </div>
+                <div class="marginbody" id="margin-8-body" data-number="8">
+                    <p class="caption">What are the hints telling us that the image was taken during the day or the night?</p>
                 </div>
             </div>
             <div class="column-6-8">
@@ -172,7 +191,7 @@
 
         <div class="container">
             <div class="column-6-8 index3-target">
-                <h3>III&emsp; L2 and L1 regularizations</h3>
+                <h3>III&emsp; L1 and L2 regularizations</h3>
                 <p>In order to avoid overfitting the training set, one can try to reduce the complexity of the model by removing layers, and consequently decreasing the number of parameters. As shown by the work of <a href="https://papers.nips.cc/paper/563-a-simple-weight-decay-can-improve-generalization.pdf" target="_blank">Krogh and Hertz (1992)</a>, another way to constrain a network and lower its complexity is to:</p>
                 <p class="inline-caption">Limit the growth of the weights through some kind of weight decay.</p>
                 <p>The goal is to prevent the weights from growing too large, unless it is really necessary.</p>
@@ -191,24 +210,24 @@
 	                var render = katex.renderToString("w = w - \\alpha \\frac{\\partial J_{regularized}}{\\partial w} = w - \\alpha ( \\frac{\\partial J_{cross-entropy}}{\\partial w} + \\lambda \\frac{\\partial J_{L1 or L2}}{\\partial w} )", { displayMode: true });
 	                document.writeln(render);
                 </script>
-                <p>For <span class="marginanchor" id="margin-3-anchor" data-number="3" data-align="middle">L2 regularization</span>, this would lead to the update rule:</p>
-                <script>
-	                var render = katex.renderToString("w = w - \\underbrace{\\alpha \\lambda w}_\\text{L2 penalty} - \\underbrace{\\alpha \\frac{\\partial J_{cross-entropy}}{\\partial w}}_\\text{Gradient penalty}", { displayMode: true });
-	                document.writeln(render);
-                </script>
                 <p>For <span class="marginanchor" id="margin-4-anchor" data-number="4" data-align="middle">L1 regularization</span>, this would lead to the update rule:</p>
             	<script>
 	                var render = katex.renderToString("w = w - \\underbrace{\\alpha \\lambda sign(w)}_\\text{L1 penalty} - \\underbrace{\\alpha \\frac{\\partial J_{cross-entropy}}{\\partial w}}_\\text{Gradient penalty}", { displayMode: true });
 	                document.writeln(render);
                 </script>
-                <p>As you can see, with L2 and L1 regularization, at every step, the weight is pushed to a slightly lower value because <script> document.write(katex.renderToString('\\alpha \\lambda << 1'))</script>, causing “weight decay”.</p>
+                <p>For <span class="marginanchor" id="margin-3-anchor" data-number="3" data-align="middle">L2 regularization</span>, this would lead to the update rule:</p>
+                <script>
+                    var render = katex.renderToString("w = w - \\underbrace{\\alpha \\lambda w}_\\text{L2 penalty} - \\underbrace{\\alpha \\frac{\\partial J_{cross-entropy}}{\\partial w}}_\\text{Gradient penalty}", { displayMode: true });
+                    document.writeln(render);
+                </script>
+                <p>As you can see, with L1 and L2 regularization, at every step, the weight is pushed to a slightly lower value because <script> document.write(katex.renderToString('\\alpha \\lambda << 1'))</script>, causing “weight decay”.</p>
             </div>
             <div class="column-2-8 column-align margin">
-                <div class="marginbody" id="margin-3-body" data-number="3">
-                    <p class="caption">In statistics, L2 regularization is sometimes refered to as ridge regression.</p>
-                </div>
                 <div class="marginbody" id="margin-4-body" data-number="4">
                     <p class="caption">In statistics, L1 regularization is sometimes refered to as Lasso regression.</p>
+                </div>
+                <div class="marginbody" id="margin-3-body" data-number="3">
+                    <p class="caption">In statistics, L2 regularization is sometimes refered to as ridge regression.</p>
                 </div>
             </div>
             <div class="column-6-8">
