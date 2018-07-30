@@ -391,11 +391,11 @@
             <div class="column-6-8 divider-bottom index4-target">
                 <h3>IV&emsp; Dropout regularization</h3>
                 <p>Although L1 and L2 regularization are simple techniques to reducing overfitting, there exist other methods, such as dropout regularization, that have been shown to be more effective at regularizing larger and more complex networks. If you had unlimited computational power, you could improve generalization by averaging the predictions of several different neural networks trained on the same task. The combination of these models will likely perform better than a single neural network trained on this task. However, with deep neural networks, training various architectures is expensive because:</p>
-             	<ol>
+             	<ul>
              		<li>Tuning the hyperparameters is time consuming.</li>
              		<li>Training the networks requires a lot of computations.</li>
              		<li>You need a large amount of data to train the models on different subsets of the data.</li>
-             	</ol>
+             	</ul>
                 <p>Dropout is a regularization technique, introduced in <a href="http://jmlr.org/papers/volume15/srivastava14a.old/srivastava14a.pdf" target="_blank">Srivastava et al. (2014)</a>, that allows you to combine many different architectures efficiently by randomly dropping some of the neurons of your network during training.</p>
             	<video width="70%" height="auto" style="margin:0% 15%" controls>
 					<source src="img/dropout1.mp4" type="video/mp4">
