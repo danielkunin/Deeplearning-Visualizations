@@ -295,8 +295,20 @@
 	        <div class="column-6-8">
 	            <p>As you can see, L1 and L2 regularizations have a dramatic effect on the weights values:</p>
 	            <ul>
-                    <li>For the L2 regularization: the weight values decrease following a normal distribution that becomes more peaked throughout training.</li>
-                    <li>For the L1 regularization: many of the weights become null. This is called “sparsity of the weights.” Because the weight penalty is independent of the weight values, weights with value 0.001 are penalized as much as weights with value 1000. The value of the penalty is <script> document.write(katex.renderToString('\\alpha\\lambda'))</script> (generally very small). The penalty constrains the subset of weights that are less useful to the model to be equal to 0. For example, you could effectively end up with 200 non-zero weights out of 1,000, which means that 800 weights were less useful for learning the task.</li>
+                    <li>For the L1 regularization:
+                        <ul>
+                            <li>“Too small” <script> document.write(katex.renderToString('\\lambda'))</script> constant: there’s no apparent effect.</li>
+                            <li>“Appropriate” <script> document.write(katex.renderToString('\\lambda'))</script> constant: many of the weights become zeros. This is called “sparsity of the weights”. Because the weight penalty is independent of the weight values, weights with value 0.001 are penalized just as much as weights with value 1000. The value of the penalty is <script> document.write(katex.renderToString('\\alpha\\lambda'))</script> (generally very small). It constrains the subset of weights that are “less useful to the model” to be equal to 0. For example, you could effectively end up with 200 non-zero weights out of 1,000, which means that 800 weights were less useful for learning the task.</li>
+                            <li>“Too large" <script> document.write(katex.renderToString('\\lambda'))</script> constant: You can observe a plateau, which means that the weights uniformly take values around zero. In fact, because <script> document.write(katex.renderToString('\\lambda'))</script> is large, the penalty <script> document.write(katex.renderToString('-\\alpha\\lambda sign(w)'))</script> is much higher than the gradient <script> document.write(katex.renderToString('\\alpha \\frac{\\partial J_{cross-entropy}}{\\partial w}'))</script>. Thus, at every update, <script> document.write(katex.renderToString('w'))</script> is pushed from <script> document.write(katex.renderToString('\\approx -\\alpha\\lambda sign(w)'))</script> in the opposite direction of its sign. For instance, if <script> document.write(katex.renderToString('w'))</script> is around zero, but slightly positive, then it will be pushed towards <script> document.write(katex.renderToString('-\\alpha\\lambda'))</script> when the penalty is applied. Hence, the plateau’s width should be <script> document.write(katex.renderToString('2 \\times \\alpha\\lambda'))</script>.</li>
+                        </ul>
+                    </li>
+                    <li>For the L2 regularization:
+                        <ul>
+                            <li>“Too small” <script> document.write(katex.renderToString('\\lambda'))</script> constant: there’s no apparent effect.</li>
+                            <li>“Appropriate” <script> document.write(katex.renderToString('\\lambda'))</script> constant: the weight values decrease following a normal distribution that becomes more and more peaked throughout training.</li>
+                            <li>“Too large” <script> document.write(katex.renderToString('\\lambda'))</script> constant: All the weights are rapidly collapsing to zeros, and the model obviously underfits because the weight values are too constrained.</li>
+                        </ul>
+                    </li>
                     <li>The weight sparsity effect caused by L1 regularization makes your model more compact in theory, and leads to storage-efficient compact models that are commonly used in smart mobile devices.</li>
                 </ul>
 	        </div>
