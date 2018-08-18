@@ -1,0 +1,12 @@
+.function {
+	stroke: #000;
+	stroke-width: 3;
+}
+
+#true {
+	stroke: #0000ff;
+}
+
+#estimate {
+	stroke: #ff0000;
+}

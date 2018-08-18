@@ -70,6 +70,55 @@
     <div class="main">
         <div class="full-container" id="landscape">
             <div class="viz-column-3-8">
+                <h3>1. Choose Function</h3>
+                <p>Choose the intercept and slope for the "true" function that we will try to learn.</p>
+                Intercept: <input id="regression_b0" type="number" name="regression_b" value="0" min="-4" max="4">
+                Slope: <input id="regression_b1" type="number" name="regression_b" value="1" min="-4" max="4">
+                <svg id="regression_plot" width=400 height=400></svg>
+            </div>
+            <div class="viz-column-3-8">
+                <h3>2. Loss Landscape</h3>
+                <p>Sample a training set and explore the loss landscape.</p>
+                Training Set Size: <input type="number" name="regression_tsize" value="100" min="1" max="1000">
+                <button class="button"  id="regression_sample">Sample</button>
+                <svg id="regression_loss" width=400 height=400></svg>
+            </div>
+            <div class="viz-column-2-8">
+                <h3>3. Select Hyperparameters</h3>
+                <p></p>
+                <div>
+                    <input type="range" value="-3" min="-8" max="0" step="any" id="regression_lrate">
+                    </br>
+                    <label>Learning Rate = <span id="regression_lrate_val">0.001</span></label>
+                    </br></br>
+                    <input type="range" value="1" min="0" max="1" step="any" id="regression_ldecay">
+                    </br>
+                    <label>Learning Rate Decay = <span id="regression_ldecay_val">1</span></label>
+                    </br></br>
+                    <input type="range" value="1" min="1" max="100" step="any" id="regression_bsize">
+                    </br>
+                    <label>Batch Size = <span id="regression_bsize_val">1</span></label>
+                </div>
+                <button class="button-transport" id="regression_reset" title="reset">
+                    <img src="img/reset.png">
+                </button>
+                <button class="button-transport" id="regression_train" title="start">
+                    <img src="img/play.png">
+                </button>
+                <button class="button-transport" id="regression_stop" title="stop">
+                    <img src="img/pause.png">
+                </button>
+                <button class="button-transport" id="regression_step" title="step">
+                    <img src="img/fastforward.png">
+                </button>
+                <svg></svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="full-container" id="landscape">
+            <div class="viz-column-3-8">
                 <h3>1. Choose loss</h3>
                 <div class="lossFunctions">
                     <p>Select an <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization">artificial landscape</a> <script>document.write(katex.renderToString('f(x,y)'))</script>.</p>
@@ -263,6 +312,13 @@
 <script src="js/landscape/optimizer.js"></script>
 <!-- Visualization Setup Code -->
 <script src="js/landscape/viz.js"></script>
+
+<!-- REGRESSION -->
+<link rel="stylesheet" href="css/regression.css">
+<script src="js/regression/line.js"></script>
+<script src="js/regression/loss.js"></script>
+<script src="js/regression/optimizer.js"></script>
+<script src="js/regression/viz.js"></script>
 
 <!-- CPPN -->
 <script src="js/cppn.js"></script>
