@@ -81,7 +81,7 @@
                 <p>Sample a training set and explore the loss landscape.</p>
                 Training Set Size: <input type="number" name="regression_tsize" value="100" min="1" max="1000">
                 <button class="button"  id="regression_sample">Sample</button>
-                <svg id="regression_loss" width=400 height=400></svg>
+                <svg id="regression_landscape" width=400 height=400></svg>
             </div>
             <div class="viz-column-2-8">
                 <h3>3. Select Hyperparameters</h3>
@@ -111,7 +111,7 @@
                 <button class="button-transport" id="regression_step" title="step">
                     <img src="img/fastforward.png">
                 </button>
-                <svg></svg>
+                <svg id="regression_loss" width=300 height=200></svg>
             </div>
         </div>
     </div>

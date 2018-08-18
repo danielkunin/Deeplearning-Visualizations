@@ -1,6 +1,6 @@
 var lineObject = new line(d3.select("#regression_plot"));
-var lossObject = new regression_loss(d3.select("#regression_loss"));
-// var optObject = new optimizer(lossObject, d3.select("#loss"));
+var lossObject = new regression_loss(d3.select("#regression_landscape"));
+var optObject = new regression_optimizer(lossObject, d3.select("#regression_loss"));
 lineObject.plot(0);
 
 

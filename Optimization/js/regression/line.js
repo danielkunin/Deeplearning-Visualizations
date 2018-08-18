@@ -34,7 +34,7 @@ class line {
     this.points = [];
     for (var i = 0; i < n; i++) {
       var point_x = uniform(this.x.domain()[0], this.x.domain()[1]),
-          point_y = this.lines[0].b0 + this.lines[0].b1 * point_x + normal(0, 10);
+          point_y = this.lines[0].b0 + this.lines[0].b1 * point_x + normal(0, 1);
       this.points.push({'x': point_x, 'y': point_y});
     }
     return this.points;

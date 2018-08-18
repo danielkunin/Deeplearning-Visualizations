@@ -1,6 +1,6 @@
 .function {
 	stroke: #000;
-	stroke-width: 3;
+	stroke-width: 2;
 }
 
 #true {
@@ -9,4 +9,10 @@
 
 #estimate {
 	stroke: #ff0000;
+}
+
+.trajectory {
+	stroke: #000;
+	stroke-width: 2;
+	fill: none;
 }
