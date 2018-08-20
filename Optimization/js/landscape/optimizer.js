@@ -1,6 +1,6 @@
 class optimizer {
 
-  constructor(loss, svg) {
+  constructor(line, loss, svg) {
 
   	// global parameters
     this.lrate = 0;
@@ -17,6 +17,7 @@ class optimizer {
     this.costs = [];
 
     // loss landscape
+    this.line = line;
     this.loss = loss;
 
     // cost plot

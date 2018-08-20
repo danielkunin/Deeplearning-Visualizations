@@ -21,12 +21,22 @@ class regression_loss {
     this.setup();
   }
 
-  value(b0, b1, train) {
-    var loss = 0;
-    for (var i = 0; i < train.length; i++) {
-      loss += Math.pow(train[i].y - b0 + train[i].x * b1, 2)
+  gradient(b0, b1, X) {
+    var db0 = 0,
+        db1 = 0;
+    for (var i = 0; i < X.length; i++) {
+      db0 += -2 * (X[i].y - (b0 + X[i].x * b1));
+      db1 += -2 * (X[i].y - (b0 + X[i].x * b1)) * X[i].x;
     }
-    return loss / train.length;
+    return {'db0': db0 / X.length, 'db1': db1 / X.length};
+  }
+
+  value(b0, b1, X) {
+    var loss = 0;
+    for (var i = 0; i < X.length; i++) {
+      loss += Math.pow(X[i].y - (b0 + X[i].x * b1), 2)
+    }
+    return loss / X.length;
   }
 
   plot(train, time) {
@@ -41,7 +51,7 @@ class regression_loss {
       for (var i = 0.5; i < this.n; ++i, ++k) {
 
         var b0 = i / this.n * (x_range[1] - x_range[0]) + x_range[0],
-            b1 = j / this.m * (y_range[1] - y_range[0]) + y_range[0];
+            b1 = (1 - j / this.m) * (y_range[1] - y_range[0]) + y_range[0];
 
         values[k] = this.value(b0, b1, train);
       }

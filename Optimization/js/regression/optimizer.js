@@ -1,20 +1,22 @@
 class regression_optimizer {
 
-  constructor(loss, svg) {
+  constructor(line, loss, svg) {
 
   	// global parameters
-    this.lrate = 0;
+    this.lrate = 1e-2;
     this.ldecay = 1;
     this.bsize = 1;
+    this.iter = 0;
     this.epoch = 0;
 
     // location and cost data
     this.training = false;
-    this.initial = {'b0': 0, 'b1': 0};
+    this.pos = {'b0': 0, 'b1': 0};
     this.path = [];
     this.cost = [];
 
     // loss landscape
+    this.line = line;
     this.loss = loss;
 
     // cost plot
@@ -107,7 +109,7 @@ class regression_optimizer {
     //   x = add(x, scale(dx, -config['lrate']));
     //   return [x, config];
     // }
-    
+
   	// update position and configuration
   	this.pos[i] = update[0];
   	this.config[i] = update[1];
@@ -126,42 +128,44 @@ class regression_optimizer {
     }
   }
 
-  train() {
-
-  	// initialize positions and configurations
-  	this.rule.forEach((e,i) => {
-  		this.config.push(Object.assign({}, parameters));
-  		this.pos.push(this.initial);
-  		this.paths.push([]);
-		  this.costs.push([]);
-  	});
+  train(X) {
 
     // iterate positions and configurations
     this.training = d3.timer(() => {
 
-      var done = true;
-      this.epoch += 1;
-      this.rule.forEach((e,i) => {
+      // var done = true;
 
-      	var config = this.config[i],
-      		pos = this.pos[i],
-      		loss = this.loss.value(pos.x, pos.y);
+      this.path.push({'b0' : this.pos.b0, 'b1' : this.pos.b1});
+      this.cost.push(loss);
 
-      	config['t'] = this.epoch;
-      	config["lrate"] = learningRates[e];
-      	var dx = this.step(pos,config,e,i);
-
-      	if (inrange(pos,[-1e4,1e4],[-1e4,1e4]) && isFinite(loss)) {
-      		this.paths[i].push(pos);
-      		this.costs[i].push(loss);
-      		done = done && (l2norm(dx) < 1e-1);
-      	} else {
-      		done = true;
-      	}
-      });
-      this.plotCost();
+      // this.plotCost();
       this.plotPath();
-      if (done) {
+      this.line.estimate(this.pos.b0, this.pos.b1);
+      this.line.plot(0);
+
+      var data = X.slice(this.iter, this.iter + this.bsize)
+
+      var loss = this.loss.value(this.pos.b0, this.pos.b1, data),
+          grad = this.loss.gradient(this.pos.b0, this.pos.b1, data);
+
+    	this.pos.b0 -= this.lrate * grad.db0;
+      this.pos.b1 -= this.lrate * grad.db1;
+
+      this.epoch = this.epoch + Math.floor((this.iter + this.bsize) / X.length);
+      this.iter = (this.iter + this.bsize) % X.length;
+
+
+    	// if (inrange(pos,[-1e4,1e4],[-1e4,1e4]) && isFinite(loss)) {
+    	// 	this.paths[i].push(pos);
+    	// 	this.costs[i].push(loss);
+    	// 	done = done && (l2norm(dx) < 1e-1);
+    	// } else {
+    	// 	done = true;
+    	// }
+
+      // this.plotCost();
+      // this.plotPath();
+      if (this.epoch > 10) {
       	this.training.stop();
       }
 
@@ -212,16 +216,19 @@ class regression_optimizer {
 
   	// line function
   	var line = d3.line()
-  	  .x((d) => { return this.loss.x(d.x); })
-  	  .y((d) => { return this.loss.y(d.y); })
+  	  .x((d) => { return this.loss.x(d.b0); })
+  	  .y((d) => { return this.loss.y(d.b1); })
   	  .curve(d3.curveBasis);
 
     // bind
     var path = this.loss.svg.selectAll("path.trajectory")
-      .data(this.paths);
+      .data([this.path]);
 
     // add
     path.enter().append("path")
+      .attr("stroke", "black")
+      .attr("stroke-width", "2px")
+      .attr("fill", "none")
       .attr("class", "trajectory")
       .attr("d", line);
 
