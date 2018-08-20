@@ -5,7 +5,7 @@ class regression_optimizer {
   	// global parameters
     this.lrate = 1e-2;
     this.ldecay = 1;
-    this.bsize = 1;
+    this.bsize = 10;
     this.iter = 0;
     this.epoch = 0;
 
@@ -140,12 +140,13 @@ class regression_optimizer {
 
       // this.plotCost();
       this.plotPath();
+
       this.line.estimate(this.pos.b0, this.pos.b1);
       this.line.plot(0);
 
       var data = X.slice(this.iter, this.iter + this.bsize)
 
-      var loss = this.loss.value(this.pos.b0, this.pos.b1, data),
+      var loss = this.loss.value(this.pos.b0, this.pos.b1, X),
           grad = this.loss.gradient(this.pos.b0, this.pos.b1, data);
 
     	this.pos.b0 -= this.lrate * grad.db0;
