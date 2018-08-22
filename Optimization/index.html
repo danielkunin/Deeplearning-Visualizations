@@ -69,19 +69,19 @@
 
     <div class="main">
         <div class="full-container" id="landscape">
-            <div class="viz-column-3-8">
+            <div class="viz-column-2-8">
                 <h3>1. Choose Function</h3>
                 <p>Choose the intercept and slope for the "true" function that we will try to learn.</p>
                 Intercept: <input id="regression_b0" type="number" name="regression_b" value="0" min="-4" max="4">
                 Slope: <input id="regression_b1" type="number" name="regression_b" value="1" min="-4" max="4">
-                <svg id="regression_plot" width=400 height=400></svg>
+                <svg id="regression_plot" width=300 height=300></svg>
             </div>
-            <div class="viz-column-3-8">
+            <div class="viz-column-4-8">
                 <h3>2. Loss Landscape</h3>
                 <p>Sample a training set and explore the loss landscape.</p>
                 Training Set Size: <input type="number" name="regression_tsize" value="100" min="1" max="1000">
                 <button class="button"  id="regression_sample">Sample</button>
-                <svg id="regression_landscape" width=400 height=400></svg>
+                <svg id="regression_landscape" width=450 height=450></svg>
             </div>
             <div class="viz-column-2-8">
                 <h3>3. Select Hyperparameters</h3>
