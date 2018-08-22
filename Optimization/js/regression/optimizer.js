@@ -11,8 +11,8 @@ class regression_optimizer {
 
     // location and cost data
     this.training = false;
-    this.pos = {'b0': 0, 'b1': 0};
-    this.path = [];
+    this.initial = {'b0': 0, 'b1': 0};
+    this.path = [this.initial];
     this.cost = [];
 
     // loss landscape
@@ -135,25 +135,27 @@ class regression_optimizer {
 
       // var done = true;
 
-      this.path.push({'b0' : this.pos.b0, 'b1' : this.pos.b1});
-      this.cost.push(loss);
+      var data = X.slice(this.iter, this.iter + this.bsize),
+          b0 = this.path[this.path.length - 1].b0,
+          b1 = this.path[this.path.length - 1].b1;
 
-      // this.plotCost();
-      this.plotPath();
+      var loss = this.loss.value(b0, b1, X),
+          grad = this.loss.gradient(b0, b1, data);
 
-      this.line.estimate(this.pos.b0, this.pos.b1);
-      this.line.plot(0);
-
-      var data = X.slice(this.iter, this.iter + this.bsize)
-
-      var loss = this.loss.value(this.pos.b0, this.pos.b1, X),
-          grad = this.loss.gradient(this.pos.b0, this.pos.b1, data);
-
-    	this.pos.b0 -= this.lrate * grad.db0;
-      this.pos.b1 -= this.lrate * grad.db1;
+    	b0 -= this.lrate * grad.db0;
+      b1 -= this.lrate * grad.db1;
 
       this.epoch = this.epoch + Math.floor((this.iter + this.bsize) / X.length);
       this.iter = (this.iter + this.bsize) % X.length;
+
+      this.path.push({'b0' : b0, 'b1' : b1});
+      this.cost.push(loss);
+
+      this.plotCost();
+      this.plotPath();
+
+      this.line.estimate(b0, b1);
+      this.line.plot(0);
 
 
     	// if (inrange(pos,[-1e4,1e4],[-1e4,1e4]) && isFinite(loss)) {
@@ -178,7 +180,7 @@ class regression_optimizer {
     // line function
   	var line = d3.line()
   	  .x((d, i) => { return this.x(i); })
-  	  .y((d, i) => { return isFinite(d) ? this.y(d) : this.y.range()[1]; })
+  	  .y((d, i) => { return this.y(d); })
   	  .curve(d3.curveBasis);
 
   	// update y axis
@@ -186,25 +188,25 @@ class regression_optimizer {
   	// this.costs.forEach((cost) => {
   	// 	maxLoss = Math.max(maxLoss, d3.max(cost, function(d) { return isFinite(d) ? d : 0; }));
   	// })
-    var maxLoss = this.costs.length != 0 ? this.costs[0][0] : 0;
+    var maxLoss = this.cost.length != 0 ? this.cost[0] : 0;
   	this.y.domain([0,maxLoss])
   	this.yaxis.call(d3.axisLeft(this.y).ticks(3, "s"));
 
   	// update x axis
-  	this.x.domain([0, this.epoch]);
+  	this.x.domain([0, this.cost.length]);
   	this.xaxis.call(d3.axisBottom(this.x).ticks(3, "s"));
 
   	// bind
     var path = this.svg.selectAll("path.loss")
-      .data(this.costs);
+      .data([this.cost]);
 
     // add
     path.enter().append("path")
-      .attr("class", (d, i) => { return "loss " + this.rule[i]; });
+      .attr("class", "loss");
 
     // update
     path.attr("d", line)
-      .attr("stroke", (d, i) => { return this.color(this.rule[i]); })
+      .attr("stroke", "black")
       .attr("stroke-width", "2px")
       .attr("fill", "none");
 
