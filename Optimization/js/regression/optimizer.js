@@ -3,9 +3,9 @@ class regression_optimizer {
   constructor(line, loss, svg) {
 
   	// global parameters
-    this.lrate = 1e-2;
-    this.ldecay = 1;
-    this.bsize = 10;
+    this.lrate = 1e-3;
+    this.ldecay = 0;
+    this.bsize = 1;
     this.iter = 0;
     this.epoch = 0;
 
@@ -44,77 +44,21 @@ class regression_optimizer {
 
     // reset parameters
     this.epoch = 0;
-    this.path = [];
+    this.iter = 0;
+    this.path = [this.initial];
     this.cost = [];
 
     // update plots
     this.plotPath();
     this.plotCost();
-  }
 
-  init() {
-
-    var xscale = this.loss.x;
-    var yscale = this.loss.y;
-
-
-  	var x = Math.random() * (xscale.domain()[1] - xscale.domain()[0]) + xscale.domain()[0],
-  		  y = Math.random() * (yscale.domain()[1] - yscale.domain()[0]) + yscale.domain()[0];
-
-    $("input[name='x']").val(x);
-    $("input[name='y']").val(y);
-
-  	this.initial = point(x, y);
-
-  	var circle = this.loss.svg.selectAll("circle")
-  	  .data([this.initial]);
-
-    circle.enter().append("circle")
-      .attr("cx", (d) => { return this.loss.x(d.x); })
-      .attr("cy", (d) => { return this.loss.y(d.y); })
-      .attr("r", 4)
-      .style("fill", "black")
-      .style("stroke-width", 2)
-      .style("stroke", "white");
-
-    circle.attr("cx", (d) => { return this.loss.x(d.x); })
-      .attr("cy", (d) => { return this.loss.y(d.y); })
-      .raise();
-
-    circle.exit().remove();
-
+    this.line.estimate(0, 0);
+    this.line.plot(0);
   }
 
 
-  update() {
-	 // update parameter configurations
-    // update color scale
-    this.color.domain(this.rule);
-
-    // update legend
-    var logLegend = this.legend
-      .scale(this.color);
-    this.svg.select(".legend").call(logLegend);
-  }
-
-
-  step(pos,config,rule,i) {
-
-  	// get gradient and apply update
-  	var dx = this.loss.gradient(pos.x, pos.y),
-  		update = algorithms[rule](pos, dx, config);
-
-    // // Stochastic Gradient Descent
-    // function sgd(x, dx, config) {
-    //   x = add(x, scale(dx, -config['lrate']));
-    //   return [x, config];
-    // }
-
-  	// update position and configuration
-  	this.pos[i] = update[0];
-  	this.config[i] = update[1];
-
-    return dx;
+  step() {
+  
   }
 
   stop() {
@@ -122,6 +66,7 @@ class regression_optimizer {
       this.training.stop();
     }
   }
+
   start() {
     if (this.training) {
       this.training.start();
@@ -142,8 +87,10 @@ class regression_optimizer {
       var loss = this.loss.value(b0, b1, X),
           grad = this.loss.gradient(b0, b1, data);
 
-    	b0 -= this.lrate * grad.db0;
-      b1 -= this.lrate * grad.db1;
+      var lrate = 1 / (1 + this.ldecay * this.epoch) * this.lrate;
+
+    	b0 -= lrate * grad.db0;
+      b1 -= lrate * grad.db1;
 
       this.epoch = this.epoch + Math.floor((this.iter + this.bsize) / X.length);
       this.iter = (this.iter + this.bsize) % X.length;
@@ -246,7 +193,6 @@ class regression_optimizer {
 
   setup() {
 
-  	// add axis
     this.xaxis = this.svg.append("g")
       .attr("class", "axis axis--x")
       .attr("transform", "translate(0," + this.height + ")")
@@ -269,7 +215,6 @@ class regression_optimizer {
       .attr("transform", "translate(" + -this.pad + "," + this.height / 2 + ")rotate(-90)")
       .attr("alignment-baseline","baseline");  
 
-    // add legend
     this.svg.append("g")
       .attr("class", "legend")
       .attr("transform", "translate(" + (this.width + this.pad / 2) + ",0)"); 
