@@ -1,59 +1,59 @@
-var lossObject = new loss('himmelblaus', 0, 0, d3.select("#contour"));
-var optObject = new optimizer(lossObject, d3.select("#loss"));
-lossObject.plot();
+var lossLandscape = new loss('himmelblaus', 0, 0, d3.select("#contour"));
+var optLandscape = new optimizer(lossLandscape, d3.select("#loss"));
+lossLandscape.plot();
 
 $("input[name='loss']").on("change", function () {
-	optObject.reset();
-	lossObject.func = this.value;
-    lossObject.plot(0);
+	optLandscape.reset();
+	lossLandscape.func = this.value;
+    lossLandscape.plot(0);
 });
 
 $("input[name='reg']").on("change", function () {
-	optObject.reset();
-	lossObject.alpha = this.value;
-    lossObject.plot(0);
+	optLandscape.reset();
+	lossLandscape.alpha = this.value;
+    lossLandscape.plot(0);
 });
 
 $("#lambda").on("input", function () {
-	optObject.reset();
+	optLandscape.reset();
 	$("#lambda_val").html(d3.format(".2")(this.value));
-	lossObject.lambda = this.value;
-    lossObject.plot(0);
+	lossLandscape.lambda = this.value;
+    lossLandscape.plot(0);
 });
 
 $("input[name='opt']").on("change", function () {
-	optObject.reset();
-	var index = optObject.rule.indexOf(this.value);
+	optLandscape.reset();
+	var index = optLandscape.rule.indexOf(this.value);
 	if (index == -1) {
-		optObject.rule.push(this.value);
+		optLandscape.rule.push(this.value);
 	} else {
-		optObject.rule.splice(index, 1);
+		optLandscape.rule.splice(index, 1);
 	}
-	optObject.update();
+	optLandscape.update();
 });
 
 $("#lrate").on("input", function () {
-	optObject.reset();
+	optLandscape.reset();
 	$("#lrate_val").html(d3.format(".2")(10**this.value));
-	optObject.lrate = 10**this.value;
+	optLandscape.lrate = 10**this.value;
 });
 
 $("#ldecay").on("input", function () {
-	optObject.reset();
+	optLandscape.reset();
 	$("#ldecay_val").html(d3.format(".2")(this.value));
-	optObject.ldecay = this.value;
+	optLandscape.ldecay = this.value;
 });
 
 $("#init").on("click", function () {
-	optObject.reset();
-	optObject.init();
+	optLandscape.reset();
+	optLandscape.init();
 });
 
 $("#train").on("click", function () {
-	optObject.reset();
-	optObject.train();
+	optLandscape.reset();
+	optLandscape.train();
 });
 
 $("#reset").on("click", function () {
-	optObject.reset();
+	optLandscape.reset();
 });

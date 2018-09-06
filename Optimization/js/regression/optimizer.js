@@ -171,7 +171,7 @@ class regression_optimizer {
   	  .curve(d3.curveBasis);
 
     // bind
-    var path = this.loss.svg.selectAll("path.trajectory")
+    var path = this.loss.svg.selectAll("path.trajectory_regression")
       .data([this.path]);
 
     // add
@@ -179,7 +179,7 @@ class regression_optimizer {
       .attr("stroke", "black")
       .attr("stroke-width", "2px")
       .attr("fill", "none")
-      .attr("class", "trajectory")
+      .attr("class", "trajectory_regression")
       .attr("d", line);
 
     // update
