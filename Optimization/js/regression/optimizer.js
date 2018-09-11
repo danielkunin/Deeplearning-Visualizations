@@ -2,6 +2,10 @@ class regression_optimizer {
 
   constructor(line, loss, svg) {
 
+  	// loss landscape
+    this.line = line;
+    this.loss = loss;
+
   	// global parameters
     this.lrate = 1e-3;
     this.ldecay = 0;
@@ -11,13 +15,11 @@ class regression_optimizer {
 
     // location and cost data
     this.training = false;
-    this.initial = {'b0': 0, 'b1': 0};
-    this.path = [this.initial];
-    this.cost = [];
-
-    // loss landscape
-    this.line = line;
-    this.loss = loss;
+    this.initial = $.extend({}, this.line.net_coef);
+    this.current = $.extend({}, this.line.net_coef);
+    this.actual = $.extend({}, this.line.obj_coef);
+    this.path = [];
+    this.cost = [[], []];
 
     // cost plot
     this.pad = 30;
@@ -45,21 +47,20 @@ class regression_optimizer {
     // reset parameters
     this.epoch = 0;
     this.iter = 0;
-    this.path = [this.initial];
-    this.cost = [];
+
+
+    this.path = [];
+    this.cost = [[], []];
+
 
     // update plots
     this.plotPath();
     this.plotCost();
 
-    this.line.estimate(0, 0);
+    this.line.network(this.initial.b0, this.initial.b1);
     this.line.plot(0);
   }
 
-
-  step() {
-  
-  }
 
   stop() {
     if (this.training) {
@@ -67,57 +68,41 @@ class regression_optimizer {
     }
   }
 
-  start() {
-    if (this.training) {
-      this.training.start();
-    }
-  }
+  start(X) {
 
-  train(X) {
+  	this.initial = $.extend({}, this.line.net_coef);
+    this.current = $.extend({}, this.line.net_coef);
+    this.actual = $.extend({}, this.line.obj_coef);
 
     // iterate positions and configurations
     this.training = d3.timer(() => {
 
-      // var done = true;
-
       var data = X.slice(this.iter, this.iter + this.bsize),
-          b0 = this.path[this.path.length - 1].b0,
-          b1 = this.path[this.path.length - 1].b1;
+          b0 = this.current.b0,
+          b1 = this.current.b1;
 
       var loss = this.loss.value(b0, b1, X),
           grad = this.loss.gradient(b0, b1, data);
 
       var lrate = 1 / (1 + this.ldecay * this.epoch) * this.lrate;
 
-    	b0 -= lrate * grad.db0;
+	  b0 -= lrate * grad.db0;
       b1 -= lrate * grad.db1;
 
       this.epoch = this.epoch + Math.floor((this.iter + this.bsize) / X.length);
       this.iter = (this.iter + this.bsize) % X.length;
 
+      this.current.b0 = b0;
+      this.current.b1 = b1;
       this.path.push({'b0' : b0, 'b1' : b1});
-      this.cost.push(loss);
+      this.cost[1].push(loss);
+      this.cost[0].push(this.loss.value(this.actual.b0, this.actual.b1, X));
 
       this.plotCost();
       this.plotPath();
 
-      this.line.estimate(b0, b1);
+      this.line.network(b0, b1);
       this.line.plot(0);
-
-
-    	// if (inrange(pos,[-1e4,1e4],[-1e4,1e4]) && isFinite(loss)) {
-    	// 	this.paths[i].push(pos);
-    	// 	this.costs[i].push(loss);
-    	// 	done = done && (l2norm(dx) < 1e-1);
-    	// } else {
-    	// 	done = true;
-    	// }
-
-      // this.plotCost();
-      // this.plotPath();
-      if (this.epoch > 10) {
-      	this.training.stop();
-      }
 
     }, 200);
   }
@@ -130,35 +115,47 @@ class regression_optimizer {
   	  .y((d, i) => { return this.y(d); })
   	  .curve(d3.curveBasis);
 
-  	// update y axis
-  	// var maxLoss = 0;
-  	// this.costs.forEach((cost) => {
-  	// 	maxLoss = Math.max(maxLoss, d3.max(cost, function(d) { return isFinite(d) ? d : 0; }));
-  	// })
-    var maxLoss = this.cost.length != 0 ? this.cost[0] : 0;
+    var maxLoss = this.cost[1].length != 0 ? this.cost[1][0] : 0;
   	this.y.domain([0,maxLoss])
   	this.yaxis.call(d3.axisLeft(this.y).ticks(3, "s"));
 
   	// update x axis
-  	this.x.domain([0, this.cost.length]);
+  	this.x.domain([0, this.cost[1].length]);
   	this.xaxis.call(d3.axisBottom(this.x).ticks(3, "s"));
 
   	// bind
     var path = this.svg.selectAll("path.loss")
-      .data([this.cost]);
+      .data(this.cost);
 
-    // add
     path.enter().append("path")
-      .attr("class", "loss");
+      .attr("class", "loss")
+      .attr("id", (d, i) => { return i ? 'estimate' : 'true'; });
 
-    // update
     path.attr("d", line)
       .attr("stroke", "black")
       .attr("stroke-width", "2px")
       .attr("fill", "none");
 
-    // remove
     path.exit().remove();
+
+
+    // var line = this.svg.selectAll("line.loss")
+    //   .data(this.actual);
+
+    // line.enter().append("line")
+    //   .attr("class", "loss")
+    //   .attr("x1", this.x(0))
+    //   .attr("x2", this.x())
+    //   .attr("y1", )
+    //   .attr("y2", )
+    //   .attr("id", 'true');
+
+    // line.attr("d", line)
+    //   .attr("stroke", "black")
+    //   .attr("stroke-width", "2px")
+    //   .attr("fill", "none");
+
+    // line.exit().remove();
 
   }
 
@@ -173,21 +170,65 @@ class regression_optimizer {
     // bind
     var path = this.loss.svg.selectAll("path.trajectory_regression")
       .data([this.path]);
-
-    // add
+    
     path.enter().append("path")
       .attr("stroke", "black")
       .attr("stroke-width", "2px")
-      .attr("fill", "none")
       .attr("class", "trajectory_regression")
+      .attr("id", "estimate")
+      .attr("fill", "none")
       .attr("d", line);
-
-    // update
+    
     path.attr("d", line)
       .raise();
-
-    // remove
+    
     path.exit().remove();
+
+
+    // bind
+    var circle = this.loss.svg.selectAll("circle.trajectory_regression")
+      .data([this.actual, this.initial]);
+    
+    circle.enter().append("circle")
+      .attr("r", 5)
+      .attr("cx", (d) => { return this.loss.x(d.b0); })
+      .attr("cy", (d) => { return this.loss.y(d.b1); })
+      .attr("class", "trajectory_regression")
+      .attr("id", (d, i) => { return i ? 'estimate' : 'true'; })
+      .call(d3.drag()
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        // .on("drag", function(d, this) {
+        // 	this.line.network(this.loss.x.invert(d3.event.x), this.loss.y.invert(d3.event.y))
+        // 	d.b0 = d3.event.x;
+        // 	d.b1 = d3.event.y;
+        // })
+        .on("end", dragended));
+
+    var x_scale = this.loss.x,
+    	y_scale = this.loss.y,
+    	line = this.line;
+	function dragstarted(d) {
+	  d3.select(this).raise().classed("active", true);
+	}
+
+	function dragged(d) {
+		var x = Math.max(x_scale.range()[0], Math.min(d3.event.x, x_scale.range()[1])),
+			y = Math.min(y_scale.range()[0], Math.max(d3.event.y, y_scale.range()[1]));
+	  	d3.select(this).attr("cx", d.x = x).attr("cy", d.y = y);
+	  	line.network(x_scale.invert(x), y_scale.invert(y));
+	}
+
+	function dragended(d) {
+	  d3.select(this).classed("active", false);
+	};
+    
+    circle.attr("cx", (d) => { return this.loss.x(d.b0); })
+      .attr("cy", (d) => { return this.loss.y(d.b1); })
+      .raise();
+    
+    circle.exit().remove();
+
 
   }
 

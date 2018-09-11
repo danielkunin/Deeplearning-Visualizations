@@ -2,13 +2,14 @@ class line {
 
   // constructor
   constructor(svg) {
-    this.lines = [{'b0': 0, 'b1': 1}, {'b0': 0, 'b1': 0}]
-    this.points = []
+  	this.obj_coef = {'b0': 0, 'b1': 0};
+  	this.net_coef = {'b0': 0, 'b1': 0};
+    this.points = [];
 
     this.pad = 30;
     this.margin = {top: 40, right: 40, bottom: 40, left: 40};
     this.svg = svg.append('g').attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
-    this.width = +svg.attr("width") - this.margin.left - this.margin.right,
+    this.width = +svg.attr("width") - this.margin.left - this.margin.right;
     this.height = +svg.attr("height") - this.margin.top - this.margin.bottom;
 
     this.n = 250; 
@@ -20,21 +21,23 @@ class line {
     this.setup();
   }
 
-  true(b0, b1) {
-    this.lines[0].b0 = b0;
-    this.lines[0].b1 = b1;
+  objective(b0, b1) {
+    this.obj_coef.b0 = b0;
+    this.obj_coef.b1 = b1;
+    this.plot(0);
   }
 
-  estimate(b0, b1) {
-    this.lines[1].b0 = b0;
-    this.lines[1].b1 = b1;
+  network(b0, b1) {
+    this.net_coef.b0 = b0;
+    this.net_coef.b1 = b1;
+    this.plot(0);
   }
 
   sample(n) {
     this.points = [];
     for (var i = 0; i < n; i++) {
       var point_x = uniform(this.x.domain()[0], this.x.domain()[1]),
-          point_y = this.lines[0].b0 + this.lines[0].b1 * point_x + normal(0, 10);
+          point_y = this.obj_coef.b0 + this.obj_coef.b1 * point_x + normal(0, 10);
       this.points.push({'x': point_x, 'y': point_y});
     }
     return this.points;
@@ -46,12 +49,13 @@ class line {
         x2 = this.x.domain()[1];
 
     // add function lines
-    var line = this.svg.selectAll("line.function").data(this.lines);
+    var line = this.svg.selectAll("line.function").data([this.obj_coef, this.net_coef]);
 
     line.attr("x1", this.x(x1))
         .attr("y1", (d) => { return this.y(d.b0 + d.b1 * x1); })
         .attr("x2", this.x(x2))
-        .attr("y2", (d) => { return this.y(d.b0 + d.b1 * x2); });
+        .attr("y2", (d) => { return this.y(d.b0 + d.b1 * x2); })
+        .raise();
 
     line.enter().append("line")
         .attr("x1", this.x(x1))
@@ -111,12 +115,6 @@ class line {
     this.legend = d3.legendColor()
       .labelFormat(d3.format(".2g"))
       .title("Loss");
-
-    // var logLegend = this.legend
-    //   .cells(this.thresholds.filter(function(e,i) { return i % 4 == 0; }))
-    //   .scale(this.color);
-
-    // this.svg.select(".legend").call(logLegend);
 
   }
 

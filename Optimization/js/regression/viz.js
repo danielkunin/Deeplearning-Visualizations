@@ -14,16 +14,20 @@ $("#regression_sample").on("click", function () {
 
 $("input[name='regression_b']").on("change", function () {
 	optObject.reset();
-	lineObject.true(parseFloat($("#regression_b0").val()), parseFloat($("#regression_b1").val()))
+	lineObject.objective(parseFloat($("#obj_b0").val()), parseFloat($("#obj_b1").val()))
+	lineObject.network(parseFloat($("#net_b0").val()), parseFloat($("#net_b1").val()))
     lineObject.plot(0);
     regression_data = lineObject.sample(0);
     lossObject.plot(regression_data, 0);
 });
 
-$("input[name='loss']").on("change", function () {
+$("input[name='intercept']").on("click", function () {
+	lineObject.objective(parseFloat(this.value), lineObject.obj_coef.b1);
 	optObject.reset();
-	lossObject.func = this.value;
-    lossObject.plot(0);
+});
+$("input[name='slope']").on("click", function () {
+	lineObject.objective(lineObject.obj_coef.b0, parseFloat(this.value));
+	optObject.reset();
 });
 
 
@@ -47,8 +51,7 @@ $("#regression_bsize").on("input", function () {
 
 
 $("#regression_train").on("click", function () {
-	optObject.reset();
-	optObject.train(regression_data);
+	optObject.start(regression_data);
 });
 
 $("#regression_stop").on("click", function () {
