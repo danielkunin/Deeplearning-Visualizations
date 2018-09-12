@@ -166,19 +166,19 @@ function cppnSetup() {
     // add canvas
     const canvas = d3.select(".vis-background").append("canvas")
         .style("width", "100%")
-        .style("height", "75vh")
+        .style("height", "60vh")
         .attr("class", "cppn");
 
     // create colors
-    var c1 = [52,78,37],
-        c2 = [49,145,114],
-        c3 = [64,105,133];
+    var c1 = [100,148,72],
+        c2 = [16,108,83],
+        c3 = [0,167,157];
     var colors = [c1, c2, c3];
 
     // define architecture
-    var layers = [5,30,20,30,3],
+    var layers = [5,20,10,20,3],
         activation = 'sin',
-        zScale = [200, 180];
+        zScale = [200, 100];
 
     // make cppn
     var cppn = new CPPN(layers, activation, zScale, colors, canvas.node());
