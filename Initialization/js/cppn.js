@@ -154,12 +154,12 @@ function cppnSetup() {
     // add canvas
     const canvas = d3.select(".vis-background").append("canvas")
         .style("width", "100%")
-        .style("height", "75vh")
+        .style("height", "60vh")
         .attr("class", "cppn");
 
     // make cppn
-    layers = [5,30,30,30,3];
-    var cppn = new CPPN(layers, 'sin', 200, 150, canvas.node());
+    layers = [5,20,10,20,3];
+    var cppn = new CPPN(layers, 'sin', 200, 100, canvas.node());
 
     // start
     cppn.initialize();
