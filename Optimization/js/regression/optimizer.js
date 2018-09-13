@@ -71,7 +71,7 @@ class regression_optimizer {
     this.current = $.extend({}, this.line.net_coef);
 
     // iterate positions and configurations
-    this.training = d3.timer(() => {
+    this.training = d3.interval(() => {
 
       var data = X.slice(this.iter, this.iter + this.bsize),
           b0 = this.current.b0,
@@ -100,7 +100,7 @@ class regression_optimizer {
       this.line.network(b0, b1);
       this.line.plot(0);
 
-    }, 200);
+    }, 50);
   }
 
   plot(t) {
