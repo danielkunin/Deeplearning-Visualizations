@@ -101,12 +101,12 @@
                       <img src="./img/regression/pos_slope.png">
                     </label>
                 </div>
-                Intercept: <input id="obj_b0" type="number" name="regression_b" value="0" min="-4" max="4">
+                <!-- Intercept: <input id="obj_b0" type="number" name="regression_b" value="0" min="-4" max="4">
                 Slope: <input id="obj_b1" type="number" name="regression_b" value="0" min="-4" max="4">
-
-                <br>
+ -->
+                <!-- <br>
                 Training Set Size: <input type="number" name="regression_tsize" value="100" min="1" max="1000">
-                <button class="button"  id="regression_sample">Sample</button>
+                <button class="button"  id="regression_sample">Sample</button> -->
 
                 <svg id="regression_plot" width=300 height=300></svg>
             </div>
@@ -114,8 +114,8 @@
                 <h3>2. Loss Landscape</h3>
                 <p>Sample a training set and explore the loss landscape.</p>
 
-                Intercept: <input id="net_b0" type="number" name="regression_b" value="0" min="-4" max="4">
-                Slope: <input id="net_b1" type="number" name="regression_b" value="0" min="-4" max="4">
+                <!-- Intercept: <input id="net_b0" type="number" name="regression_b" value="0" min="-4" max="4">
+                Slope: <input id="net_b1" type="number" name="regression_b" value="0" min="-4" max="4"> -->
 
                 <svg id="regression_landscape" width=450 height=450></svg>
             </div>
@@ -123,17 +123,33 @@
                 <h3>3. Select Hyperparameters</h3>
                 <p></p>
                 <div>
-                    <input type="range" value="-3" min="-5" max="-1" step="any" id="regression_lrate">
-                    </br>
-                    <label>Learning Rate = <span id="regression_lrate_val">0.001</span></label>
-                    </br></br>
-                    <input type="range" value="0" min="0" max="5" step="any" id="regression_ldecay">
-                    </br>
-                    <label>Learning Rate Decay = <span id="regression_ldecay_val">0</span></label>
-                    </br></br>
-                    <input type="range" value="1" min="1" max="100" step="1" id="regression_bsize">
-                    </br>
-                    <label>Batch Size = <span id="regression_bsize_val">1</span></label>
+                    Learning Rate:<br>
+                    <label class="radio-container">0.0001
+	                    <input type="radio" value="0.0001" name="regression_lrate">
+	                    <span class="checkmark"></span>
+	                </label>
+	                <label class="radio-container">0.001
+	                    <input type="radio" value="0.001" name="regression_lrate" checked>
+	                    <span class="checkmark"></span>
+	                </label>
+	                <label class="radio-container">0.01
+	                    <input type="radio" value="0.01" name="regression_lrate">
+	                    <span class="checkmark"></span>
+	                </label>
+	                <br>
+                    Batch Size:<br>
+                    <label class="radio-container">Stochastic
+	                    <input type="radio" value="1" name="regression_bsize" checked>
+	                    <span class="checkmark"></span>
+	                </label>
+	                <label class="radio-container">Mini
+	                    <input type="radio" value="30" name="regression_bsize">
+	                    <span class="checkmark"></span>
+	                </label>
+	                <label class="radio-container">Full
+	                    <input type="radio" value="300" name="regression_bsize">
+	                    <span class="checkmark"></span>
+	                </label>
                 </div>
                 <button class="button-transport" id="regression_reset" title="reset">
                     <img src="img/reset.png">
@@ -141,12 +157,12 @@
                 <button class="button-transport" id="regression_train" title="start">
                     <img src="img/play.png">
                 </button>
-                <button class="button-transport" id="regression_stop" title="stop">
+                <button class="button-transport hidden" id="regression_stop" title="stop">
                     <img src="img/pause.png">
                 </button>
-                <button class="button-transport" id="regression_step" title="step">
+                <!-- <button class="button-transport" id="regression_step" title="step">
                     <img src="img/fastforward.png">
-                </button>
+                </button> -->
                 <svg id="regression_loss" width=300 height=200></svg>
             </div>
         </div>

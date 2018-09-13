@@ -18,23 +18,24 @@
 	border-radius: 3px;
 }
 
-.function {
-	stroke: #000;
-	stroke-width: 2;
-}
 
-#true {
-	fill: #0000ff;
+
+line#true,path#true {
+	stroke-width: 2;
+	fill: none;
 	stroke: #0000ff;
 }
-
-#estimate {
-	fill: #ff0000;
+line#estimate, path#estimate {
+	stroke-width: 2;
+	fill: none;
 	stroke: #ff0000;
 }
 
-.trajectory_regression {
-	stroke: #000;
-	stroke-width: 2;
-	fill: none;
+circle#true {
+	fill: #0000ff;
+	pointer-events: none;
+}
+circle#estimate {
+	fill: #ff0000;
+	cursor: pointer;
 }

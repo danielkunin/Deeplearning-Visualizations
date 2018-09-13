@@ -3,7 +3,7 @@ class line {
   // constructor
   constructor(svg) {
   	this.obj_coef = {'b0': 0, 'b1': 0};
-  	this.net_coef = {'b0': 0, 'b1': 0};
+  	this.net_coef = {'b0': uniform(-1, 1), 'b1': uniform(-1, 1)};
     this.points = [];
 
     this.pad = 30;
@@ -49,7 +49,8 @@ class line {
         x2 = this.x.domain()[1];
 
     // add function lines
-    var line = this.svg.selectAll("line.function").data([this.obj_coef, this.net_coef]);
+    var line = this.svg.selectAll("line.function")
+      .data([this.obj_coef, this.net_coef]);
 
     line.attr("x1", this.x(x1))
         .attr("y1", (d) => { return this.y(d.b0 + d.b1 * x1); })
