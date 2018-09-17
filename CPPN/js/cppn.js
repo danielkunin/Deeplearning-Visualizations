@@ -137,8 +137,10 @@ class CPPN {
           // indexing
           var k = i * 3;
           i++;
+
+          var c = Math.floor(y / (height / 3))
           // create color
-          var color = convexCombination(data.slice(k, k + 3), this.colors)
+          var color = convexCombination(data.slice(k, k + 3), this.colors[c])
           // add color
           ctx.fillStyle = color;
           ctx.fillRect(x, y, 1, 1);
@@ -164,18 +166,30 @@ class CPPN {
 
 function cppnSetup() {
     // add canvas
-    const canvas = d3.select("body").append("canvas")
+    const canvas = d3.select("html").append("canvas")
         .style("width", "100%")
-        .style("height", "500px")
+        .style("height", "600px")
         .attr("width", 128)
         .attr("height", 128)
         .attr("class", "cppn");
 
-    // create colors
-    var c1 = [255,139,34],
-        c2 = [255,87,87],
-        c3 = [255,31,103];
-    var colors = [c1, c2, c3];
+    // initialization
+    var i1 = [255,139,34],
+        i2 = [255,87,87],
+        i3 = [255,31,103];
+    // regularization
+    var r1 = [33,0,222],
+        r2 = [0,156,222],
+        r3 = [0,222,67];
+    // optimization
+    var o1 = [100,148,72],
+        o2 = [16,108,83],
+        o3 = [0,167,157];
+    var colors = [
+      [i1, i2, i3],
+      [r1, r2, r3],
+      [o1, o2, o3]
+    ];
 
     // define architecture
     var layers = [5,30,30,30,3],
@@ -187,15 +201,18 @@ function cppnSetup() {
 
     // start
     cppn.initialize();
-    cppn.step();
+    cppn.start();
+    // cppn.step();
 
-    // toggle start/stop
-    $(".cppnControl").mouseenter(function() {
-      cppn.start();
-    });
-    $(".cppnControl").mouseleave(function() {
-      cppn.stop();
-    });
+    // // toggle start/stop
+    // $(".cppnControl").mouseenter(function() {
+    //   cppn.start();
+    // });
+    // $(".cppnControl").mouseleave(function() {
+    //   cppn.stop();
+    // });
+
+
 }
 
 cppnSetup();

@@ -163,10 +163,7 @@ var lossFunctions = {
                        'range': [-5.12, 5.12]},
   'styblinskiTang':   {'val': styblinskiTang_val,
                        'grad': styblinskiTang_grad,
-                       'range': [-5, 5]},
-  'monkeySaddle':     {'val': monkeySaddle_val,
-                       'grad': monkeySaddle_grad,
-                       'range': [-2, 2]}
+                       'range': [-5, 5]}
 }
 
 var lossTitles = {
@@ -268,18 +265,4 @@ function styblinskiTang_grad(x,y) {
   var dx = (4 * Math.pow(x, 3) - 32 * x + 5) / 2,
   	  dy = (4 * Math.pow(y, 3) - 32 * y + 5) / 2;
   return point(dx, dy);
-} 
-
-
-// Monkey Saddle Function (modified to be non-negative and with mininum)
-function monkeySaddle_val(x,y) {
-  return x * x * x - 3 * x * y * y + y**4 + x**4 + 135/256; 
-  // return x * x * x - 3 * x * y * y + 1; 
-}
-function monkeySaddle_grad(x,y) {
-  var dx = 3 * x**2 - 3 * y**2 + 4 * x**3,
-      dy = -6 * x * y + 4 * y**3;
-  // var dx = 3 * x**2 - 3 * y**2,
-  //     dy = -6 * x * y;
-  return point(dx, dy);
-}  
+}   
