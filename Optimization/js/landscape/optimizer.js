@@ -15,6 +15,7 @@ class optimizer {
     this.pos = [];
     this.paths = [];
     this.costs = [];
+    this.initial = point(0, 0);
 
     // loss landscape
     this.loss = loss;
@@ -50,54 +51,7 @@ class optimizer {
 	this.costs = [];
 
 	// update plots
-	this.plotPath();
-  this.plotCost();
-  }
-
-  init() {
-
-    var xscale = this.loss.x;
-    var yscale = this.loss.y;
-
-
-  	var x = Math.random() * (xscale.domain()[1] - xscale.domain()[0]) + xscale.domain()[0],
-  		  y = Math.random() * (yscale.domain()[1] - yscale.domain()[0]) + yscale.domain()[0];
-
-    $("input[name='x']").val(x);
-    $("input[name='y']").val(y);
-
-  	this.initial = point(x, y);
-
-  	var circle = this.loss.svg.selectAll("circle.point")
-  	  .data([this.initial]);
-
-    circle.enter().append("circle")
-      .attr("cx", (d) => { return this.loss.x(d.x); })
-      .attr("cy", (d) => { return this.loss.y(d.y); })
-      .attr("r", 5)
-      .attr("class", "point")
-      .style("fill", "black")
-      .call(d3.drag()
-        // .on("start", () => { $("#reset").click(); })
-        .on("drag", dragged));
-
-    circle.attr("cx", (d) => { return this.loss.x(d.x); })
-      .attr("cy", (d) => { return this.loss.y(d.y); })
-      .raise();
-
-    circle.exit().remove();
-
-    var initial = this.initial;
-
-    function dragged(d) {
-      var x = Math.max(xscale.range()[0], Math.min(d3.event.x, xscale.range()[1])),
-          y = Math.min(yscale.range()[0], Math.max(d3.event.y, yscale.range()[1]));
-          initial.x = xscale.invert(x);
-          initial.y = yscale.invert(y);
-          console.log(xscale.domain(), xscale.range(), d3.event.x, xscale.invert(x), xscale.invert(d3.event.x))
-          d3.select(this).attr("cx", d.x = x).attr("cy", d.y = y);
-    }
-
+	this.plot(0);
   }
 
 
@@ -170,12 +124,19 @@ class optimizer {
 				done = true;
 			}
 		});
-		this.plotCost();
-		this.plotPath();
+
+		this.plot(0);
+
 		if (done) {
 			this.training.stop();
 		}
 	}, 200);
+  }
+
+
+  plot(t) {
+    this.plotCost();
+    this.plotPath();
   }
 
   plotCost() {
@@ -244,6 +205,38 @@ class optimizer {
 
     // remove
     path.exit().remove();
+
+
+    var circle = this.loss.svg.selectAll("circle.point")
+      .data([this.initial]);
+
+    circle.enter().append("circle")
+      .attr("cx", (d) => { return this.loss.x(d.x); })
+      .attr("cy", (d) => { return this.loss.y(d.y); })
+      .attr("r", 5)
+      .attr("class", "point")
+      .style("fill", "black")
+      .call(d3.drag()
+        .on("start", () => { $("#reset").click(); })
+        .on("drag", dragged));
+
+    circle.attr("cx", (d) => { return this.loss.x(d.x); })
+      .attr("cy", (d) => { return this.loss.y(d.y); })
+      .raise();
+
+    circle.exit().remove();
+
+    var xscale = this.loss.x,
+        yscale = this.loss.y,
+        initial = this.initial;
+
+    function dragged(d) {
+      var x = Math.max(xscale.range()[0], Math.min(d3.mouse(this)[0], xscale.range()[1])),
+          y = Math.min(yscale.range()[0], Math.max(d3.mouse(this)[1], yscale.range()[1]));
+          initial.x = xscale.invert(x);
+          initial.y = yscale.invert(y);
+          d3.select(this).attr("cx", x).attr("cy", y);
+    }
 
   }
 

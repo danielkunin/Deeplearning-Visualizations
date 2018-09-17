@@ -56,7 +56,7 @@ class CPPN {
     this.isTraining = false;
 
 
-    const canvasSize = 64;
+    const canvasSize = 100;
     const NUM_IMAGE_SPACE_VARIABLES = 3;  // x, y, r
     const NUM_LATENT_VARIABLES = 2;
     this.canvas.width = canvasSize;
@@ -79,7 +79,6 @@ class CPPN {
       coords[dst++] = coord[d];
     }
   }
-
   return tf.tensor2d(coords, [imageSize * imageSize, inputNumDimensions]);
 }
 
@@ -88,6 +87,16 @@ class CPPN {
     for (var l = 1; l < this.layers.length; l++) {
       this.parameters['w' + l] = tf.variable(tf.randomNormal([this.layers[l-1],this.layers[l]], 0, 0.6));
     }
+  }
+
+  update(layers) {
+    this.stop;
+    for (var l = 1; l < this.layers.length; l++) {
+      this.parameters['w' + l].dispose();
+    }
+    this.layers = layers;
+    this.initialize();
+    this.start;
   }
 
 
@@ -138,7 +147,7 @@ class CPPN {
           var k = i * 3;
           i++;
 
-          var c = Math.floor(y / (height / 3))
+          var c = Math.floor(y / (height / 5))
           // create color
           var color = convexCombination(data.slice(k, k + 3), this.colors[c])
           // add color
@@ -166,11 +175,11 @@ class CPPN {
 
 function cppnSetup() {
     // add canvas
-    const canvas = d3.select("html").append("canvas")
+    const canvas = d3.select("#chapters").append("canvas")
         .style("width", "100%")
-        .style("height", "600px")
-        .attr("width", 128)
-        .attr("height", 128)
+        .style("height", $(window).height() + "px")
+        .attr("width", 100)
+        .attr("height", 100)
         .attr("class", "cppn");
 
     // initialization
@@ -185,14 +194,25 @@ function cppnSetup() {
     var o1 = [100,148,72],
         o2 = [16,108,83],
         o3 = [0,167,157];
+    // 
+    var l1 = [238,130,238],
+        l2 = [230,230,250],
+        l3 = [148,0,211];
+    // 
+    var g1 = [255,255,153],
+        g2 = [189,183,107],
+        g3 = [173,255,47];
+
     var colors = [
       [i1, i2, i3],
       [r1, r2, r3],
-      [o1, o2, o3]
+      [o1, o2, o3],
+      [l1, l2, l3],
+      [g1, g2, g3]
     ];
 
     // define architecture
-    var layers = [5,30,30,30,3],
+    var layers = [5,100,100,100,3],
         activation = 'sin',
         zScale = [200, 150];
 
@@ -202,6 +222,15 @@ function cppnSetup() {
     // start
     cppn.initialize();
     cppn.start();
+
+    // var ctx=canvas.node().getContext("2d");
+    // ctx.beginPath();
+    // ctx.moveTo(0,0);
+    // ctx.lineTo(300,150);
+    // ctx.stroke();
+
+
+
     // cppn.step();
 
     // // toggle start/stop
@@ -212,7 +241,9 @@ function cppnSetup() {
     //   cppn.stop();
     // });
 
-
+    return cppn;
 }
 
-cppnSetup();
+cppn = cppnSetup();
+
+

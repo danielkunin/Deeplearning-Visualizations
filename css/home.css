@@ -1,0 +1,29 @@
+html{
+/*  max-width: 1080px;
+  min-width: 720px;*/
+}
+
+body {
+    width: 100%;
+    margin: 0;
+    font-family: "Assistant";
+    background-color: #FFFFFF;
+}
+
+#cover {
+  width: 30%;
+  margin: 0 2%;
+  display: inline-block;
+  vertical-align: center;
+}
+
+#chapters {
+  width: 66%;
+  display: inline-block;
+  position: absolute;
+}
+
+#chapters a {
+  display: block;
+  position: absolute;
+}

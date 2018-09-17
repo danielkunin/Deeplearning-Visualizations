@@ -212,11 +212,11 @@ class regression_optimizer {
         initial = this.initial;
 
   	function dragged(d) {
-  		var x = Math.max(x_scale.range()[0], Math.min(d3.event.x, x_scale.range()[1])),
-    			y = Math.min(y_scale.range()[0], Math.max(d3.event.y, y_scale.range()[1]));
+  		var x = Math.max(x_scale.range()[0], Math.min(d3.mouse(this)[0], x_scale.range()[1])),
+    			y = Math.min(y_scale.range()[0], Math.max(d3.mouse(this)[1], y_scale.range()[1]));
           initial.b0 = x_scale.invert(x);
           initial.b1 = y_scale.invert(y);
-    	  	d3.select(this).attr("cx", d.x = x).attr("cy", d.y = y);
+    	  	d3.select(this).attr("cx", x).attr("cy", y);
     	  	line.network(x_scale.invert(x), y_scale.invert(y));
   	}
 
