@@ -84,9 +84,11 @@ class CPPN {
 
   // Method
   initialize() {
-    for (var l = 1; l < this.layers.length; l++) {
-      this.parameters['w' + l] = tf.variable(tf.randomNormal([this.layers[l-1],this.layers[l]], 0, 0.6));
-    }
+    tf.tidy(() => {
+      for (var l = 1; l < this.layers.length; l++) {
+          this.parameters['w' + l] = tf.variable(tf.randomNormal([this.layers[l-1],this.layers[l]], 0, 0.6));
+      }
+    });
   }
 
   update(layers) {
