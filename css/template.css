@@ -925,3 +925,23 @@ input[type=text] {
 .check-box{
   padding-right: 5%;
 }
+
+/*table*/
+table, td,th{
+  border: 1px solid #DADADA;
+}
+
+th, td{
+  padding: 0.5em;
+  text-align: left;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    height: 2em;
+    font-size: 14px;
+}
