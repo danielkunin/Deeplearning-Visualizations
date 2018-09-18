@@ -179,7 +179,7 @@ class CPPN {
 
 function cppnSetup() {
     // add canvas
-    const canvas = d3.select("#chapters").append("canvas")
+    const canvas = d3.select("#background").append("canvas")
         .style("width", "100%")
         .style("height", $(window).height() + "px")
         .attr("width", 100)
@@ -191,13 +191,13 @@ function cppnSetup() {
         i2 = [255,87,87],
         i3 = [255,31,103];
     // regularization
-    var r1 = [33,0,222],
-        r2 = [0,156,222],
-        r3 = [0,222,67];
+    var r1 = [0,233,222],
+        r2 = [41,156,222],
+        r3 = [98,0,222];
     // optimization
-    var o1 = [100,148,72],
-        o2 = [16,108,83],
-        o3 = [0,167,157];
+    var o1 = [120,184,66],
+        o2 = [45,155,106],
+        o3 = [0,125,117];
     // 
     var l1 = [238,130,238],
         l2 = [230,230,250],

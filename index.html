@@ -7,46 +7,77 @@
 </head>
 
 <body>
-    <div id="cover">
-        <a href="https://www.deeplearning.ai/"><img id="header-logo" class="cppnControl" src="img/deeplearning.png"></a>
-        <h1>AI Notes</h1>
-        <p class="title" > <a href="https://twitter.com/kiankatan">Kian Katanforoosh</a> & <a href="http://daniel-kunin.com">Daniel Kunin</a></p>
-        <p>AI notes is a project...</p>
-        <p>Number of hidden layers:</p>
-        <select id="layers">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3" selected>3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-        </select>
-        <p>Number of units per hidden layer:</p>
-        <select id="units">
-          <option value="10">10</option>
-          <option value="20">20</option>
-          <option value="30" selected>30</option>
-          <option value="40">40</option>
-          <option value="50">50</option>
-          <option value="60">60</option>
-        </select>
-        <p>Activation function:</p>
-        <select id="activation">
-          <option value="relu">relu</option>
-          <option value="sigmoid">sigmoid</option>
-          <option value="sin" selected>sin</option>
-          <option value="tanh">tanh</option>
-          <option value="linear">linear</option>
-          <option value="leakyRelu">leaky relu</option>
-        </select>
+    <div id="background">
+  
     </div>
-    <div id="chapters">
-        <a href="./initialization">Initializing your Neural Network</a>
+
+
+    <div id="cover">
+        <div id="card">
+          <div class="card-wrapper">
+            <a href="https://www.deeplearning.ai/"><img id="header-logo" class="cppnControl" src="img/deeplearning.png"></a>
+            <h1>AI Notes</h1>
+            <p class="title" > <a href="https://twitter.com/kiankatan">Kian Katanforoosh</a> & <a href="http://daniel-kunin.com">Daniel Kunin</a></p>
+            <p>AI notes is a project...</p>
+            <p>Number of hidden layers:</p>
+            <select id="layers">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3" selected>3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+            <p>Number of units per hidden layer:</p>
+            <select id="units">
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="30" selected>30</option>
+              <option value="40">40</option>
+              <option value="50">50</option>
+              <option value="60">60</option>
+            </select>
+            <p>Activation function:</p>
+            <select id="activation">
+              <option value="relu">relu</option>
+              <option value="sigmoid">sigmoid</option>
+              <option value="sin" selected>sin</option>
+              <option value="tanh">tanh</option>
+              <option value="linear">linear</option>
+              <option value="leakyRelu">leaky relu</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="chapters">
+          <div id="one" class="chapter-block">
+            <a href="./initialization">Initializing your Neural Network</a>
+          </div>
+          <div id="two" class="chapter-block">
+            <a href="./regularization">Regularization</a>
+          </div>
+          <div id="three" class="chapter-block">
+            <a href="./optimization">Optimization</a>
+          </div>
+          <div id="four" class="chapter-block">
+            <a href="./optimization">Loss</a>
+          </div>
+          <div id="five" class="chapter-block">
+            <a href="./optimization">Architecture</a>
+          </div>
+        </div>
+
+           <!--   <a href="./initialization">Initializing your Neural Network</a>
         <a href="./regularization">Regularization</a>
         <a href="./optimization">Optimization</a>
         <a href="./optimization">Loss</a>
-        <a href="./optimization">Architecture</a>
+        <a href="./optimization">Architecture</a> -->
+
     </div>
+
+
+
+    
 </body>
 
 <link rel="stylesheet" type="text/css" href="css/home.css">
