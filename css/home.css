@@ -1,14 +1,9 @@
-html{
-/*  max-width: 1080px;
-  min-width: 720px;*/
-}
 
 body {
     width: 100%;
     margin: 0;
     padding: 0;
     font-family: "Assistant";
-    /*background-color: #414750;*/
     color: white;
 }
 
@@ -29,12 +24,12 @@ body {
   width: 30%;
   height: 100vh;
   margin: 0;
- /* padding: 2%;*/
   display: inline-block;
   float: left;
-
-  background-color: #414750;
- 
+  /*background-color: #414750;*/
+  background-image: url('../img/deeplearning-bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .card-wrapper{
@@ -42,28 +37,28 @@ body {
 }
 
 #chapters{
-
   width: 70%;
   height: 100vh;
   display: inline-block !important;
- 
-
 }
 
 .chapter-block{
-  /*background-color: rgba(0,0,0,0.8);*/
   margin: 0;
   width: 100%;
   height: 20vh;
   text-align: center;
   display: block;
   margin: 0 auto;
-
-
 }
 
-.chapter-block a {
-  /*color: rgba(255,255,255,0.8);*/
+a {
+  text-decoration: none;
+  color: rgba(255,255,255,0.8);
+}
+
+.chapter-block {
+  color: rgba(255,255,255,0.8);
+  background-color: rgba(0,0,0,0.1);
   text-align: center;
   vertical-align: middle;
   text-decoration: none;
@@ -72,29 +67,18 @@ body {
   line-height: 20vh;
 }
 
-/*.chapter-block a:hover{
-   color: rgba(255,255,255,1);
-}*/
-
 .chapter-block:hover{
-  background-color: rgba(0,0,0,0.3);
-  /*color: rgba(255,255,255,0.8);*/
+  color: rgba(255,255,255,1);
+  background-color: rgba(0,0,0,0.2);
 }
 
 #background {
   top:0;
-  left: 0;
-  width: 100%;
+  left: 30%;
+  width: 70%;
   height: 100%;
   margin: 0;
   display: block;
   position: absolute;
   z-index: -1;
 }
-
-#background a {
-  display: block;
-}
-
-a{
-  color:white;

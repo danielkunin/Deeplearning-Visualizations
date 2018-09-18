@@ -3,22 +3,22 @@
 <head>
     <title>AI Notes</title>
     <!--Favicon-->
-    <link rel="shortcut icon" type="image/png" href="img/favicon.png" />
+    <link rel="shortcut icon" type="image/png" href="img/favicon.png"/>
+    <!-- Fonts -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Assistant:300,400,600,700" rel="stylesheet">
+    <!-- Home Page CSS -->
+    <link rel="stylesheet" type="text/css" href="css/home.css">
 </head>
 
 <body>
-    <div id="background">
-  
-    </div>
-
-
     <div id="cover">
         <div id="card">
           <div class="card-wrapper">
             <a href="https://www.deeplearning.ai/"><img id="header-logo" class="cppnControl" src="img/deeplearning.png"></a>
             <h1>AI Notes</h1>
             <p class="title" > <a href="https://twitter.com/kiankatan">Kian Katanforoosh</a> & <a href="http://daniel-kunin.com">Daniel Kunin</a></p>
-            <p>AI notes is a project...</p>
+            <p>The goal of the AI notes is to communicate complex concepts through visualizations and intuitive explanations.</p>
             <p>Number of hidden layers:</p>
             <select id="layers">
               <option value="1">1</option>
@@ -50,28 +50,31 @@
         </div>
 
         <div id="chapters">
-          <div id="one" class="chapter-block">
-            <a href="./initialization">Initializing your neural network</a>
-          </div>
-          <div id="two" class="chapter-block">
-            <a href="./regularization">Regularizing your neural network</a>
-          </div>
-          <div id="three" class="chapter-block">
-            <a href="./optimization">Optimizing your neural network</a>
-          </div>
-          <div id="four" class="chapter-block">
-            <a href="./optimization">Coming soon</a>
-          </div>
-          <div id="five" class="chapter-block">
-            <a href="./optimization">Coming soon</a>
-          </div>
+            <div id="background">
+            </div>
+          
+            <a href="./initialization">
+                <div id="one" class="chapter-block">
+                Initializing your neural network
+                </div>
+            </a>
+            <a href="./regularization">
+                <div id="two" class="chapter-block">
+                Regularizing your neural network
+                </div>
+            </a>
+            <a href="./optimization">
+                <div id="three" class="chapter-block">
+                    Optimizing your neural network
+                </div>
+            </a>
+            <div id="four" class="chapter-block">
+                Coming soon
+            </div>
+            <div id="five" class="chapter-block">
+                Coming soon
+            </div>
         </div>
-
-           <!--   <a href="./initialization">Initializing your Neural Network</a>
-        <a href="./regularization">Regularization</a>
-        <a href="./optimization">Optimization</a>
-        <a href="./optimization">Loss</a>
-        <a href="./optimization">Architecture</a> -->
 
     </div>
 
@@ -80,7 +83,6 @@
     
 </body>
 
-<link rel="stylesheet" type="text/css" href="css/home.css">
 <!-- TensorFlow.js -->
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.9.0"></script>
 <!-- Load D3 -->
