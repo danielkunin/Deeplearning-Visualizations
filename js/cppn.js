@@ -181,7 +181,7 @@ function cppnSetup() {
     // add canvas
     const canvas = d3.select("#background").append("canvas")
         .style("width", "100%")
-        .style("height", $(window).height() + "px")
+        .style("height", "100%")
         .attr("width", 100)
         .attr("height", 100)
         .attr("class", "cppn");
