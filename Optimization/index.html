@@ -244,7 +244,7 @@
                     <li>If the learning rate is too large, your updates will be large and the optimization is likely to diverge.</li>
                     <li>If the learning rate is appropriate, your updates are appropriate and the optimization will converge quickly.</li>
                 </ul>
-                <p>The choice of learning rate depends on the curvature of your loss function. Gradient descent makes a linear approximation of the loss function in a given point. It then moves downhill along the approximation of the loss function. In the case where the loss is highly curved, the larger your step size (learning rate) the larger the error of your approximation. Taking small steps reduces your error.</p>
+                <p>The choice of learning rate depends on the curvature of your loss function. Gradient descent makes a linear approximation of the loss function in a given point. It then moves downhill along the approximation of the loss function. In the case where the loss is highly curved, the larger your step size (learning rate) the larger the error of your approximation. Taking small steps reduces your error<sup class="footnote-index footnote-index1">1</sup>.</p>
                 <img src="img/losscurve.png">
             </div>
             <div class="column-2-8 column-align margin">
@@ -365,7 +365,7 @@
         </div>
         <div class="container">
             <div class="column-6-8">
-                <p>The choice of optimizer also influences both the speed and the existence of your convergence. A lot of alternatives to the classic gradient descent algorithms have been developed in the past few years and are listed in the table below.</p>
+                <p>The choice of optimizer also influences both the speed and the occurrence of your convergence. A lot of alternatives to the classic gradient descent algorithms have been developed in the past few years and are listed in the table below.</p>
                 <table>
                   <tr>
                     <th>Optimizer</th>
@@ -429,6 +429,7 @@
             </div>
             <div class="column-6-8 column-align">
                 <ol class="reference footnote">
+                    <li class="footnote-index1-target">Chapter 4 of the Deep Learning textbook (numerical computation) from Goodfellow et al.</li>
                 </ol>
             </div>
             <div class="column-2-8 column-align">
