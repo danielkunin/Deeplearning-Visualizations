@@ -170,15 +170,15 @@ function cppnSetup() {
         .attr("class", "cppn");
 
     // create colors
-    var c1 = [100,148,72],
-        c2 = [16,108,83],
-        c3 = [0,167,157];
+    var c1 = [120, 184,66],
+        c2 = [45,155,106],
+        c3 = [0,125,117];
     var colors = [c1, c2, c3];
 
     // define architecture
-    var layers = [5,20,10,20,3],
+    var layers = [5,20,10,10,3],
         activation = 'sin',
-        zScale = [200, 100];
+        zScale = [200, 140];
 
     // make cppn
     var cppn = new CPPN(layers, activation, zScale, colors, canvas.node());

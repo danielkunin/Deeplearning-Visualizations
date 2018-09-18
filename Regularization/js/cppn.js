@@ -170,13 +170,13 @@ function cppnSetup() {
         .attr("class", "cppn");
 
     // create colors
-    var c1 = [33,0,222],
-        c2 = [0,156,222],
-        c3 = [0,222,67];
+    var c1 = [0,233,222],
+        c2 = [41,156,222],
+        c3 = [98,0,222];
     var colors = [c1, c2, c3];
 
     // define architecture
-    var layers = [5,20,10,20,3],
+    var layers = [5,10,10,10,3],
         activation = 'sin',
         zScale = [200, 100];
 
