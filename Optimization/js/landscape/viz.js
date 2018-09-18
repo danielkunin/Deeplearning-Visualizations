@@ -4,26 +4,13 @@ lossLandscape.plot();
 optLandscape.plot(0);
 
 $("input[name='loss']").on("change", function () {
-	optLandscape.reset();
+	$("#reset").click();
 	lossLandscape.func = this.value;
     lossLandscape.plot(0);
 });
 
-$("input[name='reg']").on("change", function () {
-	optLandscape.reset();
-	lossLandscape.alpha = this.value;
-    lossLandscape.plot(0);
-});
-
-$("#lambda").on("input", function () {
-	optLandscape.reset();
-	$("#lambda_val").html(d3.format(".2")(this.value));
-	lossLandscape.lambda = this.value;
-    lossLandscape.plot(0);
-});
-
 $("input[name='opt']").on("change", function () {
-	optLandscape.reset();
+	$("#reset").click();
 	var index = optLandscape.rule.indexOf(this.value);
 	if (index == -1) {
 		optLandscape.rule.push(this.value);
@@ -33,28 +20,33 @@ $("input[name='opt']").on("change", function () {
 	optLandscape.update();
 });
 
-$("#lrate").on("input", function () {
-	optLandscape.reset();
-	$("#lrate_val").html(d3.format(".2")(10**this.value));
-	optLandscape.lrate = 10**this.value;
-});
+// $("#lrate").on("input", function () {
+// 	optLandscape.reset();
+// 	$("#lrate_val").html(d3.format(".2")(10**this.value));
+// 	optLandscape.lrate = 10**this.value;
+// });
 
-$("#ldecay").on("input", function () {
-	optLandscape.reset();
-	$("#ldecay_val").html(d3.format(".2")(this.value));
-	optLandscape.ldecay = this.value;
-});
-
-$("#init").on("click", function () {
-	optLandscape.reset();
-	optLandscape.init();
-});
+// $("#ldecay").on("input", function () {
+// 	optLandscape.reset();
+// 	$("#ldecay_val").html(d3.format(".2")(this.value));
+// 	optLandscape.ldecay = this.value;
+// });
 
 $("#train").on("click", function () {
 	optLandscape.reset();
 	optLandscape.train();
+	d3.select("#stop").classed("hidden", false);
+    d3.select("#train").classed("hidden", true);
+});
+
+$("#stop").on("click", function () {
+	optLandscape.stop();
+	d3.select("#stop").classed("hidden", true);
+    d3.select("#train").classed("hidden", false);
 });
 
 $("#reset").on("click", function () {
 	optLandscape.reset();
+	d3.select("#stop").classed("hidden", true);
+    d3.select("#train").classed("hidden", false);
 });
