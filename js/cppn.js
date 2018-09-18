@@ -11,6 +11,17 @@ var activationFunctionMap = {
   'linear': function(x) { return x; }
 };
 
+var activationzScaleMap = {
+  'tanh': [20,10],
+  'sin': [200,100],
+  'cos': [200,100],
+  'relu': [15,10],
+  'leakyRelu': [15,10],
+  'step': [1,1],
+  'sigmoid': [1,1],
+  'linear': [1,1]
+}
+
 
 // Normalizes x, y to -.5 <=> +.5, adds a radius term, and pads zeros with the
 // number of z parameters that will get added by the add z shader.
@@ -98,6 +109,10 @@ class CPPN {
       this.parameters['w' + l].dispose();
     }
     this.layers = layers;
+    this.z1Scale = activationzScaleMap[activation][0];
+    this.z2Scale = activationzScaleMap[activation][1];
+    this.z1Counter = 0;
+    this.z2Counter = 0;
     this.activation = activation;
     this.initialize();
     this.start;
@@ -216,9 +231,9 @@ function cppnSetup() {
     ];
 
     // define architecture
-    var layers = [5,30,30,30,3],
+    var layers = [5,30,30,30,30,3],
         activation = 'sin',
-        zScale = [200, 150];
+        zScale = [200, 100];
 
     // make cppn
     var cppn = new CPPN(layers, activation, zScale, colors, canvas.node());
@@ -231,16 +246,16 @@ function cppnSetup() {
 }
 
 var cppn = cppnSetup(),
-    layers = 3,
+    layers = 4,
     unit = 30
     activation = "sin";
 
-$("#layers").on("change", function() {
+$("input[name='depth']").on("change", function () {
   layers = parseInt($(this).val());
   cppn.update(architecture(layers, unit), activation)
 });
 
-$("#units").on("change", function() {
+$("input[name='complexity']").on("change", function () {
   unit = parseInt($(this).val());
   cppn.update(architecture(layers, unit), activation)
 });
@@ -249,7 +264,6 @@ $("#activation").on("change", function() {
   activation = $(this).val();
   cppn.update(architecture(layers, unit), activation)
 });
-
 
 function architecture(layers, units) {
   var arr = [5];
