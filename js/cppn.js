@@ -8,6 +8,7 @@ var activationFunctionMap = {
   'leakyRelu': function(x) { return x.leakyRelu(); },
   'step': function(x) { return x.step(); },
   'sigmoid': function(x) { return x.sigmoid(); },
+  'linear': function(x) { return x; }
 };
 
 
@@ -91,12 +92,13 @@ class CPPN {
     });
   }
 
-  update(layers) {
+  update(layers, activation) {
     this.stop;
     for (var l = 1; l < this.layers.length; l++) {
       this.parameters['w' + l].dispose();
     }
     this.layers = layers;
+    this.activation = activation;
     this.initialize();
     this.start;
   }
@@ -214,7 +216,7 @@ function cppnSetup() {
     ];
 
     // define architecture
-    var layers = [5,100,100,100,3],
+    var layers = [5,30,30,30,3],
         activation = 'sin',
         zScale = [200, 150];
 
@@ -225,27 +227,37 @@ function cppnSetup() {
     cppn.initialize();
     cppn.start();
 
-    // var ctx=canvas.node().getContext("2d");
-    // ctx.beginPath();
-    // ctx.moveTo(0,0);
-    // ctx.lineTo(300,150);
-    // ctx.stroke();
-
-
-
-    // cppn.step();
-
-    // // toggle start/stop
-    // $(".cppnControl").mouseenter(function() {
-    //   cppn.start();
-    // });
-    // $(".cppnControl").mouseleave(function() {
-    //   cppn.stop();
-    // });
-
     return cppn;
 }
 
-cppn = cppnSetup();
+var cppn = cppnSetup(),
+    layers = 3,
+    unit = 30
+    activation = "sin";
+
+$("#layers").on("change", function() {
+  layers = parseInt($(this).val());
+  cppn.update(architecture(layers, unit), activation)
+});
+
+$("#units").on("change", function() {
+  unit = parseInt($(this).val());
+  cppn.update(architecture(layers, unit), activation)
+});
+
+$("#activation").on("change", function() {
+  activation = $(this).val();
+  cppn.update(architecture(layers, unit), activation)
+});
+
+
+function architecture(layers, units) {
+  var arr = [5];
+  for (var i = 0; i < layers; i++) {
+    arr.push(units);
+  }
+  arr.push(3);
+  return arr;
+}
 
 
