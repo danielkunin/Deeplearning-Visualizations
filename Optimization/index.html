@@ -68,7 +68,6 @@
             </div>
         </div>
     </div>
-
     <div class="main">
         <div class="container index1-target">
             <div class="column-6-8 column-align">
@@ -84,7 +83,6 @@
 				-->
 
 				<script>
-
                 var render = katex.renderToString("\\lambda_{coord} \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} \\left[ (x_i - \\hat{x}_i)^2 + (y_i - \\hat{y}_i)^2 \\right] + \\lambda_{coord} \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} \\left[ (\\sqrt{w_i} - \\sqrt{\\hat{w}_i})^2 + (\\sqrt{h_i} - \\sqrt{\\hat{h}_i})^2 \\right] + \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} (C_i - \\hat{C}_i)^2 + \\lambda_{noobj}\\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} (C_i - \\hat{C}_i)^2 + \\sum_{i=0}^{S^2} \\mathbb{1}_{i}^{obj} \\sum_{c \\in classes} (p_i(c) - \\hat{p}_i(c))^2", { displayMode: true });
                 document.writeln(render);
                 </script>
@@ -217,18 +215,42 @@
                 <svg id="regression_loss" width=300 height=200></svg>
             </div>
         </div>
-    </div>
-    <div class="container">
+        <div class="container">
             <div class="column-6-8 column-align">
                 <p>Here are some insights you can take away from the visualization above:</p>
             </div>
+            <div class="column-6-8">
+                <h4>Initialization</h4>
+                <p>A good initialization can make your optimization quicker and converge to the correct minimum (in the case where there are several minima.) If you want to learn more about initialization, read our AI Note on “Initializing your neural network”.</p>
+            </div>
+            <div class="column-6-8">
+                <h4>Learning rate</h4>
+                <p>The choice of learning rate influences the convergence of your optimization.</p>
                 <ul>
-                    <li>Why does the loss landscape look like this?</li>
-                    <li>What is the red bullet?</li>
-                    <li>Why can your optimization end-up with a lower cost value than the ground truth line?</li>
-                    <li>What is the impact of the learning rate on the optimization?</li>
-                    <li>What is the impact of the batch size on the optimization?</li>
+                    <li>If the learning rate is too small, your updates are small and the optimization is slow. Furthermore, you’re likely to settle into an inappropriate local minimum.</li>
+                    <li>If the learning rate is too large, your updates will be large and the optimization is likely to diverge.</li>
+                    <li>If the learning rate is appropriate, your updates are appropriate and the optimization will converge quickly.</li>
                 </ul>
+                <p>The choice of learning rate depends on the curvature of your loss function. Gradient descent makes a linear approximation of the loss function in a given point. It then moves downhill along the approximation of the loss function. In the case where the loss is highly curved, the larger your step size (learning rate) the larger the error of your approximation. Taking small steps reduces your error.</p>
+                <img src="img/losscurve.png">
+            </div>
+            <div class="column-6-8">
+                <h4>Batch size</h4>
+                <p>The right choice of batch size is crucial to ensure convergence and generalization of your network. There’s no consensus yet on what batch size to choose. Here’s an example of a situation.</p>
+                <p>Here are the suggested heuristics to use when choosing your batch sizes:</p>
+                <ul>
+                    <li>Choosing the largest batch size that fits in your GPU memory will usually accelerate your training.</li>
+                    <li>However, larger batch sizes can also hurt the ability to generalize. There’s a trade-off to find depending on the task you’re trying to achieve.</li>
+                    <li>The larger the batch size, the more accurate the gradient of the loss will be with respect to the parameters, i.e. the direction of the update is most likely going down the local slope of the loss landscape.</li>
+                </ul>
+                <p>In practice, to find hyperparameters such as the learning rate and the batch size, we perform hyperparameter search.</p>
+            </div>
+            <div class="column-6-8">
+                <h4>Iterative update</h4>
+            </div>
+            <div class="column-6-8">
+                <p>Now that you have a starting point, a learning rate, and a batch size, it’s time to iteratively update the parameters to move towards the minimum of the loss function. The optimization algorithm is also a core choice to be made. There are various optimizers, and you can play with them in the visualization below. It will help you build intuition on the pros and cons of each of them.</p>
+            </div>
         </div>
         <div class="full-container" id="landscape">
             <div class="viz-column-3-8">
@@ -323,8 +345,46 @@
                 <svg id="loss" width="550" height="200"></svg>
             </div>
         </div>
+        <div class="container">
+            <div class="column-6-8">
+                <p>The choice of optimizer also influences both the speed and the existence of your convergence. A lot of alternatives to the classic gradient descent algorithms have been developed in the past few years and are listed in the table below.</p>
+                <table>
+                  <tr>
+                    <th>Optimizer</th>
+                    <th>Update rule</th> 
+                    <th>Advantages</th>
+                    <th>Disadvantages</th>
+                  </tr>
+                  <tr>
+                    <td>Gradient Descent</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Momentum</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>RMSprop</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Adam</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </table>
+                <p>For more information about these optimizers, refer to the Deep Learning Specialization (<a href="https://www.coursera.org/learn/deep-neural-network">Course 2</a>: “Improving your Deep Neural Network”, Week 2: “Optimization”).</p>
+                <p>Exploring the optimization methods and hyperparameters presented above helps you build intuition that you can use to optimize networks for your own tasks. Intuitively understanding  the sensitivity of the loss optimization for these hyperparameters (learning rate, batch size, optimizer, etc.) is very important during hyperparameter search. Combined with the right method (random search or bayesian optimization), it will help you iterate through your search in order to find the right model.</p>
+            </div>
+        </div>
     </div>
-        
     <div class="footer">
         <div class="container">
             <div class="column-2-8 column-align">
