@@ -309,25 +309,39 @@
                     </label>
                 </div>
                 </br>
+                <h3>2. Select initial starting point</h3>
 
-                <h3>4. Determine Optimization</h3>
+                <h3>3. Determine optimization and train</h3>
                 <div class="lossFunctions">
                     <p>Select which optimization methods to use.</p>
-                    
-                    <input type="checkbox" name="opt" value="gd"/>
-                    <label class="check-box">Gradient Descent</label>
 
-                    </br>
-                    <input type="checkbox" name="opt" value="momentum"/>
-                    <label class="check-box">Momentum </label>
-
-                    </br>
-                    <input type="checkbox" name="opt" value="rmsprop"/>
-                    <label class="check-box">RMSprop </label>
-
-                    </br>
-                    <input type="checkbox" name="opt" value="adam"/>
-                    <label class="check-box">Adam </label>
+                    <table>
+                      <tr>
+                        <th>Optimizer</th>
+                        <th>Learning Rate</th> 
+                        <th>Learning Rate Decay</th>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" name="opt" value="gd"/> Gradient Descent</td>
+                        <td><input class="gd" type="number" name="lrate" value="0.001"/></td>
+                        <td><input class="gd" type="number" name="ldecay" value="0"/></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" name="opt" value="momentum"/> Momentum</td>
+                        <td><input class="momentum" type="number" name="lrate" value="0.001"/></td>
+                        <td><input class="momentum" type="number" name="ldecay" value="0"/></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" name="opt" value="rmsprop"/> RMSprop</td>
+                        <td><input class="momentum" type="number" name="lrate" value="0.001"/></td>
+                        <td><input class="momentum" type="number" name="ldecay" value="0"/></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" name="opt" value="adam"/> Adam</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    </table>
                 </div>
                 </br>
 
@@ -343,9 +357,6 @@
                     <label>Learning Rate Decay = <span id="ldecay_val">1</span></label>
                 </div>
                 </br> -->
-
-                <h3>6. Minimize</h3>
-                </br>
                 <button class="button-transport" id="reset" title="reset">
                     <img src="img/reset.png">
                 </button>
