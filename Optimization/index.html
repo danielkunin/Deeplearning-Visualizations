@@ -85,25 +85,25 @@
 
                 <script>
                     document.write(katex.renderToString('\\mathcal{L} = \\lambda_{coord} \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} \\left[ (x_i - \\hat{x}_i)^2 + (y_i - \\hat{y}_i)^2 \\right]'))
-                </script>
+                </script> <br>
                 <!-- In the margin for this term: This term ensures that the center of the predicted bounding box should match the center of the ground thruth box.
                 -->
 
                 <script>
                     document.write(katex.renderToString(' + \\lambda_{coord} \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} \\left[ (\\sqrt{w_i} - \\sqrt{\\hat{w}_i})^2 + (\\sqrt{h_i} - \\sqrt{\\hat{h}_i})^2 \\right]'))
-                </script>
+                </script> <br> 
                 <!-- In the margin for this term: This term ensures that the width (resp. height) of the predicted bounding box should match the width (resp. height) of the ground thruth box.
                 -->
 
                 <script>
                     document.write(katex.renderToString('+ \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} (C_i - \\hat{C}_i)^2'))
-                </script>
+                </script> <br>
                 <!-- In the margin for this term: In object detection, there's usually a probability of objectness. This term ensures that the probability of objectness of the predicted bounding box should match the probability of objectness of the ground thruth box.
                 -->
 
                 <script>
                     document.write(katex.renderToString('+ \\lambda_{noobj}\\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} (C_i - \\hat{C}_i)^2'))
-                </script>
+                </script> <br>
                 <!-- In the margin for this term: In object detection, there's usually a probability of objectness. This term ensures that the probability of objectness of the predicted bounding box should match the probability of objectness of the ground thruth box if there is no ground thruth bounding box for the specific cell (i, j) in the YOLO output volume.
                 -->
 
