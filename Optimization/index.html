@@ -46,7 +46,6 @@
         <div class="container" >
             <div class="column-6-8 column-align" >
                 <h1 class="title">Optimizing your neural networks</h1>
-                 <p class="title" > <a href="https://twitter.com/kiankatan">Kian Katanforoosh</a> & <a href="http://daniel-kunin.com">Daniel Kunin</a></p>
             </div>
         </div>
         
@@ -72,20 +71,50 @@
         <div class="container index1-target">
             <div class="column-6-8 column-align">
             	
-            	<p>In machine learning, you first define a task, such as detecting cats on an image, and an objective (or loss) function to evaluate how well you perform on that task. Then, you find the architecture and parameters that result in an optimal value for your objective.</p>
+            	<p>In machine learning, you first define a task, such as detecting cats on an image, and a loss (or objective) function to evaluate how well you perform on that task. Then, you find the architecture and parameters that result in an optimal value for your objective.</p>
 
                 <h3>I&emsp;Setting-up the optimization problem</h3>
                 <p>The way you define your task is the primary factor influencing how your model is going to train and perform. Say your task is to localize and identify cars in images. Your objective function should be the following:</p>
                 <p class="inline-caption">Given an image, output bounding boxes that contain all the cars on the image. Your output boxes should match the labeled boxes.</p>
-                <p>In mathematical terms, a possible loss (or objective) function L is:</p>
+                <p>In mathematical terms, a possible loss function <script>
+                    document.write(katex.renderToString('\\mathcal{L}'))
+                </script> is:</p>
 
                 <!-- YOLO LOSS FUNCTION LATEX FORMULA (see below, should be per line though) + explanation of terms 
 				-->
+
+                <script>
+                    document.write(katex.renderToString('\\mathcal{L} = \\lambda_{coord} \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} \\left[ (x_i - \\hat{x}_i)^2 + (y_i - \\hat{y}_i)^2 \\right]'))
+                </script><br>
+                <!-- In the margin for this term: This term ensures that the center of the predicted bounding box should match the center of the ground thruth box.
+                -->
+                 <script>
+                    document.write(katex.renderToString(' + \\lambda_{coord} \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} \\left[ (\\sqrt{w_i} - \\sqrt{\\hat{w}_i})^2 + (\\sqrt{h_i} - \\sqrt{\\hat{h}_i})^2 \\right]'))
+                </script><br>
+                <!-- In the margin for this term: This term ensures that the width (resp. height) of the predicted bounding box should match the width (resp. height) of the ground thruth box.
+                -->
+                 <script>
+                    document.write(katex.renderToString('+ \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} (C_i - \\hat{C}_i)^2'))
+                </script><br>
+                <!-- In the margin for this term: In object detection, there's usually a probability of objectness. This term ensures that the probability of objectness of the predicted bounding box should match the probability of objectness of the ground thruth box.
+                -->
+                 <script>
+                    document.write(katex.renderToString('+ \\lambda_{noobj}\\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} (C_i - \\hat{C}_i)^2'))
+                </script><br>
+                <!-- In the margin for this term: In object detection, there's usually a probability of objectness. This term ensures that the probability of objectness of the predicted bounding box should match the probability of objectness of the ground thruth box if there is no ground thruth bounding box for the specific cell (i, j) in the YOLO output volume.
+                -->
+                 <script>
+                    document.write(katex.renderToString('+ \\sum_{i=0}^{S^2} \\mathbb{1}_{i}^{obj} \\sum_{c \\in classes} (p_i(c) - \\hat{p}_i(c))^2'))
+                </script><br>
+                <!-- In the margin for this term: This term ensures that the class of the predicted bounding box should match the class of the ground thruth box.
+                -->
+                 <!--
 
 				<script>
                 var render = katex.renderToString("\\lambda_{coord} \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} \\left[ (x_i - \\hat{x}_i)^2 + (y_i - \\hat{y}_i)^2 \\right] + \\lambda_{coord} \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} \\left[ (\\sqrt{w_i} - \\sqrt{\\hat{w}_i})^2 + (\\sqrt{h_i} - \\sqrt{\\hat{h}_i})^2 \\right] + \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} (C_i - \\hat{C}_i)^2 + \\lambda_{noobj}\\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} (C_i - \\hat{C}_i)^2 + \\sum_{i=0}^{S^2} \\mathbb{1}_{i}^{obj} \\sum_{c \\in classes} (p_i(c) - \\hat{p}_i(c))^2", { displayMode: true });
                 document.writeln(render);
                 </script>
+                -->
 
                 <p>This <span class="marginanchor" id="margin-0-anchor" data-number="0" data-align="top">loss function</span> depends on:</p>
                 <ul>
@@ -180,15 +209,17 @@
                 <svg id="regression_plot" width=300 height=300></svg>
             </div>
             <div class="viz-column-4-8">
-                <h3>2. Observe the loss landscape</h3>
-                <p>Sample a training set and explore the loss landscape.</p>
+                <h3>2. Observe the loss landscape and initialize parameters</h3>
+                <p>Sample a training set and explore the loss landscape. 
+                 The blue dot indicates the value of the loss function for an optimal slope and intercept.
+                 The red dot indicates the value of the loss function for a chosen initialization of the slope and intercept. Feel free to drag the red dot and choose an initialization for your slope and intercept.</p>
                 <svg id="regression_landscape" width=450 height=450></svg>
             </div>
             <div class="viz-column-2-8">
-                <h3>3. Select Hyperparameters</h3>
+                <h3>3. Search Hyperparameters</h3>
                 
                 <div>
-                    Learning Rate:<br>
+                    Select the learning rate to use:<br>
                     <label class="radio-container">0.0001
 	                    <input type="radio" value="0.0001" name="regression_lrate">
 	                    <span class="checkmark"></span>
@@ -202,7 +233,7 @@
 	                    <span class="checkmark"></span>
 	                </label>
 	                <br>
-                    Batch Size:<br>
+                    Select the batch size to use:<br>
                     <label class="radio-container">Stochastic
 	                    <input type="radio" value="1" name="regression_bsize" checked>
 	                    <span class="checkmark"></span>
@@ -272,7 +303,7 @@
         </div>
         <div class="full-container" id="landscape">
             <div class="viz-column-3-8">
-                <h3>1. Choose loss</h3>
+                <h3>1. Choose your loss function</h3>
                 <div class="lossFunctions">
                     <p>Select an <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization">artificial landscape</a> <script>document.write(katex.renderToString('f(x,y)'))</script>.</p>
                     <label>
@@ -309,9 +340,9 @@
                     </label>
                 </div>
                 </br>
-                <h3>2. Select initial starting point</h3>
+                <h3>2. Choose your initialization</h3>
 
-                <h3>3. Determine optimization and train</h3>
+                <h3>3. Choose your optimization algorithms and minimize the loss function</h3>
                 <div class="lossFunctions">
                     <p>Select which optimization methods to use.</p>
 
@@ -376,7 +407,9 @@
         </div>
         <div class="container">
             <div class="column-6-8">
-                <p>The choice of optimizer also influences both the speed and the occurrence of your convergence. A lot of alternatives to the classic gradient descent algorithms have been developed in the past few years and are listed in the table below.</p>
+                <p>The choice of optimizer also influences both the speed and the occurrence of your convergence. A lot of alternatives to the classic gradient descent algorithms have been developed in the past few years and are listed in the table below. (Notation: <script>
+                    document.write(katex.renderToString('dW = \\frac{\\partial \\mathcal{L}}{\\partial W}'))
+                    </script>)</p>
                 <table>
                   <tr>
                     <th>Optimizer</th>
@@ -386,25 +419,57 @@
                   </tr>
                   <tr>
                     <td>Gradient Descent</td>
-                    <td></td>
+                    <td>
+                        <script>document.write(katex.renderToString('W = W - \\alpha dW'))</script>
+                    </td>
                     <td></td>
                     <td></td>
                   </tr>
                   <tr>
                     <td>Momentum</td>
-                    <td></td>
+                    <td>
+                        <script>
+                            document.write(katex.renderToString('V_{dW} = \\beta V_{dW} + ( 1 - \\beta ) dW'))
+                        </script>
+                        <script>
+                            document.write(katex.renderToString('W = W - \\alpha V_{dW}'))
+                        </script>
+                     </td>
                     <td></td>
                     <td></td>
                   </tr>
                   <tr>
                     <td>RMSprop</td>
-                    <td></td>
+                    <td>
+                        <script>
+                        document.write(katex.renderToString('S_{dW} = \\beta S_{dW} + ( 1 - \\beta ) dW^2'))
+                        </script>
+                        <script>
+                        document.write(katex.renderToString('W = W - \\alpha \\frac{dW}{\\sqrt{S_{dW}} + \\varepsilon}'))
+                        </script>
+                    </td>
                     <td></td>
                     <td></td>
                   </tr>
                   <tr>
                     <td>Adam</td>
-                    <td></td>
+                    <td>
+                        <script>
+                        document.write(katex.renderToString('V_{dW} = \\beta_1 V_{dW} + ( 1 - \\beta_1 ) dW'))
+                        </script>
+                        <script>
+                        document.write(katex.renderToString('S_{dW} = \\beta_2 S_{dW} + ( 1 - \\beta_2 ) dW^2'))
+                        </script>
+                        <script>
+                        document.write(katex.renderToString('Vcorr_{dW} = \\frac{V_{dW}}{(1 - \\beta_1)^t}'))
+                        </script> 
+                        <script>
+                        document.write(katex.renderToString('Scorr_{dW} = \\frac{S_{dW}}{(1 - \\beta_2)^t}'))
+                        </script> 
+                        <script>
+                        document.write(katex.renderToString('W = W - \\alpha \\frac{dW}{\\sqrt{S_{dW}} + \\varepsilon}'))
+                        </script>    
+                     </td>
                     <td></td>
                     <td></td>
                   </tr>
@@ -448,7 +513,7 @@
             </div>
             <div class="column-6-8 column-align">
                 <p class="reference">To reference this article in an academic context, please cite this work as:</p>
-                <p class="citation">Katanforoosh & Kunin, "Regularizing your neural networks", deeplearning.ai, 2018.</p>
+                <p class="citation">Katanforoosh & Kunin, "Optimizing your neural networks", deeplearning.ai, 2018.</p>
             </div>
         </div>
     </div>
