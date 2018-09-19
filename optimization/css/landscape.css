@@ -1,0 +1,31 @@
+
+.lossFunctions img {
+	width: 20%;
+}
+.lossFunctions label input {
+	display: none;
+}
+.lossFunctions label input + img {
+	cursor: pointer;
+	opacity: 0.6;
+	border: 2px solid transparent;
+}
+.lossFunctions label input + img:hover {
+	opacity: 1;
+}
+.lossFunctions label input:checked + img {
+	opacity: 1;
+	border: 2px solid #009CDE;
+	border-radius: 3px;
+}
+.contour {
+	stroke: #fff;
+	stroke-width: 0.25;
+}
+.titles {
+	text-anchor: middle;
+	font-size: 10px;
+}
+.label {
+	font-size: 10px;
+}
