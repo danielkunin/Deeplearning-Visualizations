@@ -46,7 +46,6 @@
         <div class="container" >
             <div class="column-6-8 column-align" >
                 <h1 class="title">Optimizing your neural networks</h1>
-                 <p class="title" > <a href="https://twitter.com/kiankatan">Kian Katanforoosh</a> & <a href="http://daniel-kunin.com">Daniel Kunin</a></p>
             </div>
         </div>
         
@@ -215,15 +214,21 @@
                 <svg id="regression_plot" width=300 height=300></svg>
             </div>
             <div class="viz-column-4-8">
-                <h3>2. Observe the loss landscape</h3>
-                <p>Sample a training set and explore the loss landscape.</p>
+                <h3>2. Observe the loss landscape and initialize parameters</h3>
+                <p>Sample a training set and explore the loss landscape. 
+
+                The blue dot indicates the value of the loss function for an optimal slope and intercept.
+
+                The red dot indicates the value of the loss function for a chosen initialization of the slope and intercept. Feel free to drag the red dot and choose an initialization for your slope and intercept.
+
+            </p>
                 <svg id="regression_landscape" width=450 height=450></svg>
             </div>
             <div class="viz-column-2-8">
-                <h3>3. Select Hyperparameters</h3>
+                <h3>3. Search Hyperparameters</h3> <br>
                 
                 <div>
-                    Learning Rate:<br>
+                    Select the learning rate to use:<br>
                     <label class="radio-container">0.0001
 	                    <input type="radio" value="0.0001" name="regression_lrate">
 	                    <span class="checkmark"></span>
@@ -237,7 +242,7 @@
 	                    <span class="checkmark"></span>
 	                </label>
 	                <br>
-                    Batch Size:<br>
+                    Select the batch size to use:<br>
                     <label class="radio-container">Stochastic
 	                    <input type="radio" value="1" name="regression_bsize" checked>
 	                    <span class="checkmark"></span>
@@ -307,7 +312,7 @@
         </div>
         <div class="full-container" id="landscape">
             <div class="viz-column-3-8">
-                <h3>1. Choose loss</h3>
+                <h3>1. Choose your loss function</h3>
                 <div class="lossFunctions">
                     <p>Select an <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization">artificial landscape</a> <script>document.write(katex.renderToString('f(x,y)'))</script>.</p>
                     <label>
@@ -345,7 +350,7 @@
                 </div>
                 </br>
 
-                <h3>4. Determine Optimization</h3>
+                <h3>2. Choose your optimization algorithms</h3>
                 <div class="lossFunctions">
                     <p>Select which optimization methods to use.</p>
                     
@@ -379,7 +384,7 @@
                 </div>
                 </br> -->
 
-                <h3>6. Minimize</h3>
+                <h3>3. Minimize the loss function using the optimizer(s)</h3>
                 </br>
                 <button class="button-transport" id="reset" title="reset">
                     <img src="img/reset.png">
@@ -400,7 +405,9 @@
         </div>
         <div class="container">
             <div class="column-6-8">
-                <p>The choice of optimizer also influences both the speed and the occurrence of your convergence. A lot of alternatives to the classic gradient descent algorithms have been developed in the past few years and are listed in the table below.</p>
+                <p>The choice of optimizer also influences both the speed and the occurrence of your convergence. A lot of alternatives to the classic gradient descent algorithms have been developed in the past few years and are listed in the table below. (Notation: <script>
+                    document.write(katex.renderToString('dW = \\frac{\\partial \\mathcal{L}}{\\partial W}'))
+                    </script>)</p>
                 <table>
                   <tr>
                     <th>Optimizer</th>
@@ -410,25 +417,59 @@
                   </tr>
                   <tr>
                     <td>Gradient Descent</td>
-                    <td></td>
+                    <td><script>
+                    document.write(katex.renderToString('W = W - \\alpha dW'))
+                </script></td>
                     <td></td>
                     <td></td>
                   </tr>
                   <tr>
                     <td>Momentum</td>
-                    <td></td>
+                    <td>
+                    <script>
+                    document.write(katex.renderToString('V_{dW} = \\beta V_{dW} + ( 1 - \\beta ) dW'))
+                    </script>
+                    <script>
+                    document.write(katex.renderToString('W = W - \\alpha V_{dW}'))
+                    </script>
+
+                    </td>
                     <td></td>
                     <td></td>
                   </tr>
                   <tr>
                     <td>RMSprop</td>
-                    <td></td>
+                    <td>
+                    <script>
+                    document.write(katex.renderToString('S_{dW} = \\beta S_{dW} + ( 1 - \\beta ) dW^2'))
+                    </script>
+                    <script>
+                    document.write(katex.renderToString('W = W - \\alpha \\frac{dW}{\\sqrt{S_{dW}} + \\varepsilon}'))
+                    </script>
+                    </td>
                     <td></td>
                     <td></td>
                   </tr>
                   <tr>
                     <td>Adam</td>
-                    <td></td>
+                    <td>
+                    <script>
+                    document.write(katex.renderToString('V_{dW} = \\beta_1 V_{dW} + ( 1 - \\beta_1 ) dW'))
+                    </script>
+                    <script>
+                    document.write(katex.renderToString('S_{dW} = \\beta_2 S_{dW} + ( 1 - \\beta_2 ) dW^2'))
+                    </script>
+                    <script>
+                    document.write(katex.renderToString('Vcorr_{dW} = \\frac{V_{dW}}{(1 - \\beta_1)^t}'))
+                    </script> 
+                    <script>
+                    document.write(katex.renderToString('Scorr_{dW} = \\frac{S_{dW}}{(1 - \\beta_2)^t}'))
+                    </script> 
+                    <script>
+                    document.write(katex.renderToString('W = W - \\alpha \\frac{dW}{\\sqrt{S_{dW}} + \\varepsilon}'))
+                    </script>    
+
+                    </td>
                     <td></td>
                     <td></td>
                   </tr>
