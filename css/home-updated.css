@@ -53,6 +53,7 @@ h1.title{
 
 p.title{
   margin: 0 auto;
+  font-size: 18px;
 }
 
 p.title a {
@@ -64,6 +65,7 @@ p.title a {
 p.sub-title{
   padding-bottom:2em;
   border-bottom:2px solid white;
+  font-size: 18px;
 }
 
 ul{
