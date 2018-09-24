@@ -1,3 +1,4 @@
+var c = 0;
 
 
 var activationFunctionMap = {
@@ -166,7 +167,8 @@ class CPPN {
           var k = i * 3;
           i++;
 
-          var c = Math.floor(y / (height / 5))
+          // var c = Math.floor(y / (height / 5))
+
           // create color
           var color = convexCombination(data.slice(k, k + 3), this.colors[c])
           // add color
@@ -194,7 +196,7 @@ class CPPN {
 
 function cppnSetup() {
     // add canvas
-    const canvas = d3.select("#background").append("canvas")
+    const canvas = d3.select(".vis-background").append("canvas")
         .style("width", "100%")
         .style("height", "100%")
         .attr("width", 100)
@@ -264,6 +266,14 @@ $("#activation").on("change", function() {
   activation = $(this).val();
   cppn.update(architecture(layers, unit), activation)
 });
+
+$(".article-list ul li").on("mouseenter", function() {
+  console.log("hi")
+  c = $(this).index();
+});
+
+
+
 
 function architecture(layers, units) {
   var arr = [5];

@@ -7,8 +7,9 @@
     <!-- Fonts -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Assistant:300,400,600,700" rel="stylesheet">
+    <!-- Template Page CSS -->
+    <link rel="stylesheet" type="text/css" href="css/template.css">
     <!-- Home Page CSS -->
-
     <link rel="stylesheet" type="text/css" href="css/home-updated.css">
 </head>
 
@@ -18,39 +19,53 @@
 
             <a href="https://www.deeplearning.ai/"><img id="header-logo" class="cppnControl" src="img/deeplearning.png"></a>
             <a><img id="header-logo"></a>
-            <!-- Uncomment below to add links to other articles -->
             
         </div>
     </div>
-    <div class="main">
-        <div class="container " >
+    <div class="main vis-background">
+        <div class="container">
             <div class="column-6-8">
                 <h1 class="title">AI Note</h1>
-                 <p class="title" > <a href="https://twitter.com/kiankatan">Kian Katanforoosh</a> & <a href="http://daniel-kunin.com">Daniel Kunin</a></p>
-                 <p class="sub-title" >AI Notes is a resource for building intuition about foundational deep learning concepts. Through five long-form articles, AI Notes presents this material using novel visual perspectives and explorable explanations. These articles are intended as supplements to the deeplearning.ai introductory course.</p>
+                <p class="title"> <a href="https://twitter.com/kiankatan">Kian Katanforoosh</a> & <a href="http://daniel-kunin.com">Daniel Kunin</a></p>
+                <p class="sub-title">AI Notes are a series of long-form tutorials that help you build intuition about foundational deep learning concepts. Intended as supplements to the Deep Learning Specialization, these tutorials include interactive visualizations and easy-to-understand explanations to help you learn these concepts.</p>
             
-                 <div class="article-list">
-                     <ul>Article
-                         <li>Initializing your neural network</li>
-                         <li>Regularizing your neural network</li>
-                         <li>Optimizing your neural network</li>
-                         <li>Coming soon</li>
-                         <li>Coming soon</li>
+                <div class="article-list">
+                    <ul>Article
+                        <li><a href="./initialization">Initializing your neural network</a></li>
+                        <li><a href="./regularization">Regularizing your neural network</a></li>
+                        <li><a href="./optimization">Optimizing your neural network</a></li>
+                        <li><a href=".">Coming soon</a></li>
+                        <li><a href=".">Coming soon</a></li>
+                    </ul>
+                </div>
 
-                     </ul>
-                 </div>
-
-                 <p id="fiddle"><img src="img/home-smile.png">Fiddle with background</p>
+                <p id="fiddle"><img src="img/home-smile.png">change background</p>
+                <p>Network Depth:</p>
+                <label>
+                    Shallow
+                    <input type="radio" name="depth" value="4" checked/>
+                </label>
+                    Deep
+                    <input type="radio" name="depth" value="5" />
+                </label>
+                <p>Layer Complexity:</p>
+                <label>
+                    Simple
+                    <input type="radio" name="complexity" value="30" checked/>
+                </label>
+                    Complex
+                    <input type="radio" name="complexity" value="40" />
+                </label>
+                <p>Activation Function:</p>
+                <select id="activation">
+                  <option value="relu">relu</option>
+                  <option value="sin" selected>sin</option>
+                  <option value="tanh">tanh</option>
+                </select>
 
             </div>
         </div>
-
-
-
-
-        
     </div>
-    
     
 </body>
 
