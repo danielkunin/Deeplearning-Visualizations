@@ -233,7 +233,7 @@ function cppnSetup() {
     ];
 
     // define architecture
-    var layers = [5,20,20,20,10,3],
+    var layers = [5,20,20,20,20,3],
         activation = 'sin',
         zScale = [200, 100];
 
