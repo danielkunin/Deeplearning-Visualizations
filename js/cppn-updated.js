@@ -216,13 +216,13 @@ function cppnSetup() {
         o2 = [45,155,106],
         o3 = [0,125,117];
     // 
-    var l1 = [238,130,238],
-        l2 = [230,230,250],
-        l3 = [148,0,211];
+    var l1 = [248,73,73],
+        l2 = [240,159,180],
+        l3 = [116,0,116];
     // 
-    var g1 = [255,255,153],
-        g2 = [189,183,107],
-        g3 = [173,255,47];
+    var g1 = [246,174,29],
+        g2 = [230,170,25],
+        g3 = [195,135,35];
 
     var colors = [
       [i1, i2, i3],
@@ -233,9 +233,9 @@ function cppnSetup() {
     ];
 
     // define architecture
-    var layers = [5,20,20,20,20,3],
-        activation = 'sin',
-        zScale = [200, 100];
+    var layers = [5,12,12,12,3],
+        activation = 'sin'
+        zScale = [180, 130];
 
     // make cppn
     var cppn = new CPPN(layers, activation, zScale, colors, canvas.node());
@@ -248,7 +248,7 @@ function cppnSetup() {
 }
 
 var cppn = cppnSetup(),
-    layers = 4,
+    layers = 3,
     unit = 30
     activation = "sin";
 
