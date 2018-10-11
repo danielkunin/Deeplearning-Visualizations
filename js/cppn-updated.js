@@ -268,7 +268,6 @@ $("#activation").on("change", function() {
 });
 
 $(".article-list ul li").on("mouseenter", function() {
-  console.log("hi")
   c = $(this).index();
 });
 

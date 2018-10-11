@@ -74,47 +74,30 @@
             	<p>In machine learning, you first define a task, such as detecting cats on an image, and a loss (or objective) function to evaluate how well you perform on that task. Then, you find the architecture and parameters that result in an optimal value for your objective.</p>
 
                 <h3>I&emsp;Setting-up the optimization problem</h3>
-                <p>The way you define your task is the primary factor influencing how your model is going to train and perform. Say your task is to localize and identify cars in images. Your objective function should be the following:</p>
-                <p class="inline-caption">Given an image, output bounding boxes that contain all the cars on the image. Your output boxes should match the labeled boxes.</p>
+                <p>The way you define your task is the primary factor influencing how your model is going to train and perform. Say your task is to localize and identify cars in images. Your objective function should frame the following sentence in mathematical terms:</p>
+                <p class="inline-caption">Given an image, output bounding boxes (bbox) that contain all the cars on the image. Your output boxes should match the labeled boxes.</p>
                 <p>In mathematical terms, a possible loss function <script>
                     document.write(katex.renderToString('\\mathcal{L}'))
                 </script> is:</p>
 
                 <!-- YOLO LOSS FUNCTION LATEX FORMULA (see below, should be per line though) + explanation of terms 
 				-->
-
-                <script>
-                    document.write(katex.renderToString('\\mathcal{L} = \\lambda_{coord} \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} \\left[ (x_i - \\hat{x}_i)^2 + (y_i - \\hat{y}_i)^2 \\right]'))
-                </script><br>
                 <!-- In the margin for this term: This term ensures that the center of the predicted bounding box should match the center of the ground thruth box.
                 -->
-                 <script>
-                    document.write(katex.renderToString(' + \\lambda_{coord} \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} \\left[ (\\sqrt{w_i} - \\sqrt{\\hat{w}_i})^2 + (\\sqrt{h_i} - \\sqrt{\\hat{h}_i})^2 \\right]'))
-                </script><br>
                 <!-- In the margin for this term: This term ensures that the width (resp. height) of the predicted bounding box should match the width (resp. height) of the ground thruth box.
                 -->
-                 <script>
-                    document.write(katex.renderToString('+ \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} (C_i - \\hat{C}_i)^2'))
-                </script><br>
                 <!-- In the margin for this term: In object detection, there's usually a probability of objectness. This term ensures that the probability of objectness of the predicted bounding box should match the probability of objectness of the ground thruth box.
                 -->
-                 <script>
-                    document.write(katex.renderToString('+ \\lambda_{noobj}\\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} (C_i - \\hat{C}_i)^2'))
-                </script><br>
                 <!-- In the margin for this term: In object detection, there's usually a probability of objectness. This term ensures that the probability of objectness of the predicted bounding box should match the probability of objectness of the ground thruth box if there is no ground thruth bounding box for the specific cell (i, j) in the YOLO output volume.
                 -->
-                 <script>
-                    document.write(katex.renderToString('+ \\sum_{i=0}^{S^2} \\mathbb{1}_{i}^{obj} \\sum_{c \\in classes} (p_i(c) - \\hat{p}_i(c))^2'))
-                </script><br>
                 <!-- In the margin for this term: This term ensures that the class of the predicted bounding box should match the class of the ground thruth box.
                 -->
-                 <!--
 
-				<script>
-                var render = katex.renderToString("\\lambda_{coord} \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} \\left[ (x_i - \\hat{x}_i)^2 + (y_i - \\hat{y}_i)^2 \\right] + \\lambda_{coord} \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} \\left[ (\\sqrt{w_i} - \\sqrt{\\hat{w}_i})^2 + (\\sqrt{h_i} - \\sqrt{\\hat{h}_i})^2 \\right] + \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} (C_i - \\hat{C}_i)^2 + \\lambda_{noobj}\\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} (C_i - \\hat{C}_i)^2 + \\sum_{i=0}^{S^2} \\mathbb{1}_{i}^{obj} \\sum_{c \\in classes} (p_i(c) - \\hat{p}_i(c))^2", { displayMode: true });
+                <script>
+                var render = katex.renderToString("\\begin{aligned}\\mathcal{L} &= \\lambda_{coord} \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} \\left[ (x_i - \\hat{x}_i)^2 + (y_i - \\hat{y}_i)^2 \\right] &\\text{BBox Center}\\cr &+ \\lambda_{coord} \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} \\left[ (\\sqrt{w_i} - \\sqrt{\\hat{w}_i})^2 + (\\sqrt{h_i} - \\sqrt{\\hat{h}_i})^2 \\right] &\\text{BBox Width/Height}\\cr &+ \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} (C_i - \\hat{C}_i)^2 &\\text{Objectness}\\cr &+\\lambda_{noobj}\\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} (C_i - \\hat{C}_i)^2 &\\text{No Objectness}\\cr &+\\sum_{i=0}^{S^2} \\mathbb{1}_{i}^{obj} \\sum_{c \\in classes} (p_i(c) - \\hat{p}_i(c))^2 &\\text{Class Probabilities}\\end{aligned}", { displayMode: true });
                 document.writeln(render);
                 </script>
-                -->
+                
 
                 <p>This <span class="marginanchor" id="margin-0-anchor" data-number="0" data-align="top">loss function</span> depends on:</p>
                 <ul>
