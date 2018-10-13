@@ -236,7 +236,7 @@ class regression_optimizer {
       .call(d3.axisLeft(this.y).ticks(3, "s"));
 
     this.svg.append("text")
-      .text("Epoch")
+      .text("Iteration")
       .attr("class", "titles")
       .attr("transform", "translate(" + this.width / 2 + "," + (this.height + this.pad) + ")")
       .attr("alignment-baseline","hanging"); 

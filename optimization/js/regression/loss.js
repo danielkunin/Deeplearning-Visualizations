@@ -63,7 +63,6 @@ class regression_loss {
         values[k] = this.value(b0, b1, train);
       }
     }
-    console.log(values)
 
     this.thresholds = d3.range(-10, Math.log2(d3.max(values)), 0.5)
       .map(function(p) { return Math.pow(2, p); });

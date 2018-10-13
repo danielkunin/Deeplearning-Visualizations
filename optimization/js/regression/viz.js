@@ -43,6 +43,23 @@ $("input[name='slope']").on("click", function () {
 	optObject.plot(0);
 });
 
+$("#generate").on("click", function () {
+	$("#regression_reset").click();
+	lineObject.objective(uniform(-4, 4), uniform(-4, 4));
+	regression_data = lineObject.sample(sample_size);
+	lineObject.plot(0);
+	lossObject.plot(regression_data, 0);
+	optObject.plot(0);
+});
+
+$("#sample").on("click", function () {
+	$("#regression_reset").click();
+	regression_data = lineObject.sample(sample_size);
+	lineObject.plot(0);
+	lossObject.plot(regression_data, 0);
+	optObject.plot(0);
+});
+
 
 $("input[name='regression_lrate']").on("input", function () {
 	$("#regression_reset").click();

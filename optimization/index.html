@@ -129,7 +129,7 @@
             </div>
             <div class="column-2-8 column-align margin">
                 <div class="marginbody" id="margin-1-body" data-number="1">
-                    <p class="caption">Logistic regression can be considered as a 1 neuron neural network with sigmoid activation, and we can define the forward propagation thanks to a formula: ...<give it>. This is very complicated to do for a deep network.</p>
+                    <p class="caption">Logistic regression can be considered as a 1 neuron neural network with sigmoid activation, and we can define the forward propagation thanks to a formula: .... This is very complicated to do for a deep network.</p>
                 </div>
                 <div class="marginbody" id="margin-2-body" data-number="2">
                     <p class="caption">Do you know the mathematical formula that allows you to detect cats on images? Probably not, but using data you can find a function that performs this task. It turns out that a convolutional architecture with the right parameters define a function that would perform this task well.</p>
@@ -159,9 +159,9 @@
         <div class="full-container" id="landscape">
             <div class="viz-column-2-8">
                 <h3>1. Generate your dataset</h3>
-                <p>Choose the slope and intercept for the <span id="" class="bold">"ground truth" function</span> that you will try to learn. Click on generate to draw random points from a normal distribution centered on the "ground thruth" function.</p>
+                <p>Choose the slope and intercept for the <span id="" class="bold">"ground truth" function</span> that you will try to learn. Click on generate to draw random points from a normal distribution centered on the "ground truth" function.</p>
                 <div class="regression_coefficients">
-                    Intercept<br>
+                    <!-- Intercept<br>
                     <label>
                       <input type="radio" name="intercept" value="-3" />
                       <img src="./img/regression/neg_intercept.png">
@@ -187,7 +187,13 @@
                     <label>
                       <input type="radio" name="slope" value="3" />
                       <img src="./img/regression/pos_slope.png">
-                    </label>
+                    </label> -->
+                    <button class="button-transport" id="generate" >
+                    	new "ground truth" function
+                	</button>
+                    <button class="button-transport" id="sample" >
+                    	Sample Training Set
+                	</button>
                 </div>
                 <svg id="regression_plot" width=300 height=300></svg>
             </div>
@@ -250,7 +256,7 @@
                 <h4>Initialization</h4>
                 <p>A good initialization can make your optimization quicker and converge to the correct minimum (in the case where there are several minima.) If you want to learn more about initialization, read our AI Note on <a href="../Initialization/index.html">“Initializing your neural network”</a>.</p>
             </div>
-            <div class="column-6-8">
+            <div class="column-6-8 column-align">
                 <h4>Learning rate</h4>
                 <p>The choice of learning rate influences the convergence of your optimization.</p>
                 <ul>
