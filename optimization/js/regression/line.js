@@ -2,7 +2,10 @@ class line {
 
   // constructor
   constructor(svg) {
-  	this.obj_coef = {'b0': 0, 'b1': 0};
+
+  	this.mode = "regression";
+
+  	this.obj_coef = {'b0': normal(0, 0.1), 'b1': normal(0, 0.1)};
   	this.net_coef = {'b0': uniform(-1, 1), 'b1': uniform(-1, 1)};
     this.points = [];
 
@@ -17,6 +20,7 @@ class line {
 
     this.x = d3.scaleLinear().domain([-10, 10]).range([0, this.width]);
     this.y = d3.scaleLinear().domain([-10, 10]).range([this.height, 0]);
+    this.color = ["black", "green", "orange"];
 
     this.setup();
   }
@@ -36,9 +40,15 @@ class line {
   sample(n) {
     this.points = [];
     for (var i = 0; i < n; i++) {
-      var point_x = uniform(this.x.domain()[0], this.x.domain()[1]),
-          point_y = this.obj_coef.b0 + this.obj_coef.b1 * point_x + normal(0, 10);
-      this.points.push({'x': point_x, 'y': point_y});
+    	if (this.mode == "regression") {
+			var point_x = uniform(this.x.domain()[0], this.x.domain()[1]),
+				point_y = this.obj_coef.b0 + this.obj_coef.b1 * point_x + normal(0, 10);
+			this.points.push({'x': point_x, 'y': point_y, 'label': 0});
+		} else if (this.mode == "classification") {
+			var point_x = normal(0, 10), // normal(5 * (2 * (i % 2) - 1), 1),
+				point_y = this.obj_coef.b0 + this.obj_coef.b1 * point_x + normal(2 * (i % 2) - 1, 5);//-1.0 / this.obj_coef.b1 * point_x + normal(0, 1);
+			this.points.push({'x': point_x, 'y': point_y, 'label': i % 2});
+		}
     }
     return this.points;
   }
@@ -79,6 +89,7 @@ class line {
         .attr("cx", (d) => { return this.x(d.x) })
         .attr("cy", (d) => { return this.y(d.y); })
         .attr("r", 2)
+        .attr("fill", (d) => { return this.color[d.label]; })
         .attr("class", "sample");
 
     circle.exit().remove();

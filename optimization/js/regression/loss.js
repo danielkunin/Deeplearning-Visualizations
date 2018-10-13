@@ -3,14 +3,16 @@ class regression_loss {
   // constructor
   constructor(svg) {
 
+  	this.mode = "regression";
+
     this.pad = 30;
     this.margin = {top: 40, right: 60, bottom: 60, left: 40};
     this.svg = svg.append('g').attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
     this.width = +svg.attr("width") - this.margin.left - this.margin.right,
     this.height = +svg.attr("height") - this.margin.top - this.margin.bottom;
 
-    this.n = 250; 
-    this.m = 250;
+    this.n = 50; 
+    this.m = 50;
 
     this.thresholds = [];
     this.contours = d3.contours().size([this.n, this.m]);
@@ -34,7 +36,12 @@ class regression_loss {
   value(b0, b1, X) {
     var loss = 0;
     for (var i = 0; i < X.length; i++) {
-      loss += Math.pow(X[i].y - (b0 + X[i].x * b1), 2)
+    	if (this.mode == "regression") {
+    		loss += Math.pow(X[i].y - (b0 + X[i].x * b1), 2);
+    	} else if (this.mode == "classification") {
+    		var yhat = sigmoid(b0 * X[i].x  + b1 * X[i].y);
+    		loss += - (X[i].label * Math.log(yhat) + (1 - X[i].label) * Math.log(1 - yhat));
+    	}
     }
     return loss / X.length;
   }
@@ -56,6 +63,7 @@ class regression_loss {
         values[k] = this.value(b0, b1, train);
       }
     }
+    console.log(values)
 
     this.thresholds = d3.range(-10, Math.log2(d3.max(values)), 0.5)
       .map(function(p) { return Math.pow(2, p); });
@@ -119,6 +127,11 @@ class regression_loss {
 
 }
 
+
+// random sample from [a,b]
+function sigmoid(x) {
+  return 1.0 / (1.0 + Math.exp(-x));
+}
 
 
   
