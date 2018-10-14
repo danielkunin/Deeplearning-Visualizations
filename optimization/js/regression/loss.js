@@ -103,13 +103,13 @@ class regression_loss {
       .call(d3.axisLeft(this.y).ticks(3, "s"));
 
     this.svg.append("text")
-      .text("Intercept")
+      .text("b (intercept)")
       .attr("class", "titles")
       .attr("transform", "translate(" + this.width / 2 + "," + (this.height + this.pad) + ")")
       .attr("alignment-baseline","hanging");              
     
     this.svg.append("text")
-      .text("Slope")
+      .text("W (slope)")
       .attr("class", "titles")
       .attr("transform", "translate(" + -this.pad + "," + this.height / 2 + ")rotate(-90)")
       .attr("alignment-baseline","baseline");   

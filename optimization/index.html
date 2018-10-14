@@ -18,6 +18,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Load D3 -->
     <script src="https://d3js.org/d3.v5.min.js"></script>
+    <!--Tool Tip-->
+    <script src="../js/d3.tip.js"></script>
     <!-- Load Tensorflow -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.9.0">
     </script>
@@ -105,33 +107,38 @@
                     <li>The batch of inputs given to the network</li>
                     <li>The batch of ground truths corresponding to the input batch given to the network</li>
                 </ul>
-                <p>For a fixed value of the input batch and ground truths batch, the loss has a landscape that depends on the parameters of the network. You can try to find the minimum point on the loss landscape, but the loss landscape is almost impossible to visualize if there are more than 2 parameters.</p>
-                <p>Although it is hard to visualize the loss landscape when the network has more than 3 parameters, the landscape still exists. Updating the values will move the parameters either closer to or farther from the minimum point of this landscape. (In another AI note, you will learn techniques to visualize your loss function in higher dimensions.)</p>
+                <p>For a fixed value of the input batch and ground truths batch, the loss has a landscape that depends on the parameters of the network. It is almost impossible to visualize the loss landscape (against the parameters) if there are more than 2 parameters. However, the landscape does exist and our goal is to find the point where the loss value is minimum. Updating the values of the parameters will move the loss value either closer to or farther to the target minimum point. In another AI note, you will learn techniques to visualize your loss function in higher dimensions.</p>
             </div>
             <div class="column-2-8 column-align margin">
+            	<!-- <div class="marginbody" id="margin-0-body" data-number="0">
+                    <p class="caption">
+                    	This term ensures that the center of the predicted bounding box should match the center of the ground thruth box
+                    	This term ensures that the width (resp. height) of the predicted bounding box should match the width (resp. height) of the ground thruth box.
+                    	In object detection, there's usually a probability of objectness. This term ensures that the probability of objectness of the predicted bounding box should match the probability of objectness of the ground thruth box.
+                    	In object detection, there's usually a probability of objectness. This term ensures that the probability of objectness of the predicted bounding box should match the probability of objectness of the ground thruth box if there is no ground thruth bounding box for the specific cell (i, j) in the YOLO output volume.
+                    	This term ensures that the class of the predicted bounding box should match the class of the ground thruth box.
+                    </p>
+                </div> -->
                 <div class="marginbody" id="margin-0-body" data-number="0">
-                    <p class="caption">If this function L has a low value, it means that the parameters you have found are performing very well on the task.</p>
+                    <p class="caption">If this function L has a low value, then the found parameters define a network function performing well on the task.</p>
                 </div>
             </div>
             <div class="column-6-8">
                 <h4>The duality between the network function and the loss function</h4>
             </div>
             <div class="column-6-8 column-align">
-                <p>In optimizing your machine learning algorithm, it is important to note the difference between the function you are optimizing (i.e. loss function) and the function you will use to perform the task (i.e. the network function).</p>
+                <p>In optimizing your machine learning algorithm, it is important to note the difference between the function <script>document.write(katex.renderToString('\\mathcal{L}'))</script> you are optimizing (i.e. loss function) and the function <script>document.write(katex.renderToString('f'))</script> you will use to perform the task (i.e. the network function).</p>
                 <ul>
-                    <li><b>The network function</b> is unknown. The deeper your network is, the <span class="marginanchor" id="margin-1-anchor" data-number="1" data-align="middle">harder</span> it is to find a formula for it. You know that the network function is defined by its parameters, and your goal is to find them.</li>
-                    <li><b>The loss function</b> is chosen, and you have a formula for it. But its value depends on the parameters and thus the network function.</li>
+                    <li><b>The network function</b> is unknown. Its purpose is to mimic the <span class="marginanchor" id="margin-1-anchor" data-number="1" data-align="middle">real function</span> that performs the task. You know that the network function is defined by its parameters, and your goal is to find them.</li>
+                    <li><b>The loss function</b> is chosen for a specific task, and you have a formula for it. But its value depends on the parameters and thus the network function.</li>
                 </ul>
                 <p>Interestingly (or counterintuitively), you are not optimizing the function that you will use to predict your end value (network function). Instead, you are defining a “proxy” function (loss function) which, if minimized, will make your network function correctly.</p>
-                <p>You need a loss function because the network function is <span class="marginanchor" id="margin-2-anchor" data-number="2" data-align="middle">unknown</span> and you are not sure how to find the correct network function.</p>
+                <p>You need a loss function because the network function is unknown and you are not sure how to find the correct network function.</p>
                 <p>In summary, the way you define your optimization problem will dictate the performance of your network function.</p>
                 <img src="img/functiongraph.png">
             </div>
             <div class="column-2-8 column-align margin">
                 <div class="marginbody" id="margin-1-body" data-number="1">
-                    <p class="caption">Logistic regression can be considered as a 1 neuron neural network with sigmoid activation, and we can define the forward propagation thanks to a formula: .... This is very complicated to do for a deep network.</p>
-                </div>
-                <div class="marginbody" id="margin-2-body" data-number="2">
                     <p class="caption">Do you know the mathematical formula that allows you to detect cats on images? Probably not, but using data you can find a function that performs this task. It turns out that a convolutional architecture with the right parameters define a function that would perform this task well.</p>
                 </div>
             </div>

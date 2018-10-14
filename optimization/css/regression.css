@@ -33,7 +33,7 @@ line#estimate, path#estimate {
 
 circle#true {
 	fill: #0000ff;
-	pointer-events: none;
+	/*pointer-events: none;*/
 }
 circle#estimate {
 	fill: #ff0000;

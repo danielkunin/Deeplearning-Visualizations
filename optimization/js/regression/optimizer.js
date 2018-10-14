@@ -187,6 +187,12 @@ class regression_optimizer {
 
 
     // bind
+    var x_scale = this.loss.x,
+        y_scale = this.loss.y,
+        line = this.line,
+        initial = this.initial,
+        tip = this.tip;
+
     var circle = this.loss.svg.selectAll("circle.point")
       .data([this.actual, this.initial]);
     
@@ -196,6 +202,8 @@ class regression_optimizer {
       .attr("cy", (d) => { return this.loss.y(d.b1); })
       .attr("class", "point")
       .attr("id", (d, i) => { return i ? 'estimate' : 'true'; })
+      .on('mouseover', function(d, i) { tip.show(d, i, this); })
+      .on('mouseout', this.tip.hide)
       .call(d3.drag()
         .on("start", () => { $("#regression_reset").click(); })
         .on("drag", dragged));
@@ -206,18 +214,17 @@ class regression_optimizer {
     
     circle.exit().remove();
 
-    var x_scale = this.loss.x,
-        y_scale = this.loss.y,
-        line = this.line,
-        initial = this.initial;
 
-  	function dragged(d) {
-  		var x = Math.max(x_scale.range()[0], Math.min(d3.mouse(this)[0], x_scale.range()[1])),
-    			y = Math.min(y_scale.range()[0], Math.max(d3.mouse(this)[1], y_scale.range()[1]));
-          initial.b0 = x_scale.invert(x);
-          initial.b1 = y_scale.invert(y);
-    	  	d3.select(this).attr("cx", x).attr("cy", y);
-    	  	line.network(x_scale.invert(x), y_scale.invert(y));
+  	function dragged(d, i) {
+  		if (i == 1) {
+	  		var x = Math.max(x_scale.range()[0], Math.min(d3.mouse(this)[0], x_scale.range()[1])),
+				y = Math.min(y_scale.range()[0], Math.max(d3.mouse(this)[1], y_scale.range()[1]));
+			initial.b0 = x_scale.invert(x);
+			initial.b1 = y_scale.invert(y);
+			d3.select(this).attr("cx", x).attr("cy", y);
+			line.network(x_scale.invert(x), y_scale.invert(y));
+			tip.show(d, i, this);
+		}
   	}
 
   }
@@ -254,6 +261,19 @@ class regression_optimizer {
     this.legend = d3.legendColor()
       .labelFormat(d3.format(".2g"))
       .title("Optimizer");
+
+    this.tip = d3.tip()
+      .attr('class', 'd3-tip')
+      .offset([-10, 0])
+      .html(function(d, i) {
+      	if (i == 1) {
+      		return 'Initial Point <br>(W: ' + d3.format(".2f")(d.b1) + ', b: ' + d3.format(".2f")(d.b0) + ')';
+      	} else {
+	  		return 'Ground Truth <br>(W: ' + d3.format(".2f")(d.b1) + ', b: ' + d3.format(".2f")(d.b0) + ')';
+	  	}
+	  });
+
+	this.loss.svg.call(this.tip);
   }
 
 }
