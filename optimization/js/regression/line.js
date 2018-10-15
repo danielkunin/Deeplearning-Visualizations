@@ -41,11 +41,11 @@ class line {
     this.points = [];
     for (var i = 0; i < n; i++) {
     	if (this.mode == "regression") {
-			var point_x = normal(0, 10),// uniform(this.x.domain()[0], this.x.domain()[1]),
+			var point_x = normal(0, 5),
 				point_y = this.obj_coef.b0 + this.obj_coef.b1 * point_x + normal(0, 10);
 			this.points.push({'x': point_x, 'y': point_y, 'label': 0});
 		} else if (this.mode == "classification") {
-			var point_x = normal(0, 10), // normal(5 * (2 * (i % 2) - 1), 1),
+			var point_x = normal(0, 5),
 				point_y = this.obj_coef.b0 + this.obj_coef.b1 * point_x + normal(2 * (i % 2) - 1, 5);//-1.0 / this.obj_coef.b1 * point_x + normal(0, 1);
 			this.points.push({'x': point_x, 'y': point_y, 'label': i % 2});
 		}
