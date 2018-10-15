@@ -20,17 +20,17 @@ $("input[name='opt']").on("change", function () {
 	optLandscape.update();
 });
 
-// $("#lrate").on("input", function () {
-// 	optLandscape.reset();
-// 	$("#lrate_val").html(d3.format(".2")(10**this.value));
-// 	optLandscape.lrate = 10**this.value;
-// });
+$("input[name='lrate']").on("input", function () {
+	$("#reset").click();
+	learningRates[$(this).attr('class')] = this.value;
+	optLandscape.update();
+});
 
-// $("#ldecay").on("input", function () {
-// 	optLandscape.reset();
-// 	$("#ldecay_val").html(d3.format(".2")(this.value));
-// 	optLandscape.ldecay = this.value;
-// });
+$("input[name='ldecay']").on("input", function () {
+	$("#reset").click();
+	decayRates[$(this).attr('class')] = this.value;
+	optLandscape.update();
+});
 
 $("#train").on("click", function () {
 	optLandscape.reset();

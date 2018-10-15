@@ -3,8 +3,6 @@ class optimizer {
   constructor(loss, svg) {
 
   	// global parameters
-    this.lrate = 0;
-    this.ldecay = 1;
     this.epoch = 0;
 
     // location and loss data
@@ -104,7 +102,7 @@ class optimizer {
   	// iterate positions and configurations
 	this.training = d3.timer(() => {
 
-		var done = true;
+		var done = false;//true;
 		this.epoch += 1;
 		this.rule.forEach((e,i) => {
 
@@ -113,16 +111,18 @@ class optimizer {
 				loss = this.loss.value(pos.x, pos.y);
 
 			config['t'] = this.epoch;
+      config["ldecay"] = decayRates[e];
 			config["lrate"] = learningRates[e];
 			var dx = this.step(pos,config,e,i);
 
 			if (inrange(pos,[-1e4,1e4],[-1e4,1e4]) && isFinite(loss)) {
 				this.paths[i].push(pos);
 				this.costs[i].push(loss);
-				done = done && (l2norm(dx) < 1e-1);
-			} else {
-				done = true;
-			}
+				// done = done && (l2norm(dx) < 1e-1);
+			} 
+   //    else {
+			// 	done = true;
+			// }
 		});
 
 		this.plot(0);
@@ -148,10 +148,6 @@ class optimizer {
 	  .curve(d3.curveBasis);
 
 	// update y axis
-	// var maxLoss = 0;
-	// this.costs.forEach((cost) => {
-	// 	maxLoss = Math.max(maxLoss, d3.max(cost, function(d) { return isFinite(d) ? d : 0; }));
-	// })
   var maxLoss = this.costs.length != 0 ? this.costs[0][0] : 0;
 	this.y.domain([0,maxLoss])
 	this.yaxis.call(d3.axisLeft(this.y).ticks(3, "s"));
@@ -283,7 +279,7 @@ class optimizer {
 
 }
 
-// Gradient Descent Algorithms
+// Algorithms
 var algorithms = {
 	'gd': gd,
 	'momentum': momentum,
@@ -300,7 +296,7 @@ var algorithmTitles = {
   'rmsprop': 'RMSprop',
   'adam': 'Adam'
 }
-// Gradient Descent Learning Rates
+// Learning Rates
 var learningRates = {
 	'gd': 1e-3,
 	'momentum': 1e-3,
@@ -308,6 +304,15 @@ var learningRates = {
 	'adagrad': 5e-1,
 	'rmsprop': 1e-2,
 	'adam': 1e-2
+}
+// Learning Rate Decay
+var decayRates = {
+  'gd': 0,
+  'momentum': 0,
+  'nesterov': 0,
+  'adagrad': 0,
+  'rmsprop': 0,
+  'adam': 0
 }
 // Default Parameters
 var parameters = {
@@ -326,51 +331,51 @@ var parameters = {
 
 // Stochastic Gradient Descent
 function gd(x, dx, config) {
-  x = add(x, scale(dx, -config['lrate']));
+  var lrate = 1 / (1 + config['ldecay'] * config['t']) * config['lrate'];
+  x = add(x, scale(dx, -lrate));
   return [x, config];
 }
 
 // Stochastic Gradient Descent with Momentum
 function momentum(x, dx, config) {
-  config['v'] = sub(scale(config['v'], config['mu']), scale(dx, config['lrate']));
+  var lrate = 1 / (1 + config['ldecay'] * config['t']) * config['lrate'];
+  config['v'] = sub(scale(config['v'], config['mu']), scale(dx, lrate));
   x = add(x, config['v']);
   return [x, config];
 }
 
 // Nesterov Accelerated Gradient
 function nesterov(x, dx, config) {
+  var lrate = 1 / (1 + config['ldecay'] * config['t']) * config['lrate'];
   var v_prev = config['v'];
-  config['v'] = sub(scale(config['v'], config['mu']), scale(dx, config['lrate']));
+  config['v'] = sub(scale(config['v'], config['mu']), scale(dx, lrate));
   x = add(x, add(scale(v_prev, -config['mu']), scale(config['v'], 1 + config['mu']))) ;
   return [x, config];
 }
 
 // Adagrad
 function adagrad(x, dx, config) {
+  var lrate = 1 / (1 + config['ldecay'] * config['t']) * config['lrate'];
   config['cache'] = add(config['cache'], square(dx));
-  x = add(x, div(scale(dx, -config['lrate']), shift(sqrt(config['cache']), config['eps'])));
+  x = add(x, div(scale(dx, -lrate), shift(sqrt(config['cache']), config['eps'])));
   return [x, config];
 }
 
 // RMSprop
 function rmsprop(x, dx, config) {
+  var lrate = 1 / (1 + config['ldecay'] * config['t']) * config['lrate'];
   config['cache'] = add(scale(config['cache'], config['drate']), scale(square(dx), (1 - config['drate'])));
-  x = add(x, div(scale(dx, -config['lrate']), shift(sqrt(config['cache']), config['eps'])));
+  x = add(x, div(scale(dx, -lrate), shift(sqrt(config['cache']), config['eps'])));
   return [x, config];
 }
 
 // Adam
 function adam(x, dx, config) {
+  var lrate = 1 / (1 + config['ldecay'] * config['t']) * config['lrate'];
   config['m'] = add(scale(config['m'],config['beta1']), scale(dx, 1 - config['beta1']));
   var mt = scale(config['m'], 1 / (1 - config['beta1']**config['t']));
   config['v'] = add(scale(config['v'], config['beta2']), scale(square(dx), 1 - config['beta2']));
   var vt = scale(config['v'], 1 / (1 - config['beta2']**config['t']));
-  x = add(x, div(scale(mt, -config['lrate']), shift(sqrt(vt), config['eps'])));
+  x = add(x, div(scale(mt, -lrate), shift(sqrt(vt), config['eps'])));
   return [x, config];
 }
-
-
-
-// Add noise to simulate Stochastic Batch?
-// Add second/quasi-newton methods? (L-BFGS)
-// Visualizing acutal Loss space with random weight matrix...(CS231n notes)
