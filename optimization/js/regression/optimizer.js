@@ -84,8 +84,6 @@ class regression_optimizer {
       this.cost[1].push(loss);
       this.cost[0].push(this.loss.value(this.actual.b0, this.actual.b1, X));
 
-      // var lrate = 1 / (1 + this.ldecay * this.epoch) * this.lrate;
-
       b0 -= this.lrate * grad.db0;
       b1 -= this.lrate * grad.db1;
 

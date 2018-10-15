@@ -3,8 +3,6 @@ class regression_loss {
   // constructor
   constructor(svg) {
 
-  	this.mode = "regression";
-
     this.pad = 30;
     this.margin = {top: 40, right: 60, bottom: 60, left: 40};
     this.svg = svg.append('g').attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
@@ -36,12 +34,7 @@ class regression_loss {
   value(b0, b1, X) {
     var loss = 0;
     for (var i = 0; i < X.length; i++) {
-    	if (this.mode == "regression") {
-    		loss += Math.pow(X[i].y - (b0 + X[i].x * b1), 2);
-    	} else if (this.mode == "classification") {
-    		var yhat = sigmoid(b0 * X[i].x  + b1 * X[i].y);
-    		loss += - (X[i].label * Math.log(yhat) + (1 - X[i].label) * Math.log(1 - yhat));
-    	}
+    	loss += Math.pow(X[i].y - (b0 + X[i].x * b1), 2);
     }
     return loss / X.length;
   }
@@ -124,12 +117,6 @@ class regression_loss {
 
   }
 
-}
-
-
-// random sample from [a,b]
-function sigmoid(x) {
-  return 1.0 / (1.0 + Math.exp(-x));
 }
 
 

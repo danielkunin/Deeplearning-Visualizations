@@ -3,8 +3,6 @@ class line {
   // constructor
   constructor(svg) {
 
-  	this.mode = "regression";
-
   	this.obj_coef = {'b0': uniform(-4, 4), 'b1': uniform(-4, 4)};
   	this.net_coef = {'b0': uniform(-1, 1), 'b1': uniform(-1, 1)};
     this.points = [];
@@ -40,15 +38,9 @@ class line {
   sample(n) {
     this.points = [];
     for (var i = 0; i < n; i++) {
-    	if (this.mode == "regression") {
-			var point_x = normal(0, 5),
-				point_y = this.obj_coef.b0 + this.obj_coef.b1 * point_x + normal(0, 10);
-			this.points.push({'x': point_x, 'y': point_y, 'label': 0});
-		} else if (this.mode == "classification") {
-			var point_x = normal(0, 5),
-				point_y = this.obj_coef.b0 + this.obj_coef.b1 * point_x + normal(2 * (i % 2) - 1, 5);//-1.0 / this.obj_coef.b1 * point_x + normal(0, 1);
-			this.points.push({'x': point_x, 'y': point_y, 'label': i % 2});
-		}
+		var point_x = normal(0, 5),
+			point_y = this.obj_coef.b0 + this.obj_coef.b1 * point_x + normal(0, 10);
+		this.points.push({'x': point_x, 'y': point_y, 'label': 0});
     }
     return this.points;
   }

@@ -9,23 +9,6 @@ lineObject.plot(0);
 lossObject.plot(regression_data, 0);
 optObject.plot(0);
 
-
-// $("#regression_sample").on("click", function () {
-// 	optObject.reset();
-// 	regression_data = lineObject.sample($("input[name='regression_tsize']").val());
-// 	lineObject.plot(0);
-// 	lossObject.plot(regression_data, 0);
-// });
-
-// $("input[name='regression_b']").on("change", function () {
-// 	optObject.reset();
-// 	lineObject.objective(parseFloat($("#obj_b0").val()), parseFloat($("#obj_b1").val()))
-// 	lineObject.network(parseFloat($("#net_b0").val()), parseFloat($("#net_b1").val()))
-//     lineObject.plot(0);
-//     regression_data = lineObject.sample(0);
-//     lossObject.plot(regression_data, 0);
-// });
-
 $("input[name='intercept']").on("click", function () {
 	$("#regression_reset").click();
 	lineObject.objective(parseFloat(this.value), lineObject.obj_coef.b1);
