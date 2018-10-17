@@ -2,8 +2,8 @@ var lineObject = new line(d3.select("#regression_plot"));
 var lossObject = new regression_loss(d3.select("#regression_landscape"));
 var optObject = new regression_optimizer(lineObject, lossObject, d3.select("#regression_loss"));
 
-var sample_size = 300,
-	regression_data = lineObject.sample(sample_size);
+var sample_size = 300;
+var regression_data = lineObject.sample(sample_size);
 
 lineObject.plot(0);
 lossObject.plot(regression_data, 0);
@@ -35,13 +35,22 @@ $("#generate").on("click", function () {
 	optObject.plot(0);
 });
 
-$("#sample").on("click", function () {
+$("input[name='regression_tsize']").on("input", function () {
 	$("#regression_reset").click();
+	sample_size = parseFloat(this.value);
 	regression_data = lineObject.sample(sample_size);
 	lineObject.plot(0);
 	lossObject.plot(regression_data, 0);
 	optObject.plot(0);
 });
+
+// $("#sample").on("click", function () {
+// 	$("#regression_reset").click();
+// 	regression_data = lineObject.sample(sample_size);
+// 	lineObject.plot(0);
+// 	lossObject.plot(regression_data, 0);
+// 	optObject.plot(0);
+// });
 
 
 $("input[name='regression_lrate']").on("input", function () {

@@ -110,15 +110,6 @@
                 <p>For a fixed value of the input batch and ground truths batch, the loss has a landscape that depends on the parameters of the network. It is almost impossible to visualize the loss landscape (against the parameters) if there are more than 2 parameters. However, the landscape does exist and our goal is to find the point where the loss value is minimum. Updating the values of the parameters will move the loss value either closer to or farther to the target minimum point. In another AI note, you will learn techniques to visualize your loss function in higher dimensions.</p>
             </div>
             <div class="column-2-8 column-align margin">
-            	<!-- <div class="marginbody" id="margin-0-body" data-number="0">
-                    <p class="caption">
-                    	This term ensures that the center of the predicted bounding box should match the center of the ground thruth box
-                    	This term ensures that the width (resp. height) of the predicted bounding box should match the width (resp. height) of the ground thruth box.
-                    	In object detection, there's usually a probability of objectness. This term ensures that the probability of objectness of the predicted bounding box should match the probability of objectness of the ground thruth box.
-                    	In object detection, there's usually a probability of objectness. This term ensures that the probability of objectness of the predicted bounding box should match the probability of objectness of the ground thruth box if there is no ground thruth bounding box for the specific cell (i, j) in the YOLO output volume.
-                    	This term ensures that the class of the predicted bounding box should match the class of the ground thruth box.
-                    </p>
-                </div> -->
                 <div class="marginbody" id="margin-0-body" data-number="0">
                     <p class="caption">If this function L has a low value, then the found parameters define a network function performing well on the task.</p>
                 </div>
@@ -167,15 +158,28 @@
             <div class="viz-column-2-8">
                 <h3>1. Generate your dataset</h3>
                 <p>Choose the slope and intercept for the <span id="" class="bold">"ground truth" function</span> that you will try to learn. Click on generate to draw random points from a normal distribution centered on the "ground truth" function.</p>
-                <div class="regression_coefficients">
-                    <button class="button-transport" id="generate" >
-                    	new "ground truth" function
-                	</button>
-                    <button class="button-transport" id="sample" >
-                    	Sample Training Set
-                	</button>
-                </div>
+                <!-- <button class="button-transport" id="sample" >
+                	Sample Training Set
+            	</button> -->
+            	<div>
+            		Select training set size:<br>
+                    <label class="radio-container">Small
+	                    <input type="radio" value="20" name="regression_tsize">
+	                    <span class="checkmark"></span>
+	                </label>
+	                <label class="radio-container">Appropriate
+	                    <input type="radio" value="300" name="regression_tsize" checked>
+	                    <span class="checkmark"></span>
+	                </label>
+	                <label class="radio-container">Large
+	                    <input type="radio" value="800" name="regression_tsize">
+	                    <span class="checkmark"></span>
+	                </label>
+            	</div>
                 <svg id="regression_plot" width=300 height=300></svg>
+                <button class="button-transport" id="generate" >
+                	new "ground truth" function
+            	</button>
             </div>
             <div class="viz-column-4-8">
                 <h3>2. Observe the loss landscape and initialize parameters</h3>
@@ -189,15 +193,15 @@
                 
                 <div>
                     Select the learning rate to use:<br>
-                    <label class="radio-container">0.0001
+                    <label class="radio-container">Small
 	                    <input type="radio" value="0.0001" name="regression_lrate">
 	                    <span class="checkmark"></span>
 	                </label>
-	                <label class="radio-container">0.001
+	                <label class="radio-container">Appropriate
 	                    <input type="radio" value="0.001" name="regression_lrate" checked>
 	                    <span class="checkmark"></span>
 	                </label>
-	                <label class="radio-container">0.01
+	                <label class="radio-container">Large
 	                    <input type="radio" value="0.01" name="regression_lrate">
 	                    <span class="checkmark"></span>
 	                </label>
@@ -249,7 +253,7 @@
             </div>
             <div class="column-2-8 column-align margin">
                 <div class="marginbody" id="margin-3-body" data-number="3">
-                    <p class="caption">Here we say innapropriate local minimum because in machine learning optimization, it is unlikely to converge to the global minimum.</p>
+                    <p class="caption">Here we say inappropriate local minimum because in machine learning optimization, it is unlikely to converge to the global minimum.</p>
                 </div>
             </div>
             <div class="column-6-8">
@@ -272,9 +276,9 @@
         </div>
         <div class="full-container" id="landscape">
             <div class="viz-column-3-8">
-                <h3>1. Choose your loss function</h3>
+                <h3>1. Choose your loss landscape</h3>
+                <p>Select an <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization">artificial landscape</a> <script>document.write(katex.renderToString('f(x,y)'))</script>.</p>
                 <div class="lossFunctions">
-                    <p>Select an <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization">artificial landscape</a> <script>document.write(katex.renderToString('f(x,y)'))</script>.</p>
                     <label>
                       <input type="radio" name="loss" value="goldsteinPrice"/>
                       <img src="./img/loss/goldsteinPrice.png">
@@ -293,40 +297,39 @@
                     </label>
                 </div>
                 </br>
-                <h3>2. Choose your initialization</h3>
+                <h3>2. Choose your initial parameters</h3>
+                <p>Drag the red dot to choose the initial parameters values and thus the initial value of the loss.</p>
 
-                <h3>3. Choose your optimization algorithms and minimize the loss function</h3>
-                <div class="lossFunctions">
-                    <p>Select which optimization methods to use.</p>
+                <h3>3. Choose your optimizer</h3>
+                <p>Select the optimizers to use and their hyperparameters.</p>
 
-                    <table>
-                      <tr>
-                        <th>Optimizer</th>
-                        <th>Learning Rate</th> 
-                        <th>Learning Rate Decay</th>
-                      </tr>
-                      <tr>
-                        <td><input type="checkbox" name="opt" value="gd"/> Gradient Descent</td>
-                        <td><input class="gd" type="number" name="lrate" value="0.001" min="0" max="1" step="0.0001"/></td>
-                        <td><input class="gd" type="number" name="ldecay" value="0" min="0" max="1" step="0.01"/></td>
-                      </tr>
-                      <tr>
-                        <td><input type="checkbox" name="opt" value="momentum"/> Momentum</td>
-                        <td><input class="momentum" type="number" name="lrate" value="0.001" min="0" max="1" step="0.0001"/></td>
-                        <td><input class="momentum" type="number" name="ldecay" value="0" min="0" max="1" step="0.01"/></td>
-                      </tr>
-                      <tr>
-                        <td><input type="checkbox" name="opt" value="rmsprop"/> RMSprop</td>
-                        <td><input class="rmsprop" type="number" name="lrate" value="0.001" min="0" max="1" step="0.0001"/></td>
-                        <td><input class="rmsprop" type="number" name="ldecay" value="0" min="0" max="1" step="0.01"/></td>
-                      </tr>
-                      <tr>
-                        <td><input type="checkbox" name="opt" value="adam"/> Adam</td>
-                        <td><input class="adam" type="number" name="lrate" value="0.001" min="0" max="1" step="0.0001"/></td>
-                        <td><input class="adam" type="number" name="ldecay" value="0" min="0" max="1" step="0.01"/></td>
-                      </tr>
-                    </table>
-                </div>
+                <table>
+                  <tr>
+                    <th>Optimizer</th>
+                    <th>Learning Rate</th> 
+                    <th>Learning Rate Decay</th>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" name="opt" value="gd"/> Gradient Descent</td>
+                    <td><input class="gd" type="number" name="lrate" value="0.001" min="0" max="1" step="0.0001"/></td>
+                    <td><input class="gd" type="number" name="ldecay" value="0" min="0" max="1" step="0.01"/></td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" name="opt" value="momentum"/> Momentum</td>
+                    <td><input class="momentum" type="number" name="lrate" value="0.001" min="0" max="1" step="0.0001"/></td>
+                    <td><input class="momentum" type="number" name="ldecay" value="0" min="0" max="1" step="0.01"/></td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" name="opt" value="rmsprop"/> RMSprop</td>
+                    <td><input class="rmsprop" type="number" name="lrate" value="0.001" min="0" max="1" step="0.0001"/></td>
+                    <td><input class="rmsprop" type="number" name="ldecay" value="0" min="0" max="1" step="0.01"/></td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" name="opt" value="adam"/> Adam</td>
+                    <td><input class="adam" type="number" name="lrate" value="0.001" min="0" max="1" step="0.0001"/></td>
+                    <td><input class="adam" type="number" name="ldecay" value="0" min="0" max="1" step="0.01"/></td>
+                  </tr>
+                </table>
                 </br>
                 <button class="button-transport" id="reset" title="reset">
                     <img src="img/reset.png">
@@ -347,7 +350,7 @@
         </div>
         <div class="container">
             <div class="column-6-8">
-                <p>The choice of optimizer also influences both the speed and the occurrence of your convergence. A lot of alternatives to the classic gradient descent algorithms have been developed in the past few years and are listed in the table below. (Notation: <script>
+                <p>The choice of optimizer influences both the speed and the occurrence of your convergence. A lot of alternatives to the classic gradient descent algorithms have been developed in the past few years and are listed in the table below. (Notation: <script>
                     document.write(katex.renderToString('dW = \\frac{\\partial \\mathcal{L}}{\\partial W}'))
                     </script>)</p>
                 <table>

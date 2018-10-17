@@ -31,9 +31,13 @@ line#estimate, path#estimate {
 	stroke: #ff0000;
 }
 
+circle.point {
+	fill: #ff0000;
+	cursor: pointer;
+}
 circle#true {
 	fill: #0000ff;
-	/*pointer-events: none;*/
+	cursor: default;
 }
 circle#estimate {
 	fill: #ff0000;

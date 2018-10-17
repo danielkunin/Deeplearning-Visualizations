@@ -211,7 +211,6 @@ class optimizer {
       .attr("cy", (d) => { return this.loss.y(d.y); })
       .attr("r", 5)
       .attr("class", "point")
-      .style("fill", "black")
       .call(d3.drag()
         .on("start", () => { $("#reset").click(); })
         .on("drag", dragged));
