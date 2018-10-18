@@ -38,9 +38,9 @@
             <a><img id="header-logo" class="cppnControl"></a>
             <!-- Uncomment below to add links to other articles -->
             <ul class="header-nav">
-                 <li><a href="../Regularization/index.html">Regularization</a></li>
+                <li><a href="../regularization/index.html">Regularization</a></li>
+                <li><a href="../initialization/index.html">Initialization</a></li>
                 <li><strong>Optimization</strong></li>
-                <li><a href="../Initialization/index.html">Initialization</a></li>
             </ul>
         </div>
     </div>
@@ -158,11 +158,8 @@
             <div class="viz-column-2-8">
                 <h3>1. Generate your dataset</h3>
                 <p>Select the training set size and click on "Generate a new dataset." A training set of the chosen size will be sampled randomly from a distribution and a <font color="blue">"ground truth" line</font> will automatically be fitted to this dataset. This line is the target line for your <font color="red">network function</font> defined by <script>document.write(katex.renderToString('\\hat{y} = wx + b'))</script>.</p>
-                <!-- <button class="button-transport" id="sample" >
-                	Sample Training Set
-            	</button> -->
             	<div>
-            		Select training set size:<br>
+            		<p>Select training set size.</p>
                     <label class="radio-container">Small
 	                    <input type="radio" value="20" name="regression_tsize">
 	                    <span class="checkmark"></span>
@@ -189,10 +186,10 @@
                 <svg id="regression_landscape" width=450 height=450></svg>
             </div>
             <div class="viz-column-2-8">
-                <h3>3. Train your network function</h3>
+                <h3>3. Optimize your loss function</h3>
                 
                 <div>
-                    Select the learning rate to use:<br>
+                    <p>Select the learning rate to use.</p>
                     <label class="radio-container">Small
 	                    <input type="radio" value="0.0001" name="regression_lrate">
 	                    <span class="checkmark"></span>
@@ -205,8 +202,7 @@
 	                    <input type="radio" value="0.01" name="regression_lrate">
 	                    <span class="checkmark"></span>
 	                </label>
-	                <br>
-                    Select the batch size to use:<br>
+                    <p>Select the batch size to use.</p>
                     <label class="radio-container">1 (stochastic)
 	                    <input type="radio" value="1" name="regression_bsize" checked>
 	                    <span class="checkmark"></span>
@@ -219,7 +215,7 @@
 	                    <input type="radio" value="300" name="regression_bsize">
 	                    <span class="checkmark"></span>
 	                </label>
-                    <br>Click on &#9658; to train your <font color="red">network function</font>:
+                    <p>Train your <font color="red">network function</font>.</p>
                 </div>
                 <button class="button-transport" id="regression_reset" title="reset">
                     <img src="img/reset.png">
@@ -257,9 +253,9 @@
                     <p class="caption">Here we say inappropriate local minimum because in machine learning optimization, it is unlikely to converge to the global minimum.</p>
                 </div>
             </div>
-            <div class="column-6-8">
+            <div class="column-6-8 column-align">
                 <h4>c) Batch size</h4>
-                <p>The right choice of batch size is crucial to ensure convergence and generalization of your network. Although there’s been some research on how to choose the batch size, there’s no consensus yet on what batch size to choose.</p>
+                <p>The right choice of batch size is crucial to ensure convergence and generalization of your network. Although there’s been <span class="marginanchor" id="margin-4-anchor" data-number="4" data-align="middle">some research</span> on how to choose the batch size, there’s no consensus yet on what batch size to choose.</p>
                 <p>Recent research on the right batch size have uncovered the following:</p>
                 <ul>
                     <li>The mini-batch size determines the frequency of your updates. The smaller minibatches the more updates, but the quicker the updates.</li>
@@ -268,6 +264,15 @@
                     <li>However, large batch sizes can sometimes hurt the ability to generalize. There’s a trade-off to find depending on the task you’re trying to achieve.</li>
                 </ul>
                 <p>In practice, to find hyperparameters such as the learning rate and the batch size, you should perform hyperparameter search.</p>
+            </div>
+            <div class="column-2-8 column-align margin">
+                <div class="marginbody" id="margin-4-body" data-number="4">
+                    <p class="caption">Check out these papers:<br> 
+                    - <a href="https://arxiv.org/pdf/1711.00489.pdf">Don't Decay the learning rate, increase the batch size</a><br>
+                    - <a href="https://papers.nips.cc/paper/6770-train-longer-generalize-better-closing-the-generalization-gap-in-large-batch-training-of-neural-networks.pdf">Train longer generalize better</a><br>
+                    - <a href="https://arxiv.org/pdf/1706.02677.pdf">Accurate, large minibatch SGD</a></li>
+                    </p>
+                </div>
             </div>
             <div class="column-6-8">
                 <h4>d) Iterative update</h4>
@@ -281,7 +286,7 @@
                 In this visualization, you will choose your loss function and the starting point of your optimization. Although there's no explicit network function, you can assume that finding the minimum of your loss function is equivalent to finding the best network function for your task.
 
                 <h3>1. Choose your loss landscape</h3>
-                <p>Select an <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization">artificial landscape</a> <script>document.write(katex.renderToString('f(x,y)'))</script>.</p>
+                <p>Select an <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization">artificial landscape</a> <script>document.write(katex.renderToString('\\mathcal{L}(w_1,w_2)'))</script>.</p>
                 <div class="lossFunctions">
                     <label>
                       <input type="radio" name="loss" value="goldsteinPrice"/>
@@ -334,7 +339,7 @@
                     <td><input class="adam" type="number" name="ldecay" value="0" min="0" max="1" step="0.01"/></td>
                   </tr>
                 </table>
-                </br>
+                <p>Optimize your loss function.</p>
                 <button class="button-transport" id="reset" title="reset">
                     <img src="img/reset.png">
                 </button>
@@ -346,15 +351,13 @@
                 </button>
             </div>
             <div class="viz-column-4-8">
-                <h3>Loss landscape:</h3>
                 <p> This 2D plot describes the value of your loss function for different values of the 2 parameters <script>document.write(katex.renderToString('(w_1,w_2)'))</script>. The darker the color, the larger the loss value.</p>
                 <svg id="contour" width="550" height="520"></svg>
-                <h3>Loss plot: <script>document.write(katex.renderToString('L(x,y) = f(x,y) + \\lambda r(x,y)'))</script></h3>
                 <svg id="loss" width="550" height="200"></svg>
             </div>
         </div>
         <div class="container">
-            <div class="column-6-8">
+            <div class="column-6-8 column-align">
                 <p>The choice of optimizer influences both the speed and the occurrence of your convergence. A lot of alternatives to the classic gradient descent algorithms have been developed in the past few years and are listed in the table below. (Notation: <script>
                     document.write(katex.renderToString('dW = \\frac{\\partial \\mathcal{L}}{\\partial W}'))
                     </script>)</p>
@@ -407,12 +410,12 @@
                         <ul>
                             <li><small>RMSprop’s adaptive learning rate prevents the learning rate decay from diminishing too slowly or too fast.</small></li>
                             <li><small>RMSprop maintains per-parameter learning rates.</small></li>
-                            <li><small>RMSprop usually works well in online and non-stationary settings.</small></li>
+                            <li><small>RMSprop usually works well in <span class="marginanchor" id="margin-5-anchor" data-number="5" data-align="middle">online</span> and <span class="marginanchor" id="margin-6-anchor" data-number="6" data-align="middle">non-stationary settings</span>.</small></li>
                         </ul>
                     </td>
                   </tr>
                   <tr>
-                    <td>Adam</td>
+                    <td><a href="https://arxiv.org/pdf/1412.6980.pdf">Adam</a></td>
                     <td>
                         <script>
                         document.write(katex.renderToString('V_{dW} = \\beta_1 V_{dW} + ( 1 - \\beta_1 ) dW'))
@@ -440,7 +443,16 @@
                   </tr>
                 </table>
                 <p>For more information about these optimizers, refer to the Deep Learning Specialization (<a href="https://www.coursera.org/learn/deep-neural-network">Course 2</a>: “Improving your Deep Neural Network”, Week 2: “Optimization”).</p>
-                
+            </div>
+            <div class="column-2-8 column-align margin">
+                <div class="marginbody" id="margin-5-body" data-number="5">
+                    <p class="caption">Online optimization is when updates must be made with incomplete knowledge of the future (i.e. stochastic gradient descent optimization).</p>
+                </div>
+                <div class="marginbody" id="margin-6-body" data-number="6">
+                    <p class="caption">Non-stationary setting essentially describes inflection points (where the concavity of the landscape changes) for which the gradient is zero in some, but not all directions.</p>
+                </div>
+            </div>
+            <div class="column-6-8 ">
                 <h3>Conclusion</h3>
 
                 <p>Exploring the optimization methods and hyperparameters presented above helps you build intuition that you can use to optimize networks for your own tasks. Intuitively understanding  the sensitivity of the loss optimization for these hyperparameters (learning rate, batch size, optimizer, etc.) is very important during hyperparameter search. Combined with the right method (random search or bayesian optimization), it will help you iterate through your search in order to find the right model.</p>

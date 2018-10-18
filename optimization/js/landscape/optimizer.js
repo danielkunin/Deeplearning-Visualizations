@@ -203,6 +203,11 @@ class optimizer {
     path.exit().remove();
 
 
+    var xscale = this.loss.x,
+        yscale = this.loss.y,
+        initial = this.initial,
+        tip = this.tip;
+
     var circle = this.loss.svg.selectAll("circle.point")
       .data([this.initial]);
 
@@ -211,6 +216,8 @@ class optimizer {
       .attr("cy", (d) => { return this.loss.y(d.y); })
       .attr("r", 5)
       .attr("class", "point")
+      .on('mouseover', function(d) { tip.show(d, this); })
+      .on('mouseout', this.tip.hide)
       .call(d3.drag()
         .on("start", () => { $("#reset").click(); })
         .on("drag", dragged));
@@ -221,16 +228,13 @@ class optimizer {
 
     circle.exit().remove();
 
-    var xscale = this.loss.x,
-        yscale = this.loss.y,
-        initial = this.initial;
-
     function dragged(d) {
       var x = Math.max(xscale.range()[0], Math.min(d3.mouse(this)[0], xscale.range()[1])),
           y = Math.min(yscale.range()[0], Math.max(d3.mouse(this)[1], yscale.range()[1]));
           initial.x = xscale.invert(x);
           initial.y = yscale.invert(y);
           d3.select(this).attr("cx", x).attr("cy", y);
+          tip.show(d, this);
     }
 
   }
@@ -274,6 +278,15 @@ class optimizer {
         d3.selectAll(".trajectory").style("display", "initial");
         d3.selectAll(".loss").style("display", "initial");
       });
+
+    // add tool tip
+    this.tip = d3.tip()
+      .attr('class', 'd3-tip')
+      .offset([-10, 0])
+      .html(function(d) {
+      	return 'Initial Point <br>(w1: ' + d3.format(".2f")(d.x) + ', w2: ' + d3.format(".2f")(d.y) + ')';
+	  });
+	this.loss.svg.call(this.tip);
   }
 
 }
