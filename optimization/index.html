@@ -357,16 +357,20 @@
                   <tr>
                     <th>Optimizer</th>
                     <th>Update rule</th> 
-                    <th>Advantages</th>
-                    <th>Disadvantages</th>
+                    <th>Attribute</th>
                   </tr>
                   <tr>
-                    <td>Gradient Descent</td>
+                    <td>(Stochastic) Gradient Descent</td>
                     <td>
                         <script>document.write(katex.renderToString('W = W - \\alpha dW'))</script>
                     </td>
-                    <td></td>
-                    <td></td>
+                    <td>
+                        <ul>
+                            <li><small>GD is very slow when the dataset is large, given that GPUs can’t handle the whole data in memory and thus parallelization isn’t optimal.</small></li>
+                            <li><small>SGD usually converges faster than GD on large datasets, because updates are more frequent. Plus, the stochastic approximation of the gradient is usually precise without using the whole dataset because the data is often redundant.</small></li>
+                            <li><small>GD can use parallelization efficiently.</small></li>
+                        </ul>
+                    </td>
                   </tr>
                   <tr>
                     <td>Momentum</td>
@@ -378,8 +382,11 @@
                             document.write(katex.renderToString('W = W - \\alpha V_{dW}'))
                         </script>
                      </td>
-                    <td></td>
-                    <td></td>
+                    <td>    
+                        <ul>
+                            <li><small>Momentum boosts to speed of learning with a very minor implementation change.</small></li>
+                        </ul>
+                    </td>
                   </tr>
                   <tr>
                     <td>RMSprop</td>
@@ -391,8 +398,13 @@
                         document.write(katex.renderToString('W = W - \\alpha \\frac{dW}{\\sqrt{S_{dW}} + \\varepsilon}'))
                         </script>
                     </td>
-                    <td></td>
-                    <td></td>
+                    <td>
+                        <ul>
+                            <li><small>RMSprop’s adaptive learning rate prevents the learning rate decay from diminishing too slowly or too fast.</small></li>
+                            <li><small>RMSprop maintains per-parameter learning rates.</small></li>
+                            <li><small>RMSprop usually works well in online and non-stationary settings.</small></li>
+                        </ul>
+                    </td>
                   </tr>
                   <tr>
                     <td>Adam</td>
@@ -413,8 +425,13 @@
                         document.write(katex.renderToString('W = W - \\alpha \\frac{dW}{\\sqrt{S_{dW}} + \\varepsilon}'))
                         </script>    
                      </td>
-                    <td></td>
-                    <td></td>
+                    <td>
+                        <ul>
+                            <li><small>The hyperparameters of Adam (learning rate, Exponential decay rates for the moment estimates, etc.) are usually set to predefined values (given in the paper), and do not require to be tuned.</small></li>
+                            <li><small>Adam performs a form of learning rate annealing with adaptive step-sizes.</small></li>
+                            <li><small>Adam is often the default optimizer in machine learning.</small></li>
+                        </ul>
+                    </td>
                   </tr>
                 </table>
                 <p>For more information about these optimizers, refer to the Deep Learning Specialization (<a href="https://www.coursera.org/learn/deep-neural-network">Course 2</a>: “Improving your Deep Neural Network”, Week 2: “Optimization”).</p>
