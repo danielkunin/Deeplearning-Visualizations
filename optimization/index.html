@@ -157,7 +157,7 @@
         <div class="full-container" id="landscape">
             <div class="viz-column-2-8">
                 <h3>1. Generate your dataset</h3>
-                <p>Choose the slope and intercept for the <span id="" class="bold">"ground truth" function</span> that you will try to learn. Click on generate to draw random points from a normal distribution centered on the "ground truth" function.</p>
+                <p>Choose the slope and intercept for the <font color="blue">"ground truth" function</font> that you will try to learn. Click on generate to draw random points from a normal distribution centered on the "ground truth" function.</p>
                 <!-- <button class="button-transport" id="sample" >
                 	Sample Training Set
             	</button> -->
@@ -184,8 +184,8 @@
             <div class="viz-column-4-8">
                 <h3>2. Observe the loss landscape and initialize parameters</h3>
                 <p>Sample a training set and explore the loss landscape. 
-                 The blue dot indicates the value of the loss function for an optimal slope and intercept.
-                 The red dot indicates the value of the loss function for a chosen initialization of the slope and intercept. Feel free to drag the red dot and choose an initialization for your slope and intercept.</p>
+                 The <font color="blue">blue dot</font> indicates the value of the loss function for an optimal slope and intercept.
+                 The <font color="red">red dot</font> indicates the value of the loss function for a chosen initialization of the slope and intercept. Feel free to drag the red dot and choose an initialization for your slope and intercept.</p>
                 <svg id="regression_landscape" width=450 height=450></svg>
             </div>
             <div class="viz-column-2-8">
@@ -207,15 +207,15 @@
 	                </label>
 	                <br>
                     Select the batch size to use:<br>
-                    <label class="radio-container">Stochastic
+                    <label class="radio-container">1 (stochastic)
 	                    <input type="radio" value="1" name="regression_bsize" checked>
 	                    <span class="checkmark"></span>
 	                </label>
-	                <label class="radio-container">Mini
+	                <label class="radio-container">Mini-batch
 	                    <input type="radio" value="30" name="regression_bsize">
 	                    <span class="checkmark"></span>
 	                </label>
-	                <label class="radio-container">Full
+	                <label class="radio-container">Full-batch
 	                    <input type="radio" value="300" name="regression_bsize">
 	                    <span class="checkmark"></span>
 	                </label>
@@ -237,11 +237,11 @@
                 <p>Here are some insights you can take away from the visualization above:</p>
             </div>
             <div class="column-6-8">
-                <h4>Initialization</h4>
-                <p>A good initialization can make your optimization quicker and converge to the correct minimum (in the case where there are several minima.) If you want to learn more about initialization, read our AI Note on <a href="../Initialization/index.html">“Initializing your neural network”</a>.</p>
+                <h4>a) Initialization</h4>
+                <p>A good initialization can make your optimization quicker and converge to the correct minimum (in the case where there are several minima.) If you want to learn more about initialization, read our AI Note on "<a href="../Initialization/index.html">Initializing your neural network</a>."</p>
             </div>
             <div class="column-6-8 column-align">
-                <h4>Learning rate</h4>
+                <h4>b) Learning rate</h4>
                 <p>The choice of learning rate influences the convergence of your optimization.</p>
                 <ul>
                     <li>If the learning rate is too small, your updates are small and the optimization is slow. Furthermore, you’re likely to settle into an <span class="marginanchor" id="margin-3-anchor" data-number="3" data-align="middle">inappropriate local minimum</span>.</li>
@@ -257,18 +257,19 @@
                 </div>
             </div>
             <div class="column-6-8">
-                <h4>Batch size</h4>
-                <p>The right choice of batch size is crucial to ensure convergence and generalization of your network. There’s no consensus yet on what batch size to choose. Here’s an example of a situation.</p>
-                <p>Here are the suggested heuristics to use when choosing your batch sizes:</p>
+                <h4>c) Batch size</h4>
+                <p>The right choice of batch size is crucial to ensure convergence and generalization of your network. Although there’s been some research on how to choose the batch size, there’s no consensus yet on what batch size to choose.</p>
+                <p>Recent research on the right batch size have uncovered the following:</p>
                 <ul>
-                    <li>Choosing the largest batch size that fits in your GPU memory will usually accelerate your training.</li>
-                    <li>However, larger batch sizes can also hurt the ability to generalize. There’s a trade-off to find depending on the task you’re trying to achieve.</li>
+                    <li>The mini-batch size determines the frequency of your updates. The smaller minibatches the more updates, but the quicker the updates.</li>
                     <li>The larger the batch size, the more accurate the gradient of the loss will be with respect to the parameters, i.e. the direction of the update is most likely going down the local slope of the loss landscape.</li>
+                    <li>Choosing the largest batch size that fits in your GPU memory will benefit from efficient parallelization and usually accelerate training.</li>
+                    <li>However, large batch sizes can sometimes hurt the ability to generalize. There’s a trade-off to find depending on the task you’re trying to achieve.</li>
                 </ul>
-                <p>In practice, to find hyperparameters such as the learning rate and the batch size, we perform hyperparameter search.</p>
+                <p>In practice, to find hyperparameters such as the learning rate and the batch size, you should perform hyperparameter search.</p>
             </div>
             <div class="column-6-8">
-                <h4>Iterative update</h4>
+                <h4>d) Iterative update</h4>
             </div>
             <div class="column-6-8">
                 <p>Now that you have a starting point, a learning rate, and a batch size, it’s time to iteratively update the parameters to move towards the minimum of the loss function. The optimization algorithm is also a core choice to be made. There are various optimizers, and you can play with them in the visualization below. It will help you build intuition on the pros and cons of each of them.</p>
@@ -298,7 +299,7 @@
                 </div>
                 </br>
                 <h3>2. Choose your initial parameters</h3>
-                <p>Drag the red dot to choose the initial parameters values and thus the initial value of the loss.</p>
+                <p>Drag the <font color="red">red dot</font> to choose the initial parameters values and thus the initial value of the loss.</p>
 
                 <h3>3. Choose your optimizer</h3>
                 <p>Select the optimizers to use and their hyperparameters.</p>
@@ -435,6 +436,9 @@
                   </tr>
                 </table>
                 <p>For more information about these optimizers, refer to the Deep Learning Specialization (<a href="https://www.coursera.org/learn/deep-neural-network">Course 2</a>: “Improving your Deep Neural Network”, Week 2: “Optimization”).</p>
+                
+                <h3>Conclusion</h3>
+
                 <p>Exploring the optimization methods and hyperparameters presented above helps you build intuition that you can use to optimize networks for your own tasks. Intuitively understanding  the sensitivity of the loss optimization for these hyperparameters (learning rate, batch size, optimizer, etc.) is very important during hyperparameter search. Combined with the right method (random search or bayesian optimization), it will help you iterate through your search in order to find the right model.</p>
             </div>
         </div>
