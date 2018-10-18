@@ -99,12 +99,12 @@ class loss {
       .attr("transform", "translate(" + 0 + ",0)");
 
     this.svg.append("text")
-      .text("X")
+      .text("w1")
       .attr("class", "titles")
       .attr("transform", "translate(" + this.width / 2 + "," + (this.height + this.pad) + ")")
       .attr("alignment-baseline","hanging");              
     this.svg.append("text")
-      .text("Y")
+      .text("w2")
       .attr("class", "titles")
       .attr("transform", "translate(" + -this.pad + "," + this.height / 2 + ")rotate(-90)")
       .attr("alignment-baseline","baseline");   
