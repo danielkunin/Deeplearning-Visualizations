@@ -3,7 +3,7 @@ body {
     margin: 0;
     font-family: "Assistant";
     background-color: #D0D0D0;
-    color: white;
+    color: black;
 }
 
 
@@ -12,13 +12,7 @@ body {
     height: auto;
 }
 
-.header-wrapper{
 
-  width: 95%;
-  margin: 0 auto;
-
-
-}
 
 
 
@@ -38,15 +32,24 @@ body {
 
 }
 
-.main .container{
-  padding-top:8em;
-}
+
 
 .container {
   
     width: 75%;
     margin: 1em auto;
     height: auto;
+}
+
+.main.catalog{
+  background-color: white;
+  padding-top: 2em;
+  padding-bottom: 5%;
+
+}
+
+.footer{
+  padding-top: 2em;
 }
 
 
@@ -63,13 +66,25 @@ p.title{
 
 p.title a {
   text-decoration: none;
-  color: white;
+  color: black;
+}
+
+h2{
+  font-weight: 600;
+  color: black;
+  font-size: 22px;
+}
+
+
+h3{
+  font-weight: 400;
+  color: gray;
+  font-size: 14px;
 }
 
 
 p.sub-title{
   padding-bottom:2em;
-  border-bottom:2px solid white;
   font-size: 16px;
 }
 
@@ -84,7 +99,7 @@ ul{
 }
 
 li{
-  color: white;
+  color: black;
   font-size: 22px;
   font-weight: 400;
   padding: 0.5em 0;
@@ -94,23 +109,19 @@ li{
 
 ul li a {
     font-size: 22px;
-    color: white;
+    color: black;
     list-style: none;
   text-decoration: none;
     
-  /*  -webkit-transition: font-size 1s;
-       -moz-transition: font-size 1s;
-         -o-transition: font-size 1s;
-            transition: font-size 1s;
-    animation-timing-function: ease-in;*/
-}
+  
 
-ul li a:hover {
-    /*font-size: 32px;*/
-      text-decoration: underline;
 
 }
 
+.column-align {
+    display: inline-block;
+    vertical-align: text-top;
+}
 
 
 
@@ -121,24 +132,19 @@ ul li a:hover {
 .column-5-8,
 .column-4-8,
 .column-3-8,
+.column-25-8,
 .column-2-8,
 .column-1-8 {
     margin:0% 1%;
-    padding:0 1%;
+    padding:0 0%;
 }
 
-#fiddle{
-  font-size: 12px;
-  cursor: pointer;
-  vertical-align: middle;
+.nav-tile{
+  padding-top: 2.5%;
+  padding-bottom: 1%;
+  border-bottom:10px solid gray;
 }
 
-#fiddle img{
-  width: 1.5em;
-  vertical-align: middle;
-  padding-right: 0.5em;
-
-}
 
 
 
@@ -147,7 +153,7 @@ ul li a:hover {
 @media screen and (max-width: 720px) {
 
 
-   .column-6-8{
+   .column-6-8, .column-2-8, .column-25-8 {
         width: 100%;
     }
 
@@ -158,8 +164,16 @@ ul li a:hover {
 @media screen and (min-width: 720px) {
 
 
+    .column-8-8 {
+        width: 100%;
+    }
+
     .column-6-8 {
         width: 67%;
+    }
+
+    .column-25-8 {
+        width: 26.25%;
     }
 
    
@@ -169,28 +183,3 @@ ul li a:hover {
   
 }
 
-
-/*>>>*/
-.vis-background {
-  position: relative;
-  margin-top: 0%;
-  height: 50%;
-}
-
-.vis-background .container{
-  position: absolute;
-  top:0;
-  left: 12.5%;
-
-}
-
-.modal{
-  width: 100px;
-  height: 100px;
-  color: red;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  display: block;
-}
