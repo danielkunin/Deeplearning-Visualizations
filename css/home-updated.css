@@ -41,6 +41,10 @@ body {
     height: auto;
 }
 
+.title-section{
+  margin-bottom: 3em;
+}
+
 .main.catalog{
   background-color: white;
   padding-top: 2em;
