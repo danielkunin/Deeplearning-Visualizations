@@ -2,7 +2,7 @@ body {
     width: 100%;
     margin: 0;
     font-family: "Assistant";
-    background-color: #FFFAFA;
+    background-color: #FCF2F2;
     color: black;
 }
 
@@ -12,15 +12,22 @@ body {
     height: auto;
 }
 
-
+.header-nav{
+  display: inline-block;
+  float: right;
+  left: 0;
+  vertical-align: middle;
+   margin: 2.2em auto;
+}
 
 
 
 #header-logo{
   width: 8em;
-  vertical-align: center;
+  vertical-align: middle;
   margin: 1.5em auto;
   display: inline-block;
+ 
 
 }
 
@@ -56,7 +63,10 @@ body {
   padding-top: 2em;
 }
 
-
+a{
+  text-decoration: none;
+  color: #000000;
+}
 
 h1.title{
   font-size: 48px;
