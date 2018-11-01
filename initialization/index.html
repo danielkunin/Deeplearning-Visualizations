@@ -544,11 +544,6 @@
                 var render = katex.renderToString("n^{[l-1]}Var(W^{[l]})  \\begin{cases} < 1 &\\implies \\text{Vanishing Signal}\\cr  = 1 & \\implies Var(a^{[L]}) = Var(x)\\cr  > 1 & \\implies \\text{Exploding Signal}\\end{cases}", { displayMode: true });
                 document.writeln(render);
                 </script>
-               <!--  <p>Throughout the proof, we worked on activations computed during the forward propagation. The same result can be derived for the backpropagated gradients.</p> 
-                <script>
-                var render = katex.renderToString("n^{[l-1]}Var(W^{[l]})  \\begin{cases} < 1 &\\implies \\text{Vanishing Gradient}\\cr  = 1 & \\implies Var(\\frac{\\partial \\mathcal{L}}{\\partial a^{[l]}}) = Var(\\frac{\\partial \\mathcal{L}}{\\partial x})\\cr  > 1 & \\implies \\text{Exploding Gradient}\\end{cases}", { displayMode: true });
-                document.writeln(render);
-                </script> -->
                 <p>Thus, in order to avoid the vanishing or exploding of the forward propagated signal, we must set <script>
                     document.write(katex.renderToString("n^{[l-1]}Var(W^{[l]}) = 1"))
                     </script> by initializing <script>
@@ -560,7 +555,6 @@
                     </script> by initializing <script>
                     document.write(katex.renderToString("Var(W^{[l]}) = \\frac{1}{n^{[l]}}"))
                     </script>. </p>
-
                 <p> In practice, Machine Learning Engineers using Xavier initialization would either initialize the weights as <script>
                     document.write(katex.renderToString('\\mathcal{N}(0,\\frac{1}{n^{[l-1]}})'))
                     </script> or as <script>
