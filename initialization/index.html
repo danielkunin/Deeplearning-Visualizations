@@ -80,9 +80,9 @@
                     <li>Initialize the parameters</li>
                     <li>Use an <span class="marginanchor" id="margin-0-anchor" data-number="0" data-align="middle">optimization algorithm</span>, then repeat these steps:</li>
                     <ol type="a">
-                        <li>Forward propagate an input image</li>
+                        <li>Forward propagate an input</li>
                         <li>Compute the cost function</li>
-                        <li>Backward propagate the error to calculate the gradients</li>
+                        <li>Compute the gradients of the cost with respect to parameters using backpropagation</li>
                         <li>Update the parameters using their gradients</li>
                     </ol>
                 </ol>
@@ -153,7 +153,7 @@
         <div class="container">
             <div class="column-6-8 divider-bottom column-align">
                 <p> What do you notice about the gradients and weights when the initialization method is "zero"?</p>
-                <p class="inline-caption">Initializing all the weights with "zeros" leads the weights to learn the same features during training.</p>
+                <p class="inline-caption">Initializing all the weights with “zeros” leads the neurons to learn the same features during training.</p>
                 <p>In fact, any constant initialization scheme will perform very poorly. Consider a two hidden unit <span class="marginanchor" id="margin-1-anchor" data-number="1" data-align="middle">neural network</span> and assume we initialize all the biases to 0 and the weights with some constant
                     <script>
                     document.write(katex.renderToString('\\alpha'))
@@ -222,7 +222,7 @@
             <div class="column-2-8 column-align margin">
             	<div class="marginbody" id="margin-2-body" data-number="2">
                 	<img src="img/exploding.png">
-                	<p class="caption">The gradients are too big, leading to oscillation of the loss around its minimum value (marked by "+").</p>
+                	<p class="caption">The gradients of the cost with respect to the parameters are too big, leading to oscillation of the loss around its minimum value (marked by "+").</p>
                 </div>
             </div>
             <div class="column-4-8">
@@ -248,7 +248,7 @@
             <div class="column-2-8 column-align margin">
             	<div class="marginbody" id="margin-3-body" data-number="3">
                 	<img src="img/vanishing.png">
-                	<p class="caption">The gradients are too small, leading to convergence of the loss before it has reached the minimum value (marked by "+").</p>
+                	<p class="caption">The gradients of the cost with respect to the parameters are too small, leading to convergence of the loss before it has reached the minimum value (marked by "+").</p>
                 </div>
             </div>
             <div class="column-6-8 divider-bottom">
@@ -256,8 +256,11 @@
             </div>
             <div class="column-6-8 index3-target column-align">
                 <h3>III&emsp;What is an "appropriate" initialization?</h3>
-                <p>We will stick to the following rule of thumb concerning the <span class="marginanchor" id="margin-4-anchor" data-number="4" data-align="top">variance</span> of our activations:</p>
-                <p class="inline-caption">The variance should stay the same across every layer to prevent the signal from vanishing or exploding.</p>
+                <p>To prevent the activations of our network from vanishing or exploding we will stick to the following rules of thumb concerning its <span class="marginanchor" id="margin-100-anchor" data-number="100" data-align="top">mean</span> and <span class="marginanchor" id="margin-4-anchor" data-number="4" data-align="top">variance</span>:</p>
+                <ol class="inline-caption">
+                	<li>The mean of the activations should be zero.</li>
+                	<li>The variance of the activations should stay the same across every layer.</li>
+                </ol>
                 <p>More concretely, consider a <span class="marginanchor" id="margin-5-anchor" data-number="5" data-align="middle">layer
                     <script>
                     document.write(katex.renderToString('l'))
@@ -268,10 +271,10 @@
                 </script>
                 <p>We would like the following to hold:<sup class="footnote-index footnote-index2">2</sup></p>
                 <script>
-                var render = katex.renderToString("Var(a^{[l-1]}) = Var(a^{[l]})", { displayMode: true });
+                var render = katex.renderToString("\\begin{aligned}E[a^{[l-1]}] &= E[a^{[l]}]\\cr Var(a^{[l-1]}) &= Var(a^{[l]})\\end{aligned}", { displayMode: true });
                 document.writeln(render);
                 </script>
-                <p>Maintaining the value of the variance of the input and the output of every layer guarantees no exploding/vanishing gradient. The recommended initialization is Xavier initialization (or one of its derived methods), for every layer
+                <p>Ensuring zero-mean and maintaining the value of the variance of the input of every layer guarantees no exploding/vanishing gradient.  It applies both to the forward propagation (for activations) and backward propagation (for gradients of the cost with respect to activations). The recommended initialization is Xavier initialization (or one of its derived methods), for every layer
                     <script>
                     document.write(katex.renderToString('l'))
                     </script>:
@@ -294,7 +297,10 @@
             </div>
             <div class="column-2-8 column-align margin">
             	<div class="marginbody" id="margin-4-body" data-number="4">
-            		<p class="caption">Variance is a measure of how much a data source is spread about its mean.</p>
+            		<p class="caption">Variance is a measure of how much a random variable is spread around its mean. In deep learning, the random variable could be the data, the prediction, the weights, the activations, etc.</p>
+            	</div>
+            	<div class="marginbody" id="margin-100-body" data-number="4">
+            		<p class="caption">Mean is a measure of the center or expectation of a random variable.</p>
             	</div>
             	<div class="marginbody" id="margin-5-body" data-number="5">
                 	<img src="img/layerl.png">
@@ -315,9 +321,9 @@
 	            </div>
 	            <div class="marginbody" id="margin-6-body" data-number="6">
 	                <img src="img/normal.png">
-	                <p class="caption">Data generated from a normal distribution <script>
+	                <p class="caption">Values generated from a normal distribution <script>
                     document.write(katex.renderToString('\\mathcal{N}(\\mu,\\sigma^2)'))
-                    </script> is symmetric around its mean <script>
+                    </script> are symmetric around the mean <script>
                     document.write(katex.renderToString('\\mu'))
                     </script>.</p>
             	</div>
@@ -403,7 +409,7 @@
             </div>
             <div class="column-6-8 index4-target column-align">
                 <h3>IV&emsp;Proof of Xavier initialization</h3>
-                <p>In this section, we will prove that Xavier Initialization keeps the variance the same across every layer. Sometimes it helps to understand the proof to grasp the concept, but you can understand the fundamental idea without the math.</p>
+                <p>In this section, we will prove that Xavier Initialization keeps the variance the same across every layer. We will assume that our layer’s activations are normally distributed around zero. Sometimes it helps to understand the proof to grasp the concept, but you can understand the fundamental idea without the math.</p>
                 <p>Let’s work on the <span class="marginanchor" id="margin-7-anchor" data-number="7" data-align="middle">layer
                     <script>
                     document.write(katex.renderToString('l'))
@@ -428,7 +434,7 @@
                     document.write(katex.renderToString('Var(a^{[l-1]}) = Var(a^{[l]})'))
                     </script>.
                 </p>
-                <p>Assume we initialized our network with appropriate values. Early on in the training, we are in the <span class="marginanchor" id="margin-9-anchor" data-number="9" data-align="middle">linear regime</span> of
+                <p>Assume we initialized our network with appropriate values and the input is normalized. Early on in the training, we are in the <span class="marginanchor" id="margin-9-anchor" data-number="9" data-align="middle">linear regime</span> of
                     <script>
                     document.write(katex.renderToString("tanh"))
                     </script>. Values are small enough and thus
@@ -535,15 +541,36 @@
                 </script>
                 <p>Depending on how we initialize our weights, the relationship between the variance of our output and input will vary dramatically.  Notice the following three cases.</p>
                 <script>
-                var render = katex.renderToString("n^{[l-1]}Var(W^{[l]})  \\begin{cases} < 1 &\\implies \\text{Vanishing Gradient}\\cr  = 1 & \\implies Var(a^{[L]}) = Var(x)\\cr  > 1 & \\implies \\text{Exploding Gradient}\\end{cases}", { displayMode: true });
+                var render = katex.renderToString("n^{[l-1]}Var(W^{[l]})  \\begin{cases} < 1 &\\implies \\text{Vanishing Signal}\\cr  = 1 & \\implies Var(a^{[L]}) = Var(x)\\cr  > 1 & \\implies \\text{Exploding Signal}\\end{cases}", { displayMode: true });
                 document.writeln(render);
                 </script>
-                <p>Thus, in order to avoid the vanishing or exploding gradient problem, we must set <script>
+               <!--  <p>Throughout the proof, we worked on activations computed during the forward propagation. The same result can be derived for the backpropagated gradients.</p> 
+                <script>
+                var render = katex.renderToString("n^{[l-1]}Var(W^{[l]})  \\begin{cases} < 1 &\\implies \\text{Vanishing Gradient}\\cr  = 1 & \\implies Var(\\frac{\\partial \\mathcal{L}}{\\partial a^{[l]}}) = Var(\\frac{\\partial \\mathcal{L}}{\\partial x})\\cr  > 1 & \\implies \\text{Exploding Gradient}\\end{cases}", { displayMode: true });
+                document.writeln(render);
+                </script> -->
+                <p>Thus, in order to avoid the vanishing or exploding of the forward propagated signal, we must set <script>
                     document.write(katex.renderToString("n^{[l-1]}Var(W^{[l]}) = 1"))
                     </script> by initializing <script>
                     document.write(katex.renderToString("Var(W^{[l]}) = \\frac{1}{n^{[l-1]}}"))
-                    </script>. This is a theoretical justification for Xavier Initialization!</p>
+                    </script>. 
 
+                <p>Throughout the proof, we worked on activations computed during the forward propagation. The same result can be derived for the backpropagated gradients. Doing so, you will see that in order to avoid the vanishing or exploding gradient problem, we must set <script>
+                    document.write(katex.renderToString("n^{[l]}Var(W^{[l]}) = 1"))
+                    </script> by initializing <script>
+                    document.write(katex.renderToString("Var(W^{[l]}) = \\frac{1}{n^{[l]}}"))
+                    </script>. </p>
+
+                <p> In practice, Machine Learning Engineers using Xavier initialization would either initialize the weights as <script>
+                    document.write(katex.renderToString('\\mathcal{N}(0,\\frac{1}{n^{[l-1]}})'))
+                    </script> or as <script>
+                    document.write(katex.renderToString('\\mathcal{N}(0,\\frac{2}{n^{[l-1]} + n^{[l]}})'))
+                    </script> which is the harmonic mean of <script>
+                    document.write(katex.renderToString('\\frac{1}{n^{[l-1]}}'))
+                    </script> and <script>
+                    document.write(katex.renderToString('\\frac{1}{n^{[l]}}'))
+                    </script>. </p>
+                    <p>This is a theoretical justification for Xavier Initialization! Xavier initialization works with tanh activations. Myriads of other initialization methods exist. If you are using ReLU for example, a common activation function is He initialization (<a href="https://arxiv.org/pdf/1502.01852.pdf">He et al., Delving Deep into Rectifiers</a>).</p>
             </div>
             <div class="column-2-8 column-align margin">
             	<div class="marginbody" id="margin-7-body" data-number="7">
