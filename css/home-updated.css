@@ -192,9 +192,11 @@ ul li a {
 @media screen and (max-width: 720px) {
 
 
-   .column-6-8, .column-2-8, .column-25-8 {
-        width: 100%;
+    .column-2-8, .column-25-8 {
+        width: 42%;
     }
+
+   
 
     .nav-tile{
       padding-top: 1.5em;
