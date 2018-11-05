@@ -43,7 +43,7 @@ body {
 
 .container {
   
-    width: 75%;
+   
     margin: 1em auto;
     height: auto;
 }
@@ -216,6 +216,10 @@ ul li a {
       height: 15px;
     }
 
+    .container {
+      width: 85%;
+    }
+
  
 
 }
@@ -233,6 +237,10 @@ ul li a {
 
     .column-25-8 {
         width: 26.25%;
+    }
+
+    .container {
+      width: 75%;
     }
 
    
