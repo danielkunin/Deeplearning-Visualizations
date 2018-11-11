@@ -149,7 +149,7 @@
                     <p class="caption">The data used to train your model.</p>
                 </div>
                 <div class="marginbody" id="margin-4-body" data-number="4">
-                    <p class="caption">The data used to tune the hyperparameters of your model. This is sometimes referred to as a "dev" set.</p>
+                    <p class="caption">The data used to tune the hyperparameters of your model. This is sometimes referred to as a "validation" set.</p>
                 </div>
                 <div class="marginbody" id="margin-5-body" data-number="5">
                     <p class="caption">The data used to evaluate the performance of your model in real life.</p>
@@ -181,7 +181,7 @@
             <div class="column-6-8 divider-bottom column-align">
                 <ul>
                     <li>It is easy to do. Deep learning frameworks, such as Keras, offer options to save your model’s parameters regularly during training. Here are the corresponding lines of code and <a href="https://keras.io/callbacks/#earlystopping" target="_blank">documentation</a> on Keras to stop training when a chosen quantity has stopped improving.</li>
-                    <p class="citation">keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0, patience=0, verbose=0, mode='auto', baseline=None)</p>
+                    <p class="citation"> keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0, patience=0, verbose=0, mode='auto', baseline=None)</p>
                     <li>It is quicker than other regularization methods because you do not have any regularization hyperparameter to tune. In comparison, L2 regularization requires you to tune a regularization hyperparameter. It might take you several experiments to regularize your model with L2, while early stopping only needs one run.</li>
                 </ul>
             </div>
