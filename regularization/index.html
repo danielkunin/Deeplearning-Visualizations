@@ -115,11 +115,11 @@
                 <h4>Data Split: partioning a data set.</h4>
             </div>
             <div class="column-6-8 divider-bottom column-align">
-                <p>Before we explore the main regularization methods, you must partition your dataset. In order to estimate the ability of your model to generalize, you will split your dataset into three (or sometimes more) sets: <span class="marginanchor" id="margin-3-anchor" data-number="3" data-align="middle">training</span>, <span class="marginanchor" id="margin-4-anchor" data-number="4" data-align="middle">validation</span> and <span class="marginanchor" id="margin-5-anchor" data-number="5" data-align="middle">test</span>. If your model is trained on the training set, tuned on the validation set, and still performs well on the test set, it is able to generalize successfully.</p>
+                <p>Before we explore the main regularization methods, you must partition your dataset. In order to estimate the ability of your model to generalize, you will split your dataset into three (or sometimes more) sets: <span class="marginanchor" id="margin-3-anchor" data-number="3" data-align="middle">training</span>, <span class="marginanchor" id="margin-4-anchor" data-number="4" data-align="middle">dev</span> and <span class="marginanchor" id="margin-5-anchor" data-number="5" data-align="middle">test</span>. If your model is trained on the training set, tuned on the dev set, and still performs well on the test set, it is able to generalize successfully.</p>
                 <table>
                   <tr>
                     <th>Train Accuracy</th>
-                    <th>Validation Accuracy</th> 
+                    <th>Dev Accuracy</th> 
                     <th>Test Accuracy</th>
                     <th>Conclusion</th>
                   </tr>
@@ -159,7 +159,7 @@
         <div class="container">
             <div class="column-6-8 index2-target column-align">
                 <h3>II&emsp; Early stopping</h3>
-                <p>The easiest and widely-used regularization method is called early stopping. Recall that <span class="marginanchor" id="margin-6-anchor" data-number="6" data-align="middle">optimizing</span> a network to find the correct parameters is an iterative process. If you evaluate your model’s error on the training and validation set after every training epoch, you might see such curves:</p>
+                <p>The easiest and widely-used regularization method is called early stopping. Recall that <span class="marginanchor" id="margin-6-anchor" data-number="6" data-align="middle">optimizing</span> a network to find the correct parameters is an iterative process. If you evaluate your model’s error on the training and dev set after every training epoch, you might see such curves:</p>
                 <img src="img/curves.png">
                 <p>Based on this observation, you can state that after the 30,000th <span class="marginanchor" id="margin-7-anchor" data-number="7" data-align="middle">epoch</span>, your model starts overfitting to the training set. Early stopping means saving the model’s parameters at the 30,000th epoch. The saved model is the best performing model on the dev set and will likely generalize better to the test set.</p>
                 <p class="inline-caption"><b>Example:</b> Consider a “day vs. night image classification”. Rather than understanding the <span class="marginanchor" id="margin-8-anchor" data-number="8" data-align="middle">inherent features</span> of the data such as the brightness, the colors or the presence of a blue sky, your model learned mapping between training images and training labels by heart. You do not want this.</p>
