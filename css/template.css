@@ -372,7 +372,8 @@ h5{
 }
 
 p {
-    font-size: 18px;
+
+    font-size: 1.1em;
     margin-top: 0.8em;
     line-height: 1.6em;
 }
@@ -394,22 +395,18 @@ a{
 
 li{
   line-height: 1.8em;
-  font-size: 18px;
+  font-size: 1.1em;
 }
 
-ol  ol li{
-  font-size: 16px;
-  line-height: 2em;
-}
-
-ul{
-  /*list-style: none;*/
-}
 
 ol{
- 
-  padding-top: 1em;
-  padding-bottom: 1em;
+  margin-top: 1.8em;
+  margin-bottom: 1.8em;
+}
+
+ol ol {
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 ol.tableOfContent{
