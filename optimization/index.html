@@ -252,6 +252,9 @@
                     <p class="caption">Here we say inappropriate local minimum because in machine learning optimization, it is unlikely to converge to the global minimum.</p>
                 </div>
             </div>
+
+            <p> In practice, it is common practice to start with a large learning rate and decay it during training. Choosing the right decay (how often? by how much?) is non-trivial. A too large decay slows the progress towards the optimum, while a too small decay leads to chaotic updates with small improvements. In part II, you will study algorithmic decay approaches.</p>
+
             <div class="column-6-8 column-align">
                 <h4>c) Batch size</h4>
                 <p>The right choice of batch size is crucial to ensure convergence and generalization of your network. Although there’s been <span class="marginanchor" id="margin-4-anchor" data-number="4" data-align="middle">some research</span> on how to choose the batch size, there’s no consensus yet on what batch size to choose.</p>
@@ -269,8 +272,7 @@
 
                 <img src="img/flat_vs_sharp.png">
 
-                <p>In practice, to find hyperparameters such as the learning rate and the batch size, you should perform hyperparameter search. In <a href="https://arxiv.org/pdf/1711.00489.pdf">Don't Decay the Learning Rate, Increase the Batch Size</a>, Smith, Kindermans et al. suggest that the batch size and the learning rate are two ways to achieve the same outcome. They show that the benefits of decaying the learning rate can be achieved by increasing the batch size during training.
-
+                <p>In practice, to find hyperparameters such as the learning rate and the batch size, you should perform hyperparameter search. In <a href="https://arxiv.org/pdf/1711.00489.pdf">Don't Decay the Learning Rate, Increase the Batch Size</a>, Smith, Kindermans et al. suggest that the batch size and the learning rate are two ways to achieve the same outcome. They argue that the benefits of decaying the learning rate can be achieved by increasing the batch size during training. The efficient use of vast batch sizes notably reduces the number of parameter updates required to train a model.
                 </p>
 
 
