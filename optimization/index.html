@@ -262,7 +262,21 @@
                     <li>Choosing the largest batch size that fits in your GPU memory will benefit from efficient parallelization and usually accelerate training.</li>
                     <li>However, large batch sizes can sometimes hurt the ability to generalize. There’s a trade-off to find depending on the task you’re trying to achieve.</li>
                 </ul>
-                <p>In practice, to find hyperparameters such as the learning rate and the batch size, you should perform hyperparameter search.</p>
+
+                <p>
+                    Recall that the input batch is an input to the cost function. In <a href="https://arxiv.org/pdf/1609.04836.pdf">On large-batch training for deep learning: generalization gap and sharp minima</a>, Keskar et al. provide numerical evidence that a large batch size typically lead to sharper cost function surfaces than a small batch size. Here's an intuitive figure comparing a flat and a sharp minumum. Flat cost surfaces (and thus small batche sizes) are preferred because they lead to good generalization without requiring high precision.
+                </p>
+
+                <img src="img/flat_vs_sharp.png">
+
+                <p>In practice, to find hyperparameters such as the learning rate and the batch size, you should perform hyperparameter search. In <a href="https://arxiv.org/pdf/1711.00489.pdf">Don't Decay the Learning Rate, Increase the Batch Size</a>, Smith, Kindermans et al. suggest that the batch size and the learning rate are two ways to achieve the same outcome. They show that the benefits of decaying the learning rate can be achieved by increasing the batch size during training.
+
+                </p>
+
+
+
+
+
             </div>
             <div class="column-2-8 column-align margin">
                 <div class="marginbody" id="margin-4-body" data-number="4">
