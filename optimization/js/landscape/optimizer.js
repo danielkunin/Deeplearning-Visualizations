@@ -8,7 +8,7 @@ class optimizer {
     // location and loss data
     this.training = null;
     this.initial = point(0,0);
-    this.rule = [];
+    this.rule = ['gd','momentum','rmsprop','adam'];
     this.config = [];
     this.pos = [];
     this.paths = [];
@@ -286,7 +286,8 @@ class optimizer {
       .html(function(d) {
       	return 'Initial Point <br>(w1: ' + d3.format(".2f")(d.x) + ', w2: ' + d3.format(".2f")(d.y) + ')';
 	  });
-	this.loss.svg.call(this.tip);
+  	this.loss.svg.call(this.tip);
+    this.update();
   }
 
 }

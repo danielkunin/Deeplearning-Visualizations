@@ -19,11 +19,14 @@
     <!-- Load D3 -->
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <!-- Load Tensorflow -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.9.0">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.13.3/dist/tf.min.js"></script>
     <!-- Load Katex -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.css" integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>
+    <!-- Load Highlight -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/monokai-sublime.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     <!--Scroll To-->
     <script src="../js/template.js"></script>
 </head>
@@ -181,7 +184,59 @@
             <div class="column-6-8 divider-bottom column-align">
                 <ul>
                     <li>It is easy to do. Deep learning frameworks, such as Keras, offer options to save your model’s parameters regularly during training. Here are the corresponding lines of code and <a href="https://keras.io/callbacks/#earlystopping" target="_blank">documentation</a> on Keras to stop training when a chosen quantity has stopped improving.</li>
-                    <p class="citation">keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0, patience=0, verbose=0, mode='auto', baseline=None)</p>
+                    <!-- <p class="citation">keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0, patience=0, verbose=0, mode='auto', baseline=None)</p> -->
+                    <pre><code class="python">
+def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wait = 100):
+    """
+    Python implementation of the early stopping algorithm.
+
+    Arguments:
+    model -- Your model class which comes with functions:
+                model.train() -- trains the model for one step and returns the updated model.
+                model.eval() -- evaluates the model on a set and returns the error.
+                model.copy() -- copies the model.
+    X_train -- Training set
+    Y_train -- Training labels
+    X_dev -- Dev set
+    Y_dev -- Dev labels
+    eval_freq -- integer, ratio of training step per evaluation step.
+    stop_wait -- number of train step without dev error improvement before stopping.
+
+    Returns:
+    best_model -- the model with minimal dev error and early stopping
+    best_dev_error -- the best dev error achieved by best_model
+    best_model_index -- the best_model's saving step 
+    """
+
+    current_model = model.copy()       # Track your current model
+    best_model = model.copy()          # Track your best model
+    num_train_steps = 0                # number of training steps
+    num_steps_since_best_model = 0     # number of training steps since the last best model was saved
+    best_dev_error = np.inf            # the best dev error achieved so far (by best_model)
+    best_model_index = 0               # the best_model's saving step 
+
+    # Loop unless there's no model improvement on the dev set for stop_wait steps.
+    while num_steps_since_best_model < stop_wait:
+
+        # Train current_model for "train_per_eval_ratio" steps
+        for s in range(train_per_eval_ratio):
+            current_model.train(X_train, Y_train)
+            num_train_steps = num_train_steps + 1
+
+        # Evaluate your current_model on the dev set.
+        dev_error = current_model.eval(X_dev, Y_dev)
+
+        # If the dev error is lower than the best dev error previously achieved, then save the current_model as the best_model
+        if dev_error < best_dev_error:
+            num_steps_since_best_model = 0
+            best_model = current_model.copy()
+            best_model_index = num_train_steps
+            current_model = best_model
+        # Otherwise increment num_steps_since_best_model
+        else:
+            num_steps_since_best_model = num_steps_since_best_model + 1
+
+        return best_model, best_dev_error, best_model_index</code></pre>
                     <li>It is quicker than other regularization methods because you do not have any regularization hyperparameter to tune. In comparison, L2 regularization requires you to tune a regularization hyperparameter. It might take you several experiments to regularize your model with L2, while early stopping only needs one run.</li>
                 </ul>
             </div>
