@@ -184,8 +184,6 @@
             <div class="column-6-8 divider-bottom column-align">
                 <ul>
                     <li>It is easy to do. Deep learning frameworks, such as Keras, offer options to save your model’s parameters regularly during training. Here are the corresponding lines of code and <a href="https://keras.io/callbacks/#earlystopping" target="_blank">documentation</a> on Keras to stop training when a chosen quantity has stopped improving.</li>
-<<<<<<< HEAD
-                    <!-- <p class="citation">keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0, patience=0, verbose=0, mode='auto', baseline=None)</p> -->
                     <pre><code class="python">
 def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wait = 100):
     """
@@ -237,10 +235,8 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
         else:
             num_steps_since_best_model = num_steps_since_best_model + 1
 
-        return best_model, best_dev_error, best_model_index</code></pre>
-=======
-                    <p class="citation"> keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0, patience=0, verbose=0, mode='auto', baseline=None)</p>
->>>>>>> 98defe7eb7578469dc56ee2f5ebdd9aa0f8b3723
+        return best_model, best_dev_error, best_model_index
+                    </code></pre>
                     <li>It is quicker than other regularization methods because you do not have any regularization hyperparameter to tune. In comparison, L2 regularization requires you to tune a regularization hyperparameter. It might take you several experiments to regularize your model with L2, while early stopping only needs one run.</li>
                 </ul>
             </div>
