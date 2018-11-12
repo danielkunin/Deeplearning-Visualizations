@@ -162,8 +162,10 @@
         <div class="container">
             <div class="column-6-8 index2-target column-align">
                 <h3>II&emsp; Early stopping</h3>
-                <p>The easiest and widely-used regularization method is called early stopping. Recall that <span class="marginanchor" id="margin-6-anchor" data-number="6" data-align="middle">optimizing</span> a network to find the correct parameters is an iterative process. If you evaluate your model’s error on the training and dev set after every training epoch, you might see such curves:</p>
-                <img src="img/curves.png">
+                <p>The easiest regularization method is called early stopping. Recall that <span class="marginanchor" id="margin-6-anchor" data-number="6" data-align="middle">optimizing</span> a network to find the correct parameters is an iterative process. If you evaluate your model’s error on the training and dev set after every training epoch, you might see such curves:</p>
+                <div style="display: flex; justify-content: center;">
+                    <img src="img/curves.png" style="width:600px;height:300px;">
+                </div>
                 <p>Based on this observation, you can state that after the 30,000th <span class="marginanchor" id="margin-7-anchor" data-number="7" data-align="middle">epoch</span>, your model starts overfitting to the training set. Early stopping means saving the model’s parameters at the 30,000th epoch. The saved model is the best performing model on the dev set and will likely generalize better to the test set.</p>
                 <p class="inline-caption"><b>Example:</b> Consider a “day vs. night image classification”. Rather than understanding the <span class="marginanchor" id="margin-8-anchor" data-number="8" data-align="middle">inherent features</span> of the data such as the brightness, the colors or the presence of a blue sky, your model learned mapping between training images and training labels by heart. You do not want this.</p>
             </div>
@@ -238,16 +240,20 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
         return best_model, best_dev_error, best_model_index
                     </code></pre>
                     <li>It is quicker than other regularization methods because you do not have any regularization hyperparameter to tune. In comparison, L2 regularization requires you to tune a regularization hyperparameter. It might take you several experiments to regularize your model with L2, while early stopping only needs one run.</li>
-                </ul>
+                </ul>    
+
+        <p>
+            Despite being practical, early stopping is not satisfying from a scientific standpoint. There exist other regularization methods, such as L1 (/L2) regularization and dropout, or optimization methods, such as learning rate annealing, that rely more on theory and are often more reliable.
+        </p>
             </div>
         </div>
 
         <div class="container">
             <div class="column-6-8 index3-target">
                 <h3>III&emsp; L1 and L2 regularizations</h3>
-                <p>Although early stopping is a practical technique to reduce overfitting, there exist other methods, such as L1 and L2 regularizations, that rely more on theory. In order to avoid overfitting the training set, you can try to reduce the complexity of the model by removing layers, and consequently decreasing the number of parameters. As shown by the work of <a href="https://papers.nips.cc/paper/563-a-simple-weight-decay-can-improve-generalization.pdf" target="_blank">Krogh and Hertz (1992)</a>, another way to constrain a network and lower its complexity is to:</p>
+                <p>In order to avoid overfitting the training set, you can try to reduce the complexity of the model by removing layers, and consequently decreasing the number of parameters. As shown by the work of <a href="https://papers.nips.cc/paper/563-a-simple-weight-decay-can-improve-generalization.pdf" target="_blank">Krogh and Hertz (1992)</a>, another way to constrain a network and lower its complexity is to:</p>
                 <p class="inline-caption">Limit the growth of the weights through some kind of weight decay.</p>
-                <p>You want to prevent the weights from growing too large, unless it is really necessary.</p>
+                <p>You want to prevent the weights from growing too large, unless it is really necessary. Intuitively, you are reducing the set of potential networks to choose from. </p>
             </div>
             <div class="column-6-8">
                 <h4>How does this work?</h4>
@@ -491,7 +497,10 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
 
         <div class="container">
             <div class="column-6-8">
-                <p>Successfully training a model on complex tasks is complicated. You need to find a model architecture that can understand the complexity of the dataset. Once you find such an architecture, you can work on improving generalization with the regularization techniques we discussed here.</p>
+                <p>When applying regularization methods, you need a metric to track your model's improvement and generalization ability. The bias/variance tradeoff enables you to measure the efficiency of your regularization. <p>The bias/variance tradeoff is discussed in our <a href="https://www.coursera.org/specializations/deep-learning" target="_blank">Deep Learning Specialization</a> (<a href="https://www.coursera.org/learn/deep-neural-network" target="_blank">Course 2: “Improving Neural Networks”</a>, Week 2: “Practical aspects of Deep Learning”). We invite you to check it out! </p>
+
+
+                <p>Successfully training a model on complex tasks is complicated. You need to find a model architecture that can understand the complexity of the dataset. Once you find such an architecture, you can work on improving generalization with the regularization techniques we discussed here. In the end, it should achieve low bias and low variance!</p>
             </div>
         </div>
 

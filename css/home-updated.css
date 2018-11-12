@@ -3,7 +3,7 @@ body {
     margin: 0;
     font-family: "Assistant";
     background-color: #FCF2F2;
-    color: black;
+   color: #303030;
 }
 
 
@@ -23,7 +23,7 @@ body {
 
 
 #header-logo{
-  width: 8em;
+  width: 9em;
   vertical-align: middle;
   margin: 1.5em auto;
   display: inline-block;
@@ -42,30 +42,75 @@ body {
 
 
 .container {
-  
-   
     margin: 1em auto;
     height: auto;
 }
 
 .title-section{
-  margin-bottom: 3em;
+  margin-top: 1.5em;
+  margin-bottom: 3.5em;
 }
 
 .main.catalog{
   background-color: white;
   padding-top: 2em;
-  padding-bottom: 5%;
+  padding-bottom: 1.8em;
 
 }
 
 .footer{
-  padding-top: 2em;
+/*  padding-top: 1em;*/
+}
+
+.footer-li li{
+  font-size: 0.8em;
+  display: inline-block;
+  padding-right: 0.5em;
+   color: rgba(0,0,0,0.6);
+}
+
+ul.footer-li{
+  display: inline-block;
+  padding: 0;
+  margin:0;
+  border-bottom: 1px solid rgba(0,0,0,0.4);
+}
+
+
+p.footer-note{
+  margin-top: 0;
+  padding-top: 1em;
+/*  padding-bottom:2em;*/
+  font-size: 0.8em;
+  color: rgba(0,0,0,0.6);
+  display: inline-block;
+}
+
+.social{
+  float: right;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.icon1{
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+  background-color: rgba(0,0,0,0.2);
+  margin-left: 0.5em;
+  display: inline-block;
+  margin-top: 1em;
+}
+
+
+a.highlighted{
+  font-style: italic;
+  font-weight: 400;
+  color: #303030;
 }
 
 a{
   text-decoration: none;
-  color: #000000;
 }
 
 h1.title{
@@ -80,7 +125,13 @@ p.title{
 
 p.title a {
   text-decoration: none;
-  color: black;
+  color: #303030;
+}
+
+p.sub-title{
+  font-size: 0.9em;
+  color: rgba(0,0,0,0.5);
+  margin-top: 0;
 }
 
 h2{
@@ -97,11 +148,6 @@ h3{
 }
 
 
-p.footer-note{
-  padding-bottom:2em;
-  font-size: 12px;
-  color: rgba(0,0,0,0.6);
-}
 
 ul{
   list-style: none;
@@ -123,14 +169,22 @@ li{
 
 
 ul li a {
-    font-size: 22px;
-    color: black;
-    list-style: none;
+  font-size: 22px;
+  color: black;
+  list-style: none;
   text-decoration: none;
     
   
 
 
+}
+
+.backToBlog{
+  border-left: 1px solid #3E3E3E; 
+  padding-left: 1em;
+  margin-left: 1em;
+  vertical-align: middle;
+  color: #303030;
 }
 
 .column-align {

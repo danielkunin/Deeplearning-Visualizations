@@ -171,7 +171,13 @@ p.citation{
 
 }
 
+.blue{
+  color: #009CDE;
+}
 
+.red{
+  color: #FF8686;
+}
 
 /*grid*/
 
@@ -291,7 +297,7 @@ img{
   border-bottom: 1px solid #E6E6E6;
   
   margin:3% auto 2% auto;
-  padding:2% 4% 2% 6%;
+  padding:5% 4%;
   min-width: 1200px;
 
 }
@@ -320,7 +326,7 @@ img{
   cursor: pointer;
   font-style: italic;
   background-color: rgba(255,196,0,0.4);
-rgba(3,196,244,0.3)
+/*  rgba(3,196,244,0.3)*/
 }
 
 .marginbody {
@@ -372,9 +378,9 @@ h5{
 }
 
 p {
-
     font-size: 1.1em;
-    margin-top: 0.8em;
+    margin-top: 0.6em;
+    margin-bottom: 0;
     line-height: 1.6em;
 }
 
@@ -383,10 +389,6 @@ p i{
 }
 
 
-p.viz-field{
-  margin-top:0.5em;
-  margin-bottom: 0;
-}
 
 a{
   color: black;
@@ -476,6 +478,13 @@ ol.tableOfContent2 li:hover{
 
 
 
+.footer-generic{
+  background-color: rgba(0,0,0,0.8);
+  padding-top: 2em;
+  padding-bottom: 2em;
+
+}
+
 .footer ol{
   padding-left: 1em;
 }
@@ -485,6 +494,46 @@ ol.tableOfContent2 li:hover{
   cursor: pointer;
 }
 
+
+.footer-li li{
+  font-size: 0.8em;
+  display: inline-block;
+  padding-right: 0.5em;
+   color: rgba(0,0,0,0.6);
+}
+
+ul.footer-li{
+  display: inline-block;
+  padding: 0;
+  margin:0;
+  border-bottom: 1px solid rgba(0,0,0,0.4);
+}
+
+
+p.footer-note{
+  margin-top: 0;
+  padding-top: 1em;
+/*  padding-bottom:2em;*/
+  font-size: 0.8em;
+  color: rgba(255,255,255,0.4);
+  display: inline-block;
+}
+
+.social{
+  float: right;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.icon1{
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+  background-color: rgba(255,255,255,0.4);
+  margin-left: 0.5em;
+  display: inline-block;
+  margin-top: 1em;
+}
 
 
 
@@ -686,16 +735,21 @@ ol.reference li {
 }
 /*stylesheet*/
 .button{
-	/*box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);*/
 	padding: 0.5em 1.2em;
   margin: auto 0.2em;
 	font-size: 14px;
 	background-color: white;
 	border-radius: 0.2em;
-	 -webkit-transition: box-shadow 0.5s; /* For Safari 3.1 to 6.0 */
-    transition: box-shadow 0.5s;
-    font-family: "Assistant";
+	-webkit-transition: box-shadow 0.5s; /* For Safari 3.1 to 6.0 */
+  transition: box-shadow 0.5s;
+  font-family: "Assistant";
 
+
+}
+
+button{
+     -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
 .viz-button{
@@ -705,19 +759,21 @@ ol.reference li {
 }
 
 .button-transport{
-  padding: 0.2em 1em 0em 1em;
-  margin: auto 0.2em;
+  padding: 0.5em 1.6em;
+  margin-top: 0.5em;
+  margin-right: 0.4em;
   font-size: 14px;
   background-color: white;
   border-radius: 0.2em;
    -webkit-transition: box-shadow 0.5s; /* For Safari 3.1 to 6.0 */
     transition: box-shadow 0.5s;
     font-family: "Assistant";
+
 }
 
 .button-transport img{
-  width: 1.5em;
-  height: 1.5em;
+  width: 0.8em;
+  height: 0.8em;
 }
 
 .button:hover,.button-transport:hover{
@@ -757,8 +813,7 @@ ol.reference li {
     position: relative;
     padding-left: 2em;
     padding-right: 2.2em;
-    margin-top: 1em;
-    margin-bottom: 1em;
+    margin-top: 0.8em;
     cursor: pointer;
     font-size: 14px;
     -webkit-user-select: none;
@@ -780,8 +835,8 @@ ol.reference li {
     position: absolute;
     top: 0;
     left: 0;
-    height: 20px;
-    width: 20px;
+    height: 1em;
+    width: 1em;
     background-color: #fff;
     border:1px solid #d0d0d0;
     border-radius: 50%;
@@ -816,10 +871,11 @@ ol.reference li {
 
 /* Style the indicator (dot/circle) */
 .radio-container .checkmark:after {
- 	top: 6px;
-	left: 6px;
-	width: 8px;
-	height: 8px;
+ 	top: 4px;
+	left: 4px;
+	width: 6px;
+	height: 6px;
+  vertical-align: middle;
 	border-radius: 50%;
 	background: #03A9F4;
 }

@@ -146,7 +146,7 @@
                 <p>In the visualization below, you will play with the starting point of initialization, the learning rate, and the batch size. With these parameters, you will fit a linear regression on a set of 300 data points using the gradient descent optimization algorithm. For more information on gradient descent optimization, refer to the Deep Learning Specialization (<a href="https://www.coursera.org/learn/neural-networks-deep-learning">Course 1</a>: “Neural Networks and Deep Learning”, Week 2: “Logistic Regression as a Neural Network”.) Here are some questions you should ask yourself:</p>
                 <ul>
                     <li>Why does the loss landscape look like this?</li>
-                    <li>What is the red dot?</li>
+                    <li>What is the red bullet?</li>
                     <li>Why can your optimization end-up with a lower cost value than the ground truth line?</li>
                     <li>What is the impact of the learning rate on the optimization?</li>
                     <li>What is the impact of the batch size on the optimization?</li>
@@ -173,7 +173,7 @@
 	                </label>
             	</div>
                 <svg id="regression_plot" width="250" height="250" style="margin-top:1em;margin-bottom: 1em;""></svg>
-                <button class="button-transport" id="generate" style="width:100%; ">
+                <button class="button-transport" id="generate" style="width: 100%;">
                 	Generate a new dataset
             	</button>
             </div>
@@ -246,14 +246,14 @@
                 </ul>
                 <p>The choice of learning rate depends on the curvature of your loss function. Gradient descent makes a linear approximation of the loss function in a given point. It then moves downhill along the approximation of the loss function. In the case where the loss is highly curved, the larger your step size (learning rate) the larger the error of your approximation. Taking small steps reduces your error<sup class="footnote-index footnote-index1">1</sup>.</p>
                 <img src="img/losscurve.png">
-
-                            <p>It is common practice to start with a large learning rate and decay it during training. Choosing the right decay (how often? by how much?) is non-trivial. An excessively agressive decay schedule slows the progress towards the optimum, while a slow-paced decay schedule leads to chaotic updates with small improvements. In part II, you will study algorithmic decay approaches.</p>
             </div>
             <div class="column-2-8 column-align margin">
                 <div class="marginbody" id="margin-3-body" data-number="3">
-                    <p class="caption">Here we say inappropriate local minimum because in machine learning optimization, the optimzation is often non-convex and unlikely to converge to the global minimum.</p>
+                    <p class="caption">Here we say inappropriate local minimum because in machine learning optimization, it is unlikely to converge to the global minimum.</p>
                 </div>
             </div>
+
+            <p> In practice, it is common practice to start with a large learning rate and decay it during training. Choosing the right decay (how often? by how much?) is non-trivial. A too large decay slows the progress towards the optimum, while a too small decay leads to chaotic updates with small improvements. In part II, you will study algorithmic decay approaches.</p>
 
             <div class="column-6-8 column-align">
                 <h4>c) Batch size</h4>
@@ -298,7 +298,7 @@
         </div>
         <div class="full-container" id="landscape">
             <div class="viz-column-3-8">
-                <p>In this visualization, you will choose your loss function and the starting point of your optimization. Although there's no explicit network function, you can assume that finding the minimum of your loss function is equivalent to finding the best network function for your task.</p>
+                In this visualization, you will choose your loss function and the starting point of your optimization. Although there's no explicit network function, you can assume that finding the minimum of your loss function is equivalent to finding the best network function for your task.
 
                 <h3>1. Choose your loss landscape</h3>
                 <p>Select an <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization">artificial landscape</a> <script>document.write(katex.renderToString('\\mathcal{L}(w_1,w_2)'))</script>.</p>
@@ -513,22 +513,6 @@
             <div class="column-6-8 column-align">
                 <p class="reference">To reference this article in an academic context, please cite this work as:</p>
                 <p class="citation">Katanforoosh & Kunin, "Optimizing your neural networks", deeplearning.ai, 2018.</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="footer-generic">
-        <div class="container">
-            <p class="footer-note">
-                Contact us at hello@deeplearning.ai</br>
-                © Deeplearning.ai 2018
-            </p>
-
-
-            <div class="social">
-                <div class="icon1"></div>
-                <div class="icon1"></div>
-                <div class="icon1"></div>
             </div>
         </div>
     </div>
