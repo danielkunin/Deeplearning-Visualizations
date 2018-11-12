@@ -33,13 +33,14 @@
     <div class="header"> 
         <div class="header-wrapper">
 
-        	<a href="https://www.deeplearning.ai/"><img id="header-logo" class="cppnControl" src="../img/deeplearning.png"></a>
-            <a><img id="header-logo" class="cppnControl"></a>
+  
+                <a href="https://www.deeplearning.ai/"><img id="header-logo" class="cppnControl" src="../img/deeplearning.png"></a>
+                <a href="../index.html" class="backToBlog">Back to AI Notes</a>
             <!-- Uncomment below to add links to other articles -->
             <ul class="header-nav">
                 <li><a href="../regularization/index.html">Regularization</a></li>
                 <li><a href="../initialization/index.html">Initialization</a></li>
-                <li><strong>Optimization</strong></li>
+                <li id="current_article">Optimization</li>
             </ul>
         </div>
     </div>
@@ -153,10 +154,10 @@
                 </ul>
             </div>
         </div>
-        <div class="full-container" id="landscape">
+        <div class="full-container hide-backToTop" id="landscape">
             <div class="viz-column-2-8">
                 <h3>1. Generate your dataset</h3>
-                <p>Select the training set size and click on "Generate a new dataset." A training set of the chosen size will be sampled randomly from a distribution and a <font color="blue">"ground truth" line</font> will automatically be fitted to this dataset. This line is the target line for your <font color="red">network function</font> defined by <script>document.write(katex.renderToString('\\hat{y} = wx + b'))</script>.</p>
+                <p>Select the training set size and click on "Generate a new dataset." A training set of the chosen size will be sampled randomly from a distribution and a <span class="blue">"ground truth" line</span> will automatically be fitted to this dataset. This line is the target line for your <span class="red">network function</span> defined by <script>document.write(katex.renderToString('\\hat{y} = wx + b'))</script>.</p>
             	<div>
             		<p>Select training set size.</p>
                     <label class="radio-container">Small
@@ -172,16 +173,16 @@
 	                    <span class="checkmark"></span>
 	                </label>
             	</div>
-                <svg id="regression_plot" width=300 height=300></svg>
-                <button class="button-transport" id="generate" >
+                <svg id="regression_plot" width="250" height="250" style="margin-top:1em;margin-bottom: 1em;""></svg>
+                <button class="button-transport" id="generate" style="width:100%; ">
                 	Generate a new dataset
             	</button>
             </div>
             <div class="viz-column-4-8">
                 <h3>2. Observe the loss landscape and initialize parameters</h3>
                 <p>Your loss function is the L2 loss defined by: <script>document.write(katex.renderToString('\\mathcal{L}(y, \\hat{y}) = ||y - \\hat{y}||_2^2'))</script> Observe the loss landscape for the generated dataset. 
-                 The <font color="blue">blue dot</font> indicates the value of the loss function for an optimal slope and intercept.
-                 The <font color="red">red dot</font> indicates the value of the loss function for a chosen initialization of the slope and intercept. Feel free to drag the red dot to change the inital slope and intercept.</p>
+                 The <span class="blue">blue dot</span> indicates the value of the loss function for an optimal slope and intercept.
+                 The <span class="red">red dot</span> indicates the value of the loss function for a chosen initialization of the slope and intercept. Feel free to drag the red dot to change the inital slope and intercept.</p>
                 <svg id="regression_landscape" width=450 height=450></svg>
             </div>
             <div class="viz-column-2-8">
@@ -214,7 +215,7 @@
 	                    <input type="radio" value="300" name="regression_bsize">
 	                    <span class="checkmark"></span>
 	                </label>
-                    <p>Train your <font color="red">network function</font>.</p>
+                    <p>Train your <span class="red">network function</span>.</p>
                 </div>
                 <button class="button-transport" id="regression_reset" title="reset">
                     <img src="img/reset.png">
@@ -255,9 +256,9 @@
                 </div>
             </div>
 
-            <div class="column-6-8 column-align">
+            <div class="column-6-8">
                 <h4>c) Batch size</h4>
-                <p>The right choice of batch size is crucial to ensure convergence and generalization of your network. Although there’s been <span class="marginanchor" id="margin-4-anchor" data-number="4" data-align="middle">some research</span> on how to choose the batch size, there’s no consensus yet on what batch size to choose.</p>
+                <p>The right choice of batch size is crucial to ensure convergence and generalization of your network. Although there’s been some research<sup class="footnote-index footnote-index2">2</sup> on how to choose the batch size, there’s no consensus yet on what batch size to choose.</p>
                 <p>Recent research on the right batch size have uncovered the following:</p>
                 <ul>
                     <li>The mini-batch size determines the frequency of your updates. The smaller minibatches the more updates, but the quicker the updates.</li>
@@ -275,19 +276,6 @@
                 <p>In practice, to find hyperparameters such as the learning rate and the batch size, you should perform hyperparameter search. In <a href="https://arxiv.org/pdf/1711.00489.pdf">Don't Decay the Learning Rate, Increase the Batch Size</a>, Smith, Kindermans et al. suggest that the batch size and the learning rate are two ways to achieve the same outcome. They argue that the benefits of decaying the learning rate can be achieved by increasing the batch size during training. The efficient use of vast batch sizes notably reduces the number of parameter updates required to train a model.
                 </p>
 
-
-
-
-
-            </div>
-            <div class="column-2-8 column-align margin">
-                <div class="marginbody" id="margin-4-body" data-number="4">
-                    <p class="caption">Check out these papers:<br> 
-                    - <a href="https://arxiv.org/pdf/1711.00489.pdf">Don't Decay the learning rate, increase the batch size</a><br>
-                    - <a href="https://papers.nips.cc/paper/6770-train-longer-generalize-better-closing-the-generalization-gap-in-large-batch-training-of-neural-networks.pdf">Train longer generalize better</a><br>
-                    - <a href="https://arxiv.org/pdf/1706.02677.pdf">Accurate, large minibatch SGD</a></li>
-                    </p>
-                </div>
             </div>
             <div class="column-6-8">
                 <h4>d) Iterative update</h4>
@@ -296,9 +284,9 @@
                 <p>Now that you have a starting point, a learning rate, and a batch size, it’s time to iteratively update the parameters to move towards the minimum of the loss function. The optimization algorithm is also a core choice to be made. There are various optimizers, and you can play with them in the visualization below. It will help you build intuition on the pros and cons of each of them.</p>
             </div>
         </div>
-        <div class="full-container" id="landscape">
+        <div class="full-container hide-backToTop" id="landscape">
             <div class="viz-column-3-8">
-                In this visualization, you will choose your loss function and the starting point of your optimization. Although there's no explicit network function, you can assume that finding the minimum of your loss function is equivalent to finding the best network function for your task.
+                <p>In this visualization, you will choose your loss function and the starting point of your optimization. Although there's no explicit network function, you can assume that finding the minimum of your loss function is equivalent to finding the best network function for your task.</p>
 
                 <h3>1. Choose your loss landscape</h3>
                 <p>Select an <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization">artificial landscape</a> <script>document.write(katex.renderToString('\\mathcal{L}(w_1,w_2)'))</script>.</p>
@@ -334,7 +322,13 @@
                     <th>Learning Rate Decay</th>
                   </tr>
                   <tr>
-                    <td><input type="checkbox" name="opt" value="gd" checked/> Gradient Descent</td>
+                    <td>
+                        <div class="checkbox">
+                            <input type="checkbox" name="opt" value="gd" checked/>
+                            <label>Gradient Descent</label>
+                        </div>
+                        
+                    </td>
                     <td><input class="gd" type="number" name="lrate" value="0.001" min="0" max="1" step="0.0001"/></td>
                     <td><input class="gd" type="number" name="ldecay" value="0" min="0" max="1" step="0.01"/></td>
                   </tr>
@@ -504,6 +498,11 @@
             <div class="column-6-8 column-align">
                 <ol class="reference footnote">
                     <li class="footnote-index1-target">Chapter 4 of the Deep Learning textbook (numerical computation) from Goodfellow et al.</li>
+                    <li class="footnote-index2-target">Check out these papers:<br> 
+                    - <a href="https://arxiv.org/pdf/1711.00489.pdf">Don't Decay the learning rate, increase the batch size</a><br>
+                    - <a href="https://papers.nips.cc/paper/6770-train-longer-generalize-better-closing-the-generalization-gap-in-large-batch-training-of-neural-networks.pdf">Train longer generalize better</a><br>
+                    - <a href="https://arxiv.org/pdf/1706.02677.pdf">Accurate, large minibatch SGD</a></li>
+                    </li>
                 </ol>
             </div>
             <div class="column-2-8 column-align">
@@ -512,6 +511,22 @@
             <div class="column-6-8 column-align">
                 <p class="reference">To reference this article in an academic context, please cite this work as:</p>
                 <p class="citation">Katanforoosh & Kunin, "Optimizing your neural networks", deeplearning.ai, 2018.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-generic hide-backToTop">
+        <div class="container">
+            <p class="footer-note">
+                Contact us at hello@deeplearning.ai</br>
+                © Deeplearning.ai 2018
+            </p>
+
+
+            <div class="social">
+                <div class="icon1"></div>
+                <div class="icon1"></div>
+                <div class="icon1"></div>
             </div>
         </div>
     </div>

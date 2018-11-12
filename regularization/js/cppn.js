@@ -198,6 +198,8 @@ function cppnSetup() {
         cppn.stop();
       }
     });
+
+    $("body").fadeTo(500, 1);
 }
 
 cppnSetup();

@@ -31,12 +31,12 @@
     <div class="header"> 
         <div class="header-wrapper">
 
-        	<a href="https://www.deeplearning.ai/"><img id="header-logo" class="cppnControl" src="img/deeplearning.png"></a>
-            <a><img id="header-logo" class="cppnControl"></a>
+        	<a href="https://www.deeplearning.ai/"><img id="header-logo" class="cppnControl" src="../img/deeplearning.png"></a>
+            <a href="../index.html" class="backToBlog">Back to AI Notes</a>
             <!-- Uncomment below to add links to other articles -->
             <ul class="header-nav">
                 <li><a href="../regularization/index.html">Regularization</a></li>
-                <li><strong>Initialization</strong></li>
+                <li id="current_article">Initialization</li>
                 <li><a href="../optimization/index.html">Optimization</a></li>
             </ul>
         </div>
@@ -98,7 +98,7 @@
                 </div>
             </div>
         </div>
-        <div class="full-container" id="playground">
+        <div class="full-container hide-backToTop" id="playground">
             <div class="viz-column-2-8">
                 <h3>1. Choose input dataset</h3>
                 <p>Select a training dataset.</p>
@@ -333,7 +333,7 @@
             </div>
         </div>
 
-        <div class="full-container" id="mnist">
+        <div class="full-container hide-backToTop" id="mnist">
             <div class="viz-column-2-8">
                 <h3>1. Load your dataset</h3>
                 <p>Load 10,000 handwritten digits images (<a href="http://yann.lecun.com/exdb/mnist/">MNIST</a>).</p>
@@ -719,6 +719,22 @@
             </div>
         </div>
     </div>
+     <div class="footer-generic hide-backToTop">
+        <div class="container">
+            <p class="footer-note">
+                Contact us at hello@deeplearning.ai</br>
+                © Deeplearning.ai 2018
+            </p>
+
+
+            <div class="social">
+                <div class="icon1"></div>
+                <div class="icon1"></div>
+                <div class="icon1"></div>
+            </div>
+        </div>
+    </div>
+    
     <div class="backToTop">
         <p>↑ Back to top</p>
     </div>
@@ -741,6 +757,7 @@
 <script src="js/mnist/nn.js"></script>
 <!-- Data Zip Reader -->
 <script src="js/mnist/zip/zip.js"></script>
+<script src="js/mnist/zip/zip-ext.js"></script>
 <!-- Data Generattion Code -->
 <script src="js/mnist/data.js"></script>
 <!-- Visualization Code -->

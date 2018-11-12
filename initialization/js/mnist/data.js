@@ -28,6 +28,31 @@ function extract(file, data, draw) {
   });
 }
 
+// sum two arrays
+function sum(a, b) {
+  for (var i = 0; i < b.length; i++) {
+    b[i] += a[i];
+  }
+  return b;
+}
+
+// get mean of an array of arrays
+function mean(x) {
+  var n = x.length,
+      mu = x.reduce(sum).map((a) => a / n);
+  return mu;
+}
+
+// get std of an array of arrays
+function std(x, mu) {
+  var neg_mu = mu.map((a) => -a),
+      e = x.map((a) => sum(a, neg_mu)),
+      se = e.map((a) => a.map((a) => Math.pow(a, 2))),
+      mse = mean(se),
+      sigma = mse.map(Math.sqrt);
+  return sigma;
+}
+
 // process a CSV formatted string into array of arrays of images and array of labels
 function process(text, data) {
     var lines = text.split(/\r\n|\n/);
@@ -36,7 +61,7 @@ function process(text, data) {
     // iterate through lines
     for (var i = 0; i < lines.length - 1; i++) {
       var digits = lines[i].split(',');
-      labels.push(parseFloat(digits[0]));
+      labels.push(parseInt(digits[0]));
       var image = [];
       for (var j=1; j < digits.length; j++) {
         image.push(parseFloat(digits[j]) / 255.0);
@@ -47,4 +72,6 @@ function process(text, data) {
     data["images"] = images;
     data["labels"] =  labels;
     data['size'] =  i;
+    // data['mean'] =  mean(images);
+    // data['std'] =  std(images, data['mean']);
 }

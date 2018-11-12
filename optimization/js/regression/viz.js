@@ -35,7 +35,7 @@ $("#generate").on("click", function () {
 	optObject.plot(0);
 });
 
-$("input[name='regression_tsize']").on("input", function () {
+$("input[name='regression_tsize']").on("click", function () {
 	$("#regression_reset").click();
 	sample_size = parseFloat(this.value);
 	regression_data = lineObject.sample(sample_size);
@@ -53,17 +53,17 @@ $("input[name='regression_tsize']").on("input", function () {
 // });
 
 
-$("input[name='regression_lrate']").on("input", function () {
+$("input[name='regression_lrate']").on("click", function () {
 	$("#regression_reset").click();
 	optObject.lrate = parseFloat(this.value);
 });
 
-$("input[name='regression_bsize']").on("input", function () {
+$("input[name='regression_bsize']").on("click", function () {
 	$("#regression_reset").click();
 	optObject.bsize = parseInt(this.value);
 });
 
-$("#regression_bsize").on("input", function () {
+$("#regression_bsize").on("click", function () {
 	$("#regression_reset").click();
 	$("#regression_bsize_val").html(d3.format(".2")(this.value));
 	optObject.bsize = parseInt(this.value);

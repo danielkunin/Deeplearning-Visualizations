@@ -36,9 +36,9 @@
         <div class="header-wrapper">
 
         	<a href="https://www.deeplearning.ai/"><img id="header-logo" class="cppnControl" src="../img/deeplearning.png"></a>
-            <a><img id="header-logo" class="cppnControl"></a>
+            <a href="../index.html" class="backToBlog">Back to AI Notes</a>
             <ul class="header-nav">
-                <li><strong>Regularization</strong></li>
+                <li id="current_article">Regularization</li>
                 <li><a href="../initialization/index.html">Initialization</a></li>
                 <li><a href="../optimization/index.html">Optimization</a></li>
             </ul>
@@ -304,7 +304,7 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
             </div>
         </div>
 
-        <div class="full-container" id="mnist">
+        <div class="full-container hide-backToTop" id="mnist">
             <div class="viz-column-4-8">
                 <div id="mnist_network"></div>
             </div>
@@ -403,7 +403,7 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
                 <p>It’s useful to build some intuition about what L1 and L2 regularization do. You can play with the visualization below to observe variations of the cost landscape subject to regularization from a top view.</p>
 	        </div>
         </div>
-        <div class="full-container" id="landscape">
+        <div class="full-container hide-backToTop" id="landscape">
             <div class="viz-column-4-8">
                 <svg id="contour" width="550" height="520"></svg>
             </div>
@@ -491,7 +491,7 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
              	</ul>
 
                 <p>Dropout is a regularization technique, introduced in <a href="http://jmlr.org/papers/volume15/srivastava14a.old/srivastava14a.pdf" target="_blank">Srivastava et al. (2014)</a>, that allows you to combine many different architectures efficiently by randomly dropping some of the neurons of your network during training.</p>
-            	<video width="70%" height="auto" style="margin:0% 15%" controls>
+            	<video width="70%" height="auto" controls>
 					<source src="img/dropout1.mp4" type="video/mp4">
 					Your browser does not support the video tag.
 				</video>
@@ -557,6 +557,21 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
             </div>
         </div>
     </div>
+     <div class="footer-generic hide-backToTop">
+        <div class="container">
+            <p class="footer-note">
+                Contact us at hello@deeplearning.ai</br>
+                © Deeplearning.ai 2018
+            </p>
+
+
+            <div class="social">
+                <div class="icon1"></div>
+                <div class="icon1"></div>
+                <div class="icon1"></div>
+            </div>
+        </div>
+    </div>
     <div class="backToTop">
         <p>↑ Back to top</p>
     </div>
@@ -574,6 +589,7 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
 <link rel="stylesheet" href="css/sparsity.css">
 <script src="js/sparsity/nn.js"></script>
 <script src="js/sparsity/zip/zip.js"></script>
+<script src="js/sparsity/zip/zip-ext.js"></script>
 <script src="js/sparsity/data.js"></script>
 <script src="js/sparsity/viz.js"></script>
 
