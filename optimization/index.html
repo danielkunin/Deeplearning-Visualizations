@@ -75,8 +75,8 @@
             	<p>In machine learning, you first define a task, such as detecting cats on an image, and a loss (or objective) function to evaluate how well you perform on that task. Then, you find the architecture and parameters that result in an optimal value for your objective.</p>
 
                 <h3>I&emsp;Setting-up the optimization problem</h3>
-                <p>The way you define your task is the primary factor influencing how your model is going to train and perform. Say your task is to localize and identify cars in images. Your objective function should frame the following sentence in mathematical terms:</p>
-                <p class="inline-caption">Given an image, output bounding boxes (bbox) that contain all the cars on the image. Your output boxes should match the labeled boxes.</p>
+                <p>The way you define your task is the primary factor influencing how your model is going to train and perform. Say your task is to localize and identify cars and pedestrians in images. Your objective function should frame the following sentence in mathematical terms:</p>
+                <p class="inline-caption">Given an image, output bounding boxes (bbox) that contain all the cars and pedestrians on the image. Your output boxes should match the labeled boxes.</p>
                 <p>In mathematical terms, a possible loss function <script>
                     document.write(katex.renderToString('\\mathcal{L}'))
                 </script> is:</p>
@@ -163,7 +163,7 @@
 	                    <input type="radio" value="20" name="regression_tsize">
 	                    <span class="checkmark"></span>
 	                </label>
-	                <label class="radio-container">Appropriate
+	                <label class="radio-container">Medium
 	                    <input type="radio" value="300" name="regression_tsize" checked>
 	                    <span class="checkmark"></span>
 	                </label>
@@ -242,7 +242,7 @@
                 <ul>
                     <li>If the learning rate is too small, your updates are small and the optimization is slow. Furthermore, you’re likely to settle into an <span class="marginanchor" id="margin-3-anchor" data-number="3" data-align="middle">inappropriate local minimum</span>.</li>
                     <li>If the learning rate is too large, your updates will be large and the optimization is likely to diverge.</li>
-                    <li>If the learning rate is appropriate, your updates are appropriate and the optimization will converge quickly.</li>
+                    <li>If the learning rate is appropriate, your updates are appropriate and the optimization will converge.</li>
                 </ul>
                 <p>The choice of learning rate depends on the curvature of your loss function. Gradient descent makes a linear approximation of the loss function in a given point. It then moves downhill along the approximation of the loss function. In the case where the loss is highly curved, the larger your step size (learning rate) the larger the error of your approximation. Taking small steps reduces your error<sup class="footnote-index footnote-index1">1</sup>.</p>
                 <img src="img/losscurve.png">
@@ -389,9 +389,8 @@
                     </td>
                     <td>
                         <ul>
-                            <li><small>GD is very slow when the dataset is large, given that GPUs can’t handle the whole data in memory and thus parallelization isn’t optimal.</small></li>
+                            <li><small>GD can use parallelization efficiently, but is very slow when the dataset is larger than what your GPU's memory can handle. The parallelization wouldn't be optimal.</small></li>
                             <li><small>SGD usually converges faster than GD on large datasets, because updates are more frequent. Plus, the stochastic approximation of the gradient is usually precise without using the whole dataset because the data is often redundant.</small></li>
-                            <li><small>GD can use parallelization efficiently.</small></li>
                         </ul>
                     </td>
                   </tr>

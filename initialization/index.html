@@ -290,7 +290,7 @@
                     </script> and variance
                     <script>
                     document.write(katex.renderToString('\\sigma^2 = \\frac{1}{n^{[l-1]}}'))
-                    </script>. Biases are initialized with zeros.
+                    </script> where <script>document.write(katex.renderToString('n^{[l-1]}'))</script> is the number of neuron in layer <script> document.write(katex.renderToString('l-1'))</script>. Biases are initialized with zeros.
                     <br>
                     <br> The visualization below illustrates the influence of the weights’ initialization on each layer’s activations for a 5-layer fully-connected neural network (presented below).</p>
             </div>
@@ -316,7 +316,11 @@
 	                    document.write(katex.renderToString('g^{[l]}'))
 	                    </script> is the activation function of layer <script>
 	                    document.write(katex.renderToString('l'))
-	                    </script>. </p>
+	                    </script>. <script>document.write(katex.renderToString('n^{[l]}'))
+                        </script> is the number of neuron in layer 
+                        <script>
+                        document.write(katex.renderToString('l'))
+                        </script>.</p>
 	            </div>
 	            <div class="marginbody" id="margin-6-body" data-number="6">
 	                <img src="img/normal.png">

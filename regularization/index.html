@@ -56,7 +56,7 @@
         <div class="container divider-bottom" >
             <div class="column-6-8 column-align" >
                
-                <h2 class="title">Regularization methods are designed to help your model generalize to unseen data and avoid overfitting the training data. In this post, you will learn various methods to regularize your models. Our recommendations will be accompanied by intuitive explanations and interactive visualizations.</h2>
+                <h2 class="title">Regularization methods are used to prevent your model from overfitting on the training data in order to better generalize to unseen data. In this post, you will learn various methods to regularize your models. Our recommendations will be accompanied by intuitive explanations and interactive visualizations.</h2>
                
             </div>
 
@@ -102,7 +102,8 @@
             </div>
             <div class="column-6-8 column-align">
                 <p>Your network is <span class="marginanchor" id="margin-1-anchor" data-number="1" data-align="middle">complex</span> enough to fully memorize the mapping between the training data and the training labels. However, it does not generalize well to unseen data because it has merely over-memorized the salient features of the training set. This is called <span class="marginanchor" id="margin-2-anchor" data-number="2" data-align="middle">overfitting</span> the training set.</p>
-                <p class="inline-caption"><b>Example:</b> You train a 20-layer convolutional neural network to detect if there’s a cloud (label 1) or no clouds (label 0) in the sky.</p>
+                <p class="inline-caption"><b>Example 1:</b> You train a 20-layer convolutional neural network to detect if there’s a cloud (label 1) or no clouds (label 0) in the sky.</p>
+                <p class="inline-caption"><b>Example 2:</b> Consider a “day vs. night image classification”. Rather than understanding the <span class="marginanchor" id="margin-8-anchor" data-number="8" data-align="middle">inherent features</span> of the data such as the brightness, the colors or the presence of a blue sky, your model learned mapping between training images and training labels by heart. You do not want this.</p>
                 <p>The best way to help your model generalize is to gather a larger dataset, but this is not always possible. When you do not have access to a large dataset, you can use regularization methods. Let’s learn the intuition behind these methods.</p>
             </div>
             <div class="column-2-8 column-align margin">
@@ -112,6 +113,9 @@
                 <div class="marginbody" id="margin-2-body" data-number="2">
                     <img src="img/overfit.png">
                     <p class="caption">An overfit classifier will learn a complex decision boundary (red line) that correctly classifies most of the training data, but will not generalize to unseen data.</p>
+                </div>
+                <div class="marginbody" id="margin-8-body" data-number="8">
+                    <p class="caption">What are the hints telling us that the image was taken during the day or the night?</p>
                 </div>
             </div>
             <div class="column-6-8">
@@ -142,7 +146,7 @@
                     <td>95%</td>
                     <td>93%</td>
                     <td>92%</td>
-                    <td>Appropriate (correct bias/variance trade-off)</td>
+                    <td><span class="marginanchor" id="margin-45-anchor" data-number="45" data-align="middle">Appropriate</span> (correct bias/variance trade-off)</td>
                   </tr>
                 </table>
                 <p>You want to close the performance gap between your test set and your dev and training set. Let’s delve into the methods that will help you do so.</p>
@@ -157,6 +161,10 @@
                 <div class="marginbody" id="margin-5-body" data-number="5">
                     <p class="caption">The data used to evaluate the performance of your model in real life.</p>
                 </div>
+                <div class="marginbody" id="margin-45-body" data-number="45">
+                    <img src="img/appropriate.png">
+                    <p class="caption">An appropriate classifier will learn a decision boundary (red line) that correctly classifies most of the training data, and will generalize to unseen data.</p>
+                </div>
             </div>
         </div>
         <div class="container">
@@ -167,7 +175,6 @@
                     <img src="img/curves.png" style="width:600px;height:300px;">
                 </div>
                 <p>Based on this observation, you can state that after the 30,000th <span class="marginanchor" id="margin-7-anchor" data-number="7" data-align="middle">epoch</span>, your model starts overfitting to the training set. Early stopping means saving the model’s parameters at the 30,000th epoch. The saved model is the best performing model on the dev set and will likely generalize better to the test set.</p>
-                <p class="inline-caption"><b>Example:</b> Consider a “day vs. night image classification”. Rather than understanding the <span class="marginanchor" id="margin-8-anchor" data-number="8" data-align="middle">inherent features</span> of the data such as the brightness, the colors or the presence of a blue sky, your model learned mapping between training images and training labels by heart. You do not want this.</p>
             </div>
             <div class="column-2-8 column-align margin">
                 <div class="marginbody" id="margin-6-body" data-number="6">
@@ -175,9 +182,6 @@
                 </div>
                 <div class="marginbody" id="margin-7-body" data-number="7">
                     <p class="caption">An epoch is one optimization pass over the entire dataset. In full-batch gradient descent, one epoch is one iteration, but in stochastic gradient descent, one epoch is multiple iterations.</p>
-                </div>
-                <div class="marginbody" id="margin-8-body" data-number="8">
-                    <p class="caption">What are the hints telling us that the image was taken during the day or the night?</p>
                 </div>
             </div>
             <div class="column-6-8">
@@ -264,7 +268,7 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
 	                var render = katex.renderToString("w = w - \\alpha \\frac{\\partial J_{cross-entropy}}{\\partial w}", { displayMode: true });
 	                document.writeln(render);
                 </script>
-                <p>Instead, you would now train a network to minimize the cost <script> document.write(katex.renderToString('J_{regularized} = J_{cross-entropy} + \\lambda J_{\\text{L1 or L2}}'))</script> where <script> document.write(katex.renderToString('J_{L1} = \\sum_{\\text{all weights } w_k} |w_k|'))</script> and <script> document.write(katex.renderToString('J_{L2} = \\sum_{\\text{all weights } w_k} ||w_k||_2^2'))</script>. Your weight update rule would be:</p>
+                <p>Instead, you would now train a network to minimize the cost <script> document.write(katex.renderToString('J_{regularized} = J_{cross-entropy} + \\lambda J_{\\text{L1 or L2}}'))</script> where <script> document.write(katex.renderToString('J_{L1} = \\sum_{\\text{all weights } w_k} |w_k|'))</script> and <script> document.write(katex.renderToString('J_{L2} = \\sum_{\\text{all weights } w_k} |w_k|^2'))</script>. Your weight update rule would be:</p>
                 <script>
 	                var render = katex.renderToString("w = w - \\alpha \\frac{\\partial J_{regularized}}{\\partial w} = w - \\alpha ( \\frac{\\partial J_{cross-entropy}}{\\partial w} + \\lambda \\frac{\\partial J_{L1 or L2}}{\\partial w} )", { displayMode: true });
 	                document.writeln(render);
@@ -276,24 +280,24 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
                 </script>
                 <p>For <span class="marginanchor" id="margin-10-anchor" data-number="10" data-align="middle">L2 regularization</span>, this would lead to the update rule:</p>
                 <script>
-                    var render = katex.renderToString("w = w - \\underbrace{\\alpha \\lambda w}_\\text{L2 penalty} - \\underbrace{\\alpha \\frac{\\partial J_{cross-entropy}}{\\partial w}}_\\text{Gradient penalty}", { displayMode: true });
+                    var render = katex.renderToString("w = w - \\underbrace{2 \\alpha \\lambda w}_\\text{L2 penalty} - \\underbrace{\\alpha \\frac{\\partial J_{cross-entropy}}{\\partial w}}_\\text{Gradient penalty}", { displayMode: true });
                     document.writeln(render);
                 </script>
-                <p>At every step of L1 and L2 regularization the weight is pushed to a slightly lower value because <script> document.write(katex.renderToString('\\alpha \\lambda << 1'))</script>, causing weight decay.</p>
+                <p>At every step of L1 and L2 regularization the weight is pushed to a slightly lower value because <script> document.write(katex.renderToString('2 \\alpha \\lambda << 1'))</script>, causing weight decay.</p>
             </div>
             <div class="column-2-8 column-align margin">
                 <div class="marginbody" id="margin-9-body" data-number="9">
-                    <p class="caption">In statistics, L1 regularization is sometimes refered to as Lasso regression.</p>
+                    <p class="caption">In statistics, a linear regression with L1 regularization is sometimes referred to as Lasso regression.</p>
                 </div>
                 <div class="marginbody" id="margin-10-body" data-number="10">
-                    <p class="caption">In statistics, L2 regularization is sometimes refered to as ridge regression.</p>
+                    <p class="caption">In statistics, a linear regression with L2 regularization is sometimes referred to as Ridge regression.</p>
                 </div>
             </div>
             <div class="column-6-8">
                 <h4>What’s the difference between L1 and L2?</h4>
             </div>
             <div class="column-6-8 column-align">
-                <p>The update rules are different. While the L2 “weight decay” <script> document.write(katex.renderToString('\\alpha\\lambda w'))</script> penalty is proportional to the value of the weight to be updated, the L1 “weight decay” <script> document.write(katex.renderToString('\\alpha\\lambda sign(w)'))</script> is not.</p>
+                <p>The update rules are different. While the L2 “weight decay” <script> document.write(katex.renderToString('2 \\alpha\\lambda w'))</script> penalty is proportional to the value of the weight to be updated, the L1 “weight decay” <script> document.write(katex.renderToString('\\alpha\\lambda sign(w)'))</script> is not.</p>
                 <p>For L2, the smaller the <script> document.write(katex.renderToString('w'))</script>, the smaller the penalty during the update of <script> document.write(katex.renderToString('w'))</script> and vice-versa for larger <script> document.write(katex.renderToString('w'))</script>.</p>
                 <p>For L1, the penalty is independent of the value of <script> document.write(katex.renderToString('w'))</script>, but the direction of the penalty (positive or negative) depends on the sign of <script> document.write(katex.renderToString('w'))</script>. This results in an effect called “feature selection” or “weight sparsity”.</p>
                 <p>You can play with the visualization below to see the impact of L1 and L2 regularization on the weights during training.</p>
@@ -365,7 +369,7 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
                     <ul>
                             <li>“Too small” <script> document.write(katex.renderToString('\\lambda'))</script> constant: there’s no apparent effect.</li>
                             <li>“Appropriate” <script> document.write(katex.renderToString('\\lambda'))</script> constant: many of the weights become zeros. This is called “sparsity of the weights”. Because the weight penalty is independent of the weight values, weights with value 0.001 are penalized just as much as weights with value 1000. The value of the penalty is <script> document.write(katex.renderToString('\\alpha\\lambda'))</script> (generally very small). It constrains the subset of weights that are “less useful to the model” to be equal to 0. For example, you could effectively end up with 200 non-zero weights out of 1,000, which means that 800 weights were less useful for learning the task.</li>
-                            <li>“Too large" <script> document.write(katex.renderToString('\\lambda'))</script> constant: You can observe a plateau, which means that the weights uniformly take values around zero. In fact, because <script> document.write(katex.renderToString('\\lambda'))</script> is large, the penalty <script> document.write(katex.renderToString('-\\alpha\\lambda sign(w)'))</script> is much higher than the gradient <script> document.write(katex.renderToString('\\alpha \\frac{\\partial J_{cross-entropy}}{\\partial w}'))</script>. Thus, at every update, <script> document.write(katex.renderToString('w'))</script> is pushed from <script> document.write(katex.renderToString('\\approx -\\alpha\\lambda sign(w)'))</script> in the opposite direction of its sign. For instance, if <script> document.write(katex.renderToString('w'))</script> is around zero, but slightly positive, then it will be pushed towards <script> document.write(katex.renderToString('-\\alpha\\lambda'))</script> when the penalty is applied. Hence, the plateau’s width should be <script> document.write(katex.renderToString('2 \\times \\alpha\\lambda'))</script>.</li>
+                            <li>“Too large" <script> document.write(katex.renderToString('\\lambda'))</script> constant: You can observe a plateau, which means that the weights uniformly take values around zero. In fact, because <script> document.write(katex.renderToString('\\lambda'))</script> is large, the penalty <script> document.write(katex.renderToString('-\\alpha\\lambda sign(w)'))</script> is much higher than the gradient <script> document.write(katex.renderToString('- \\alpha \\frac{\\partial J_{cross-entropy}}{\\partial w}'))</script>. Thus, at every update, <script> document.write(katex.renderToString('w'))</script> is pushed by <script> document.write(katex.renderToString('\\approx -\\alpha\\lambda sign(w)'))</script> in the opposite direction of its sign. For instance, if <script> document.write(katex.renderToString('w'))</script> is around zero, but slightly positive, then it will be pushed towards <script> document.write(katex.renderToString('-\\alpha\\lambda'))</script> when the penalty is applied. Hence, the plateau’s width should be <script> document.write(katex.renderToString('2 \\times \\alpha\\lambda'))</script>.</li>
                     </ul>
                     
                     
@@ -374,7 +378,7 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
                     
                         
                             <li>“Too small” <script> document.write(katex.renderToString('\\lambda'))</script> constant: there’s no apparent effect.</li>
-                            <li>“Appropriate” <script> document.write(katex.renderToString('\\lambda'))</script> constant: the weight values decrease following a normal distribution that becomes more and more peaked throughout training.</li>
+                            <li>“Appropriate” <script> document.write(katex.renderToString('\\lambda'))</script> constant: the weight values decrease following a centered distribution that becomes more and more peaked throughout training.</li>
                             <li>“Too large” <script> document.write(katex.renderToString('\\lambda'))</script> constant: All the weights are rapidly collapsing to zeros, and the model obviously underfits because the weight values are too constrained.</li>
                     </ul>
                     
