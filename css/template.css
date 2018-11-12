@@ -8,7 +8,9 @@ body {
     margin: 0;
     font-family: "Assistant";
     background-color: #FFFFFF;
+    opacity: 0;
 }
+
 
 .header{
     width: 100%;
