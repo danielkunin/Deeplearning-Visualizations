@@ -790,9 +790,9 @@ button{
    -webkit-transition: box-shadow 0.5s; /* For Safari 3.1 to 6.0 */
     transition: box-shadow 0.5s;
     font-family: "Assistant";
-  /*border: transparent;*/
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-/*  border: 1px solid rgba(0, 0, 0, 0.2);*/
+  /*border: transparent;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);*/
+  border: 1px solid #D0D0D0
 
 }
 
