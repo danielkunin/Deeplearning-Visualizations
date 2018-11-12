@@ -149,7 +149,7 @@ function mnist_setup() {
   // bind initialization buttons
   $("input[name='mnist_init']").on("change", function () {
     $("#mnist_reset").click();
-    alpha = this.value
+    alpha = parseInt(this.value);
     train = mnist.train(alpha, lambda, histogram, summary);
   });
 
