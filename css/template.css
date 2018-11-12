@@ -766,11 +766,10 @@ video{
   transition: box-shadow 0.5s;
   font-family: "Assistant";
 
-
 }
 
 button{
-     -webkit-appearance: none;
+    -webkit-appearance: none;
     -moz-appearance: none;
 }
 
@@ -781,6 +780,7 @@ button{
 }
 
 .button-transport{
+
   padding: 0.5em 1.6em;
   margin-top: 0.5em;
   margin-right: 0.4em;
@@ -790,6 +790,9 @@ button{
    -webkit-transition: box-shadow 0.5s; /* For Safari 3.1 to 6.0 */
     transition: box-shadow 0.5s;
     font-family: "Assistant";
+  /*border: transparent;*/
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+/*  border: 1px solid rgba(0, 0, 0, 0.2);*/
 
 }
 
