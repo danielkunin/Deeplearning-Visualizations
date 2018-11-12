@@ -253,7 +253,7 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
                 <h3>III&emsp; L1 and L2 regularizations</h3>
                 <p>In order to avoid overfitting the training set, you can try to reduce the complexity of the model by removing layers, and consequently decreasing the number of parameters. As shown by the work of <a href="https://papers.nips.cc/paper/563-a-simple-weight-decay-can-improve-generalization.pdf" target="_blank">Krogh and Hertz (1992)</a>, another way to constrain a network and lower its complexity is to:</p>
                 <p class="inline-caption">Limit the growth of the weights through some kind of weight decay.</p>
-                <p>You want to prevent the weights from growing too large, unless it is really necessary.</p>
+                <p>You want to prevent the weights from growing too large, unless it is really necessary. Intuitively, you are reducing the set of potential networks to choose from. </p>
             </div>
             <div class="column-6-8">
                 <h4>How does this work?</h4>
