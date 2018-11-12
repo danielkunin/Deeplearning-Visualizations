@@ -87,7 +87,7 @@ function backToTop() {
 		var eTop = $(".backToTop").offset().top,
 			eBottom = eTop + $(".backToTop").outerHeight();
 		var count = $(".intro").inView();
-		$(".full-container").each(function(i) {
+		$(".hide-backToTop").each(function(i) {
 			count += (eBottom > $(this).offset().top && eTop < $(this).offset().top + $(this).outerHeight());
 		})
 		$(".backToTop").css({"visibility":(count ? "hidden" : "visible")});
