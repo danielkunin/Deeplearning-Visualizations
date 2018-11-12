@@ -23,23 +23,23 @@
 line#true,path#true {
 	stroke-width: 2;
 	fill: none;
-	stroke: #0000ff;
+	stroke: #009CDE;
 }
 line#estimate, path#estimate {
 	stroke-width: 2;
 	fill: none;
-	stroke: #ff0000;
+	stroke: #FF8686;
 }
 
 circle.point {
-	fill: #ff0000;
+	fill: #FF8686;
 	cursor: pointer;
 }
 circle#true {
-	fill: #0000ff;
+	fill: #009CDE;
 	cursor: default;
 }
 circle#estimate {
-	fill: #ff0000;
+	fill: #FF8686;
 	cursor: pointer;
 }

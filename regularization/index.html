@@ -36,9 +36,9 @@
         <div class="header-wrapper">
 
         	<a href="https://www.deeplearning.ai/"><img id="header-logo" class="cppnControl" src="../img/deeplearning.png"></a>
-            <a><img id="header-logo" class="cppnControl"></a>
+            <a href="https://www.deeplearning.ai/category/community/" class="backToBlog">Back to Blog</a>
             <ul class="header-nav">
-                <li><strong>Regularization</strong></li>
+                <li id="current_article">Regularization</li>
                 <li><a href="../initialization/index.html">Initialization</a></li>
                 <li><a href="../optimization/index.html">Optimization</a></li>
             </ul>
@@ -487,7 +487,7 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
              	</ul>
 
                 <p>Dropout is a regularization technique, introduced in <a href="http://jmlr.org/papers/volume15/srivastava14a.old/srivastava14a.pdf" target="_blank">Srivastava et al. (2014)</a>, that allows you to combine many different architectures efficiently by randomly dropping some of the neurons of your network during training.</p>
-            	<video width="70%" height="auto" style="margin:0% 15%" controls>
+            	<video width="70%" height="auto" controls>
 					<source src="img/dropout1.mp4" type="video/mp4">
 					Your browser does not support the video tag.
 				</video>
