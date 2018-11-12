@@ -83,7 +83,7 @@ function MNIST(layers) {
 			// get batch
 			tf.tidy(() => {
 				activations['a0'].assign(tf.tensor2d(DATA["images"].slice(index,index + batch)));
-				labels.assign(tf.oneHot(tf.tensor(DATA["labels"].slice(index,index + batch)),10));
+				labels.assign(tf.oneHot(tf.tensor1d(DATA["labels"].slice(index,index + batch), 'int32'), 10).asType('float32'));
 			});
 			// minimize
 			tf.tidy(() => {
