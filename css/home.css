@@ -1,15 +1,23 @@
+
+html{
+  margin: 0;
+}
+
 body {
     width: 100%;
     margin: 0;
     font-family: "Assistant";
-    background-color: #FCF2F2;
-   color: #303030;
+    background-color: #FFFFFF;
+    color: #303030;
+
 }
 
 
 .header{
     width: 100%;
     height: auto;
+    background-color: white;
+    border-bottom: 1px solid #FF6B58;
 }
 
 .header-nav{
@@ -17,7 +25,9 @@ body {
   float: right;
   left: 0;
   vertical-align: middle;
-   margin: 2.2em auto;
+   margin: 0.8em auto;
+   color: black;
+
 }
 
 
@@ -25,7 +35,7 @@ body {
 #header-logo{
   width: 9em;
   vertical-align: middle;
-  margin: 1.5em auto;
+  margin: 0.8em auto;
   display: inline-block;
  
 
@@ -44,22 +54,27 @@ body {
 .container {
     margin: 1em auto;
     height: auto;
+
 }
 
 .title-section{
-  margin-top: 1.5em;
-  margin-bottom: 3.5em;
+  margin-top: 3em;
+  margin-bottom: 1em;
+
+
 }
 
 .main.catalog{
   background-color: white;
   padding-top: 2em;
-  padding-bottom: 1.8em;
+  padding-bottom: 4em;
 
 }
 
 .footer{
 /*  padding-top: 1em;*/
+border-top: 1px solid rgba(255,107,88,0.2);;
+/*background-color: #FCF2F2;*/
 }
 
 .footer-li li{
@@ -132,6 +147,8 @@ p.sub-title{
   font-size: 0.9em;
   color: rgba(0,0,0,0.5);
   margin-top: 0;
+/*  padding-bottom: 2em;
+  border-bottom: 1px solid rgba(255,107,88,0.2);*/
 }
 
 h2{
