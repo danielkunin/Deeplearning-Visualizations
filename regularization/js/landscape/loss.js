@@ -17,7 +17,7 @@ class loss {
 
     this.thresholds = [];
     this.contours = d3.contours().size([this.n, this.m]);
-    this.color = d3.scaleLog().interpolate(function() { return d3.interpolateYlGnBu; });
+    this.color = d3.scaleLog().interpolate(function() { return d3.interpolateSpectral; });
     this.x = d3.scaleLinear().domain([]).range([0, this.width]);
     this.y = d3.scaleLinear().domain([]).range([this.height, 0]);
 
@@ -26,12 +26,6 @@ class loss {
 
   value(x, y) {
     return lossFunctions[this.func].val(x, y) + this.lambda * elasticNet_val(x, y, this.alpha);
-  }
-
-  gradient(x, y) {
-    var loss_grad = lossFunctions[this.func].grad(x, y),
-        reg_grad = elasticNet_grad(x, y, this.alpha);
-    return add(loss_grad, scale(reg_grad, this.lambda));
   }
 
   update() {
@@ -87,6 +81,23 @@ class loss {
       .attr("fill", (d) => { return this.color(d.value); });
     contours.exit().remove();
 
+
+    var parent = this;
+    this.svg.on('mouseleave', parent.tip.hide)
+    .on('mousemove', function (d) {
+      var target = d3.select('#tip')
+          .attr('cx', d3.mouse(this)[0])
+          .attr('cy', d3.mouse(this)[1]);
+      var x = parent.x.invert(d3.mouse(this)[0]),
+          y = parent.y.invert(d3.mouse(this)[1]);
+      target.data()[0].val = parent.value.call(parent, x, y);
+      if (x_range[0] < x && x < x_range[1] && y_range[0] < y && y < y_range[1]) {
+        parent.tip.show(target.data()[0], target.node());
+      } else {
+        parent.tip.hide();
+      }
+    });
+
   }
 
   setup() {
@@ -122,22 +133,16 @@ class loss {
       .attr("transform", "translate(" + this.width / 2 + "," + -this.pad + ")")
       .attr("alignment-baseline","central");
 
-    // var tip = d3.tip()
-    //   .attr('class', 'd3-tip')
-    //   .offset([-10, 0])
-    //   .html(function(d) {
-    //     return '(X: ' + d3.format(".2f")(d.x) + ', Y: ' + d3.format(".2f")(d.y) + ')';
-    // });
-    // this.svg.append('circle')
-    //   .attr('id', 'tipfollowscursor');
-    // this.svg.on('mouseover', function (d) {
-    //         var target = d3.select('#tipfollowscursor')
-    //             .attr('cx', d3.event.offsetX)
-    //             .attr('cy', d3.event.offsetY)
-    //             .node();
-    //         tip.show(d, target);
-    //     })
-    // this.svg.call(tip);
+    this.tip = d3.tip()
+      .attr('class', 'd3-tip')
+      .offset([-10, 0])
+      .html(function(d) {
+        return d3.format(".2f")(d.val);
+    });
+    this.svg.append('circle')
+      .attr('id', 'tip')
+      .data([{val: 0}]);
+    this.svg.call(this.tip);
 
     this.update();
 
@@ -152,11 +157,7 @@ function elasticNet_val(x, y, alpha) {
       L2 = (x,y) => { return Math.pow(x, 2) + Math.pow(y, 2); };
   return alpha * L1(x, y) + (1 - alpha) * L2(x, y);
 }
-function elasticNet_grad(x, y, alpha) {
-  var L1 = point(alpha * Math.sign(x),alpha * Math.sign(y)); 
-  var L2 = point((1 - alpha) * 2 * x, (1 - alpha) * 2 * y);
-  return add(L1, L2);
-}
+
 
 // See https://en.wikipedia.org/wiki/Test_functions_for_optimization
 var lossFunctions = {

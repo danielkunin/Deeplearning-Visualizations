@@ -46,7 +46,6 @@ d3.tip = function() {
     nodel.html(content)
       .style('position', 'absolute')
       .style('opacity', 1)
-      .style('pointer-events', 'all')
 
     while(i--) nodel.classed(directions[i], false)
     coords = direction_callbacks[dir].apply(this)
@@ -64,7 +63,6 @@ d3.tip = function() {
     var nodel = getNodeEl()
     nodel
       .style('opacity', 0)
-      .style('pointer-events', 'none')
     return tip
   }
 
@@ -243,7 +241,6 @@ d3.tip = function() {
       .style('position', 'absolute')
       .style('top', '0')
       .style('opacity', '0')
-      .style('pointer-events', 'none')
       .style('box-sizing', 'border-box')
 
     return node.node()
