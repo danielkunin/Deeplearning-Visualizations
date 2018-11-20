@@ -34,7 +34,7 @@ class loss {
     return add(loss_grad, scale(reg_grad, this.lambda));
   }
 
-  plot(time) {
+  update() {
 
     // update title
     this.title.text(lossTitles[this.func] + " Function");
@@ -77,7 +77,7 @@ class loss {
     // plot contours
     var contours = this.svg.selectAll("path.contour")
       .data(this.contours(values));
-    contours.transition().duration(time)
+    contours.transition().duration(0)
       .attr("class", "contour")
       .attr("d", d3.geoPath(d3.geoIdentity().scale(this.width / this.n)))
       .attr("fill", (d) => { return this.color(d.value); });
@@ -121,6 +121,26 @@ class loss {
       .attr("class", "titles")
       .attr("transform", "translate(" + this.width / 2 + "," + -this.pad + ")")
       .attr("alignment-baseline","central");
+
+    // var tip = d3.tip()
+    //   .attr('class', 'd3-tip')
+    //   .offset([-10, 0])
+    //   .html(function(d) {
+    //     return '(X: ' + d3.format(".2f")(d.x) + ', Y: ' + d3.format(".2f")(d.y) + ')';
+    // });
+    // this.svg.append('circle')
+    //   .attr('id', 'tipfollowscursor');
+    // this.svg.on('mouseover', function (d) {
+    //         var target = d3.select('#tipfollowscursor')
+    //             .attr('cx', d3.event.offsetX)
+    //             .attr('cy', d3.event.offsetY)
+    //             .node();
+    //         tip.show(d, target);
+    //     })
+    // this.svg.call(tip);
+
+    this.update();
+
   }
 
 }
@@ -163,10 +183,7 @@ var lossFunctions = {
                        'range': [-5.12, 5.12]},
   'styblinskiTang':   {'val': styblinskiTang_val,
                        'grad': styblinskiTang_grad,
-                       'range': [-5, 5]},
-  'monkeySaddle':     {'val': monkeySaddle_val,
-                       'grad': monkeySaddle_grad,
-                       'range': [-2, 2]}
+                       'range': [-5, 5]}
 }
 
 var lossTitles = {
@@ -269,17 +286,4 @@ function styblinskiTang_grad(x,y) {
   	  dy = (4 * Math.pow(y, 3) - 32 * y + 5) / 2;
   return point(dx, dy);
 } 
-
-
-// Monkey Saddle Function (modified to be non-negative and with mininum)
-function monkeySaddle_val(x,y) {
-  return x * x * x - 3 * x * y * y + y**4 + x**4 + 135/256; 
-  // return x * x * x - 3 * x * y * y + 1; 
-}
-function monkeySaddle_grad(x,y) {
-  var dx = 3 * x**2 - 3 * y**2 + 4 * x**3,
-      dy = -6 * x * y + 4 * y**3;
-  // var dx = 3 * x**2 - 3 * y**2,
-  //     dy = -6 * x * y;
-  return point(dx, dy);
-}  
+ 

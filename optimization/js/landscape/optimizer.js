@@ -7,13 +7,12 @@ class optimizer {
 
     // location and loss data
     this.training = null;
-    this.initial = point(0,0);
+    this.initial = point(0, 0);
     this.rule = ['gd','momentum','rmsprop','adam'];
     this.config = [];
     this.pos = [];
     this.paths = [];
     this.costs = [];
-    this.initial = point(0, 0);
 
     // loss landscape
     this.loss = loss;
@@ -49,7 +48,8 @@ class optimizer {
 	this.costs = [];
 
 	// update plots
-	this.plot(0);
+	this.plotCost();
+  this.plotPath();
   }
 
 
@@ -62,6 +62,10 @@ class optimizer {
     var logLegend = this.legend
       .scale(this.color);
     this.svg.select(".legend").call(logLegend);
+    
+    // update plots
+    this.plotCost();
+    this.plotPath();
   }
 
 
@@ -125,19 +129,15 @@ class optimizer {
 			// }
 		});
 
-		this.plot(0);
+		this.plotCost();
+    this.plotPath();
 
-		if (done) {
-			this.training.stop();
-		}
+		// if (done) {
+		// 	this.training.stop();
+		// }
 	}, 200);
   }
 
-
-  plot(t) {
-    this.plotCost();
-    this.plotPath();
-  }
 
   plotCost() {
 
@@ -211,6 +211,7 @@ class optimizer {
     var circle = this.loss.svg.selectAll("circle.point")
       .data([this.initial]);
 
+
     circle.enter().append("circle")
       .attr("cx", (d) => { return this.loss.x(d.x); })
       .attr("cy", (d) => { return this.loss.y(d.y); })
@@ -222,9 +223,10 @@ class optimizer {
         .on("start", () => { $("#reset").click(); })
         .on("drag", dragged));
 
-    circle.attr("cx", (d) => { return this.loss.x(d.x); })
-      .attr("cy", (d) => { return this.loss.y(d.y); })
-      .raise();
+    circle.each(function(d, i) {
+        d.x = xscale.invert(d3.select(this).attr("cx"));
+        d.y = yscale.invert(d3.select(this).attr("cy"));
+      }).raise();
 
     circle.exit().remove();
 

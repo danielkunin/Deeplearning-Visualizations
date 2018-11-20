@@ -34,7 +34,7 @@ class loss {
     return add(loss_grad, scale(reg_grad, this.lambda));
   }
 
-  plot(time) {
+  update() {
 
     // update title
     this.title.text(lossTitles[this.func] + " Function");
@@ -77,7 +77,7 @@ class loss {
     // plot contours
     var contours = this.svg.selectAll("path.contour")
       .data(this.contours(values));
-    contours.transition().duration(time)
+    contours.transition().duration(0)
       .attr("class", "contour")
       .attr("d", d3.geoPath(d3.geoIdentity().scale(this.width / this.n)))
       .attr("fill", (d) => { return this.color(d.value); });
@@ -121,6 +121,8 @@ class loss {
       .attr("class", "titles")
       .attr("transform", "translate(" + this.width / 2 + "," + -this.pad + ")")
       .attr("alignment-baseline","central");
+
+    this.update();
   }
 
 }

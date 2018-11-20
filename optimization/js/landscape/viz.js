@@ -1,12 +1,11 @@
 var lossLandscape = new loss('himmelblaus', 0, 0, d3.select("#contour"));
 var optLandscape = new optimizer(lossLandscape, d3.select("#loss"));
-lossLandscape.plot();
-optLandscape.plot(0);
 
 $("input[name='loss']").on("change", function () {
 	$("#reset").click();
 	lossLandscape.func = this.value;
-    lossLandscape.plot(0);
+    lossLandscape.update();
+    optLandscape.update();
 });
 
 $("input[name='opt']").on("change", function () {
