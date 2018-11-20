@@ -137,7 +137,7 @@ class loss {
       .attr('class', 'd3-tip')
       .offset([-10, 0])
       .html(function(d) {
-        return d3.format(".2f")(d.val);
+        return 'Loss: ' + d3.format(".2f")(d.val);
     });
     this.svg.append('circle')
       .attr('id', 'tip')
