@@ -136,11 +136,6 @@ function summary(batch, epoch) {
 //////////////////////////
 function mnist_setup() {
 
-  var lambdas = [
-    {'small': 0.0001, 'medium': 0.01, 'large': 1},
-    {'small': 0.00001, 'medium': 0.005, 'large': 0.1}
-  ]
-
   // define layers and setup plots
   var layers = [784,100,50,10],
       histogram = mnist_network();
@@ -148,7 +143,7 @@ function mnist_setup() {
   // create MNIST object
   var mnist = MNIST(layers),
       alpha = 1,
-      lambda = 0.001,
+      lambda = 0.01,
       train = mnist.train(alpha, lambda, histogram, summary);
 
   // bind initialization buttons
@@ -160,7 +155,7 @@ function mnist_setup() {
 
   $("input[name='lambda_sparsity']").on("change", function () {
     $("#mnist_reset").click();
-    lambda = lambdas[alpha][this.value]
+    lambda = parseFloat(this.value);
     train = mnist.train(alpha, lambda, histogram, summary);
   });
 
