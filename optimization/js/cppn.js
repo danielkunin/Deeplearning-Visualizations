@@ -170,9 +170,9 @@ function cppnSetup() {
         .attr("class", "cppn");
 
     // create colors
-    var c1 = [120, 184,66],
-        c2 = [45,155,106],
-        c3 = [0,125,117];
+    var c1 = [30,145,35],//[120,184,66],
+        c2 = [70,135,35],//[45,155,106],
+        c3 = [95,125,35];//[0,125,117];
     var colors = [c1, c2, c3];
 
     // define architecture
