@@ -138,6 +138,7 @@ h1.title{
   margin: 0 auto;
   font-size: 52px;
   color: white;
+  text-shadow: 0px 0px 10px rgba(0,0,0,0.3);
 }
 
 
@@ -338,12 +339,7 @@ img{
    position: relative;
 }
 
-.marginanchor {
-  cursor: pointer;
-  font-style: italic;
-  background-color: rgba(255,196,0,0.4);
-/*  rgba(3,196,244,0.3)*/
-}
+
 
 .marginbody {
   opacity: 0;
@@ -356,9 +352,7 @@ img{
   margin: 0;
 }
 
-.marginanchor:hover {
-  background-color: rgba(255,196,0,0.6);
-}
+
 
 .margin-border {
   opacity: 1;
@@ -700,6 +694,8 @@ ol.reference li {
       padding-top: 6em;
     }
 
+    
+
 }
 
 @media screen and (min-width: 720px) {
@@ -745,6 +741,17 @@ ol.reference li {
 
     ol{
     padding-left: 4em;}
+
+
+    .marginanchor {
+    cursor: pointer;
+    font-style: italic;
+    background-color: rgba(255,196,0,0.4);
+    }
+
+    .marginanchor:hover {
+      background-color: rgba(255,196,0,0.6);
+    }
 
 
 
