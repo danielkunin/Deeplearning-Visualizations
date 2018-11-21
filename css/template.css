@@ -686,6 +686,35 @@ ol.reference li {
   font-size: 0.9em !important;
 }
 
+.inlineType.full-container{
+  padding: 4% 12%;
+}
+
+.inlineType h3{
+  font-size: 20px;
+}
+
+.inlineType p{
+  font-size: 16px;
+  margin-top: 1.2em;
+}
+
+.inlineType .radio-container{
+  font-size: 16px;
+}
+
+.inlineType .radio-container .checkmark:after{
+  top:5px;
+  left: 5px;
+}
+
+.viz-column-divider{
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  margin: 3em 2% 2em 2%;
+  max-width: 875px;
+
+}
+
 /*Responsive*/
 
 @media screen and (max-width: 720px) {
