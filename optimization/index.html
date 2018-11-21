@@ -160,29 +160,27 @@
         
             <div class="viz-column-3-8">
                 <h3>1. Generate your dataset</h3>
-                <p>Select the training set size and click on "Generate a new dataset." A training set of the chosen size will be sampled randomly from a distribution and a <span class="blue">"ground truth" line</span> will automatically be fitted to this dataset. This line is the target line for your <span class="red">network function</span> defined by <script>document.write(katex.renderToString('\\hat{y} = wx + b'))</script>.</p>
-            	<div>
-            		<p>Select training set size.</p>
-                    <label class="radio-container">Small
-	                    <input type="radio" value="20" name="regression_tsize">
-	                    <span class="checkmark"></span>
-	                </label>
-	                <label class="radio-container">Medium
-	                    <input type="radio" value="300" name="regression_tsize" checked>
-	                    <span class="checkmark"></span>
-	                </label>
-	                <label class="radio-container">Large
-	                    <input type="radio" value="800" name="regression_tsize">
-	                    <span class="checkmark"></span>
-	                </label>
-            	</div>
+                <p>Select training set size.</p>
+                <label class="radio-container">Small
+                    <input type="radio" value="20" name="regression_tsize">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Medium
+                    <input type="radio" value="300" name="regression_tsize" checked>
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Large
+                    <input type="radio" value="800" name="regression_tsize">
+                    <span class="checkmark"></span>
+                </label>
+                <p>A training set of the chosen size will be sampled with noise from a <span class="blue">"ground truth"</span> line.</p>
+                <button class="button-transport" id="generate" style="margin:auto">
+                   Generate a new <span class="blue">"ground truth"</span> line
+                </button>
+                <p>This line is the target line for your <span class="red">network function</span> defined by <script>document.write(katex.renderToString('\\hat{y} = wx + b'))</script>.</p>
             </div>
-            <div class="viz-column-2-8" style="margin-left: 4%;">
-
-                <svg id="regression_plot" width="250" height="250" style="margin-top:1em;border: 1px solid rgba(0,0,0,0.2);"></svg>
-                <button class="button-transport" id="generate" style="width:100%; ">
-                	Generate a new dataset
-            	</button>
+            <div class="viz-column-3-8" style="margin-left: 4%;">
+                <svg id="regression_plot" width="350" height="350" style="margin-top:1em;border: 1px solid rgba(0,0,0,0.2);"></svg>
             </div>
             <div class="viz-column-5-8 viz-column-divider"></div>
           
@@ -221,7 +219,7 @@
 	                    <span class="checkmark"></span>
 	                </label>
                     <p>Select the batch size to use.</p>
-                    <label class="radio-container">1 (stochastic)
+                    <label class="radio-container">Stochastic
 	                    <input type="radio" value="1" name="regression_bsize" checked>
 	                    <span class="checkmark"></span>
 	                </label>
