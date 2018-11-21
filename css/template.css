@@ -545,6 +545,20 @@ p.footer-note{
   margin-top: 1em;
 }
 
+.fontAwesomeIcon{
+  font-size: 30px;
+  margin-left: 0.2em;
+  margin-top: 0.5em;
+  color: rgba(255,255,255,0.5);
+  display: inline-block;
+}
+
+.fontAwesomeIcon:hover{
+  color: white;
+  cursor: pointer;
+}
+
+
 
 
 ol.tableOfContent li:hover{
