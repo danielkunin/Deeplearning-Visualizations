@@ -99,7 +99,21 @@ p.footer-note{
   font-size: 0.8em;
   color: rgba(0,0,0,0.6);
   display: inline-block;
+  line-height: 1.2em;
 }
+
+p.footer-note a{
+  text-decoration: none;
+  color: rgba(0,0,0,0.2);
+  padding-right: 1em;
+  font-weight: 600;
+  line-height: 1.8em;
+}
+
+p.footer-note a:hover{
+  color: rgba(0,0,0,0.8);
+}
+
 
 .social{
   float: right;
@@ -107,15 +121,8 @@ p.footer-note{
   vertical-align: middle;
 }
 
-.icon1{
-  width: 30px;
-  height: 30px;
-  border-radius: 50px;
-  background-color: rgba(0,0,0,0.2);
-  margin-left: 0.5em;
-  display: inline-block;
-  margin-top: 1em;
-}
+
+
 
 .fontAwesomeIcon{
   font-size: 30px;

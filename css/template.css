@@ -529,6 +529,18 @@ p.footer-note{
   display: inline-block;
 }
 
+p.footer-note a{
+  text-decoration: none;
+  color: rgba(255,255,255,0.2);
+  padding-right: 1em;
+  font-weight: 600;
+}
+
+p.footer-note a:hover{
+  color: rgba(255,255,255,1);
+}
+
+
 .social{
   float: right;
   display: inline-block;
