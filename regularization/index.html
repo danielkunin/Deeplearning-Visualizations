@@ -477,8 +477,8 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
 	        <div class="column-6-8">
 	            <p>As you can see, L1 and L2 regularizations have a dramatic effect on the geometry of the cost function:</p>
 	            <ul class="bullet-list">
-                    <li>Using the 6th landscape (Rastrigin Function), notice that adding regularization results in a more convex cost landscape and diminishes the chance of falling into a non-desired minimum.</li>
-                    <li>Using the 3rd landscape (Himmelblaus Function), notice that adding L2 regularization prevents the network from converging to a local minimum.</li>
+                    <li>Using the first landscape (Himmelblaus Function), notice that adding L2 regularization prevents the network from converging to a local minimum.</li>
+                    <li>Using the last landscape (Rastrigin Function), notice that adding regularization results in a more convex cost landscape and diminishes the chance of falling into a non-desired minimum.</li>
                 </ul>
 	        </div>
         </div>
