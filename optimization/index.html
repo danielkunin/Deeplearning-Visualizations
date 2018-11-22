@@ -144,7 +144,7 @@
             <div class="column-6-8">
                 <h4>Initialization, learning rate and batch size</h4>
             </div>
-            <div class="column-6-8 column-align">
+            <div class="column-6-8">
                 <p>First, initialize the parameters of the network function so that you have a starting point for your optimization. You also need to choose your hyperparameters such as the learning rate and the batch size. They will have an important influence on the optimization.</p>
                 <p>In the visualization below, you will play with the starting point of initialization, the learning rate, and the batch size. With these parameters, you will fit a linear regression on a set of 300 data points using the gradient descent optimization algorithm. For more information on gradient descent optimization, refer to the Deep Learning Specialization (<a href="https://www.coursera.org/learn/neural-networks-deep-learning">Course 1</a>: “Neural Networks and Deep Learning”, Week 2: “Logistic Regression as a Neural Network”.) Here are some questions you should ask yourself:</p>
                 <ul>
@@ -156,9 +156,9 @@
                 </ul>
             </div>
         </div>
-        <div class="full-container hide-backToTop inlineType" id="landscape">
+        <div class="full-container hide-backToTop" id="regression"> <!-- class="inlineType" -->
         
-            <div class="viz-column-3-8">
+            <div class="viz-column-4-8">
                 <h3>1. Generate your dataset</h3>
                 <p>Select training set size.</p>
                 <label class="radio-container">Small
@@ -179,16 +179,13 @@
                 </button>
                 <p>This line is the target line for your <span class="red">network function</span> defined by <script>document.write(katex.renderToString('\\hat{y} = wx + b'))</script>.</p>
             </div>
-            <div class="viz-column-3-8" style="margin-left: 4%;">
+            <div class="viz-column-4-8" style="margin-left: 4%;">
                 <svg id="regression_plot" width="350" height="350" style="margin-top:1em;border: 1px solid rgba(0,0,0,0.2);"></svg>
             </div>
             <div class="viz-column-5-8 viz-column-divider"></div>
           
 
-
-
-
-            <div class="viz-column-3-8">
+            <div class="viz-column-4-8">
                 <h3>2. Observe the loss landscape and initialize parameters</h3>
                 <p>Your loss function is the L2 loss defined by: <script>document.write(katex.renderToString('\\mathcal{L}(y, \\hat{y}) = ||y - \\hat{y}||_2^2'))</script> Observe the loss landscape for the generated dataset. 
                  The <span class="blue">blue dot</span> indicates the value of the loss function for an optimal slope and intercept.
@@ -200,8 +197,7 @@
 
             <div class="viz-column-5-8 viz-column-divider" style="margin-top: 0;"></div>
 
-
-            <div class="viz-column-3-8 ">
+            <div class="viz-column-4-8">
                 <h3>3. Optimize your loss function</h3>
                 
                 <div>
@@ -244,7 +240,7 @@
                 </button>
             </div>
             <div class="viz-column-4-8">
-                <svg id="regression_loss" width=420 height=280 style="margin-top: 1em;"></svg>
+                <svg id="regression_loss" width=420 height=300 style="margin-top: 1em;"></svg>
             </div>
         </div>
         <div class="container">
@@ -303,7 +299,7 @@
             </div>
         </div>
         <div class="full-container hide-backToTop" id="landscape">
-            <div class="viz-column-3-8">
+            <div class="viz-column-4-8">
                 <p>In this visualization, you will choose your loss function and the starting point of your optimization. Although there's no explicit network function, you can assume that finding the minimum of your loss function is equivalent to finding the best network function for your task.</p>
 
                 <h3>1. Choose your loss landscape</h3>

@@ -49,3 +49,9 @@ $("#reset").on("click", function () {
 	d3.select("#stop").classed("hidden", true);
     d3.select("#train").classed("hidden", false);
 });
+
+$(window).on('resize scroll', function() {
+  if(!$("#landscape").inView()) {
+    $("#stop").click();
+  }
+});

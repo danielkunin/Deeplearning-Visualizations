@@ -87,3 +87,9 @@ $("#regression_reset").on("click", function () {
 	d3.select("#regression_stop").classed("hidden", true);
     d3.select("#regression_train").classed("hidden", false);
 });
+
+$(window).on('resize scroll', function() {
+  if(!$("#regression").inView()) {
+    $("#regression_stop").click();
+  }
+});
