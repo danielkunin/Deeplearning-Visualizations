@@ -185,7 +185,8 @@ class optimizer {
 
 	// bind
     var path = this.loss.svg.selectAll("path.trajectory")
-      .data(this.paths);
+      .data(this.paths)
+      .attr("clip-path","url(#landscape_clip)");;
 
     // add
     path.enter().append("path")

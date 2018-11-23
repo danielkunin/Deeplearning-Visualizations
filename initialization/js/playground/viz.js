@@ -403,8 +403,8 @@ function playground_pred() {
 
   // add canvas
   var canvas = output.append("canvas")
-    .style("width", function(){ return width + "px"; })
-    .style("height", function(){ return height + "px"; })
+    .style("width", width + "px")
+    .style("height", height + "px")
     .style("position", "absolute")
     .style("left", margin.left + "px")
     .style("top", 0 + "px")
@@ -412,11 +412,11 @@ function playground_pred() {
 
   // add svg
   var svg = output.append("svg")
-    .attr("width", width + margin.right)
-    .attr("height", height + margin.bottom)
+    .attr("width", width + margin.right + "px")
+    .attr("height", height + margin.bottom + "px")
     .style("position", "absolute")
-    .style("left", margin.left)
-    .style("top", 0);
+    .style("left", margin.left + "px")
+    .style("top", 0 + "px");
 
   // scales
   var x = d3.scaleLinear()

@@ -115,6 +115,14 @@ class regression_loss {
       .labelFormat(d3.format(".2g"))
       .title("Loss");
 
+    this.svg.append("clipPath")
+      .attr("id", "regression_clip")
+      .append("rect")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("height", this.height)
+        .attr("width", this.width);
+
   }
 
 }

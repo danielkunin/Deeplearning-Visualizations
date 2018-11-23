@@ -7,7 +7,7 @@ class regression_optimizer {
     this.loss = loss;
 
   	// global parameters
-    this.lrate = 1e-3;
+    this.lrate = 5e-3;
     this.bsize = 1;
     this.iter = 0;
     this.epoch = 0;
@@ -168,7 +168,8 @@ class regression_optimizer {
 
     // bind
     var path = this.loss.svg.selectAll("path.trajectory")
-      .data([this.path]);
+      .data([this.path])
+      .attr("clip-path","url(#regression_clip)");
     
     path.enter().append("path")
       .attr("stroke", "black")

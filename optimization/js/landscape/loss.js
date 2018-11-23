@@ -122,6 +122,14 @@ class loss {
       .attr("transform", "translate(" + this.width / 2 + "," + -this.pad + ")")
       .attr("alignment-baseline","central");
 
+    this.svg.append("clipPath")
+      .attr("id", "landscape_clip")
+      .append("rect")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("height", this.height)
+        .attr("width", this.width);
+
     this.update();
   }
 
