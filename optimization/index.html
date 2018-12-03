@@ -446,6 +446,8 @@
                 <p>The choice of optimizer influences both the speed and the occurrence of your convergence. A lot of alternatives to the classic gradient descent algorithms have been developed in the past few years and are listed in the table below. (Notation: <script>
                     document.write(katex.renderToString('dW = \\frac{\\partial \\mathcal{L}}{\\partial W}'))
                     </script>)</p>
+            </div>
+            <div class="column-8-8 column-align">
                 <table>
                   <tr>
                     <th>Optimizer</th>
@@ -526,6 +528,8 @@
                     </td>
                   </tr>
                 </table>
+            </div>
+            <div class="column-6-8 column-align">
                 <p>
                     Despite performing well in the initial portion of training, adaptive optimization methods such as Adam or RMSprop have been found to generalize poorly compared to Stochastic gradient descent (SGD) at later stages of training. In <a href="https://arxiv.org/pdf/1712.07628.pdf">Improving Generalization Performance by Switching from Adam to SGD</a>, Keskar et al. investigate a hybrid strategy that begins training with an adaptive method and switches to SGD when appropriate.</p>
 
