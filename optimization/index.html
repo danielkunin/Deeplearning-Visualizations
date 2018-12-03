@@ -180,7 +180,7 @@
                 <p>This line is the target line for your <span class="red">network function</span> defined by <script>document.write(katex.renderToString('\\hat{y} = wx + b'))</script>.</p>
             </div>
             <div class="viz-column-4-8" style="margin-left: 4%;">
-                <svg id="regression_plot" width="350" height="350" style="margin-top:1em;border: 1px solid rgba(0,0,0,0.2);"></svg>
+                <div id="regression_plot" style="margin-top:1em;border: 1px solid rgba(0,0,0,0.2);"></div>
             </div>
             <div class="viz-column-5-8 viz-column-divider"></div>
           
@@ -192,7 +192,7 @@
                  The <span class="red">red dot</span> indicates the value of the loss function for a chosen initialization of the slope and intercept. Feel free to drag the red dot to change the inital slope and intercept.</p>
             </div>
             <div class="viz-column-4-8">
-                <svg id="regression_landscape" width=450 height=450></svg>
+                <div id="regression_landscape"></div>
             </div>
 
             <div class="viz-column-5-8 viz-column-divider" style="margin-top: 0;"></div>
@@ -240,7 +240,7 @@
                 </button>
             </div>
             <div class="viz-column-4-8">
-                <svg id="regression_loss" width=420 height=300 style="margin-top: 1em;"></svg>
+                <div id="regression_loss" style="margin-top: 1em;"></div>
             </div>
         </div>
         <div class="container">
@@ -375,8 +375,8 @@
             </div>
             <div class="viz-column-4-8">
                 <p> This 2D plot describes the value of your loss function for different values of the 2 parameters <script>document.write(katex.renderToString('(w_1,w_2)'))</script>. The darker the color, the larger the loss value.</p>
-                <svg id="contour" width="550" height="520"></svg>
-                <svg id="loss" width="550" height="200"></svg>
+                <div id="contour"></div>
+                <div id="loss"></div>
             </div>
         </div>
         <div class="container">

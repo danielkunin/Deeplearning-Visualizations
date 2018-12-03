@@ -1,6 +1,6 @@
 class optimizer {
 
-  constructor(loss, svg) {
+  constructor(loss, div) {
 
   	// global parameters
     this.epoch = 0;
@@ -20,9 +20,9 @@ class optimizer {
     // cost plot
     this.pad = 30;
     this.margin = {top: 20, right: 80, bottom: 50, left: 40};
-    this.svg = svg.append('g').attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
-    this.width = +svg.attr("width") - this.margin.left - this.margin.right,
-    this.height = +svg.attr("height") - this.margin.top - this.margin.bottom;
+    this.width = 550 - this.margin.left - this.margin.right,
+    this.height = 200 - this.margin.top - this.margin.bottom;
+    this.svg = addSVG(div, this.width, this.height, this.margin);
 
     // scales
     this.x = d3.scaleLinear().domain([]).range([0, this.width]);

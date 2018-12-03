@@ -1,7 +1,7 @@
 class line {
 
   // constructor
-  constructor(svg) {
+  constructor(div) {
 
   	this.obj_coef = {'b0': uniform(-4, 4), 'b1': uniform(-4, 4)};
   	this.net_coef = {'b0': uniform(-1, 1), 'b1': uniform(-1, 1)};
@@ -9,9 +9,9 @@ class line {
 
     this.pad = 30;
     this.margin = {top: 40, right: 40, bottom: 40, left: 40};
-    this.svg = svg.append('g').attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
-    this.width = +svg.attr("width") - this.margin.left - this.margin.right;
-    this.height = +svg.attr("height") - this.margin.top - this.margin.bottom;
+    this.width = 350 - this.margin.left - this.margin.right;
+    this.height = 350 - this.margin.top - this.margin.bottom;
+    this.svg = addSVG(div, this.width, this.height, this.margin);
 
     this.n = 250; 
     this.m = 250;

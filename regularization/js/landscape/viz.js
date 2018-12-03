@@ -1,4 +1,4 @@
-var lossObject = new loss('himmelblaus', 0, 0, d3.select("#contour"));
+var lossObject = new loss('himmelblaus', 0, 0, "#contour");
 
 $("input[name='loss']").on("change", function () {
 	lossObject.func = this.value;

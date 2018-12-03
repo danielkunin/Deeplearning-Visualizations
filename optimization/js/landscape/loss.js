@@ -1,16 +1,16 @@
 class loss {
 
   // constructor
-  constructor(func, alpha = 0, lambda = 0, svg) {
+  constructor(func, alpha = 0, lambda = 0, div) {
     this.func = func;
     this.alpha = alpha;
     this.lambda = lambda;
 
     this.pad = 30;
     this.margin = {top: 40, right: 80, bottom: 50, left: 40};
-    this.svg = svg.append('g').attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
-    this.width = +svg.attr("width") - this.margin.left - this.margin.right,
-    this.height = +svg.attr("height") - this.margin.top - this.margin.bottom;
+    this.width = 550 - this.margin.left - this.margin.right,
+    this.height = 520 - this.margin.top - this.margin.bottom;
+    this.svg = addSVG(div, this.width, this.height, this.margin);
 
     this.n = 250; 
     this.m = 250;
