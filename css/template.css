@@ -257,17 +257,7 @@ p.citation{
   margin:0% 2%;
 }
 
-.viz-column-4-8 img{  
-  width: 425px;
-}
 
-.viz-column-2-8 img{  
-  width: 212.5px;
-}
-
-.viz-column-8-8 img{  
-  width: 1000px;
-}
 .viz-column-8-8,
 .viz-column-4-8,
 .viz-column-3-8,
@@ -275,20 +265,20 @@ p.citation{
   display: inline-block;
   vertical-align: text-top;
 }
-.viz-column-8-8{
-  width: 1000px;
+/*.viz-column-8-8{
+  width: 84%;
 }
 .viz-column-4-8{
-  width: 500px;
+  width: 42%;
 }
 
 .viz-column-3-8{
-  width: 375px;
+  width: 31.5%;
 }
 
 .viz-column-2-8{
-  width: 250px;
-}
+  width: 21%;
+}*/
 
 
 .cppn {
@@ -315,7 +305,8 @@ img{
   
   margin:3% auto 2% auto;
   padding:5% 4%;
-  min-width: 1200px;
+  width: 100%;
+ /* min-width: 1200px;*/
 
 }
 
@@ -729,6 +720,15 @@ ol.reference li {
         width: 100%;
     }
 
+    .viz-column-8-8,.viz-column-4-8,.viz-column-3-8, .viz-column-2-8{
+      width: 100%;
+    }
+
+    .viz-column-4-8 img,.viz-column-2-8 img, .viz-column-8-8 img{
+      width: 100%;
+    }
+
+
     .sm-screen-img{
     	display: block;
     }
@@ -808,6 +808,33 @@ ol.reference li {
       background-color: rgba(255,196,0,0.6);
     }
 
+    .viz-column-8-8{
+      width: 84%;
+    }
+    .viz-column-4-8{
+      width: 42%;
+    }
+
+    .viz-column-3-8{
+      width: 31.5%;
+    }
+
+    .viz-column-2-8{
+      width: 21%;
+    }
+
+
+      .viz-column-4-8 img{  
+      width: 425px;
+    }
+
+    .viz-column-2-8 img{  
+      width: 212.5px;
+    }
+
+    .viz-column-8-8 img{  
+      width: 1000px;
+    }
 
 
   
