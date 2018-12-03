@@ -106,7 +106,7 @@ function mnist_network(layers) {
     .attr('x', x(0))
     .attr('y', 0)
     .attr('text-anchor', 'middle')
-    .text("Weights");
+    .text("Histogram of Weights");
 
   // add axes
   var xaxis = svg.append("g")
