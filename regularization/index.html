@@ -153,7 +153,7 @@
                     <td><span class="marginanchor" id="margin-45-anchor" data-number="45" data-align="middle">Appropriate</span> (correct bias/variance trade-off)</td>
                   </tr>
                 </table>
-                <p>You want to close the performance gap between your test set and your dev and training set. Let’s delve into the methods that will help you do so.</p>
+                <p>You want to close the performance gap between your test set and your dev and training set while keeping the training performance as high as possible. Let’s delve into the methods that will help you do so.</p>
             </div>
             <div class="column-2-8 column-align margin">
                 <div class="marginbody" id="margin-3-body" data-number="3">
@@ -303,7 +303,7 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
             <div class="column-6-8 column-align">
                 <p>The update rules are different. While the L2 “weight decay” <script> document.write(katex.renderToString('2 \\alpha\\lambda w'))</script> penalty is proportional to the value of the weight to be updated, the L1 “weight decay” <script> document.write(katex.renderToString('\\alpha\\lambda sign(w)'))</script> is not.</p>
                 <p>For L2, the smaller the <script> document.write(katex.renderToString('w'))</script>, the smaller the penalty during the update of <script> document.write(katex.renderToString('w'))</script> and vice-versa for larger <script> document.write(katex.renderToString('w'))</script>.</p>
-                <p>For L1, the penalty is independent of the value of <script> document.write(katex.renderToString('w'))</script>, but the direction of the penalty (positive or negative) depends on the sign of <script> document.write(katex.renderToString('w'))</script>. This results in an effect called “feature selection” or “weight sparsity”.</p>
+                <p>For L1, the penalty is independent of the value of <script> document.write(katex.renderToString('w'))</script>, but the direction of the penalty (positive or negative) depends on the sign of <script> document.write(katex.renderToString('w'))</script>. This results in an effect called “feature selection” or “weight sparsity”. L1 regularization makes 0 the non-relevant weights.</p>
                 <p>You can play with the visualization below to see the impact of L1 and L2 regularization on the weights during training.</p>
             </div>
         </div>
@@ -484,9 +484,9 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
         </div>
 
         <div class="container">
-            <div class="column-6-8 divider-bottom index4-target">
+            <div class="column-6-8 column-align divider-bottom index4-target">
                 <h3>IV&emsp; Dropout regularization</h3>
-                <p>Although L1 and L2 regularization are simple techniques to reducing overfitting, there exist other methods, such as dropout regularization, that have been shown to be more effective at regularizing larger and more complex networks. If you had unlimited computational power, you could improve generalization by averaging the predictions of several different neural networks trained on the same task. The combination of these models will likely perform better than a single neural network trained on this task. However, with deep neural networks, training various architectures is expensive because:</p>
+                <p>Although L1 and L2 regularization are simple techniques to reducing overfitting, there exist other methods, such as dropout regularization, that have been shown to be more effective at regularizing larger and more complex networks. <span class="marginanchor" id="margin-17-anchor" data-number="17" data-align="middle">If you had unlimited computational power</span>, you could improve generalization by averaging the predictions of several different neural networks trained on the same task. The combination of these models will likely perform better than a single neural network trained on this task. However, with deep neural networks, training various architectures is expensive because:</p>
              	
                 <ul>
              		<li>Tuning the hyperparameters is time consuming.</li>
@@ -500,6 +500,11 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
 					Your browser does not support the video tag.
 				</video>
             	<p>Dropout is discussed in detail in our <a href="https://www.coursera.org/specializations/deep-learning" target="_blank">Deep Learning Specialization</a> (<a href="https://www.coursera.org/learn/deep-neural-network" target="_blank">Course 2: “Improving Neural Networks”</a>, Week 2: “Practical aspects of Deep Learning”). We invite you to check it out to understand the intuition behind dropout. </p>
+            </div>
+            <div class="column-2-8 column-align margin">
+                <div class="marginbody" id="margin-17-body" data-number="17">
+                    <p class="caption">This, in fact, is the motivation behind ensemble methods such as random forest.</p>
+                </div>
             </div>
         </div>
 

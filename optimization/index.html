@@ -58,7 +58,7 @@
         <div class="container divider-bottom" >
             <div class="column-6-8 column-align" >
                
-                <h2 class="title">Machine learning is an optimization problem. Various optimization techniques exist, and different optimizers lead to different trained models. Through interactive visualizations, you will learn the intuition behind (I) setting-up your optimization problem and (II) running the neural network optimization process.</h2>
+                <h2 class="title">Training machine learning is an optimization problem. Various optimization techniques exist, and different optimizers lead to different trained models. Through interactive visualizations, you will learn the intuition behind (I) setting-up your optimization problem and (II) running the neural network optimization process.</h2>
                
             </div>
 
@@ -75,11 +75,11 @@
         <div class="container index1-target">
             <div class="column-6-8 column-align">
             	
-            	<p>In machine learning, you first define a task, such as detecting cats on an image, and a loss (or objective) function to evaluate how well you perform on that task. Then, you find the architecture and parameters that result in an optimal value for your objective.</p>
+            	<p>In machine learning, you first define a task, such as detecting cats on an image, and a loss (or objective) function to evaluate how well you perform on that task. Then, you find the architecture and its parameters that result in an optimal value for your objective.</p>
 
                 <h3>I&emsp;Setting-up the optimization problem</h3>
                 <p>The way you define your task is the primary factor influencing how your model is going to train and perform. Say your task is to localize and identify cars and pedestrians in images. Your objective function should frame the following sentence in mathematical terms:</p>
-                <p class="inline-caption">Given an image, output bounding boxes (bbox) that contain all the cars and pedestrians on the image. Your output boxes should match the labeled boxes.</p>
+                <p class="inline-caption">Given an image, output bounding boxes (bbox) that contain all the cars and pedestrians on the image. Your output boxes should match the labeled boxes in size,  position and predicted class.</p>
                 <p>In mathematical terms, a possible loss function <script>
                     document.write(katex.renderToString('\\mathcal{L}'))
                 </script> is:</p>
