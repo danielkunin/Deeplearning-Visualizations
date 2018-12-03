@@ -75,7 +75,7 @@
         <div class="container index1-target">
             <div class="column-6-8 column-align">
                 <h3>I&emsp;The importance of an appropriate initialization</h3>
-                <p>In machine learning, a model is defined by its architecture and its parameters. For example, in order to build a binary classifier, you first fix an architecture (a neural network). Then, you learn the parameters using the training process:
+                <p>In machine learning, a model is defined by its architecture and its parameters. For example, in order to build a binary classifier, you first fix an architecture (e.g. Logistic regression, Support Vector Machine, Neural Network). Then, you learn the parameters using the training process:
                 </p>
                 <ol>
                     <li>Initialize the parameters</li>
@@ -84,14 +84,14 @@
                         <li>Forward propagate an input</li>
                         <li>Compute the cost function</li>
                         <li>Compute the gradients of the cost with respect to parameters using backpropagation</li>
-                        <li>Update the parameters using their gradients</li>
+                        <li>Update each parameter according to its gradient</li>
                     </ol>
                 </ol>
                 <p>
                     Given a new data point, you can then use your model (architecture + learned parameters) to predict its class.
                 </p>
                 <p>
-                    It is critical to initialize the parameters with the right method. To illustrate this argument, consider the 3-layer neural network below. You can try initializing this network with different initializations and observe for yourself the impact on the learning.
+                    It is critical to initialize the parameters with the right method. To illustrate this, consider the 3-layer neural network below. You can try initializing this network with different methods and observe the impact on the learning.
                 </p>
             </div>
             <div class="column-2-8 column-align margin">
@@ -166,7 +166,7 @@
                     document.write(katex.renderToString('relu(\\alpha x_1 + \\alpha x_2)'))
                     </script>. Thus, both hidden units will have identical influence on the cost, which will lead to identical gradients. Thus, both neurons will evolve symmetrically throughout training, effectively collapsing the ability of our network to learn.</p>
                 <p>What do you notice about the cost plot when you initialize your weights with "too small" or "too large" values?</p>
-                <p class="inline-caption">Initializing the weights with (i) "too small" or (ii) "too large" values leads respectively to (i) slow learning or (ii) divergence.</p>
+                <p class="inline-caption">Despite breaking the symmetry, initializing the weights with (i) "too small" or (ii) "too large" values leads respectively to (i) slow learning or (ii) divergence.</p>
                 <p>An "appropriate" initialization is required to have efficient training. We will investigate this further in the next section.</p>
             </div>
             <div class="column-2-8 column-align margin">
@@ -195,7 +195,11 @@
                     </script> are all matrices of size
                     <script>
                     document.write(katex.renderToString('(2,2)'))
-                    </script> because layers [1] to [L-1] have 2 neurons and receive 2 inputs.</p>
+                    </script> because layers [1] to [L-1] have 2 neurons and receive 2 inputs. With this in mind, and for illustrative purposes, if we assume <script>
+                    document.write(katex.renderToString('W^{[1]} = W^{[2]} = \\dots = W^{[L-1]} = W'))
+                    </script> the output prediction is: <script>
+                    document.write(katex.renderToString('\\hat{y} = W^{[L]}W^{L-1}X'))
+                    </script>.</p>
                 <p>What would be the outcome of a "too small", "too large" or "appropriate" initialization?</p>
             </div>
         </div>
