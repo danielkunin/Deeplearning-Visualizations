@@ -22,8 +22,8 @@ class regression_optimizer {
     // cost plot
     this.pad = 30;
     this.margin = {top: 40, right: 40, bottom: 40, left: 40};
-    this.width = 420 - this.margin.left - this.margin.right,
-    this.height = 300 - this.margin.top - this.margin.bottom;
+    this.width = 300 - this.margin.left - this.margin.right,
+    this.height = 200 - this.margin.top - this.margin.bottom;
     this.svg = addSVG(div, this.width, this.height, this.margin);
 
     // scales

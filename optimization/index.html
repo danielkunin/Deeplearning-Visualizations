@@ -156,11 +156,78 @@
                 </ul>
             </div>
         </div>
-        <div class="full-container hide-backToTop" id="regression"> <!-- class="inlineType" -->
-        
+        <div class="full-container hide-backToTop" id="regression">
+            <div class="viz-column-2-8">
+                <h3>1. Generate your dataset</h3>
+                <p>Select a training set size.</p>
+                <label class="radio-container">Small
+                    <input type="radio" value="20" name="regression_tsize">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Medium
+                    <input type="radio" value="300" name="regression_tsize" checked>
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Large
+                    <input type="radio" value="800" name="regression_tsize">
+                    <span class="checkmark"></span>
+                </label>
+                <p>A training set of the chosen size will be sampled with noise from a <span class="blue">"ground truth"</span> line. This line is the target line for your <span class="red">network function</span> defined by <script>document.write(katex.renderToString('\\hat{y} = wx + b'))</script>.</p>
+                <div id="regression_plot" style="margin-top:1em;border: 1px solid rgba(0,0,0,0.2);"></div>
+                <button class="button-transport" id="generate" style="margin:auto">
+                   Generate a new <span class="blue">"ground truth"</span> line
+                </button>
+            </div>
+            <div class="viz-column-4-8">
+                <h3>2. Observe the loss landscape and initialize parameters</h3>
+                <p>The loss function is the L2 loss defined as <script>document.write(katex.renderToString('\\mathcal{L}(y, \\hat{y}) = ||y - \\hat{y}||_2^2'))</script>. The <span class="blue">blue dot</span> indicates the value of the loss function at the "ground truth" slope and intercept. The <span class="red">red dot</span> indicates the value of the loss function at a chosen initialization of the slope and intercept. Drag and drop the red dot to change the initialization.</p>
+                <div id="regression_landscape"></div>
+            </div>
+            <div class="viz-column-2-8">
+                <h3>3. Optimize your loss function</h3>
+                <p>We can now iteratively update our network functions parameters in order to minimize the loss. Select a learning rate to use.</p>
+                <label class="radio-container">Small
+                    <input type="radio" value="0.0001" name="regression_lrate">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Medium
+                    <input type="radio" value="0.01" name="regression_lrate" checked>
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Large
+                    <input type="radio" value="0.1" name="regression_lrate">
+                    <span class="checkmark"></span>
+                </label>
+                <p>Select a batch size to use.</p>
+                <label class="radio-container">Stochastic
+                    <input type="radio" value="1" name="regression_bsize" checked>
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Mini-batch
+                    <input type="radio" value="30" name="regression_bsize">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Full-batch
+                    <input type="radio" value="300" name="regression_bsize">
+                    <span class="checkmark"></span>
+                </label>
+                <p>Train your <span class="red">network function</span>.</p>
+                <button class="button-transport" id="regression_reset" title="reset">
+                    <img src="img/reset.png">
+                </button>
+                <button class="button-transport" id="regression_train" title="start">
+                    <img src="img/play.png">
+                </button>
+                <button class="button-transport hidden" id="regression_stop" title="stop">
+                    <img src="img/pause.png">
+                </button>
+                <div id="regression_loss"></div>
+            </div>
+        </div>
+        <!-- <div class="full-container inlineType hide-backToTop" id="regression">
             <div class="viz-column-4-8">
                 <h3>1. Generate your dataset</h3>
-                <p>Select training set size.</p>
+                <p>Select a training set size.</p>
                 <label class="radio-container">Small
                     <input type="radio" value="20" name="regression_tsize">
                     <span class="checkmark"></span>
@@ -187,9 +254,7 @@
 
             <div class="viz-column-4-8">
                 <h3>2. Observe the loss landscape and initialize parameters</h3>
-                <p>Your loss function is the L2 loss defined by: <script>document.write(katex.renderToString('\\mathcal{L}(y, \\hat{y}) = ||y - \\hat{y}||_2^2'))</script> Observe the loss landscape for the generated dataset. 
-                 The <span class="blue">blue dot</span> indicates the value of the loss function for an optimal slope and intercept.
-                 The <span class="red">red dot</span> indicates the value of the loss function for a chosen initialization of the slope and intercept. Feel free to drag the red dot to change the inital slope and intercept.</p>
+                <p>The loss function is the L2 loss defined as <script>document.write(katex.renderToString('\\mathcal{L}(y, \\hat{y}) = ||y - \\hat{y}||_2^2'))</script>. The <span class="blue">blue dot</span> indicates the value of the loss function at the "ground truth" slope and intercept. The <span class="red">red dot</span> indicates the value of the loss function at a chosen initialization of the slope and intercept. Drag and drop the red dot to change the initialization.</p>
             </div>
             <div class="viz-column-4-8">
                 <div id="regression_landscape"></div>
@@ -199,36 +264,33 @@
 
             <div class="viz-column-4-8">
                 <h3>3. Optimize your loss function</h3>
-                
-                <div>
-                    <p>Select the learning rate to use.</p>
-                    <label class="radio-container">Small
-	                    <input type="radio" value="0.0001" name="regression_lrate">
-	                    <span class="checkmark"></span>
-	                </label>
-	                <label class="radio-container">Medium
-	                    <input type="radio" value="0.01" name="regression_lrate" checked>
-	                    <span class="checkmark"></span>
-	                </label>
-	                <label class="radio-container">Large
-	                    <input type="radio" value="0.1" name="regression_lrate">
-	                    <span class="checkmark"></span>
-	                </label>
-                    <p>Select the batch size to use.</p>
-                    <label class="radio-container">Stochastic
-	                    <input type="radio" value="1" name="regression_bsize" checked>
-	                    <span class="checkmark"></span>
-	                </label>
-	                <label class="radio-container">Mini-batch
-	                    <input type="radio" value="30" name="regression_bsize">
-	                    <span class="checkmark"></span>
-	                </label>
-	                <label class="radio-container">Full-batch
-	                    <input type="radio" value="300" name="regression_bsize">
-	                    <span class="checkmark"></span>
-	                </label>
-                    <p>Train your <span class="red">network function</span>.</p>
-                </div>
+                <p>Using the gradient of the loss function we can now iteratively update our network functions parameters to improve its performance. Select a learning rate to use.</p>
+                <label class="radio-container">Small
+                    <input type="radio" value="0.0001" name="regression_lrate">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Medium
+                    <input type="radio" value="0.01" name="regression_lrate" checked>
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Large
+                    <input type="radio" value="0.1" name="regression_lrate">
+                    <span class="checkmark"></span>
+                </label>
+                <p>Select a batch size to use.</p>
+                <label class="radio-container">Stochastic
+                    <input type="radio" value="1" name="regression_bsize" checked>
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Mini-batch
+                    <input type="radio" value="30" name="regression_bsize">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Full-batch
+                    <input type="radio" value="300" name="regression_bsize">
+                    <span class="checkmark"></span>
+                </label>
+                <p>Train your <span class="red">network function</span>.</p>
                 <button class="button-transport" id="regression_reset" title="reset">
                     <img src="img/reset.png">
                 </button>
@@ -240,9 +302,9 @@
                 </button>
             </div>
             <div class="viz-column-4-8">
-                <div id="regression_loss" style="margin-top: 1em;"></div>
+                <div id="regression_loss"></div>
             </div>
-        </div>
+        </div> -->
         <div class="container">
             <div class="column-6-8 column-align">
                 <p>Here are some insights you can take away from the visualization above:</p>

@@ -4,7 +4,7 @@ class regression_loss {
   constructor(div) {
 
     this.pad = 30;
-    this.margin = {top: 25, right: 75, bottom: 75, left: 25};
+    this.margin = {top: 50, right: 75, bottom: 75, left: 50};
     this.width = 450 - this.margin.left - this.margin.right,
     this.height = 450 - this.margin.top - this.margin.bottom;
     this.svg = addSVG(div, this.width, this.height, this.margin);
