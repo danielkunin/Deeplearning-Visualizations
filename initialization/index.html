@@ -164,8 +164,8 @@
                     </script> in this network, the output of both hidden units will be
                     <script>
                     document.write(katex.renderToString('relu(\\alpha x_1 + \\alpha x_2)'))
-                    </script>. Thus, both hidden units will have identical influence  on the loss, which will lead to identical gradients. Thus, both neurons will evolve symmetrically throughout training, effectively collapsing the ability of our network to learn.</p>
-                <p>What do you notice about the loss plot when you initialize your weights with "too small" or "too large" values?</p>
+                    </script>. Thus, both hidden units will have identical influence on the cost, which will lead to identical gradients. Thus, both neurons will evolve symmetrically throughout training, effectively collapsing the ability of our network to learn.</p>
+                <p>What do you notice about the cost plot when you initialize your weights with "too small" or "too large" values?</p>
                 <p class="inline-caption">Initializing the weights with (i) "too small" or (ii) "too large" values leads respectively to (i) slow learning or (ii) divergence.</p>
                 <p>An "appropriate" initialization is required to have efficient training. We will investigate this further in the next section.</p>
             </div>
@@ -223,7 +223,7 @@
             <div class="column-2-8 column-align margin">
             	<div class="marginbody" id="margin-2-body" data-number="2">
                 	<img src="img/exploding.png">
-                	<p class="caption">The gradients of the cost with respect to the parameters are too big, leading to oscillation of the loss around its minimum value (marked by "+").</p>
+                	<p class="caption">The gradients of the cost with respect to the parameters are too big, leading to oscillation of the cost around its minimum value (marked by "+").</p>
                 </div>
             </div>
             <div class="column-6-8">
@@ -249,7 +249,7 @@
             <div class="column-2-8 column-align margin">
             	<div class="marginbody" id="margin-3-body" data-number="3">
                 	<img src="img/vanishing.png">
-                	<p class="caption">The gradients of the cost with respect to the parameters are too small, leading to convergence of the loss before it has reached the minimum value (marked by "+").</p>
+                	<p class="caption">The gradients of the cost with respect to the parameters are too small, leading to convergence of the cost before it has reached the minimum value (marked by "+").</p>
                 </div>
             </div>
             <div class="column-6-8 divider-bottom">
