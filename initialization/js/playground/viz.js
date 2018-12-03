@@ -10,11 +10,7 @@ function playground_dataset() {
       padding = 10;
 
   // add svg
-  var svg = d3.select("#playground_dataset").append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  var svg = addSVG("#playground_dataset", width, height, margin);
 
   // setup scales
   var x = d3.scaleLinear()
@@ -63,11 +59,7 @@ function playground_legend() {
       height = 150 - margin.top - margin.bottom;
 
   // add svg
-  var svg = d3.select("#playground_legend").append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  var svg = addSVG("#playground_legend", width, height, margin);
 
   // scales
   var x = d3.scaleLinear()
@@ -178,11 +170,7 @@ function playground_network(layers) {
       height = 325 - margin.top - margin.bottom;
 
   // add svg
-  var svg = d3.select("#playground_network").append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  var svg = addSVG("#playground_network", width, height, margin);
 
   // setup scales
   var x = d3.scaleLinear()
@@ -316,11 +304,7 @@ function playground_loss() {
       height = 150 - margin.top - margin.bottom;
 
   // add svg
-  var svg = d3.select("#playground_loss").append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  var svg = addSVG("#playground_loss", width, height, margin);
 
   // scales
   var x = d3.scaleLinear()

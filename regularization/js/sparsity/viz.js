@@ -5,16 +5,12 @@
 function mnist_network(layers) {
   // setup dimensions
   var margin = {top: 20, right: 0, bottom: 20, left: 0},
-    width = 450 - margin.left - margin.right,
-    height = 450 - margin.top - margin.bottom
-    pad = 30;
+      width = 450 - margin.left - margin.right,
+      height = 450 - margin.top - margin.bottom
+      pad = 30;
 
   // add svg
-  var svg = d3.select("#mnist_network").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  var svg = addSVG("#mnist_network", width, height, margin)
 
   // setup scales
   var layout = d3.scaleLinear()
@@ -106,7 +102,7 @@ function mnist_network(layers) {
     .attr('x', x(0))
     .attr('y', 0)
     .attr('text-anchor', 'middle')
-    .text("Weights");
+    .text("Histogram of Weights");
 
   // add axes
   var xaxis = svg.append("g")

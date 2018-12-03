@@ -1,5 +1,5 @@
-var lossLandscape = new loss('himmelblaus', 0, 0, d3.select("#contour"));
-var optLandscape = new optimizer(lossLandscape, d3.select("#loss"));
+var lossLandscape = new loss('himmelblaus', 0, 0, "#contour");
+var optLandscape = new optimizer(lossLandscape, "#loss");
 
 $("input[name='loss']").on("change", function () {
 	$("#reset").click();

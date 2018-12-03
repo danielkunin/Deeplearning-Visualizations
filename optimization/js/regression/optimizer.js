@@ -1,6 +1,6 @@
 class regression_optimizer {
 
-  constructor(line, loss, svg) {
+  constructor(line, loss, div) {
 
   	// loss landscape
     this.line = line;
@@ -22,9 +22,9 @@ class regression_optimizer {
     // cost plot
     this.pad = 30;
     this.margin = {top: 40, right: 40, bottom: 40, left: 40};
-    this.svg = svg.append('g').attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
-    this.width = +svg.attr("width") - this.margin.left - this.margin.right,
-    this.height = +svg.attr("height") - this.margin.top - this.margin.bottom;
+    this.width = 300 - this.margin.left - this.margin.right,
+    this.height = 200 - this.margin.top - this.margin.bottom;
+    this.svg = addSVG(div, this.width, this.height, this.margin);
 
     // scales
     this.x = d3.scaleLinear().domain([]).range([0, this.width]);

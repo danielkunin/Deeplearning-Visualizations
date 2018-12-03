@@ -10,11 +10,7 @@ function mnist_network(layers) {
     pad = 5;
 
   // add svg
-  var svg = d3.select("#mnist_network").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  var svg = addSVG("#mnist_network", width, height, margin);
 
   // setup scales
   var layout = d3.scaleLinear()
