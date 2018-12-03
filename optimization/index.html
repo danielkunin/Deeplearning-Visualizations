@@ -78,7 +78,20 @@
             	<p>In machine learning, you first define a task, such as detecting cats on an image, and a loss (or objective) function to evaluate how well you perform on that task. Then, you find the architecture and its parameters that result in an optimal value for your objective.</p>
 
                 <h3>I&emsp;Setting-up the optimization problem</h3>
-                <p>The way you define your task is the primary factor influencing how your model is going to train and perform. Say your task is to localize and identify cars and pedestrians in images. Your objective function should frame the following sentence in mathematical terms:</p>
+                <p>The way you define your task is the primary factor influencing how your model is going to train and perform.</p>
+
+                <h4>Example 1: House price prediction</h4>
+
+                <p> Say your task is to predict the price of a house <script>document.write(katex.renderToString('y \\in \\mathbb{R}'))</script> from features of the house such as size (in <script>document.write(katex.renderToString('m^2'))</script>), number of bedrooms, height of the ceiling, etc. You define your loss function as <script>
+                document.write(katex.renderToString("\\mathcal{L} = ||y-\\hat{y}||_2^2"))</script>
+
+                where <script>document.write(katex.renderToString('\\hat{y}'))</script> is your prediction for the price of the house and <script>document.write(katex.renderToString('y'))</script> is the real price of the house (ground truth.) This loss function can be summarized in one sentence:</p>
+
+                <p class="inline-caption">Given a set of house features, the square distance between your prediction and the ground truth price should be as small as possible.</p>
+
+                <h4>Example 2: object detection</h4>
+
+                <p> Let's go over a more complex example. Say your task is to localize and identify cars and pedestrians in images. Your objective function should frame the following sentence in mathematical terms:</p>
                 <p class="inline-caption">Given an image, output bounding boxes (bbox) that contain all the cars and pedestrians on the image. Your output boxes should match the labeled boxes in size,  position and predicted class.</p>
                 <p>In mathematical terms, a possible loss function <script>
                     document.write(katex.renderToString('\\mathcal{L}'))
