@@ -83,7 +83,7 @@
                 <p>Ultimately, you want your neural network to generalize to “unseen data” so that it can be used in the real world. A neural network's ability to generalize to unseen data depends on two factors:
                 </p>
                 <ul>
-                    <li>The information in the training data. For example, a dataset of images taken from the front-facing camera of a car contains much more information than a dataset of images of clouds in the sky.</li>
+                    <li>The information in the training data. For example, a dataset of images taken from the front-facing camera of a car contains intuitively more complex information than a dataset of images of clouds in the sky.</li>
                     <li>The complexity of the network. By complexity, we mean the complexity of the function your neural network can mimic. Usually, the more parameters your network uses, the more complex it is.</li>
                 </ul>
             </div>
@@ -178,7 +178,7 @@
                 <div style="display: flex; justify-content: center;">
                     <img src="img/curves.png" style="width:600px;height:300px;">
                 </div>
-                <p>Based on this observation, you can state that after the 30,000th <span class="marginanchor" id="margin-7-anchor" data-number="7" data-align="middle">epoch</span>, your model starts overfitting to the training set. Early stopping means saving the model’s parameters at the 30,000th epoch. The saved model is the best performing model on the dev set and will likely generalize better to the test set.</p>
+                <p>Based on this observation, you can estimate that after the 30,000th <span class="marginanchor" id="margin-7-anchor" data-number="7" data-align="middle">epoch</span>, your model starts overfitting to the training set. Early stopping means saving the model’s parameters at the 30,000th epoch. The saved model is the best performing model on the dev set and will likely generalize better to the test set.</p>
             </div>
             <div class="column-2-8 column-align margin">
                 <div class="marginbody" id="margin-6-body" data-number="6">
@@ -272,7 +272,7 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
 	                var render = katex.renderToString("w = w - \\alpha \\frac{\\partial J_{cross-entropy}}{\\partial w}", { displayMode: true });
 	                document.writeln(render);
                 </script>
-                <p>Instead, you would now train a network to minimize the cost <script> document.write(katex.renderToString('J_{regularized} = J_{cross-entropy} + \\lambda J_{\\text{L1 or L2}}'))</script> where <script> document.write(katex.renderToString('J_{L1} = \\sum_{\\text{all weights } w_k} |w_k|'))</script> and <script> document.write(katex.renderToString('J_{L2} = \\sum_{\\text{all weights } w_k} |w_k|^2'))</script>. Your weight update rule would be:</p>
+                <p>Instead, you would now train a network to minimize the cost <script> document.write(katex.renderToString('J_{regularized} = J_{cross-entropy} + \\lambda J_{\\text{L1 or L2}}'))</script> where <script> document.write(katex.renderToString('J_{L1} = \\sum_{\\text{all weights } w_k} |w_k|'))</script> and <script> document.write(katex.renderToString('J_{L2} = ||w||_2^2 = \\sum_{\\text{all weights } w_k} |w_k|^2'))</script>. Your weight update rule would be:</p>
                 <script>
 	                var render = katex.renderToString("w = w - \\alpha \\frac{\\partial J_{regularized}}{\\partial w} = w - \\alpha ( \\frac{\\partial J_{cross-entropy}}{\\partial w} + \\lambda \\frac{\\partial J_{L1 or L2}}{\\partial w} )", { displayMode: true });
 	                document.writeln(render);
