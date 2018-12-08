@@ -474,8 +474,8 @@
                     </td>
                     <td>
                         <ul>
-                            <li><small>GD can use parallelization efficiently, but is very slow when the dataset is larger than what your GPU's memory can handle. The parallelization wouldn't be optimal.</small></li>
-                            <li><small>SGD usually converges faster than GD on large datasets, because updates are more frequent. Plus, the stochastic approximation of the gradient is usually precise without using the whole dataset because the data is often redundant.</small></li>
+                            <li>GD can use parallelization efficiently, but is very slow when the dataset is larger than what your GPU's memory can handle. The parallelization wouldn't be optimal.</li>
+                            <li>SGD usually converges faster than GD on large datasets, because updates are more frequent. Plus, the stochastic approximation of the gradient is usually precise without using the whole dataset because the data is often redundant.</li>
                         </ul>
                     </td>
                   </tr>
@@ -491,7 +491,7 @@
                      </td>
                     <td>    
                         <ul>
-                            <li><small>Momentum speeds up the learning with a very minor implementation change.</small></li>
+                            <li>Momentum speeds up the learning with a very minor implementation change.</li>
                         </ul>
                     </td>
                   </tr>
@@ -507,9 +507,9 @@
                     </td>
                     <td>
                         <ul>
-                            <li><small>RMSprop’s adaptive learning rate prevents the learning rate decay from diminishing too slowly or too fast.</small></li>
-                            <li><small>RMSprop maintains per-parameter learning rates.</small></li>
-                            <li><small>RMSprop usually works well in <span class="marginanchor" id="margin-5-anchor" data-number="5" data-align="middle">online</span> and <span class="marginanchor" id="margin-6-anchor" data-number="6" data-align="middle">non-stationary settings</span>.</small></li>
+                            <li>RMSprop’s adaptive learning rate prevents the learning rate decay from diminishing too slowly or too fast.</li>
+                            <li>RMSprop maintains per-parameter learning rates.</li>
+                            <li>RMSprop usually works well in <span class="marginanchor" id="margin-5-anchor" data-number="5" data-align="middle">online</span> and <span class="marginanchor" id="margin-6-anchor" data-number="6" data-align="middle">non-stationary settings</span>.</li>
                         </ul>
                     </td>
                   </tr>
@@ -534,9 +534,9 @@
                      </td>
                     <td>
                         <ul>
-                            <li><small>The hyperparameters of Adam (learning rate, Exponential decay rates for the moment estimates, etc.) are usually set to predefined values (given in the paper), and do not require to be tuned.</small></li>
-                            <li><small>Adam performs a form of learning rate annealing with adaptive step-sizes.</small></li>
-                            <li><small>Adam is often the default optimizer in machine learning.</small></li>
+                            <li>The hyperparameters of Adam (learning rate, Exponential decay rates for the moment estimates, etc.) are usually set to predefined values (given in the paper), and do not require to be tuned.</li>
+                            <li>Adam performs a form of learning rate annealing with adaptive step-sizes.</li>
+                            <li>Adam is often the default optimizer in machine learning.</li>
                         </ul>
                     </td>
                   </tr>
