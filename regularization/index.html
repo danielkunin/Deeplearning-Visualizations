@@ -175,9 +175,8 @@
             <div class="column-6-8 index2-target column-align">
                 <h3>II&emsp; Early stopping</h3>
                 <p>The easiest regularization method is called early stopping. Recall that <span class="marginanchor" id="margin-6-anchor" data-number="6" data-align="middle">optimizing</span> a network to find the correct parameters is an iterative process. If you evaluate your model’s error on the training and dev set after every training epoch, you might see such curves:</p>
-                <div style="display: flex; justify-content: center;">
-                    <img src="img/curves.png" style="width:600px;height:300px;">
-                </div>
+               
+                <img src="img/curves.png">
                 <p>Based on this observation, you can estimate that after the 30,000th <span class="marginanchor" id="margin-7-anchor" data-number="7" data-align="middle">epoch</span>, your model starts overfitting to the training set. Early stopping means saving the model’s parameters at the 30,000th epoch. The saved model is the best performing model on the dev set and will likely generalize better to the test set.</p>
             </div>
             <div class="column-2-8 column-align margin">
@@ -411,7 +410,7 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
             <div class="viz-column-4-8">
                 <div id="contour"></div>
             </div>
-            <div class="viz-column-3-8" style="padding-left: 5%;">
+            <div class="viz-column-3-8">
                 <div class="viz-field">
                     <h4>1. Choose an <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization" target="_blank">artificial</a> loss landscape</h4>
                 

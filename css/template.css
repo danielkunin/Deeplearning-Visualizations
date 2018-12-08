@@ -136,7 +136,7 @@ li#current_article{
 
 h1.title{
   margin: 0 auto;
-  font-size: 52px;
+  font-size: 3em;
   color: white;
   text-shadow: 0px 0px 10px rgba(0,0,0,0.3);
 }
@@ -304,7 +304,7 @@ img{
   border-bottom: 1px solid #E6E6E6;
   
   margin:3% auto 2% auto;
-  padding:5% 4%;
+  /*padding:5% 4%;*/
   width: 100%;
  /* min-width: 1200px;*/
 
@@ -669,8 +669,9 @@ ol.reference li {
 }
 
 .katex-display{
-  margin:2.5em 0 !important;
-  font-size: 1.2em !important;
+  /*margin:2.5em 0;
+  font-size: 1.2em ;*/
+  font-size:0.8vw;
 }
 
 .katex{
@@ -749,6 +750,46 @@ ol.reference li {
       padding-top: 6em;
     }
 
+    .katex-display{
+ /*     font-size: 1em;*/
+    }
+
+    .full-container{
+      padding:10% 0;
+      margin: 5% 0;
+
+    }
+
+    .viz-field{
+      padding:0 5%;
+    }
+
+
+
+    .viz-column-8-8,
+    .viz-column-4-8,
+    .viz-column-3-8,
+    .viz-column-2-8{
+      margin:0;
+     
+    }
+
+    table { width:250px;table-layout:fixed; }
+  table tr { height:1em;  }
+  td { overflow:hidden;white-space:nowrap;  } 
+
+    h1.title{
+  
+  font-size: 12vw;}
+
+
+  .container {
+  
+    width: 80%;
+    margin: 0 auto;
+
+  }
+
     
 
 }
@@ -825,16 +866,18 @@ ol.reference li {
 
 
       .viz-column-4-8 img{  
-      width: 425px;
+      width: 50%;
     }
 
     .viz-column-2-8 img{  
-      width: 212.5px;
+      width: 25%;
     }
 
     .viz-column-8-8 img{  
-      width: 1000px;
+      width: 100%;
     }
+
+
 
 
   
