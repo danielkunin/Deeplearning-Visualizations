@@ -174,7 +174,7 @@
         <div class="container">
             <div class="column-6-8 index2-target column-align">
                 <h3>II&emsp; Early stopping</h3>
-                <p>The easiest regularization method is called early stopping. Recall that <span class="marginanchor" id="margin-6-anchor" data-number="6" data-align="middle">optimizing</span> a network to find the correct parameters is an iterative process. If you evaluate your model’s error on the training and dev set after every training epoch, you might see such curves:</p>
+                <p>One of the widely used regularization method is called early stopping. Recall that <span class="marginanchor" id="margin-6-anchor" data-number="6" data-align="middle">optimizing</span> a network to find the correct parameters is an iterative process. If you evaluate your model’s error on the training and dev set after every training epoch, you might see such curves:</p>
                
                 <img src="img/curves.png">
                 <p>Based on this observation, you can estimate that after the 30,000th <span class="marginanchor" id="margin-7-anchor" data-number="7" data-align="middle">epoch</span>, your model starts overfitting to the training set. Early stopping means saving the model’s parameters at the 30,000th epoch. The saved model is the best performing model on the dev set and will likely generalize better to the test set.</p>
@@ -192,7 +192,7 @@
             </div>
             <div class="column-6-8 divider-bottom column-align">
                 <ul>
-                    <li>It is easy to do. Deep learning frameworks, such as Keras, offer options to save your model’s parameters regularly during training. Here are the corresponding lines of code and <a href="https://keras.io/callbacks/#earlystopping" target="_blank">documentation</a> on Keras to stop training when a chosen quantity has stopped improving.</li>
+                    <li>It is usually easier to do. Deep learning frameworks, such as Tensorflow or Pytorch, offer options to save your model’s parameters regularly during training. In real world applications, determining when a chosen quantity (e.g. validation accuracy) has stopped improving is sometimes hard due to noisy batches of data. Here's a Python code walking through a possible implementation of early stopping.</li>
                     <pre><code class="python">
 def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wait = 100):
     """
@@ -302,7 +302,7 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
             <div class="column-6-8 column-align">
                 <p>The update rules are different. While the L2 “weight decay” <script> document.write(katex.renderToString('2 \\alpha\\lambda w'))</script> penalty is proportional to the value of the weight to be updated, the L1 “weight decay” <script> document.write(katex.renderToString('\\alpha\\lambda sign(w)'))</script> is not.</p>
                 <p>For L2, the smaller the <script> document.write(katex.renderToString('w'))</script>, the smaller the penalty during the update of <script> document.write(katex.renderToString('w'))</script> and vice-versa for larger <script> document.write(katex.renderToString('w'))</script>.</p>
-                <p>For L1, the penalty is independent of the value of <script> document.write(katex.renderToString('w'))</script>, but the direction of the penalty (positive or negative) depends on the sign of <script> document.write(katex.renderToString('w'))</script>. This results in an effect called “feature selection” or “weight sparsity”. L1 regularization makes 0 the non-relevant weights.</p>
+                <p>For L1, the penalty is independent of the value of <script> document.write(katex.renderToString('w'))</script>, but the direction of the penalty (positive or negative) depends on the sign of <script> document.write(katex.renderToString('w'))</script>. This results in an effect called “feature selection” or “weight sparsity”. L1 regularization makes the non-relevant weights 0.</p>
                 <p>You can play with the visualization below to see the impact of L1 and L2 regularization on the weights during training.</p>
             </div>
         </div>
@@ -399,7 +399,6 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
                 <h3>How does weight decay help the model generalize?</h3>
             </div>
 	        <div class="column-6-8">
-	            
                     <li>Weight decay suppresses any irrelevant components of the weight vector by driving the optimization to find the smallest vector that solves the learning problem.</li>
                     <li>Weight decay attenuates the influence of outliers on the weight optimization by constraining the weight values. There’s less risk for the weights to learn the sampling error (for example when a subset of your data points comes from a wrong distribution or is mislabelled.) In other words, the output of the model is less affected by changes in the input.</li>
                 
@@ -509,10 +508,13 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
 
         <div class="container">
             <div class="column-6-8">
+                <h3>Conclusion</h3>
+            </div>
+            <div class="column-6-8">
                 <p>When applying regularization methods, you need a metric to track your model's improvement and generalization ability. The bias/variance tradeoff enables you to measure the efficiency of your regularization. <p>The bias/variance tradeoff is discussed in our <a href="https://www.coursera.org/specializations/deep-learning" target="_blank">Deep Learning Specialization</a> (<a href="https://www.coursera.org/learn/deep-neural-network" target="_blank">Course 2: “Improving Neural Networks”</a>, Week 2: “Practical aspects of Deep Learning”). We invite you to check it out! </p>
 
 
-                <p>Successfully training a model on complex tasks is complicated. You need to find a model architecture that can understand the complexity of the dataset. Once you find such an architecture, you can work on improving generalization with the regularization techniques we discussed here. In the end, it should achieve low bias and low variance!</p>
+                <p>Successfully training a model on complex tasks is complicated. You need to find a model architecture that can encompass the complexity of the dataset. Once you find such an architecture, you can work on improving generalization. Exploring, and even combining, different regularization techniques is an unmissable step of the training process. It helps you build intuition on the ability of a model to generalize in the real-world.</p>
             </div>
         </div>
 

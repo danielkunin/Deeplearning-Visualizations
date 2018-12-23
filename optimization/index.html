@@ -122,7 +122,7 @@
                     <li>The batch of inputs given to the network</li>
                     <li>The batch of ground truths corresponding to the input batch given to the network</li>
                 </ul>
-                <p>For a fixed value of the input batch and ground truths batch, the loss has a landscape that depends on the parameters of the network. It is almost impossible to visualize the loss landscape (against the parameters) if there are more than 2 parameters. However, the landscape does exist and our goal is to find the point where the loss value is minimum. Updating the values of the parameters will move the loss value either closer to or farther to the target minimum point. In another AI note, you will learn techniques to visualize your loss function in higher dimensions.</p>
+                <p>For a fixed value of the input batch and ground truths batch, the loss has a landscape that depends on the parameters of the network. It is almost impossible to visualize the loss landscape (against the parameters) if there are more than 2 parameters. However, the landscape does exist and our goal is to find the point where the loss value is minimal. Updating the values of the parameters will move the loss value either closer to or farther to the target minimum point. In another AI note, you will learn techniques to visualize your loss function in higher dimensions.</p>
             </div>
             <div class="column-2-8 column-align margin">
                 <div class="marginbody" id="margin-0-body" data-number="0">
@@ -138,7 +138,11 @@
                     <li><b>The network function</b> is unknown. Its purpose is to mimic the <span class="marginanchor" id="margin-1-anchor" data-number="1" data-align="middle">real function</span> that performs the task. You know that the network function is defined by its parameters, and your goal is to find them.</li>
                     <li><b>The loss function</b> is chosen for a specific task, and you have a formula for it. But its value depends on the parameters and thus the network function.</li>
                 </ul>
-                <p>Interestingly (or counterintuitively), you are not optimizing the function that you will use to predict your end value (network function). Instead, you are defining a “proxy” function (loss function) which, if minimized, will make your network function correctly.</p>
+                <p>Interestingly, you are minimizing your loss function through optimizing the parameters of your network function.
+                
+                <!-- <p>Interestingly (or counterintuitively), you are not optimizing the function that you will use to predict your end value (network function). Instead, you are defining a “proxy” function (loss function) which, if minimized, will make your network function correctly. -->
+
+                </p>
                 <p>You need a loss function because the network function is unknown and you are not sure how to find the correct network function.</p>
                 <p>In summary, the way you define your optimization problem will dictate the performance of your network function.</p>
                 <img src="img/functiongraph.png">
@@ -460,7 +464,7 @@
                     document.write(katex.renderToString('dW = \\frac{\\partial \\mathcal{L}}{\\partial W}'))
                     </script>)</p>
             </div>
-            <div class="column-8-8 column-align">
+            <div class="column-6-8 column-align">
                 <table>
                   <tr>
                     <th>Optimizer</th>
@@ -542,14 +546,8 @@
                   </tr>
                 </table>
             </div>
-            <div class="column-6-8 column-align">
-                <p>
-                    Despite performing well in the initial portion of training, adaptive optimization methods such as Adam or RMSprop have been found to generalize poorly compared to Stochastic gradient descent (SGD) at later stages of training. In <a href="https://arxiv.org/pdf/1712.07628.pdf">Improving Generalization Performance by Switching from Adam to SGD</a>, Keskar et al. investigate a hybrid strategy that begins training with an adaptive method and switches to SGD when appropriate.</p>
 
-                <p>
-                    For more information about these optimizers, refer to the Deep Learning Specialization (<a href="https://www.coursera.org/learn/deep-neural-network">Course 2</a>: “Improving your Deep Neural Network”, Week 2: “Optimization”).</p>
-            </div>
-            <div class="column-2-8 column-align margin">
+             <div class="column-2-8 column-align margin">
                 <div class="marginbody" id="margin-5-body" data-number="5">
                     <p class="caption">Online optimization is when updates must be made with incomplete knowledge of the future (i.e. stochastic gradient descent optimization).</p>
                 </div>
@@ -557,10 +555,19 @@
                     <p class="caption">Non-stationary setting essentially describes inflection points (where the concavity of the landscape changes) for which the gradient is zero in some, but not all directions.</p>
                 </div>
             </div>
+
+            <div class="column-6-8 column-align">
+                <p>
+                    Despite performing well in the initial portion of training, adaptive optimization methods such as Adam or RMSprop have been found to generalize poorly compared to Stochastic gradient descent (SGD) at later stages of training. In <a href="https://arxiv.org/pdf/1712.07628.pdf">Improving Generalization Performance by Switching from Adam to SGD</a>, Keskar et al. investigate a hybrid strategy that begins training with an adaptive method and switches to SGD when appropriate.</p>
+
+                <p>
+                    For more information about these optimizers, refer to the Deep Learning Specialization (<a href="https://www.coursera.org/learn/deep-neural-network">Course 2</a>: “Improving your Deep Neural Network”, Week 2: “Optimization”).</p>
+            </div>
+
             <div class="column-6-8 ">
                 <h3>Conclusion</h3>
 
-                <p>Exploring the optimization methods and hyperparameters presented above helps you build intuition that you can use to optimize networks for your own tasks. Intuitively understanding  the sensitivity of the loss optimization for these hyperparameters (learning rate, batch size, optimizer, etc.) is very important during hyperparameter search. Combined with the right method (random search or bayesian optimization), it will help you iterate through your search in order to find the right model.</p>
+                <p>Exploring the optimization methods and hyperparameters presented above helps you build intuition that you can use to optimize networks for your own tasks. Intuitively understanding  the sensitivity of the loss optimization for these hyperparameters (learning rate, batch size, optimizer, etc.) is very important during hyperparameter search. Combined with the right method (random search or Bayesian optimization), it will help you iterate through your search in order to find the right model.</p>
             </div>
         </div>
     </div>

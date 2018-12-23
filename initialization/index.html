@@ -267,7 +267,9 @@
                 	<li>The mean of the activations should be zero.</li>
                 	<li>The variance of the activations should stay the same across every layer.</li>
                 </ol>
-                <p>More concretely, consider a <span class="marginanchor" id="margin-5-anchor" data-number="5" data-align="middle">layer
+                <p>Under these two assumptions, the backpropagated gradient signal should not be multiplied by too small or too large values in any layer. It should travel to the input layer without exploding or vanishing.</p>
+
+                <p> More concretely, consider a <span class="marginanchor" id="margin-5-anchor" data-number="5" data-align="middle">layer
                     <script>
                     document.write(katex.renderToString('l'))
                     </script></span>. Its forward propagation is:</p>
@@ -558,13 +560,17 @@
                     document.write(katex.renderToString("n^{[l-1]}Var(W^{[l]}) = 1"))
                     </script> by initializing <script>
                     document.write(katex.renderToString("Var(W^{[l]}) = \\frac{1}{n^{[l-1]}}"))
-                    </script>. 
+                    </script>. </p>
 
                 <p>Throughout the proof, we worked on activations computed during the forward propagation. The same result can be derived for the backpropagated gradients. Doing so, you will see that in order to avoid the vanishing or exploding gradient problem, we must set <script>
                     document.write(katex.renderToString("n^{[l]}Var(W^{[l]}) = 1"))
                     </script> by initializing <script>
                     document.write(katex.renderToString("Var(W^{[l]}) = \\frac{1}{n^{[l]}}"))
-                    </script>. </p>
+                    </script>.
+                </p>
+                
+                <h3>Conclusion</h3>
+
                 <p> In practice, Machine Learning Engineers using Xavier initialization would either initialize the weights as <script>
                     document.write(katex.renderToString('\\mathcal{N}(0,\\frac{1}{n^{[l-1]}})'))
                     </script> or as <script>
@@ -624,6 +630,7 @@
                 	<p class="caption">This is only true for independent random variables.</p>
                 </div>
             </div>
+
         </div>
     </div>
     <div class="footer">
