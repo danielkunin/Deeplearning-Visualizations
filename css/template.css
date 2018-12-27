@@ -669,14 +669,13 @@ ol.reference li {
 }
 
 .katex-display{
-  /*margin:2.5em 0;
-  font-size: 1.2em ;*/
+
   font-size:1.2em;
 }
 
 .katex{
   font-size: 0.9em !important;
-  overflow-x: auto;
+/*  overflow-x: auto;*/
   overflow-y: visible;
 }
 
@@ -757,9 +756,22 @@ ol.reference li {
 
     .katex-display{
       font-size: 1em;
-        /* font-size:2vw;*/
+      /* font-size:2vw;*/
       overflow-x: auto;
       overflow-y: visible;
+
+    }
+
+    .katex-fade{
+      position: absolute;
+      right: 0;
+      width: 30px;
+      height: 100%;
+      background-image: -webkit-linear-gradient(0deg, rgba(255,255,255,.5), #fff);
+      background-image: -moz-linear-gradient(0deg, rgba(255,255,255,.5), #fff);
+      background-image: -ms-linear-gradient(0deg, rgba(255,255,255,.5), #fff);
+      background-image: -o-linear-gradient(0deg, rgba(255,255,255,.5), #fff);
+      background-image: linear-gradient(0deg, rgba(255,255,255,.5), #fff);
     }
 
     .full-container{
