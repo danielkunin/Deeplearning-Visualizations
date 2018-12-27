@@ -304,7 +304,7 @@ img{
   border-bottom: 1px solid #E6E6E6;
   
   margin:3% auto 2% auto;
-  /*padding:5% 4%;*/
+  padding:5% 4%;
   width: 100%;
  /* min-width: 1200px;*/
 
@@ -671,12 +671,15 @@ ol.reference li {
 .katex-display{
   /*margin:2.5em 0;
   font-size: 1.2em ;*/
-  font-size:0.8vw;
+  font-size:1.2em;
 }
 
 .katex{
   font-size: 0.9em !important;
+  overflow-x: auto;
+  overflow-y: visible;
 }
+
 
 .inlineType.full-container{
   padding: 4% 12%;
@@ -722,7 +725,9 @@ ol.reference li {
     }
 
     .viz-column-8-8,.viz-column-4-8,.viz-column-3-8, .viz-column-2-8{
-      width: 100%;
+      width: 80%;
+      margin: 0 auto;
+      padding: 0 10%;
     }
 
     .viz-column-4-8 img,.viz-column-2-8 img, .viz-column-8-8 img{
@@ -747,16 +752,20 @@ ol.reference li {
     }
 
     .intro{
-      padding-top: 6em;
+      padding-top: 4em;
     }
 
     .katex-display{
- /*     font-size: 1em;*/
+      font-size: 1em;
+        /* font-size:2vw;*/
+      overflow-x: auto;
+      overflow-y: visible;
     }
 
     .full-container{
       padding:10% 0;
-      margin: 5% 0;
+      margin: 5% 0%;
+
 
     }
 
@@ -774,9 +783,9 @@ ol.reference li {
      
     }
 
-    table { width:250px;table-layout:fixed; }
+    table { width:250px;/*table-layout:fixed;*/ }
   table tr { height:1em;  }
-  td { overflow:hidden;white-space:nowrap;  } 
+  td { overflow:hidden;/*white-space:nowrap;*/  } 
 
     h1.title{
   
@@ -789,6 +798,12 @@ ol.reference li {
     margin: 0 auto;
 
   }
+
+  h2.title{
+    font-size: 20px;
+  }
+
+
 
     
 
@@ -892,7 +907,7 @@ video{
 .button{
 	padding: 0.55em 1.6em;
   margin-top: 0.5em;
-  margin-right: 0.4em;
+/*  margin-right: 0.4em;*/
 	font-size: 14px;
 	background-color: white;
 	border-radius: 0.2em;
@@ -917,16 +932,16 @@ button{
 
   padding: 0.5em 1.6em;
   margin-top: 0.5em;
-  margin-right: 0.4em;
+ /* margin-right: 0.4em;*/
   font-size: 14px;
   background-color: white;
   border-radius: 0.2em;
    -webkit-transition: box-shadow 0.5s; /* For Safari 3.1 to 6.0 */
     transition: box-shadow 0.5s;
     font-family: "Assistant";
-  /*border: transparent;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);*/
-  border: 1px solid #D0D0D0
+
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0,0,0,0.1);
 
 }
 
@@ -936,7 +951,7 @@ button{
 }
 
 .button:hover,.button-transport:hover{
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
   /*border:1px solid rgba(3, 169, 244, 1);*/
 }
 
@@ -1146,7 +1161,7 @@ table, td,th{
 }
 
 th, td{
-  padding: 0.5em;
+/*  padding: 0.5em;*/
   text-align: left;
 }
 
@@ -1155,6 +1170,7 @@ table {
     width: 100%;
     margin-top: 1.8em;
     margin-bottom: 1.8em;
+    overflow-x:auto;
 }
 
 th {

@@ -191,7 +191,7 @@
                 </label>
                 <p>A training set of the chosen size will be sampled with noise from a <span class="blue">"ground truth"</span> line. This line is the target line for your <span class="red">network function</span> defined by <script>document.write(katex.renderToString('\\hat{y} = wx + b'))</script>.</p>
                 <div id="regression_plot" style="margin-top:1em;border: 1px solid rgba(0,0,0,0.2);"></div>
-                <button class="button-transport" id="generate" style="margin:auto">
+                <button class="button-transport" id="generate">
                    Generate a new <span class="blue">"ground truth"</span> line
                 </button>
             </div>
@@ -408,6 +408,7 @@
                 <h3>3. Choose your optimizer</h3>
                 <p>Select the optimizers to use and their hyperparameters.</p>
 
+
                 <table>
                   <tr>
                     <th>Optimizer</th>
@@ -464,7 +465,7 @@
                     document.write(katex.renderToString('dW = \\frac{\\partial \\mathcal{L}}{\\partial W}'))
                     </script>)</p>
             </div>
-            <div class="column-6-8 column-align">
+            <div class="column-6-8 column-align" style="overflow-x: auto;">
                 <table>
                   <tr>
                     <th>Optimizer</th>
