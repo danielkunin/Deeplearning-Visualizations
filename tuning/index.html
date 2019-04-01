@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Learn how to appropriately initialize parameters in your neural networks.">
+    <meta name="author" content="--">
+    <title>Tuning Hyperparameters</title>
+    <!-- Fonts -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Assistant:300,400,600,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <!-- Home Page CSS -->
+    <link rel="stylesheet" type="text/css" href="../css/template.css">
+    <!--Favicon-->
+    <link rel="shortcut icon" type="image/png" href="../img/favicon.png" />
+    <!-- Load jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Load D3 -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <!--Tool Tip-->
+    <script src="../js/d3.tip.js"></script>
+    <!-- Load Tensorflow -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.13.3/dist/tf.min.js"></script>
+    <!-- Load Katex -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.css" integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>
+    <!-- Load Highlight -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/monokai-sublime.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <!--Scroll To-->
+    <script src="../js/template.js"></script>
+</head>
+
+<body>
+    <div class="header"> 
+        <div class="header-wrapper">
+
+        	<a href="https://www.deeplearning.ai/"><img id="header-logo" class="cppnControl" src="../img/deeplearning.png"></a>
+            <a href="../index.html" class="backToBlog">AI Notes</a>
+            <ul class="header-nav">
+                <li><a href="../regularization/index.html">Regularization</a></li>
+                <li><a href="../initialization/index.html">Initialization</a></li>
+                <li><a href="../optimization/index.html">Optimization</a></li>
+                <li id="current_article">Tuning</li>
+            </ul>
+        </div>
+    </div>
+    <div class="main vis-background">
+        <div class="container" >
+            <div class="column-6-8 column-align" >
+                <h1 class="title">Tuning your neural networks</h1>
+            </div>
+        </div>
+        
+    </div>
+    <div class="main intro ">
+        <div class="container divider-bottom" >
+            <div class="column-6-8 column-align" >
+               
+                <h2 class="title">Description.</h2>
+               
+            </div>
+
+            <div class="column-2-8 column-align">
+                <h3 class="tableOfContent">Table of content</h3>
+                <ol class="tableOfContent" type="I">
+                    <li class="index index1">Section 1</li>
+                    <li class="index index2">Section 2</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="full-container hide-backToTop" id="regression">
+            <div class="viz-column-2-8">
+                <h3>1. Type of search</h3>
+                <label class="radio-container">Grid
+                    <input type="radio" value="grid" name="sample_mode" checked>
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Random
+                    <input type="radio" value="random" name="sample_mode">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <div class="viz-column-2-8">
+                <h3>2. Learning rate range</h3>
+                <label>Lower
+                    <input type="number" name="lrate_lower" value="0" min="0" max="10" step="1"/>
+                </label>
+                <label>Upper
+                    <input type="number" name="lrate_upper" value="10" min="0" max="10" step="1"/>
+                </label>
+            </div>
+            <div class="viz-column-2-8">
+                <h3>3. Batch size range</h3>
+                <label>Lower
+                    <input type="number" name="bsize_lower" value="0" min="0" max="10" step="1"/>
+                </label>
+                <label>Upper
+                    <input type="number" name="bsize_upper" value="10" min="0" max="10" step="1"/>
+                </label>
+            </div>
+            <div class="viz-column-2-8">
+                <h3>4. Number of samples</h3>
+                <label>Samples
+                    <input type="number" name="sample_number" value="16" min="1" max="20" step="1"/>
+                </label>
+                <button id="sample">Sample</button>
+            </div>
+            <div class="viz-column-4-8">
+                <div id="hyperparameter_space"></div>
+            </div>
+            <div class="viz-column-4-8">
+                <div id="accuracy_curves"></div>
+            </div>
+        </div>
+    </div>
+        
+    <div class="footer">
+        <div class="container">
+            <div class="column-2-8 column-align">
+                <h4 class="reference">Authors</h4>
+            </div>
+            <div class="column-6-8 column-align">
+                <ol class="reference ">
+                    <li><a href="">Shubhang Desai</a> - Written content. </li>
+                    <li><a href="https://twitter.com/kiankatan">Kian Katanforoosh</a> - Written content and structure. </li>
+                    <li><a href="http://daniel-kunin.com">Daniel Kunin</a> - Visualizations (created using <a href="https://d3js.org/">D3.js</a> and <a href="https://js.tensorflow.org/">TensorFlow.js</a>).</li>
+                </ol>
+            </div>
+            <div class="column-2-8 column-align">
+                <h4 class="reference">Acknowledgments</h4>
+            </div>
+            <div class="column-6-8 column-align">
+                <ol class="reference">
+                    <li>The template for the article was designed by <a href="https://www.jingru-guo.com/">Jingru Guo</a> and inspired by <a href="https://distill.pub/">Distill</a>.</li>
+                    <li>The banner visualization adapted code from deeplearn.js's implementation of a <a href="https://deeplearnjs.org/demos/nn-art/">CPPN</a>.</li>
+                </ol>
+            </div>
+            <div class="column-2-8 column-align">
+                <h4 class="reference">Footnotes</h4>
+            </div>
+            <div class="column-6-8 column-align">
+                <ol class="reference footnote">
+                </ol>
+            </div>
+            <div class="column-2-8 column-align">
+                <h4 class="reference">Reference</h4>
+            </div>
+            <div class="column-6-8 column-align">
+                <p class="reference">To reference this article in an academic context, please cite this work as:</p>
+                <p class="citation">Desai, Katanforoosh, & Kunin, "Tuning your neural networks", deeplearning.ai, 2018.</p>
+                <!-- <p class="reference">BibTeX citation:</p>
+                <p class="citation">@article{kiank+dkunin,<br>
+                  &emsp;author = {Katanforoosh, Kian and Kunin, Daniel},<br>
+                  &emsp;title = {Initializing your neural networks},<br>
+                  &emsp;journal = {deeplearning.ai},<br>
+                  &emsp;year = {2018}}</p> -->
+            </div>
+        </div>
+    </div>
+    <div class="footer-generic hide-backToTop">
+        <div class="container">
+            <p class="footer-note">
+                Contact us at hello@deeplearning.ai</br>
+                © Deeplearning.ai 2018</br>
+                <a href="https://www.deeplearning.ai/privacy/">PRIVACY POLICY</a> <a href="https://www.deeplearning.ai/terms-of-use/">TERMS OF USE</a>
+            </p>
+      
+
+
+            <div class="social">
+                    <a href="https://www.facebook.com/deeplearningHQ/"><i class="fab fa-facebook fontAwesomeIcon" ></i></a>
+                    <a href="https://twitter.com/deeplearningai_"><i class="fab fa-twitter-square fontAwesomeIcon"></i></a>
+                    <a href="https://www.linkedin.com/company/deeplearningai/"><i class="fab fa-linkedin fontAwesomeIcon"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="backToTop">
+        <p>↑ Back to top</p>
+    </div>
+</body>
+
+<!-- Additional JS -->
+<script src="https://d3js.org/d3-contour.v1.min.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
+
+<!-- SEARCH -->
+<link rel="stylesheet" href="css/search.css">
+<script src="js/search/experiment.js"></script>
+<script src="js/search/controller.js"></script>
+<script src="js/search/hyperparameter_space.js"></script>
+<script src="js/search/accuracy_curves.js"></script>
+<script src="js/search/viz.js"></script>
+
+<!-- CPPN -->
+<script src="js/cppn.js"></script>
