@@ -55,16 +55,16 @@
         <div class="container divider-bottom" >
             <div class="column-6-8 column-align" >
                
-                <h2 class="title">The lack of appropriate initialization techniques is one of the major reasons deep neural networks were not training properly in the past decades. Since then, new initialization schemes have been found to accelerate training. In this post, we will explain the methods to initialize the parameters of your neural network.</h2>
+                <h2 class="title">Initialization has a significant effect on the speed and reliability of training deep neural networks. Recently, simple initialization schemes have been found to accelerate training -- but they require some care to avoid common pitfalls. In this post, we'll explain how to initialize neural network parameters effectively.</h2>
                
             </div>
 
             <div class="column-2-8 column-align">
                 <h3 class="tableOfContent">Table of content</h3>
                 <ol class="tableOfContent" type="I">
-                    <li class="index index1">The importance of an appropriate initialization</li>
-                    <li class="index index2">What are the issues with a bad initialization?</li>
-                    <li class="index index3">What is an "appropriate" initialization?</li>
+                    <li class="index index1">The importance of effective initialization</li>
+                    <li class="index index2">The problem of exploding or vanishing gradients</li>
+                    <li class="index index3">What is proper initialization?</li>
                     <li class="index index4">Proof of Xavier initialization</li>
                 </ol>
             </div>
@@ -74,24 +74,25 @@
     <div class="main">
         <div class="container index1-target">
             <div class="column-6-8 column-align">
-                <h3>I&emsp;The importance of an appropriate initialization</h3>
-                <p>In machine learning, a model is defined by its architecture and its parameters. For example, in order to build a binary classifier, you first fix an architecture (e.g. Logistic regression, Support Vector Machine, Neural Network). Then, you learn the parameters using the training process:
+                <h3>I&emsp;The importance of effective initialization</h3>
+                <p>To build a machine learning algorithm, usually you'd define an architecture (e.g. Logistic regression, Support Vector Machine, Neural Network) and train it to learn parameters. Here is a common training process for neural networks:
                 </p>
                 <ol>
                     <li>Initialize the parameters</li>
-                    <li>Use an <span class="marginanchor" id="margin-0-anchor" data-number="0" data-align="middle">optimization algorithm</span>, then repeat these steps:</li>
+                    <li>Choose an <span class="marginanchor" id="margin-0-anchor" data-number="0" data-align="middle">optimization algorithm</span></li> 
+                    <li>Repeat these steps:</li>
                     <ol type="a">
                         <li>Forward propagate an input</li>
                         <li>Compute the cost function</li>
                         <li>Compute the gradients of the cost with respect to parameters using backpropagation</li>
-                        <li>Update each parameter according to its gradient</li>
+                        <li>Update each parameter using the gradients, according to the optimization algorithm</li>
                     </ol>
                 </ol>
                 <p>
-                    Given a new data point, you can then use your model (architecture + learned parameters) to predict its class.
+                    Then, given a new data point, you can use your model (architecture plus learned parameters) to predict its class.
                 </p>
                 <p>
-                    It is critical to initialize the parameters with the right method. To illustrate this, consider the 3-layer neural network below. You can try initializing this network with different methods and observe the impact on the learning.
+                    The initialization step is critical to the model's ultimate performance, and it requires the right method. To illustrate this, consider the 3-layer neural network below. You can try initializing this network with different methods and observe the impact on the learning.
                 </p>
             </div>
             <div class="column-2-8 column-align margin">
@@ -154,9 +155,9 @@
         </div>
         <div class="container">
             <div class="column-6-8 divider-bottom column-align">
-                <p> What do you notice about the gradients and weights when the initialization method is "zero"?</p>
-                <p class="inline-caption">Initializing all the weights with “zeros” leads the neurons to learn the same features during training.</p>
-                <p>In fact, any constant initialization scheme will perform very poorly. Consider a two hidden unit <span class="marginanchor" id="margin-1-anchor" data-number="1" data-align="middle">neural network</span> and assume we initialize all the biases to 0 and the weights with some constant
+                <p> What do you notice about the gradients and weights when the initialization method is zero?</p>
+                <p class="inline-caption">Initializing all the weights with zeros leads the neurons to learn the same features during training.</p>
+                <p>In fact, any constant initialization scheme will perform very poorly. Consider a <span class="marginanchor" id="margin-1-anchor" data-number="1" data-align="middle">neural network</span> with two hidden units, and assume we initialize all the biases to 0 and the weights with some constant
                     <script>
                     document.write(katex.renderToString('\\alpha'))
                     </script>. If we forward propagate an input
@@ -165,10 +166,10 @@
                     </script> in this network, the output of both hidden units will be
                     <script>
                     document.write(katex.renderToString('relu(\\alpha x_1 + \\alpha x_2)'))
-                    </script>. Thus, both hidden units will have identical influence on the cost, which will lead to identical gradients. Thus, both neurons will evolve symmetrically throughout training, effectively collapsing the ability of our network to learn.</p>
-                <p>What do you notice about the cost plot when you initialize your weights with "too small" or "too large" values?</p>
-                <p class="inline-caption">Despite breaking the symmetry, initializing the weights with (i) "too small" or (ii) "too large" values leads respectively to (i) slow learning or (ii) divergence.</p>
-                <p>An "appropriate" initialization is required to have efficient training. We will investigate this further in the next section.</p>
+                    </script>. Thus, both hidden units will have identical influence on the cost, which will lead to identical gradients. Thus, both neurons will evolve symmetrically throughout training, effectively preventing different neurons from learning different things.</p>
+                <p>What do you notice about the cost plot when you initialize your weights with values too small or too large?</p>
+                <p class="inline-caption">Despite breaking the symmetry, initializing the weights with values (i) too small or (ii) too large leads respectively to (i) slow learning or (ii) divergence.</p>
+                <p>Choosing proper values for initialization is necessary for efficient training. We will investigate this further in the next section.</p>
             </div>
             <div class="column-2-8 column-align margin">
             	<div class="marginbody" id="margin-1-body" data-number="1">
@@ -177,10 +178,10 @@
                 </div>
             </div>
             <div class="column-6-8 index2-target">
-                <h3>II&emsp; What are the issues with a bad initialization?</h3>
-                <p>Consider this 9-layer neural network just after it was initialized.</p>
+                <h3>II&emsp; The problem of exploding or vanishing gradients</h3>
+                <p>Consider this 9-layer neural network.</p>
                 <img src="img/9layer.png">
-                <p>At every iteration of the optimization loop (forward, cost, backward, update), we observe that backpropagated gradients are either amplified or minimized as you move from the output layer towards the input layer. This result makes sense if you recall the following example.
+                <p>At every iteration of the optimization loop (forward, cost, backward, update), we observe that backpropagated gradients are either amplified or minimized as you move from the output layer towards the input layer. This result makes sense if you consider the following example.
                     <br>
                     <br> Assume all the activation functions are linear (identity function). Then the output activation is:</p>
                 <script>
@@ -201,12 +202,12 @@
                     </script> the output prediction is: <script>
                     document.write(katex.renderToString('\\hat{y} = W^{[L]}W^{L-1}X'))
                     </script>.</p>
-                <p>What would be the outcome of a "too small", "too large" or "appropriate" initialization?</p>
+                <p>What would be the outcome of initialization values that were too small, too large or appropriate?</p>
             </div>
         </div>
         <div class="container">
             <div class="column-6-8">
-                <h3>Case 1: a "too large" initialization leads to Exploding Gradients.</h3>
+                <h3>Case 1: a too-large initialization leads to exploding gradients.</h3>
             </div>
             <div class="column-6-8 column-align">
                 <p>Consider the case where every weight is initialized slightly larger than the identity matrix.</p>
@@ -223,16 +224,16 @@
                     </script> increase exponentially with
                     <script>
                     document.write(katex.renderToString('l'))
-                    </script>. When these activations are used in backward propagation, this leads to the <span class="marginanchor" id="margin-2-anchor" data-number="2" data-align="bottom">exploding gradient problem</span>.</p>
+                    </script>. When these activations are used in backward propagation, this leads to the <span class="marginanchor" id="margin-2-anchor" data-number="2" data-align="bottom">exploding gradient problem</span>. That is, the gradients of the cost with the respect to the parameters are too big. This leads the cost to oscillate around its minimum value.</p>
             </div>
             <div class="column-2-8 column-align margin">
             	<div class="marginbody" id="margin-2-body" data-number="2">
                 	<img src="img/exploding.png">
-                	<p class="caption">The gradients of the cost with respect to the parameters are too big, leading to oscillation of the cost around its minimum value (marked by "+").</p>
+                	<p class="caption">This plot represents the cost function's landscape as if you were looking at it from above. If the gradients of the cost with respect to the parameters are too big, the cost (represented by red arrows) will oscillate around its minimum value (marked by +).</p>
                 </div>
             </div>
             <div class="column-6-8">
-                <h3>Case 2: a "too small" initialization leads to Vanishing Gradients</h3>
+                <h3>Case 2: a too-small initialization leads to vanishing gradients</h3>
             </div>
             <div class="column-6-8 column-align">
                 <p>Similarly, consider the case where every weight is initialized slightly smaller than the identity matrix.</p>
@@ -249,25 +250,25 @@
                     </script> decrease exponentially with
                     <script>
                     document.write(katex.renderToString('l'))
-                    </script>. When these activations are used in backward propagation, this leads to the <span class="marginanchor" id="margin-3-anchor" data-number="3" data-align="bottom">vanishing gradient problem</span>.</p>
+                    </script>. When these activations are used in backward propagation, this leads to the <span class="marginanchor" id="margin-3-anchor" data-number="3" data-align="bottom">vanishing gradient problem</span>. The gradients of the cost with respect to the parameters are too small, leading to convergence of the cost before it has reached the minimum value.</p>
             </div>
             <div class="column-2-8 column-align margin">
             	<div class="marginbody" id="margin-3-body" data-number="3">
                 	<img src="img/vanishing.png">
-                	<p class="caption">The gradients of the cost with respect to the parameters are too small, leading to convergence of the cost before it has reached the minimum value (marked by "+").</p>
+                	<p class="caption">The graphic above illustrates the vanishing gradient problem. As you can see, the cost converges to a value different from its minimum value (marked by “+”).</p>
                 </div>
             </div>
             <div class="column-6-8 divider-bottom">
-                <p>All in all, initializing your weights with inappropriate values will lead to divergence or a slow-down in the training of your neural network. Although we illustrated the exploding/vanishing gradient problem with simple symmetrical weight matrices, the observation generalizes to any "too small" or "too large" initializations.</p>
+                <p>All in all, initializing your weights with inappropriate values will lead to divergence or a slow-down in the training of your neural network. Although we illustrated the exploding/vanishing gradient problem with simple symmetrical weight matrices, the observation generalizes to any initialization values that are too small or too large.</p>
             </div>
             <div class="column-6-8 index3-target column-align">
-                <h3>III&emsp;What is an "appropriate" initialization?</h3>
-                <p>To prevent the activations of our network from vanishing or exploding we will stick to the following rules of thumb concerning its <span class="marginanchor" id="margin-100-anchor" data-number="100" data-align="top">mean</span> and <span class="marginanchor" id="margin-4-anchor" data-number="4" data-align="top">variance</span>:</p>
-                <ol class="inline-caption">
-                	<li>The mean of the activations should be zero.</li>
-                	<li>The variance of the activations should stay the same across every layer.</li>
+                <h3>III&emsp;How to find appropriate initialization values</h3>
+                <p>To prevent the gradients of the network's activations from vanishing or exploding, we will stick to the following rules of thumb:
+                	<li>The <span class="marginanchor" id="margin-100-anchor" data-number="100" data-align="top">mean</span> of the activations should be zero.</li>
+                	<li>The <span class="marginanchor" id="margin-4-anchor" data-number="4" data-align="top">variance</span>:</p>
+                <ol class="inline-caption"> of the activations should stay the same across every layer.</li>
                 </ol>
-                <p>Under these two assumptions, the backpropagated gradient signal should not be multiplied by too small or too large values in any layer. It should travel to the input layer without exploding or vanishing.</p>
+                <p>Under these two assumptions, the backpropagated gradient signal should not be multiplied by values too small or too large in any layer. It should travel to the input layer without exploding or vanishing.</p>
 
                 <p> More concretely, consider a <span class="marginanchor" id="margin-5-anchor" data-number="5" data-align="middle">layer
                     <script>
@@ -282,7 +283,7 @@
                 var render = katex.renderToString("\\begin{aligned}E[a^{[l-1]}] &= E[a^{[l]}]\\cr Var(a^{[l-1]}) &= Var(a^{[l]})\\end{aligned}", { displayMode: true });
                 document.writeln(render);
                 </script>
-                <p>Ensuring zero-mean and maintaining the value of the variance of the input of every layer guarantees no exploding/vanishing gradient.  It applies both to the forward propagation (for activations) and backward propagation (for gradients of the cost with respect to activations). The recommended initialization is Xavier initialization (or one of its derived methods), for every layer
+                <p>Ensuring zero-mean and maintaining the value of the variance of the input of every layer guarantees no exploding/vanishing signal.  This method applies both to the forward propagation (for activations) and backward propagation (for gradients of the cost with respect to activations). The recommended initialization is Xavier initialization (or one of its derived methods), for every layer
                     <script>
                     document.write(katex.renderToString('l'))
                     </script>:
@@ -301,7 +302,7 @@
                     document.write(katex.renderToString('\\sigma^2 = \\frac{1}{n^{[l-1]}}'))
                     </script> where <script>document.write(katex.renderToString('n^{[l-1]}'))</script> is the number of neuron in layer <script> document.write(katex.renderToString('l-1'))</script>. Biases are initialized with zeros.
                     <br>
-                    <br> The visualization below illustrates the influence of the weights’ initialization on each layer’s activations for a 5-layer fully-connected neural network (presented below).</p>
+                    <br> The visualization below illustrates the influence of the Xavier initialization on each layer’s activations for a five-layer fully-connected neural network.</p>
             </div>
             <div class="column-2-8 column-align margin">
             	<div class="marginbody" id="margin-4-body" data-number="4">
@@ -417,7 +418,7 @@
         </div>
         <div class="container">
             <div class="column-6-8 column-align">
-                <p>You can find the theory behind this visualization in <a href="http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf?hc_location=ufi" target="_blank"> Glorot et al. (2010)</a>.  The next section will teach you the proof of Xavier initialization and you will understand more precisely why it is an appropriate initialization to use.</p>
+                <p>You can find the theory behind this visualization in <a href="http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf?hc_location=ufi" target="_blank"> Glorot et al. (2010)</a>.  The next section presents the proof of Xavier initialization and explains more precisely why it is an effective initialization.</p>
             </div>
             <div class="column-6-8 index4-target column-align">
                 <h3>IV&emsp;Proof of Xavier initialization</h3>
@@ -580,7 +581,7 @@
                     </script> and <script>
                     document.write(katex.renderToString('\\frac{1}{n^{[l]}}'))
                     </script>. </p>
-                    <p>This is a theoretical justification for Xavier Initialization! Xavier initialization works with tanh activations. Myriads of other initialization methods exist. If you are using ReLU for example, a common initialization is He initialization (<a href="https://arxiv.org/pdf/1502.01852.pdf">He et al., Delving Deep into Rectifiers</a>). While it follows the same thought process, the proof of initialization for ReLU is slightly more complicated than the one for tanh. </p>
+                    <p>This is a theoretical justification for Xavier Initialization. Xavier initialization works with tanh activations. Myriads of other initialization methods exist. If you are using ReLU for example, a common initialization is He initialization (<a href="https://arxiv.org/pdf/1502.01852.pdf">He et al., Delving Deep into Rectifiers</a>). While it follows the same thought process, the proof of initialization for ReLU is slightly more complicated than the one for tanh. </p>
             </div>
             <div class="column-2-8 column-align margin">
             	<div class="marginbody" id="margin-7-body" data-number="7">
