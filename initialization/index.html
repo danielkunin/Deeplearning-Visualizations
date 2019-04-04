@@ -199,9 +199,9 @@
                     document.write(katex.renderToString('(2,2)'))
                     </script> because layers [1] to [L-1] have 2 neurons and receive 2 inputs. With this in mind, and for illustrative purposes, if we assume <script>
                     document.write(katex.renderToString('W^{[1]} = W^{[2]} = \\dots = W^{[L-1]} = W'))
-                    </script> the output prediction is: <script>
+                    </script> the output prediction is <script>
                     document.write(katex.renderToString('\\hat{y} = W^{[L]}W^{L-1}X'))
-                    </script>.</p>
+                    </script> (where <script>document.write(katex.renderToString('W^{L-1}'))</script> takes the matrix <script>document.write(katex.renderToString('W'))</script> to the power of L-1, while <script>document.write(katex.renderToString('W^{[L]}'))</script> denotes the Lth matrix).</p>
                 <p>What would be the outcome of initialization values that were too small, too large or appropriate?</p>
             </div>
         </div>
