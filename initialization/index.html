@@ -55,7 +55,7 @@
         <div class="container divider-bottom" >
             <div class="column-6-8 column-align" >
                
-                <h2 class="title">Initialization has a significant effect on the speed and reliability of training deep neural networks. Recently, simple initialization schemes have been found to accelerate training -- but they require some care to avoid common pitfalls. In this post, we'll explain how to initialize neural network parameters effectively.</h2>
+                <h2 class="title">Initialization can have a significant impact on convergence in training deep neural networks. Recently, simple initialization schemes have been found to accelerate training -- but they require some care to avoid common pitfalls. In this post, we'll explain how to initialize neural network parameters effectively.</h2>
                
             </div>
 
@@ -92,7 +92,7 @@
                     Then, given a new data point, you can use your model (architecture plus learned parameters) to predict its class.
                 </p>
                 <p>
-                    The initialization step is critical to the model's ultimate performance, and it requires the right method. To illustrate this, consider the 3-layer neural network below. You can try initializing this network with different methods and observe the impact on the learning.
+                    The initialization step can be critical to the model's ultimate performance, and it requires the right method. To illustrate this, consider the 3-layer neural network below. You can try initializing this network with different methods and observe the impact on the learning.
                 </p>
             </div>
             <div class="column-2-8 column-align margin">
@@ -218,7 +218,7 @@
                 <p>This simplifies to
                     <script>
                     document.write(katex.renderToString('\\hat{y} = W^{[L]}1.5^{L-1}X'))
-                    </script>, and the values of the activation
+                    </script>, and the values of
                     <script>
                     document.write(katex.renderToString('a^{[l]}'))
                     </script> increase exponentially with
@@ -283,7 +283,7 @@
                 var render = katex.renderToString("\\begin{aligned}E[a^{[l-1]}] &= E[a^{[l]}]\\cr Var(a^{[l-1]}) &= Var(a^{[l]})\\end{aligned}", { displayMode: true });
                 document.writeln(render);
                 </script>
-                <p>Ensuring zero-mean and maintaining the value of the variance of the input of every layer guarantees no exploding/vanishing signal.  This method applies both to the forward propagation (for activations) and backward propagation (for gradients of the cost with respect to activations). The recommended initialization is Xavier initialization (or one of its derived methods), for every layer
+                <p>Ensuring zero-mean and maintaining the value of the variance of the input of every layer guarantees no exploding/vanishing signal, as we'll explain in a moment.  This method applies both to the forward propagation (for activations) and backward propagation (for gradients of the cost with respect to activations). The recommended initialization is Xavier initialization (or one of its derived methods), for every layer
                     <script>
                     document.write(katex.renderToString('l'))
                     </script>:
@@ -508,7 +508,7 @@
                     </script> and the second assumption leads to
                     <script>
                     document.write(katex.renderToString("E[a_j^{[l-1]}]^2 = 0"))
-                    </script> because weights are initialized with zero mean, and inputs are normalized. Thus,</p>
+                    </script> because weights are initialized with zero mean, and inputs are normalized. Thus:</p>
                 <script>
                 var render = katex.renderToString("Var(z_k^{[l]}) = \\sum_{j=1}^{n^{[l-1]}}Var(w_{kj}^{[l]})Var(a_j^{[l-1]}) = \\sum_{j=1}^{n^{[l-1]}}Var(W^{[l]})Var(a^{[l-1]}) = n^{[l-1]}Var(W^{[l]})Var(a^{[l-1]})", { displayMode: true });
                 document.writeln(render);
