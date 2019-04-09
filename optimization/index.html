@@ -58,14 +58,14 @@
         <div class="container divider-bottom" >
             <div class="column-6-8 column-align" >
                
-                <h2 class="title">Training machine learning is an optimization problem. Various optimization techniques exist, and different optimizers lead to different trained models. Through interactive visualizations, you will learn the intuition behind (I) setting-up your optimization problem and (II) running the neural network optimization process.</h2>
+                <h2 class="title">Training a machine learning model is an optimization problem. Various techniques exist, and different optimizers lead to different trained models. Through interactive visualizations, we'll help you develop your intuition for setting up the optimization problem and running the optimization process.</h2>
                
             </div>
 
             <div class="column-2-8 column-align">
                 <h3 class="tableOfContent">Table of content</h3>
                 <ol class="tableOfContent" type="I">
-                    <li class="index index1">Setting-up the optimization problem</li>
+                    <li class="index index1">Setting up the optimization problem</li>
                     <li class="index index2">Running the optimization process</li>
                 </ol>
             </div>
@@ -75,24 +75,24 @@
         <div class="container index1-target">
             <div class="column-6-8 column-align">
             	
-            	<p>In machine learning, you first define a task, such as detecting cats on an image, and a loss (or objective) function to evaluate how well you perform on that task. Then, you find the architecture and its parameters that result in an optimal value for your objective.</p>
+            	<p>In machine learning, you start by defining a task, such as detecting cats on an image, and a loss (or objective) function to evaluate how well your model performs on that task. Then, you find the architecture and its parameters that will result in an optimal value for your objective.</p>
 
-                <h3>I&emsp;Setting-up the optimization problem</h3>
-                <p>The way you define your task is the primary factor influencing how your model is going to train and perform.</p>
+                <h3>I&emsp;Setting up the optimization problem</h3>
+                <p>The loss function will be different in different tasks depending on the output desired. Which one you choose will have a major influence on the model's training and performance.</p>
 
                 <h4>Example 1: House price prediction</h4>
 
-                <p> Say your task is to predict the price of a house <script>document.write(katex.renderToString('y \\in \\mathbb{R}'))</script> from features of the house such as size (in <script>document.write(katex.renderToString('m^2'))</script>), number of bedrooms, height of the ceiling, etc. You define your loss function as <script>
+                <p> Say your task is to predict the price of a house <script>document.write(katex.renderToString('y \\in \\mathbb{R}'))</script> based on features such as size in square meters, number of bedrooms, and ceiling height. You define your loss function as <script>
                 document.write(katex.renderToString("\\mathcal{L} = ||y-\\hat{y}||_2^2"))</script>
 
-                where <script>document.write(katex.renderToString('\\hat{y}'))</script> is your prediction for the price of the house and <script>document.write(katex.renderToString('y'))</script> is the real price of the house (ground truth.) This loss function can be summarized in one sentence:</p>
+                where <script>document.write(katex.renderToString('\\hat{y}'))</script> is your predicted price and <script>document.write(katex.renderToString('y'))</script> is the actual price, also known as ground truth. This loss function can be summarized in one sentence:</p>
 
-                <p class="inline-caption">Given a set of house features, the square distance between your prediction and the ground truth price should be as small as possible.</p>
+                <p class="inline-caption">Given a set of house features, the square of the difference between your prediction and the ground-truth price should be as small as possible.</p>
 
                 <h4>Example 2: object detection</h4>
 
-                <p> Let's go over a more complex example. Say your task is to localize and identify cars and pedestrians in images. Your objective function should frame the following sentence in mathematical terms:</p>
-                <p class="inline-caption">Given an image, output bounding boxes (bbox) that contain all the cars and pedestrians on the image. Your output boxes should match the labeled boxes in size,  position and predicted class.</p>
+                <p> Let's consider a different example. Say your task is to detect (that is, localize and identify) cars and pedestrians in images. Your loss function should frame the following sentence in mathematical terms:</p>
+                <p class="inline-caption">Given an image, output bounding boxes (bbox) that contain all the cars and pedestrians in the image. Output boxes should match the labeled boxes in size,  position and predicted class.</p>
                 <p>In mathematical terms, a possible loss function <script>
                     document.write(katex.renderToString('\\mathcal{L}'))
                 </script> (<a href="https://arxiv.org/pdf/1506.02640.pdf">Redmon et al., 2016</a>) is:</p> 
@@ -119,37 +119,32 @@
                 <p>This <span class="marginanchor" id="margin-0-anchor" data-number="0" data-align="top">loss function</span> depends on:</p>
                 <ul>
                     <li>The parameters of the network (weights and biases)</li>
-                    <li>The batch of inputs given to the network</li>
-                    <li>The batch of ground truths corresponding to the input batch given to the network</li>
+                    <li>The input to the network</li>
+                    <li>The ground truths corresponding to the input</li>
                 </ul>
-                <p>For a fixed value of the input batch and ground truths batch, the loss has a landscape that depends on the parameters of the network. It is almost impossible to visualize the loss landscape (against the parameters) if there are more than 2 parameters. However, the landscape does exist and our goal is to find the point where the loss value is minimal. Updating the values of the parameters will move the loss value either closer to or farther to the target minimum point. In another AI note, you will learn techniques to visualize your loss function in higher dimensions.</p>
+                <p>For a fixed value of the input batch and ground truths batch, the loss has a landscape that depends on the parameters of the network. It is almost impossible to visualize the loss landscape (against the parameters) if there are more than two parameters. However, the landscape does exist and our goal is to find the point where the loss value is minimal. Updating the parameter values will move the loss value either closer to or farther from the target minimum point. (Techniques exist to visualize loss functions in higher dimensions.)</p>
             </div>
             <div class="column-2-8 column-align margin">
                 <div class="marginbody" id="margin-0-body" data-number="0">
-                    <p class="caption">If this function L has a low value, then the found parameters define a network function performing well on the task.</p>
+                    <p class="caption">By definition, this function L has a low value, then the when the model performs well on the task.</p>
                 </div>
             </div>
             <div class="column-6-8">
-                <h4>The relationship between the network function and the loss function</h4>
+                <h4>The relationship between the model and the loss function</h4>
             </div>
             <div class="column-6-8 column-align">
-                <p>In optimizing your machine learning algorithm, it is important to note the difference between the function <script>document.write(katex.renderToString('\\mathcal{L}'))</script> you are optimizing (i.e. loss function) and the function <script>document.write(katex.renderToString('f'))</script> you will use to perform the task (i.e. the network function).</p>
+                <p>In optimizing your machine learning algorithm, it is important to note the difference between the function <script>document.write(katex.renderToString('\\mathcal{L}'))</script> you are optimizing (the loss function) and the function <script>document.write(katex.renderToString('f'))</script> you will use to perform the task (the model).</p>
                 <ul>
-                    <li><b>The network function</b> is unknown. Its purpose is to mimic the <span class="marginanchor" id="margin-1-anchor" data-number="1" data-align="middle">real function</span> that performs the task. You know that the network function is defined by its parameters, and your goal is to find them.</li>
-                    <li><b>The loss function</b> is chosen for a specific task, and you have a formula for it. But its value depends on the parameters and thus the network function.</li>
+                    <li><b>The model</b> is unknown. Its purpose is to mimic the <span class="marginanchor" id="margin-1-anchor" data-number="1" data-align="middle">real function</span> that performs the task. You know that the network function is defined by its parameters, and your goal is to find them.</li>
+                    <li><b>The loss function</b> is chosen for a specific task, and you have a formula for it. But its value depends on the parameters and thus the model.</li>
                 </ul>
-                <p>Interestingly, you are minimizing your loss function through optimizing the parameters of your network function.
-                
-                <!-- <p>Interestingly (or counterintuitively), you are not optimizing the function that you will use to predict your end value (network function). Instead, you are defining a “proxy” function (loss function) which, if minimized, will make your network function correctly. -->
-
-                </p>
-                <p>You need a loss function because the network function is unknown and you are not sure how to find the correct network function.</p>
-                <p>In summary, the way you define your optimization problem will dictate the performance of your network function.</p>
+                <p>Counterintuitively, you are not optimizing the function you will use to predict the end value. Instead, you are defining a proxy (the loss function) that, if minimized, will make your model yield relatively accurate predictions. You need a loss function because the model itself is unknown.</p>
+                <p>In summary, the way you define your loss function will dictate the performance of your model. The diagram below illustrates the process of finding a model that performs the task at hand.</p>
                 <img src="img/functiongraph.png">
             </div>
             <div class="column-2-8 column-align margin">
                 <div class="marginbody" id="margin-1-body" data-number="1">
-                    <p class="caption">Do you know the mathematical formula that allows you to detect cats on images? Probably not, but using data you can find a function that performs this task. It turns out that a convolutional architecture with the right parameters define a function that would perform this task well.</p>
+                    <p class="caption">Do you know the mathematical formula that allows you to detect cats on images? Probably not, but using data you can find a function that performs this task. It turns out that a convolutional architecture with the right parameters defines a function that can perform this task well.</p>
                 </div>
             </div>
         </div>
@@ -163,11 +158,11 @@
             </div>
             <div class="column-6-8">
                 <p>First, initialize the parameters of the network function so that you have a starting point for your optimization. You also need to choose your hyperparameters such as the learning rate and the batch size. They will have an important influence on the optimization.</p>
-                <p>In the visualization below, you will play with the starting point of initialization, the learning rate, and the batch size. With these parameters, you will fit a linear regression on a set of 300 data points using the gradient descent optimization algorithm. For more information on gradient descent optimization, refer to the Deep Learning Specialization (<a href="https://www.coursera.org/learn/neural-networks-deep-learning">Course 1</a>: “Neural Networks and Deep Learning”, Week 2: “Logistic Regression as a Neural Network”.) Here are some questions you should ask yourself:</p>
+                <p>In the visualization below, you can play with the starting point of initialization, the learning rate, and the batch size. With these parameters, you will fit a linear regression on a set of 300 data points using the gradient descent optimization algorithm. For more information on gradient descent optimization, refer to the Deep Learning Specialization (<a href="https://www.coursera.org/learn/neural-networks-deep-learning">Course 1</a>: “Neural Networks and Deep Learning”, Week 2: “Logistic Regression as a Neural Network”.) Here are some questions to ask yourself:</p>
                 <ul>
                     <li>Why does the loss landscape look like this?</li>
                     <li>What is the red dot?</li>
-                    <li>Why can your optimization end-up with a lower cost value than the ground truth line?</li>
+                    <li>Why can your optimization end up with a cost value lower than the ground truth line?</li>
                     <li>What is the impact of the learning rate on the optimization?</li>
                     <li>What is the impact of the batch size on the optimization?</li>
                 </ul>
@@ -324,7 +319,7 @@
         </div> -->
         <div class="container">
             <div class="column-6-8 column-align">
-                <p>Here are some insights you can take away from the visualization above:</p>
+                <p>Here are some takeaways from the visualization above:</p>
             </div>
             <div class="column-6-8">
                 <h4>a) Initialization</h4>
@@ -334,39 +329,36 @@
                 <h4>b) Learning rate</h4>
                 <p>The choice of learning rate influences the convergence of your optimization.</p>
                 <ul>
-                    <li>If the learning rate is too small, your updates are small and the optimization is slow. Furthermore, you’re likely to settle into an <span class="marginanchor" id="margin-3-anchor" data-number="3" data-align="middle">inappropriate local minimum</span>.</li>
+                    <li>If the learning rate is too small, your updates are small and the optimization is slow. Furthermore, you’re likely to settle into an <span class="marginanchor" id="margin-3-anchor" data-number="3" data-align="middle">inappropriate local minimum</span>. (We use this term because, in machine learning optimization, the optimzation is often non-convex and unlikely to converge to the global minimum.)</p>
+                </div>
+            </div></li>
                     <li>If the learning rate is too large, your updates will be large and the optimization is likely to diverge.</li>
                     <li>If the learning rate is appropriate, your updates are appropriate and the optimization will converge.</li>
                 </ul>
                 <p>The choice of learning rate depends on the curvature of your loss function. Gradient descent makes a linear approximation of the loss function in a given point. It then moves downhill along the approximation of the loss function. In the case where the loss is highly curved, the larger your step size (learning rate) the larger the error of your approximation. Taking small steps reduces your error<sup class="footnote-index footnote-index1">1</sup>.</p>
                 <img src="img/losscurve.png">
 
-                            <p>It is common practice to start with a large learning rate and decay it during training. Choosing the right decay (how often? by how much?) is non-trivial. An excessively agressive decay schedule slows the progress towards the optimum, while a slow-paced decay schedule leads to chaotic updates with small improvements. In part II, you will study algorithmic decay approaches.</p>
-            </div>
-            <div class="column-2-8 column-align margin">
-                <div class="marginbody" id="margin-3-body" data-number="3">
-                    <p class="caption">Here we say inappropriate local minimum because in machine learning optimization, the optimzation is often non-convex and unlikely to converge to the global minimum.</p>
-                </div>
+                            <p>It is common practice to start with a large learning rate and decay it during training. Choosing the right decay (how often? by how much?) is non-trivial. An excessively agressive decay schedule slows the progress towards the optimum, while a slow-paced decay schedule leads to chaotic updates with small improvements.</p>
             </div>
 
             <div class="column-6-8">
                 <h4>c) Batch size</h4>
-                <p>The right choice of batch size is crucial to ensure convergence and generalization of your network. Although there’s been some research<sup class="footnote-index footnote-index2">2</sup> on how to choose the batch size, there’s no consensus yet on what batch size to choose.</p>
-                <p>Recent research on the right batch size have uncovered the following:</p>
+                <p>The right choice of batch size is crucial to ensure convergence and generalization of your network. Although there’s been some research<sup class="footnote-index footnote-index2">2</sup> on how to choose the batch size, there’s no consensus yet on what batch size to choose. In practice, you can use a hyperparameter search to choose a good batch size.</p>
+                <p>Recent research into batch size has uncovered the following principles:</p>
                 <ul>
-                    <li>The mini-batch size determines the frequency of your updates. The smaller minibatches the more updates, but the quicker the updates.</li>
-                    <li>The larger the batch size, the more accurate the gradient of the loss will be with respect to the parameters, i.e. the direction of the update is most likely going down the local slope of the loss landscape.</li>
-                    <li>Choosing the largest batch size that fits in your GPU memory will benefit from efficient parallelization and usually accelerate training.</li>
-                    <li>However, large batch sizes can sometimes hurt the ability to generalize. There’s a trade-off to find depending on the task you’re trying to achieve.</li>
+                    <li>The batch size determines the frequency of your updates. The smaller the batches, the more — though quicker — the updates.</li>
+                    <li>The larger the batch size, the more accurate the gradient of the loss will be with respect to the parameters. That is, the direction of the update is most likely going down the local slope of the loss landscape.</li>
+                    <li>Choosing the largest batch size that fits in GPU memory will result in efficient parallelization and usually accelerate training.</li>
+                    <li>However, large batch sizes can sometimes hurt the ability to generalize. There’s a balance to be struck depending on the task you’re trying to achieve.</li>
                 </ul>
 
                 <p>
-                    Recall that the input batch is an input to the cost function. In <a href="https://arxiv.org/pdf/1609.04836.pdf">On large-batch training for deep learning: generalization gap and sharp minima</a>, Keskar et al. provide numerical evidence that a large batch size typically lead to sharper cost function surfaces than a small batch size. Here's an intuitive figure comparing a flat and a sharp minumum. Flat cost surfaces (and thus small batche sizes) are preferred because they lead to good generalization without requiring high precision.
+                    Recall that the input batch is an input to the cost function. Large batch size typically leads to sharper cost function surfaces than a small batch size, as  Keskar et al. find in their paper, <a href="https://arxiv.org/pdf/1609.04836.pdf">On large-batch training for deep learning: generalization gap and sharp minima</a>. Here's an intuitive figure comparing a flat and a sharp minumum. Flat cost surfaces (and thus small batche sizes) are preferred because they lead to good generalization without requiring high precision.
                 </p>
 
                 <img src="img/flat_vs_sharp.png">
 
-                <p>In practice, to find hyperparameters such as the learning rate and the batch size, you should perform hyperparameter search. In <a href="https://arxiv.org/pdf/1711.00489.pdf">Don't Decay the Learning Rate, Increase the Batch Size</a>, Smith, Kindermans et al. suggest that the batch size and the learning rate are two ways to achieve the same outcome. They argue that the benefits of decaying the learning rate can be achieved by increasing the batch size during training. The efficient use of vast batch sizes notably reduces the number of parameter updates required to train a model.
+                <p>In practice, to find hyperparameters such as the learning rate and the batch size, you should perform hyperparameter search. Batch size and the learning rate are two ways to achieve the same outcome, according to Smith, Kindermans et al. in <a href="https://arxiv.org/pdf/1711.00489.pdf">Don't Decay the Learning Rate, Increase the Batch Size</a>. They argue that the benefits of decaying the learning rate can be achieved by increasing the batch size during training. So if you change the batch size, you may also need to change the learning rate. The efficient use of vast batch sizes notably reduces the number of parameter updates required to train a model.
                 </p>
 
             </div>
@@ -374,7 +366,7 @@
                 <h4>d) Iterative update</h4>
             </div>
             <div class="column-6-8">
-                <p>Now that you have a starting point, a learning rate, and a batch size, it’s time to iteratively update the parameters to move towards the minimum of the loss function. The optimization algorithm is also a core choice to be made. There are various optimizers, and you can play with them in the visualization below. It will help you build intuition on the pros and cons of each of them.</p>
+                <p>Now that you have a starting point, a learning rate, and a batch size, it’s time to iteratively update the parameters to move towards the minimum of the loss function. The optimization algorithm is also a core choice to be made. You can play with various optimizers in the visualization below. That will help you build intuition regarding the pros and cons of each.</p>
             </div>
         </div>
         <div class="full-container hide-backToTop" id="landscape">
@@ -461,7 +453,7 @@
         </div>
         <div class="container">
             <div class="column-6-8 column-align">
-                <p>The choice of optimizer influences both the speed and the occurrence of your convergence. A lot of alternatives to the classic gradient descent algorithms have been developed in the past few years and are listed in the table below. (Notation: <script>
+                <p>The choice of optimizer influences both the speed of convergence and whether it occurs. A lot of alternatives to the classic gradient descent algorithms have been developed in the past few years and are listed in the table below. (Notation: <script>
                     document.write(katex.renderToString('dW = \\frac{\\partial \\mathcal{L}}{\\partial W}'))
                     </script>)</p>
             </div>
@@ -550,7 +542,7 @@
 
              <div class="column-2-8 column-align margin">
                 <div class="marginbody" id="margin-5-body" data-number="5">
-                    <p class="caption">Online optimization is when updates must be made with incomplete knowledge of the future (i.e. stochastic gradient descent optimization).</p>
+                    <p class="caption">Online optimization is when updates must be made with incomplete knowledge of the future (as in stochastic gradient descent optimization).</p>
                 </div>
                 <div class="marginbody" id="margin-6-body" data-number="6">
                     <p class="caption">Non-stationary setting essentially describes inflection points (where the concavity of the landscape changes) for which the gradient is zero in some, but not all directions.</p>
@@ -559,16 +551,16 @@
 
             <div class="column-6-8 column-align">
                 <p>
-                    Despite performing well in the initial portion of training, adaptive optimization methods such as Adam or RMSprop have been found to generalize poorly compared to Stochastic gradient descent (SGD) at later stages of training. In <a href="https://arxiv.org/pdf/1712.07628.pdf">Improving Generalization Performance by Switching from Adam to SGD</a>, Keskar et al. investigate a hybrid strategy that begins training with an adaptive method and switches to SGD when appropriate.</p>
+                    Despite performing well in the initial portion of training, adaptive optimization methods such as Adam or RMSprop have been found to generalize poorly at later stages of training compared to Stochastic gradient descent (SGD). In <a href="https://arxiv.org/pdf/1712.07628.pdf">Improving Generalization Performance by Switching from Adam to SGD</a>, Keskar et al. investigate a hybrid strategy that begins training with an adaptive method and switches to SGD when appropriate.</p>
 
                 <p>
-                    For more information about these optimizers, refer to the Deep Learning Specialization (<a href="https://www.coursera.org/learn/deep-neural-network">Course 2</a>: “Improving your Deep Neural Network”, Week 2: “Optimization”).</p>
+                    You can find more information about these optimizers in the Deep Learning Specialization (<a href="https://www.coursera.org/learn/deep-neural-network">Course 2</a>: Improving your Deep Neural Network, Week 2: Optimization) on Coursera.</p>
             </div>
 
             <div class="column-6-8 ">
                 <h3>Conclusion</h3>
 
-                <p>Exploring the optimization methods and hyperparameters presented above helps you build intuition that you can use to optimize networks for your own tasks. Intuitively understanding  the sensitivity of the loss optimization for these hyperparameters (learning rate, batch size, optimizer, etc.) is very important during hyperparameter search. Combined with the right method (random search or Bayesian optimization), it will help you iterate through your search in order to find the right model.</p>
+                <p>Exploring the optimization methods and hyperparameters presented above helps you build intuition for optimizing networks for your own tasks. Intuitively understanding  the sensitivity of the loss optimization for these hyperparameters (learning rate, batch size, optimizer, etc.) is very important during hyperparameter search. Combined with the right method (random search or Bayesian optimization), it will help you iterate through your search to find the right model.</p>
             </div>
         </div>
     </div>
