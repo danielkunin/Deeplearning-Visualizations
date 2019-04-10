@@ -549,7 +549,7 @@
                     document.write(katex.renderToString("L"))
                     </script> be the output layer of our network.  Using this expression at every layer, we can link the output layer's variance to the input layer's variance:</p>
                 <script>
-                var render = katex.renderToString("\\begin{aligned} Var(a^{[L]}) &= n^{[L-1]}Var(W^{[L]})Var(a^{[L-1]}) \\cr  &= n^{[L-1]}Var(W^{[L]})n^{[L-2]}Var(W^{[L-1]})Var(a^{[L-2]})\\cr &=\\dots\\cr &= [\\prod_{l=1}^L n^{[l-1]}Var(W^{[l]})]Var(x)\\end{aligned}", { displayMode: true });
+                var render = katex.renderToString("\\begin{aligned} Var(a^{[L]}) &= n^{[L-1]}Var(W^{[L]})Var(a^{[L-1]}) \\cr  &= n^{[L-1]}Var(W^{[L]})n^{[L-2]}Var(W^{[L-1]})Var(a^{[L-2]})\\cr &=\\dots\\cr &= \\left[\\prod_{l=1}^L n^{[l-1]}Var(W^{[l]})\\right]Var(x)\\end{aligned}", { displayMode: true });
                 document.writeln(render);
                 </script>
                 <p>Depending on how we initialize our weights, the relationship between the variance of our output and input will vary dramatically.  Notice the following three cases.</p>
