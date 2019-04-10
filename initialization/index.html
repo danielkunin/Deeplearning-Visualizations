@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Learn how to appropriately initialize parameters in your neural networks.">
+    <meta name="description" content="Learn how to appropriately initialize parameters in neural networks.">
     <meta name="author" content="--">
     <title>Initialization</title>
     <!-- Fonts -->
@@ -46,7 +46,7 @@
     <div class="main vis-background">
         <div class="container" >
             <div class="column-6-8 column-align" >
-                <h1 class="title">Initializing your neural networks</h1>
+                <h1 class="title">Initializing neural networks</h1>
             </div>
         </div>
         
@@ -55,7 +55,7 @@
         <div class="container divider-bottom" >
             <div class="column-6-8 column-align" >
                
-                <h2 class="title">Initialization can have a significant impact on convergence in training deep neural networks. Recently, simple initialization schemes have been found to accelerate training -- but they require some care to avoid common pitfalls. In this post, we'll explain how to initialize neural network parameters effectively.</h2>
+                <h2 class="title">Initialization can have a significant impact on convergence in training deep neural networks. Simple initialization schemes have been found to accelerate training, but they require some care to avoid common pitfalls. In this post, we'll explain how to initialize neural network parameters effectively.</h2>
                
             </div>
 
@@ -89,7 +89,7 @@
                     </ol>
                 </ol>
                 <p>
-                    Then, given a new data point, you can use your model (architecture plus learned parameters) to predict its class.
+                    Then, given a new data point, you can the model (architecture plus learned parameters) to predict its class.
                 </p>
                 <p>
                     The initialization step can be critical to the model's ultimate performance, and it requires the right method. To illustrate this, consider the 3-layer neural network below. You can try initializing this network with different methods and observe the impact on the learning.
@@ -167,7 +167,7 @@
                     <script>
                     document.write(katex.renderToString('relu(\\alpha x_1 + \\alpha x_2)'))
                     </script>. Thus, both hidden units will have identical influence on the cost, which will lead to identical gradients. Thus, both neurons will evolve symmetrically throughout training, effectively preventing different neurons from learning different things.</p>
-                <p>What do you notice about the cost plot when you initialize your weights with values too small or too large?</p>
+                <p>What do you notice about the cost plot when you initialize weights with values too small or too large?</p>
                 <p class="inline-caption">Despite breaking the symmetry, initializing the weights with values (i) too small or (ii) too large leads respectively to (i) slow learning or (ii) divergence.</p>
                 <p>Choosing proper values for initialization is necessary for efficient training. We will investigate this further in the next section.</p>
             </div>
@@ -259,7 +259,7 @@
                 </div>
             </div>
             <div class="column-6-8 divider-bottom">
-                <p>All in all, initializing your weights with inappropriate values will lead to divergence or a slow-down in the training of your neural network. Although we illustrated the exploding/vanishing gradient problem with simple symmetrical weight matrices, the observation generalizes to any initialization values that are too small or too large.</p>
+                <p>All in all, initializing weights with inappropriate values will lead to divergence or a slow-down in the training of your neural network. Although we illustrated the exploding/vanishing gradient problem with simple symmetrical weight matrices, the observation generalizes to any initialization values that are too small or too large.</p>
             </div>
             <div class="column-6-8 index3-target column-align">
                 <h3>III&emsp;How to find appropriate initialization values</h3>
@@ -355,7 +355,7 @@
  			</div>
             <div class="viz-column-4-8">
                 <h3>2. Select an initialization method</h3>
-                <p>Among the below distributions, select the one to use to initialize your parameters. <sup class="footnote-index footnote-index3">3</sup>.</p>
+                <p>Among the below distributions, select the one to use to initialize parameters. <sup class="footnote-index footnote-index3">3</sup>.</p>
                 <label class="radio-container">Zero
                     <input type="radio" value="zero" name="mnist_init">
                     <span class="checkmark"></span>
@@ -724,11 +724,11 @@
             </div>
             <div class="column-6-8 column-align">
                 <p class="reference">To reference this article in an academic context, please cite this work as:</p>
-                <p class="citation">Katanforoosh & Kunin, "Initializing your neural networks", deeplearning.ai, 2018.</p>
+                <p class="citation">Katanforoosh & Kunin, "Initializing neural networks", deeplearning.ai, 2018.</p>
                 <!-- <p class="reference">BibTeX citation:</p>
                 <p class="citation">@article{kiank+dkunin,<br>
                   &emsp;author = {Katanforoosh, Kian and Kunin, Daniel},<br>
-                  &emsp;title = {Initializing your neural networks},<br>
+                  &emsp;title = {Initializing neural networks},<br>
                   &emsp;journal = {deeplearning.ai},<br>
                   &emsp;year = {2018}}</p> -->
             </div>
