@@ -89,7 +89,7 @@
                     </ol>
                 </ol>
                 <p>
-                    Then, given a new data point, you can use the model (architecture plus learned parameters) to predict its class.
+                    Then, given a new data point, you can use the model to predict its class.
                 </p>
                 <p>
                     The initialization step can be critical to the model's ultimate performance, and it requires the right method. To illustrate this, consider the three-layer neural network below. You can try initializing this network with different methods and observe the impact on the learning.
@@ -476,7 +476,7 @@
                     var render = katex.renderToString("Var(a_k^{[l]}) = Var(z_k^{[l]}) = Var(\\sum_{j=1}^{n^{[l-1]}}w_{kj}^{[l]}a_j^{[l-1]})", { displayMode: true });
                     document.writeln(render);
                     </script>
-                <p>A common “math trick” is to extract the summation outside the variance. To do this, we must make the following three <span class="marginanchor" id="margin-11-anchor" data-number="11" data-align="middle">assumptions</span><sup class="footnote-index footnote-index6">6</sup>:</p>
+                <p>A common math trick is to extract the summation outside the variance. To do this, we must make the following three <span class="marginanchor" id="margin-11-anchor" data-number="11" data-align="middle">assumptions</span><sup class="footnote-index footnote-index6">6</sup>:</p>
                 <ol class="inline-caption">
                     <li>Weights are independent and identically distributed</li>
                     <li>Inputs are independent and identically distributed</li>
@@ -487,7 +487,7 @@
                 var render = katex.renderToString("Var(a_k^{[l]}) = Var(z_k^{[l]}) = Var(\\sum_{j=1}^{n^{[l-1]}}w_{kj}^{[l]}a_j^{[l-1]}) = \\sum_{j=1}^{n^{[l-1]}}Var(w_{kj}^{[l]}a_j^{[l-1]})", { displayMode: true });
                 document.writeln(render);
                 </script>
-                <p>Another common “math trick” is to convert the variance of a product into a product of variances. Here is the <span class="marginanchor" id="margin-12-anchor" data-number="12" data-align="middle">formula</span> for it:</p>
+                <p>Another common math trick is to convert the variance of a product into a product of variances. Here is the <span class="marginanchor" id="margin-12-anchor" data-number="12" data-align="middle">formula</span> for it:</p>
                 <script>
                 var render = katex.renderToString("Var(XY) = E[X]^2Var(Y) + Var(X)E[Y]^2 + Var(X)Var(Y)", { displayMode: true });
                 document.writeln(render);
@@ -577,12 +577,12 @@
                     document.write(katex.renderToString('\\mathcal{N}(0,\\frac{1}{n^{[l-1]}})'))
                     </script> or as <script>
                     document.write(katex.renderToString('\\mathcal{N}(0,\\frac{2}{n^{[l-1]} + n^{[l]}})'))
-                    </script> which is the harmonic mean of <script>
+                    </script>. The variance term of the latter distribution is the harmonic mean of <script>
                     document.write(katex.renderToString('\\frac{1}{n^{[l-1]}}'))
                     </script> and <script>
                     document.write(katex.renderToString('\\frac{1}{n^{[l]}}'))
                     </script>. </p>
-                    <p>This is a theoretical justification for Xavier initialization. Xavier initialization works with tanh activations. Myriad other initialization methods exist. If you are using ReLU, for example, a common initialization is He initialization (<a href="https://arxiv.org/pdf/1502.01852.pdf">He et al., Delving Deep into Rectifiers</a>). While the justification for this initialization is slightly more complicated, it follows the same thought process as the one for tanh. </p>
+                    <p>This is a theoretical justification for Xavier initialization. Xavier initialization works with tanh activations. Myriad other initialization methods exist. If you are using ReLU, for example, a common initialization is He initialization (<a href="https://arxiv.org/pdf/1502.01852.pdf">He et al., Delving Deep into Rectifiers</a>), in which the weights are initialized by multiplying by 2 the variance of the Xavier initialization. While the justification for this initialization is slightly more complicated, it follows the same thought process as the one for tanh. </p>
             </div>
             <div class="column-2-8 column-align margin">
             	<div class="marginbody" id="margin-7-body" data-number="7">
