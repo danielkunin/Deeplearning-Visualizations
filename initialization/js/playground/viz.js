@@ -565,7 +565,12 @@ function playground_setup() {
     d3.select("#playground_step").classed("inactive", false)
 
   });
+
+  // Load first dataset
+  d3.select('#playground_dataset svg rect').dispatch('click');
+
 }  
+
 
 
 // wait until all documents load then setup
