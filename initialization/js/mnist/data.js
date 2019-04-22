@@ -1,6 +1,7 @@
 
 // Set directory of zip reader
-zip.workerScriptsPath = window.location.pathname.slice(0, -10) + "/js/mnist/zip/";
+// zip.workerScriptsPath = window.location.pathname.slice(0, -10) + "/js/mnist/zip/";
+zip.workerScriptsPath = "/ai-notes/initialization/js/mnist/zip/";
 
 // Download the .zip file, Extract the .csv file, Load into RAM
 function extract(file, data, draw) {
