@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Learn how to appropriately optimize your neural networks.">
+    <meta name="description" content="Learn how to appropriately optimize neural networks.">
     <meta name="author" content="--">
     <title>Optimization</title>
     <!-- Fonts -->
@@ -49,7 +49,7 @@
     <div class="main vis-background">
         <div class="container" >
             <div class="column-6-8 column-align" >
-                <h1 class="title">Optimizing your neural networks</h1>
+                <h1 class="title">Optimizing neural networks</h1>
             </div>
         </div>
         
@@ -58,7 +58,7 @@
         <div class="container divider-bottom" >
             <div class="column-6-8 column-align" >
                
-                <h2 class="title">Training a machine learning model is an optimization problem. Various techniques exist, and different optimizers lead to different trained models. Through interactive visualizations, we'll help you develop your intuition for setting up the optimization problem and running the optimization process.</h2>
+                <h2 class="title">Training a machine learning model is a matter of optimizing the distance between the model's predictions and reality. But optimizing its performance isn't so straightforward. Rather than adjusting the model directly, you must take an indirect route. Through interactive visualizations, we'll help you develop your intuition for setting up and solving the optimization problem.</h2>
                
             </div>
 
@@ -75,10 +75,10 @@
         <div class="container index1-target">
             <div class="column-6-8 column-align">
             	
-            	<p>In machine learning, you start by defining a task, such as detecting cats on an image, and a loss (or objective) function to evaluate how well your model performs on that task. Then, you find the architecture and its parameters that will result in an optimal value for your objective.</p>
+            	<p>In machine learning, you start by defining a task and a model consisting of an architecture and parameters. The values of the parameters determine how accurately the model performs the task. But how do you find good values? By defining a loss function that evaluates how well the model performs. The goal is to optimize the loss function—that is, to find parameter values that close the distance between the model's predictions and reality.</p>
 
                 <h3>I&emsp;Setting up the optimization problem</h3>
-                <p>The loss function will be different in different tasks depending on the output desired. Which one you choose will have a major influence on the model's training and performance.</p>
+                <p>The loss function will be different in different tasks depending on the output desired. How you define it has a major influence on how the model will train and perform. Let's consider two examples:</p>
 
                 <h4>Example 1: House price prediction</h4>
 
@@ -91,8 +91,8 @@
 
                 <h4>Example 2: object detection</h4>
 
-                <p> Let's consider a different example. Say your task is to detect (that is, localize and identify) cars and pedestrians in images. Your loss function should frame the following sentence in mathematical terms:</p>
-                <p class="inline-caption">Given an image, output bounding boxes (bbox) that contain all the cars and pedestrians in the image. Output boxes should match the labeled boxes in size,  position and predicted class.</p>
+                <p> Let's consider a more complex example. Say your task is to detect (that is, localize and identify) cars and pedestrians in images. The loss function should frame the following sentence in mathematical terms:</p>
+                <p class="inline-caption">Given an image, predict bounding boxes (bbox) that contain all the cars and pedestrians in the image. The predicted boxes should match the size, position and class of the actual objects.</p>
                 <p>In mathematical terms, a possible loss function <script>
                     document.write(katex.renderToString('\\mathcal{L}'))
                 </script> (<a href="https://arxiv.org/pdf/1506.02640.pdf">Redmon et al., 2016</a>) is:</p> 
@@ -118,33 +118,33 @@
 
                 <p>This <span class="marginanchor" id="margin-0-anchor" data-number="0" data-align="top">loss function</span> depends on:</p>
                 <ul>
-                    <li>The parameters of the network (weights and biases)</li>
-                    <li>The input to the network</li>
-                    <li>The ground truths corresponding to the input</li>
+                    <li>Parameters of the network (weights and biases)</li>
+                    <li>Input to the network (images)</li>
+                    <li>Ground truth corresponding to the input (labels comprising bounding boxes and classes)</li>
                 </ul>
-                <p>For a fixed value of the input batch and ground truths batch, the loss has a landscape that depends on the parameters of the network. It is almost impossible to visualize the loss landscape (against the parameters) if there are more than two parameters. However, the landscape does exist and our goal is to find the point where the loss value is minimal. Updating the parameter values will move the loss value either closer to or farther from the target minimum point. (Techniques exist to visualize loss functions in higher dimensions.)</p>
+                <p>For a fixed value of the input batch and ground-truth batch, the loss has a landscape that depends on the parameters of the network. It is difficult to visualize the loss landscape (against the parameters) if there are more than two parameters. However, the landscape does exist and our goal is to find the point where the loss value is minimal. Updating the parameter values will move the loss value either closer to or farther from the target minimum point. (Techniques exist to visualize loss functions in higher dimensions.)</p>
             </div>
             <div class="column-2-8 column-align margin">
                 <div class="marginbody" id="margin-0-body" data-number="0">
-                    <p class="caption">By definition, this function L has a low value, then the when the model performs well on the task.</p>
+                    <p class="caption">By definition, this function L has a low value when the model performs well on the task.</p>
                 </div>
             </div>
             <div class="column-6-8">
                 <h4>The relationship between the model and the loss function</h4>
             </div>
             <div class="column-6-8 column-align">
-                <p>In optimizing your machine learning algorithm, it is important to note the difference between the function <script>document.write(katex.renderToString('\\mathcal{L}'))</script> you are optimizing (the loss function) and the function <script>document.write(katex.renderToString('f'))</script> you will use to perform the task (the model).</p>
+                <p>It is important to distinguish between the function <script>document.write(katex.renderToString('f'))</script> that will perform the task (the model) and the function <script>document.write(katex.renderToString('\\mathcal{L}'))</script> you are optimizing (the loss function).</p>
                 <ul>
-                    <li><b>The model</b> is unknown. Its purpose is to mimic the <span class="marginanchor" id="margin-1-anchor" data-number="1" data-align="middle">real function</span> that performs the task. You know that the network function is defined by its parameters, and your goal is to find them.</li>
-                    <li><b>The loss function</b> is chosen for a specific task, and you have a formula for it. But its value depends on the parameters and thus the model.</li>
+                    <li><b>The model</b> is an architecture and a set of parameters that constitutes a <span class="marginanchor" id="margin-1-anchor" data-number="1" data-align="middle">real function</span> that performs the task. The optimized parameter values will enable the model to perform the task with relative accuracy.</li>
+                    <li><b>The loss function</b> quantifies how accurately the model performs on given data set. Its value depends on the model's parameter values.</li>
                 </ul>
-                <p>Counterintuitively, you are not optimizing the function you will use to predict the end value. Instead, you are defining a proxy (the loss function) that, if minimized, will make your model yield relatively accurate predictions. You need a loss function because the model itself is unknown.</p>
-                <p>In summary, the way you define your loss function will dictate the performance of your model. The diagram below illustrates the process of finding a model that performs the task at hand.</p>
+                <p>At this point, the optimized parameter values are unknown. However, you have a formula for the loss function. Optimize that, and you will find good parameter values. The way to do this is to feed the training data set into the model, find the loss function, and adjust the parameters to make it as small as possible. This is usually an iterative process.</p>
+                <p>In summary, the way you define the loss function will dictate the performance of your model on the task at hand. The diagram below illustrates the process of finding a model that performs the task at hand.</p>
                 <img src="img/functiongraph.png">
             </div>
             <div class="column-2-8 column-align margin">
                 <div class="marginbody" id="margin-1-body" data-number="1">
-                    <p class="caption">Do you know the mathematical formula that allows you to detect cats on images? Probably not, but using data you can find a function that performs this task. It turns out that a convolutional architecture with the right parameters defines a function that can perform this task well.</p>
+                    <p class="caption">Do you know the mathematical formula that allows you to detect cats in images? Probably not, but using data you can find a function that performs this task. It turns out that a convolutional architecture with the right parameters defines a function that can perform this task well.</p>
                 </div>
             </div>
         </div>
@@ -157,8 +157,8 @@
                 <h4>Initialization, learning rate and batch size</h4>
             </div>
             <div class="column-6-8">
-                <p>First, initialize the parameters of the network function so that you have a starting point for your optimization. You also need to choose your hyperparameters such as the learning rate and the batch size. They will have an important influence on the optimization.</p>
-                <p>In the visualization below, you can play with the starting point of initialization, the learning rate, and the batch size. With these parameters, you will fit a linear regression on a set of 300 data points using the gradient descent optimization algorithm. For more information on gradient descent optimization, refer to the Deep Learning Specialization (<a href="https://www.coursera.org/learn/neural-networks-deep-learning">Course 1</a>: “Neural Networks and Deep Learning”, Week 2: “Logistic Regression as a Neural Network”.) Here are some questions to ask yourself:</p>
+                <p>First, initialize the parameters of the network function so you have a starting point for  optimization. You also need to choose  hyperparameters such as learning rate and batch size. They will have an important influence on the optimization.</p>
+                <p>In the visualization below, you can play with the starting point of initialization, learning rate, and batch size. With these parameters, you will fit a linear regression on a set of 300 data points using the gradient descent optimization algorithm. For more information on gradient descent optimization, see the Deep Learning Specialization (<a href="https://www.coursera.org/learn/neural-networks-deep-learning">Course 1</a>: Neural Networks and Deep Learning, Week 2: Logistic Regression as a Neural Network.) Here are some questions to ask yourself:</p>
                 <ul>
                     <li>Why does the loss landscape look like this?</li>
                     <li>What is the red dot?</li>
@@ -319,17 +319,17 @@
         </div> -->
         <div class="container">
             <div class="column-6-8 column-align">
-                <p>Here are some takeaways from the visualization above:</p>
+                <p>Here are some takeaways from the visualization:</p>
             </div>
             <div class="column-6-8">
                 <h4>a) Initialization</h4>
-                <p>A good initialization can make your optimization quicker and converge to the correct minimum (in the case where there are several minima.) If you want to learn more about initialization, read our AI Note on "<a href="../Initialization/index.html">Initializing your neural network</a>."</p>
+                <p>A good initialization can make your optimization quicker and converge to the correct minimum (in the case where there are several minima). If you want to learn more about initialization, read our AI Note on "<a href="../Initialization/index.html">Initializing neural networks</a>."</p>
             </div>
             <div class="column-6-8 column-align">
                 <h4>b) Learning rate</h4>
                 <p>The choice of learning rate influences the convergence of your optimization.</p>
                 <ul>
-                    <li>If the learning rate is too small, your updates are small and the optimization is slow. Furthermore, you’re likely to settle into an <span class="marginanchor" id="margin-3-anchor" data-number="3" data-align="middle">inappropriate local minimum</span>. (We use this term because, in machine learning optimization, the optimzation is often non-convex and unlikely to converge to the global minimum.)</p>
+                    <li>If the learning rate is too small, your updates are small and the optimization is slow. Furthermore, you’re likely to settle into an <span class="marginanchor" id="margin-3-anchor" data-number="3" data-align="middle">inappropriate local minimum</span>. (We use this term because, in machine learning optimization, the optimization is often non-convex and unlikely to converge to the global minimum.)</p>
                 </div>
             </div></li>
                     <li>If the learning rate is too large, your updates will be large and the optimization is likely to diverge.</li>
@@ -338,7 +338,7 @@
                 <p>The choice of learning rate depends on the curvature of your loss function. Gradient descent makes a linear approximation of the loss function in a given point. It then moves downhill along the approximation of the loss function. In the case where the loss is highly curved, the larger your step size (learning rate) the larger the error of your approximation. Taking small steps reduces your error<sup class="footnote-index footnote-index1">1</sup>.</p>
                 <img src="img/losscurve.png">
 
-                            <p>It is common practice to start with a large learning rate and decay it during training. Choosing the right decay (how often? by how much?) is non-trivial. An excessively agressive decay schedule slows the progress towards the optimum, while a slow-paced decay schedule leads to chaotic updates with small improvements.</p>
+                            <p>It is common practice to start with a large learning rate and decay it during training. Choosing the right decay (how often? by how much?) is non-trivial. An excessively aggressive decay schedule slows the progress towards the optimum, while a slow-paced decay schedule leads to chaotic updates with small improvements.</p>
             </div>
 
             <div class="column-6-8">
@@ -366,7 +366,8 @@
                 <h4>d) Iterative update</h4>
             </div>
             <div class="column-6-8">
-                <p>Now that you have a starting point, a learning rate, and a batch size, it’s time to iteratively update the parameters to move towards the minimum of the loss function. The optimization algorithm is also a core choice to be made. You can play with various optimizers in the visualization below. That will help you build intuition regarding the pros and cons of each.</p>
+                <p>Now that you have a starting point, a learning rate, and a batch size, it’s time to iteratively update the parameters to move towards the minimum of the loss function.</p> 
+                <p>The optimization algorithm is also a core choice to be made. You can play with various optimizers in the visualization below. That will help you build intuition regarding the pros and cons of each.</p>
             </div>
         </div>
         <div class="full-container hide-backToTop" id="landscape">
@@ -471,8 +472,9 @@
                     </td>
                     <td>
                         <ul>
-                            <li>GD can use parallelization efficiently, but is very slow when the dataset is larger than what your GPU's memory can handle. The parallelization wouldn't be optimal.</li>
+                            <li>GD can use parallelization efficiently, but is very slow when the data set is larger the GPU's memory can handle. The parallelization wouldn't be optimal.</li>
                             <li>SGD usually converges faster than GD on large datasets, because updates are more frequent. Plus, the stochastic approximation of the gradient is usually precise without using the whole dataset because the data is often redundant.</li>
+                            <li>Of the optimizers profiled here, SGD uses the least memory for a given batch size.</li>
                         </ul>
                     </td>
                   </tr>
@@ -488,7 +490,8 @@
                      </td>
                     <td>    
                         <ul>
-                            <li>Momentum speeds up the learning with a very minor implementation change.</li>
+                            <li>Momentum speeds up the learning with a very minor implementation change.
+                                <li>Momentum uses more memory for a given batch size than SGD but less than RMSprop and Adam.</li></li>
                         </ul>
                     </td>
                   </tr>
@@ -507,6 +510,7 @@
                             <li>RMSprop’s adaptive learning rate prevents the learning rate decay from diminishing too slowly or too fast.</li>
                             <li>RMSprop maintains per-parameter learning rates.</li>
                             <li>RMSprop usually works well in <span class="marginanchor" id="margin-5-anchor" data-number="5" data-align="middle">online</span> and <span class="marginanchor" id="margin-6-anchor" data-number="6" data-align="middle">non-stationary settings</span>.</li>
+                            <li>RMSprop uses more memory for a given batch size than SGD and Momentum, but less than Adam.</li>
                         </ul>
                     </td>
                   </tr>
@@ -531,8 +535,9 @@
                      </td>
                     <td>
                         <ul>
-                            <li>The hyperparameters of Adam (learning rate, Exponential decay rates for the moment estimates, etc.) are usually set to predefined values (given in the paper), and do not require to be tuned.</li>
+                            <li>The hyperparameters of Adam (learning rate, Exponential decay rates for the moment estimates, etc.) are usually set to predefined values (given in the paper), and do not need to be tuned.</li>
                             <li>Adam performs a form of learning rate annealing with adaptive step-sizes.</li>
+                            <li>Of the optimizers profiled here, Adam uses the most memory for a given batch size.</li>
                             <li>Adam is often the default optimizer in machine learning.</li>
                         </ul>
                     </td>
@@ -542,16 +547,16 @@
 
              <div class="column-2-8 column-align margin">
                 <div class="marginbody" id="margin-5-body" data-number="5">
-                    <p class="caption">Online optimization is when updates must be made with incomplete knowledge of the future (as in stochastic gradient descent optimization).</p>
+                    <p class="caption">Online optimization is when updates must be made with incomplete knowledge of the future (as in Stochastic Gradient Descent optimization).</p>
                 </div>
                 <div class="marginbody" id="margin-6-body" data-number="6">
-                    <p class="caption">Non-stationary setting essentially describes inflection points (where the concavity of the landscape changes) for which the gradient is zero in some, but not all directions.</p>
+                    <p class="caption">Non-stationary setting essentially describes inflection points (where the concavity of the landscape changes) for which the gradient is zero in some, but not all, directions.</p>
                 </div>
             </div>
 
             <div class="column-6-8 column-align">
                 <p>
-                    Despite performing well in the initial portion of training, adaptive optimization methods such as Adam or RMSprop have been found to generalize poorly at later stages of training compared to Stochastic gradient descent (SGD). In <a href="https://arxiv.org/pdf/1712.07628.pdf">Improving Generalization Performance by Switching from Adam to SGD</a>, Keskar et al. investigate a hybrid strategy that begins training with an adaptive method and switches to SGD when appropriate.</p>
+                    Despite performing well in the initial portion of training, adaptive optimization methods such as Adam or RMSprop have been found to generalize poorly at later stages of training compared to Stochastic Gradient Descent (SGD). In <a href="https://arxiv.org/pdf/1712.07628.pdf">Improving Generalization Performance by Switching from Adam to SGD</a>, Keskar et al. investigate a hybrid strategy that begins training with an adaptive method and switches to SGD when appropriate.</p>
 
                 <p>
                     You can find more information about these optimizers in the Deep Learning Specialization (<a href="https://www.coursera.org/learn/deep-neural-network">Course 2</a>: Improving your Deep Neural Network, Week 2: Optimization) on Coursera.</p>
@@ -592,7 +597,7 @@
                 <ol class="reference footnote">
                     <li class="footnote-index1-target">Chapter 4 of the Deep Learning textbook (numerical computation) from Goodfellow et al.</li>
                     <li class="footnote-index2-target">Check out these papers:<br> 
-                    - <a href="https://arxiv.org/pdf/1711.00489.pdf">Don't Decay the learning rate, increase the batch size</a><br>
+                    - <a href="https://arxiv.org/pdf/1711.00489.pdf">Don't decay the learning rate, increase the batch size</a><br>
                     - <a href="https://papers.nips.cc/paper/6770-train-longer-generalize-better-closing-the-generalization-gap-in-large-batch-training-of-neural-networks.pdf">Train longer generalize better</a><br>
                     - <a href="https://arxiv.org/pdf/1706.02677.pdf">Accurate, large minibatch SGD</a></li>
                     </li>
@@ -603,7 +608,7 @@
             </div>
             <div class="column-6-8 column-align">
                 <p class="reference">To reference this article in an academic context, please cite this work as:</p>
-                <p class="citation">Katanforoosh & Kunin, "Optimizing your neural networks", deeplearning.ai, 2018.</p>
+                <p class="citation">Katanforoosh & Kunin, "Optimizing neural networks", deeplearning.ai, 2018.</p>
             </div>
         </div>
     </div>
