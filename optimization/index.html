@@ -58,7 +58,7 @@
         <div class="container divider-bottom" >
             <div class="column-6-8 column-align" >
                
-                <h2 class="title">Training a machine learning model is a matter of optimizing the distance between the model's predictions and reality. But optimizing its performance isn't so straightforward. Rather than adjusting the model directly, you must take an indirect route. Through interactive visualizations, we'll help you develop your intuition for setting up and solving the optimization problem.</h2>
+                <h2 class="title">Training a machine learning model is a matter of optimizing the difference between the model's predictions and reality. But optimizing its performance isn't so straightforward. Through interactive visualizations, we'll help you develop your intuition for setting up and solving the optimization problem.</h2>
                
             </div>
 
@@ -75,14 +75,14 @@
         <div class="container index1-target">
             <div class="column-6-8 column-align">
             	
-            	<p>In machine learning, you start by defining a task and a model consisting of an architecture and parameters. The values of the parameters determine how accurately the model performs the task. But how do you find good values? By defining a loss function that evaluates how well the model performs. The goal is to optimize the loss function and thereby to find parameter values that close the distance between the model's predictions and reality.</p>
+            	<p>In machine learning, you start by defining a task and a model consisting of an architecture and parameters. For a given architecture, the values of the parameters determine how accurately the model performs the task. But how do you find good values? By defining a loss function that evaluates how well the model performs. The goal is to optimize the loss function and thereby to find parameter values that close the gap between the model's predictions and reality.</p>
 
                 <h3>I&emsp;Setting up the optimization problem</h3>
                 <p>The loss function will be different in different tasks depending on the output desired. How you define it has a major influence on how the model will train and perform. Let's consider two examples:</p>
 
                 <h4>Example 1: House price prediction</h4>
 
-                <p> Say your task is to predict the price of houses <script>document.write(katex.renderToString('y \\in \\mathbb{R}'))</script> based on features such as size in square meters, number of bedrooms, and ceiling height. The loss function can be summarized by the sentence:</p>
+                <p> Say your task is to predict the price of houses <script>document.write(katex.renderToString('y \\in \\mathbb{R}'))</script> based on features such as floor area, number of bedrooms, and ceiling height. The loss function can be summarized by the sentence:</p>
 
                 <p class="inline-caption">Given a set of house features, the square of the difference between your prediction and the actual price should be as small as possible.</p>
 
