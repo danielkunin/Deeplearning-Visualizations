@@ -331,16 +331,18 @@
                 <h4>b) Learning rate</h4>
                 <p>The choice of learning rate influences the convergence of your optimization.</p>
                 <ul>
-                    <li>If the learning rate is too small, your updates are small and the optimization is slow. Furthermore, you’re likely to settle into an <span class="marginanchor" id="margin-3-anchor" data-number="3" data-align="middle">inappropriate local minimum</span>. (We use this term because, in machine learning optimization, the optimization is often non-convex and unlikely to converge to the global minimum.)</p>
-                </div>
-            </div></li>
+                    <li>If the learning rate is too small, your updates are small and the optimization is slow. Furthermore, you’re likely to settle into an <span class="marginanchor" id="margin-3-anchor" data-number="3" data-align="middle">inappropriate local minimum</span>. (We use this term because, in machine learning optimization, the optimization is often non-convex and unlikely to converge to the global minimum.)</li>
                     <li>If the learning rate is too large, your updates will be large and the optimization is likely to diverge.</li>
                     <li>If the learning rate is appropriate, your updates are appropriate and the optimization will converge.</li>
                 </ul>
                 <p>The choice of learning rate depends on the curvature of your loss function. Gradient descent makes a linear approximation of the loss function in a given point. It then moves downhill along the approximation of the loss function. In the case where the loss is highly curved, the larger your step size (learning rate), the larger the error of your approximation. Taking small steps reduces the error<sup class="footnote-index footnote-index1">1</sup>.</p>
                 <img src="img/losscurve.png">
-
-                            <p>It is common practice to start with a large learning rate and decay it during training. Choosing the right decay (how often? by how much?) is non-trivial. An excessively aggressive decay schedule slows the progress towards the optimum, while a slow-paced decay schedule leads to chaotic updates with small improvements.</p>
+                <p>It is common practice to start with a large learning rate and decay it during training. Choosing the right decay (how often? by how much?) is non-trivial. An excessively aggressive decay schedule slows the progress towards the optimum, while a slow-paced decay schedule leads to chaotic updates with small improvements.</p>
+            </div>
+            <div class="column-2-8 column-align margin">	
+                <div class="marginbody" id="margin-3-body" data-number="3">	
+                    <p class="caption">Here we say inappropriate local minimum because in machine learning optimization, the optimzation is often non-convex and unlikely to converge to the global minimum.</p>	
+                </div>	
             </div>
 
             <div class="column-6-8">
