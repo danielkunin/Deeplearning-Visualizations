@@ -175,8 +175,9 @@
             <div class="column-6-8 index2-target column-align">
                 <h3>II&emsp; Early stopping</h3>
                 <p>One of the widely used regularization method is called early stopping. Recall that <span class="marginanchor" id="margin-6-anchor" data-number="6" data-align="middle">optimizing</span> a network to find the correct parameters is an iterative process. If you evaluate your model’s error on the training and dev set after every training epoch, you might see such curves:</p>
-               
-                <img src="img/curves.png">
+               <object type="image/svg+xml" data="img/earlystopping.svg">
+                  <img src="img/curves.png">
+                </object>
                 <p>Based on this observation, you can estimate that after the 30,000th <span class="marginanchor" id="margin-7-anchor" data-number="7" data-align="middle">epoch</span>, your model starts overfitting to the training set. Early stopping means saving the model’s parameters at the 30,000th epoch. The saved model is the best performing model on the dev set and will likely generalize better to the test set.</p>
             </div>
             <div class="column-2-8 column-align margin">
@@ -588,6 +589,10 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
         <p>↑ Back to top</p>
     </div>
 </body>
+
+<!-- EARLY STOPPING & DROPOUT -->
+<link rel="stylesheet" href="css/earlystopping.css">
+<script src="js/earlystopping.js"></script>
 
 <!-- LANDSCAPE -->
 <script src="https://d3js.org/d3-contour.v1.min.js"></script>
