@@ -154,7 +154,7 @@
   </g>
   <!-- <text id="keepprob_text" class="iter_text" transform="translate(213.33 540)">keep_prob</text> -->
   <g id="slide_box">
-    <rect id="box" x="71.96" y="453.37" width="40" height="22" rx="9.23" fill="#fff" stroke="#000" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect id="box_body" x="71.96" y="453.37" width="40" height="22" rx="9.23" fill="#fff" stroke="#000" stroke-linecap="round" stroke-linejoin="round"/>
     <text id="box_text" class="iter_text" x="78" y="470">0.01</text>
   </g>
 </svg>
