@@ -36,7 +36,7 @@
 </head>
 
 <body>
-    <div class="header"> 
+    <div class="header">
         <div class="header-wrapper">
 
         	<a href="https://www.deeplearning.ai/"><img id="header-logo" class="cppnControl" src="../img/deeplearning.png"></a>
@@ -54,14 +54,14 @@
                 <h1 class="title">Regularizing your neural networks</h1>
             </div>
         </div>
-        
+
     </div>
     <div class="main intro ">
         <div class="container divider-bottom" >
             <div class="column-6-8 column-align" >
-               
+
                 <h2 class="title">Regularization methods are used to prevent your model from overfitting on the training data in order to better generalize to unseen data. In this post, you will learn various methods to regularize your models. Our recommendations will be accompanied by intuitive explanations and interactive visualizations.</h2>
-               
+
             </div>
 
             <div class="column-2-8 column-align">
@@ -130,7 +130,7 @@
                 <table>
                   <tr>
                     <th>Train Accuracy</th>
-                    <th>Dev Accuracy</th> 
+                    <th>Dev Accuracy</th>
                     <th>Test Accuracy</th>
                     <th>Conclusion</th>
                   </tr>
@@ -175,9 +175,10 @@
             <div class="column-6-8 index2-target column-align">
                 <h3>II&emsp; Early stopping</h3>
                 <p>One of the widely used regularization method is called early stopping. Recall that <span class="marginanchor" id="margin-6-anchor" data-number="6" data-align="middle">optimizing</span> a network to find the correct parameters is an iterative process. If you evaluate your model’s error on the training and dev set after every training epoch, you might see such curves:</p>
-               <object type="image/svg+xml" data="img/earlystopping.svg">
+                <!-- <object type="image/svg+xml" data="img/earlystopping.svg">
                   <img src="img/curves.png">
-                </object>
+                </object> -->
+                <div id="earlystopping-placeholder"></div>
                 <p>Based on this observation, you can estimate that after the 30,000th <span class="marginanchor" id="margin-7-anchor" data-number="7" data-align="middle">epoch</span>, your model starts overfitting to the training set. Early stopping means saving the model’s parameters at the 30,000th epoch. The saved model is the best performing model on the dev set and will likely generalize better to the test set.</p>
             </div>
             <div class="column-2-8 column-align margin">
@@ -214,7 +215,7 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
     Returns:
     best_model -- the model with minimal dev error and early stopping
     best_dev_error -- the best dev error achieved by best_model
-    best_model_index -- the best_model's saving step 
+    best_model_index -- the best_model's saving step
     """
 
     current_model = model.copy()       # Track your current model
@@ -222,7 +223,7 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
     num_train_steps = 0                # number of training steps
     num_steps_since_best_model = 0     # number of training steps since the last best model was saved
     best_dev_error = np.inf            # the best dev error achieved so far (by best_model)
-    best_model_index = 0               # the best_model's saving step 
+    best_model_index = 0               # the best_model's saving step
 
     # Loop unless there's no model improvement on the dev set for stop_wait steps.
     while num_steps_since_best_model < stop_wait:
@@ -248,7 +249,7 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
         return best_model, best_dev_error, best_model_index
                     </code></pre>
                     <li>It is quicker than other regularization methods because you do not have any regularization hyperparameter to tune. In comparison, L2 regularization requires you to tune a regularization hyperparameter. It might take you several experiments to regularize your model with L2, while early stopping only needs one run.</li>
-                </ul>    
+                </ul>
 
         <p>
             Despite being practical, early stopping is not satisfying from a scientific standpoint. There exist other regularization methods, such as L1 (/L2) regularization and dropout, or optimization methods, such as learning rate annealing, that rely more on theory and are often more reliable.
@@ -313,7 +314,7 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
                 <div id="mnist_network"></div>
             </div>
             <div class="viz-column-4-8">
-                <p class="viz-field">Use the following selections to view a histogram of the weight values <span id="regularized" 
+                <p class="viz-field">Use the following selections to view a histogram of the weight values <span id="regularized"
                 class="bold">with</span> and <span id="unregularized" class="bold">without</span> regularization.</p>
             	<div class="viz-field">
                     <h4>1. Select a regularization method</h4>
@@ -363,7 +364,7 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
                     </label>
                 </div>
             </div>
-            
+
         </div>
         <div class="container">
 	        <div class="column-6-8">
@@ -375,20 +376,20 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
                             <li>“Appropriate” <script> document.write(katex.renderToString('\\lambda'))</script> constant: many of the weights become zeros. This is called “sparsity of the weights”. Because the weight penalty is independent of the weight values, weights with value 0.001 are penalized just as much as weights with value 1000. The value of the penalty is <script> document.write(katex.renderToString('\\alpha\\lambda'))</script> (generally very small). It constrains the subset of weights that are “less useful to the model” to be equal to 0. For example, you could effectively end up with 200 non-zero weights out of 1,000, which means that 800 weights were less useful for learning the task.</li>
                             <li>“Too large" <script> document.write(katex.renderToString('\\lambda'))</script> constant: You can observe a plateau, which means that the weights uniformly take values around zero. In fact, because <script> document.write(katex.renderToString('\\lambda'))</script> is large, the penalty <script> document.write(katex.renderToString('-\\alpha\\lambda sign(w)'))</script> is much higher than the gradient <script> document.write(katex.renderToString('- \\alpha \\frac{\\partial J_{cross-entropy}}{\\partial w}'))</script>. Thus, at every update, <script> document.write(katex.renderToString('w'))</script> is pushed by <script> document.write(katex.renderToString('\\approx -\\alpha\\lambda sign(w)'))</script> in the opposite direction of its sign. For instance, if <script> document.write(katex.renderToString('w'))</script> is around zero, but slightly positive, then it will be pushed towards <script> document.write(katex.renderToString('-\\alpha\\lambda'))</script> when the penalty is applied. Hence, the plateau’s width should be <script> document.write(katex.renderToString('2 \\times \\alpha\\lambda'))</script>.</li>
                     </ul>
-                    
-                    
+
+
                     <strong>For the L2 regularization: </strong>
                     <ul>
-                    
-                        
+
+
                             <li>“Too small” <script> document.write(katex.renderToString('\\lambda'))</script> constant: there’s no apparent effect.</li>
                             <li>“Appropriate” <script> document.write(katex.renderToString('\\lambda'))</script> constant: the weight values decrease following a centered distribution that becomes more and more peaked throughout training.</li>
                             <li>“Too large” <script> document.write(katex.renderToString('\\lambda'))</script> constant: All the weights are rapidly collapsing to zeros, and the model obviously underfits because the weight values are too constrained.</li>
                     </ul>
-                    
+
 
                     <p>The weight sparsity effect caused by L1 regularization makes your model more compact in theory, and leads to storage-efficient compact models that are commonly used in smart mobile devices.</p>
-                
+
 	        </div>
             <div class="column-6-8">
                 <h3>How do you implement L1 and L2 regularization?</h3>
@@ -402,7 +403,7 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
 	        <div class="column-6-8">
                     <li>Weight decay suppresses any irrelevant components of the weight vector by driving the optimization to find the smallest vector that solves the learning problem.</li>
                     <li>Weight decay attenuates the influence of outliers on the weight optimization by constraining the weight values. There’s less risk for the weights to learn the sampling error (for example when a subset of your data points comes from a wrong distribution or is mislabelled.) In other words, the output of the model is less affected by changes in the input.</li>
-                
+
                 <p>It’s useful to build some intuition about what L1 and L2 regularization do. You can play with the visualization below to observe variations of the cost landscape subject to regularization from a top view.</p>
 	        </div>
         </div>
@@ -413,7 +414,7 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
             <div class="viz-column-3-8">
                 <div class="viz-field">
                     <h4>1. Choose an <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization" target="_blank">artificial</a> loss landscape</h4>
-                
+
                     <div class="lossFunctions">
                         <label>
                           <input type="radio" name="loss" value="himmelblaus" checked/>
@@ -449,10 +450,10 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
                         </label>
                     </div>
                 </div>
-                
+
                 <div class="viz-field">
                     <h4>2. Select a regularization method</h4>
-                
+
                     <label class="radio-container">L1 regularization
                         <input type="radio" value="1" name="reg">
                         <span class="checkmark"></span>
@@ -465,7 +466,7 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
 
                 <div class="viz-field">
     	            <h4>3. Choose a value for the regularization constant</h4>
-                    
+
                     <input type="range" value="0" min="0" max="40" step="any" id="lambda">
                     </br>
                     <label>Lambda = <span id="lambda_val">0.00</span></label>
@@ -486,7 +487,7 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
             <div class="column-6-8 column-align divider-bottom index4-target">
                 <h3>IV&emsp; Dropout regularization</h3>
                 <p>Although L1 and L2 regularization are simple techniques to reducing overfitting, there exist other methods, such as dropout regularization, that have been shown to be more effective at regularizing larger and more complex networks. <span class="marginanchor" id="margin-17-anchor" data-number="17" data-align="middle">If you had unlimited computational power</span>, you could improve generalization by averaging the predictions of several different neural networks trained on the same task. The combination of these models will likely perform better than a single neural network trained on this task. However, with deep neural networks, training various architectures is expensive because:</p>
-             	
+
                 <ul>
              		<li>Tuning the hyperparameters is time consuming.</li>
              		<li>Training the networks requires a lot of computations.</li>
@@ -494,10 +495,11 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
              	</ul>
 
                 <p>Dropout is a regularization technique, introduced in <a href="http://jmlr.org/papers/volume15/srivastava14a.old/srivastava14a.pdf" target="_blank">Srivastava et al. (2014)</a>, that allows you to combine many different architectures efficiently by randomly dropping some of the neurons of your network during training.</p>
-            	<video width="70%" height="auto" controls>
+            	<!-- <video width="70%" height="auto" controls>
 					<source src="img/dropout1.mp4" type="video/mp4">
 					Your browser does not support the video tag.
-				</video>
+				</video> -->
+                <div id="dropout-placeholder"></div>
             	<p>Dropout is discussed in detail in our <a href="https://www.coursera.org/specializations/deep-learning" target="_blank">Deep Learning Specialization</a> (<a href="https://www.coursera.org/learn/deep-neural-network" target="_blank">Course 2: “Improving Neural Networks”</a>, Week 2: “Practical aspects of Deep Learning”). We invite you to check it out to understand the intuition behind dropout. </p>
             </div>
             <div class="column-2-8 column-align margin">
@@ -520,7 +522,7 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
         </div>
 
     </div>
-        
+
     <div class="footer">
         <div class="container">
             <div class="column-2-8 column-align">
@@ -575,7 +577,7 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
                 © Deeplearning.ai 2018</br>
                 <a href="https://www.deeplearning.ai/privacy/">PRIVACY POLICY</a> <a href="https://www.deeplearning.ai/terms-of-use/">TERMS OF USE</a>
             </p>
-      
+
 
 
             <div class="social">
@@ -592,7 +594,13 @@ def early_stopping(model, X_train, Y_train, X_dev, Y_dev, eval_freq = 1, stop_wa
 
 <!-- EARLY STOPPING & DROPOUT -->
 <link rel="stylesheet" href="css/earlystopping.css">
+<script src="/js/TweenMax.min.js"></script>
+<script src="/js/Draggable.min.js"></script>
+<script src="/js/DrawSVGPlugin.min.js"></script>
+<script src="/js/MorphSVGPlugin.min.js"></script>
+<script src="/js/snap.svg-min.js"></script>
 <script src="js/earlystopping.js"></script>
+<script src="js/dropout.js"></script>
 
 <!-- LANDSCAPE -->
 <script src="https://d3js.org/d3-contour.v1.min.js"></script>

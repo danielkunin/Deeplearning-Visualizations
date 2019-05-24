@@ -1,0 +1,160 @@
+<svg id="dropout" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
+  <title>dropout_reg_2</title>
+  <g id="static">
+    <rect id="vid_ui" x="111.69" y="507.09" width="32.89" height="32.89" rx="16.45" fill="#636363"/>
+    <g id="meter">
+      <line x1="116.11" y1="463.84" x2="140.16" y2="463.84" fill="none" stroke="#c9c9c9" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>
+      <line x1="140.16" y1="88.84" x2="116.11" y2="88.84" fill="none" stroke="#c9c9c9" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>
+      <line x1="116.11" y1="185" x2="140.16" y2="185" fill="none" stroke="#c9c9c9" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>
+      <line x1="116.11" y1="287" x2="140.16" y2="287" fill="none" stroke="#c9c9c9" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>
+      <line x1="116.11" y1="374" x2="140.16" y2="374" fill="none" stroke="#c9c9c9" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>
+      <text transform="translate(148.57 92.37)" font-size="12" fill="#b5b5b5" font-family="Roboto-Regular, Roboto">1.00</text>
+      <text transform="translate(148.57 291)" font-size="12" fill="#b5b5b5" font-family="Roboto-Regular, Roboto">0.50</text>
+      <text transform="translate(148.57 467.37)" font-size="12" fill="#b5b5b5" font-family="Roboto-Regular, Roboto">0.05</text>
+      <text transform="translate(96.4 333.99) rotate(-90)" font-size="16" fill="#b5b5b5" font-family="Roboto-Regular, Roboto">Keep Probability</text>
+    </g>
+    <g id="layer_labels">
+      <text transform="translate(231.89 527.04)" font-size="12" fill="#b5b5b5" font-family="Roboto-Regular, Roboto">layer l-1</text>
+      <text transform="translate(340.66 527.04)" font-size="12" fill="#b5b5b5" font-family="Roboto-Regular, Roboto">layer l</text>
+      <text transform="translate(437.56 527.04)" font-size="12" fill="#b5b5b5" font-family="Roboto-Regular, Roboto">layer l+1</text>
+    </g>
+  </g>
+
+  <!-- buttons -->
+  <g id="pause_button">
+    <rect x="121.55" y="516.17" width="13.17" height="14.72" fill="none"/>
+    <g id="pause_button-2" data-name="pause button">
+      <rect x="122.69" y="516.17" width="3.88" height="14.72" rx="1.62" fill="#fff"/>
+      <rect x="129.69" y="516.17" width="3.88" height="14.72" rx="1.62" fill="#fff"/>
+    </g>
+  </g>
+  <path id="play_button" d="M123.68,517.33v12.4a1.15,1.15,0,0,0,1.73,1l10.74-6.2a1.15,1.15,0,0,0,0-2l-10.74-6.2A1.15,1.15,0,0,0,123.68,517.33Z" fill="#fff"/>
+  <line id="prog_bar" x1="128.13" y1="463.84" x2="128.13" y2="88.84" fill="none" stroke="#c9c9c9" stroke-miterlimit="10" stroke-width="5"/>
+  <circle id="dot" cx="128.13" cy="463.84" r="9" fill="#636363"/>
+
+
+  <g id="net">
+    <g id="drop_6">
+      <line x1="374.07" y1="468.1" x2="459.95" y2="416.57" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="369.56" y1="462.84" x2="459.95" y2="354.37" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="366.36" y1="460.65" x2="459.95" y2="292.17" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="364.27" y1="459.63" x2="459.95" y2="229.97" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="362.85" y1="459.1" x2="459.95" y2="167.78" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="350.27" y1="458.93" x2="252.62" y2="136.68" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="349.09" y1="459.33" x2="252.62" y2="198.87" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="347.37" y1="460.05" x2="252.62" y2="261.07" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="344.79" y1="461.52" x2="252.62" y2="323.27" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="340.88" y1="464.9" x2="252.62" y2="385.47" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="336.43" y1="472.81" x2="252.62" y2="447.67" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="356.29" cy="478.77" r="20.73" fill="#fff" stroke="#f95d6a" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    </g>
+    <g id="drop_5">
+      <line x1="377.02" y1="416.57" x2="459.95" y2="416.57" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="374.07" y1="405.9" x2="459.95" y2="354.37" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="369.56" y1="400.65" x2="459.95" y2="292.17" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="366.36" y1="398.45" x2="459.95" y2="229.97" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="364.26" y1="397.43" x2="459.95" y2="167.78" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="349.09" y1="397.13" x2="252.62" y2="136.68" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="347.37" y1="397.85" x2="252.62" y2="198.87" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="344.79" y1="399.32" x2="252.62" y2="261.07" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="340.88" y1="402.7" x2="252.62" y2="323.27" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="336.43" y1="410.61" x2="252.62" y2="385.47" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="336.43" y1="422.53" x2="252.62" y2="447.67" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="356.29" cy="416.57" r="20.73" fill="#fff" stroke="#f95d6a" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    </g>
+    <g id="drop_4">
+      <line x1="377.02" y1="354.37" x2="459.95" y2="354.37" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="374.07" y1="343.7" x2="459.95" y2="292.17" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="369.56" y1="338.45" x2="459.95" y2="229.97" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="366.36" y1="336.25" x2="459.95" y2="167.78" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="374.07" y1="365.04" x2="459.95" y2="416.57" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="340.88" y1="368.24" x2="252.62" y2="447.67" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="347.37" y1="335.65" x2="252.62" y2="136.68" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="344.79" y1="337.12" x2="252.62" y2="198.87" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="340.88" y1="340.5" x2="252.62" y2="261.07" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="336.43" y1="348.41" x2="252.62" y2="323.27" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="336.43" y1="360.33" x2="252.62" y2="385.47" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="356.29" cy="354.37" r="20.73" fill="#fff" stroke="#f95d6a" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    </g>
+    <g id="drop_3">
+      <line x1="377.02" y1="292.17" x2="459.95" y2="292.17" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="374.07" y1="281.51" x2="459.95" y2="229.97" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="369.56" y1="276.25" x2="459.95" y2="167.78" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="369.56" y1="308.1" x2="459.95" y2="416.57" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="374.07" y1="302.84" x2="459.95" y2="354.37" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="344.79" y1="309.43" x2="252.62" y2="447.67" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="340.88" y1="306.04" x2="252.62" y2="385.47" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="344.79" y1="274.92" x2="252.62" y2="136.68" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="340.88" y1="278.31" x2="252.62" y2="198.87" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="336.43" y1="286.22" x2="252.62" y2="261.07" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="336.43" y1="298.13" x2="252.62" y2="323.27" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="356.29" cy="292.17" r="20.73" fill="#fff" stroke="#f95d6a" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    </g>
+    <g id="drop_2">
+      <line x1="377.02" y1="229.97" x2="459.95" y2="229.97" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="374.06" y1="219.31" x2="459.95" y2="167.78" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="366.36" y1="248.1" x2="459.95" y2="416.57" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="369.56" y1="245.9" x2="459.95" y2="354.37" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="374.07" y1="240.64" x2="459.95" y2="292.17" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="347.37" y1="248.7" x2="252.62" y2="447.67" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="344.79" y1="247.23" x2="252.62" y2="385.47" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="340.88" y1="243.84" x2="252.62" y2="323.27" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="340.88" y1="216.11" x2="252.62" y2="136.68" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="336.43" y1="224.02" x2="252.62" y2="198.87" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="336.43" y1="235.93" x2="252.62" y2="261.07" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="356.29" cy="229.97" r="20.73" fill="#fff" stroke="#f95d6a" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    </g>
+    <g id="drop_0">
+      <circle cx="356.29" cy="104.69" r="20.73" fill="#fff" stroke="#f95d6a" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <line x1="362.85" y1="125.25" x2="459.95" y2="416.57" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="364.27" y1="124.72" x2="459.95" y2="354.37" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="366.36" y1="123.7" x2="459.95" y2="292.17" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="369.56" y1="121.5" x2="459.95" y2="229.97" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="374.07" y1="116.24" x2="459.95" y2="167.78" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="350.28" y1="125.42" x2="252.62" y2="447.67" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="349.09" y1="125.02" x2="252.62" y2="385.47" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="347.38" y1="124.29" x2="252.62" y2="323.27" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="344.79" y1="122.83" x2="252.62" y2="261.07" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="340.88" y1="119.44" x2="252.62" y2="198.87" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="336.43" y1="111.53" x2="252.62" y2="136.68" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g id="drop_1">
+      <line x1="377.02" y1="167.78" x2="459.95" y2="167.78" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="364.26" y1="186.92" x2="459.95" y2="416.57" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="366.36" y1="185.9" x2="459.95" y2="354.37" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="369.56" y1="183.7" x2="459.95" y2="292.17" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="374.07" y1="178.44" x2="459.95" y2="229.97" fill="none" stroke="#ff7c43" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="349.09" y1="187.22" x2="252.62" y2="447.67" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="347.37" y1="186.5" x2="252.62" y2="385.47" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="344.79" y1="185.03" x2="252.62" y2="323.27" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="340.88" y1="181.64" x2="252.62" y2="261.07" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="336.43" y1="161.82" x2="252.62" y2="136.68" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="336.43" y1="173.73" x2="252.62" y2="198.87" fill="none" stroke="#d45087" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="356.29" cy="167.78" r="20.73" fill="#fff" stroke="#f95d6a" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    </g>
+    <g id="outputs">
+      <circle cx="459.95" cy="167.78" r="20.73" fill="#fff" stroke="#ffa600" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <circle cx="459.95" cy="229.97" r="20.73" fill="#fff" stroke="#ffa600" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <circle cx="459.95" cy="292.17" r="20.73" fill="#fff" stroke="#ffa600" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <circle cx="459.95" cy="354.37" r="20.73" fill="#fff" stroke="#ffa600" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <circle cx="459.95" cy="416.57" r="20.73" fill="#fff" stroke="#ffa600" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    </g>
+    <g id="inputs">
+      <circle cx="252.62" cy="447.67" r="20.73" fill="#fff" stroke="#a05195" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <circle cx="252.62" cy="385.47" r="20.73" fill="#fff" stroke="#a05195" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <circle cx="252.62" cy="323.27" r="20.73" fill="#fff" stroke="#a05195" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <circle cx="252.62" cy="261.07" r="20.73" fill="#fff" stroke="#a05195" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <circle cx="252.62" cy="198.87" r="20.73" fill="#fff" stroke="#a05195" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <circle cx="252.62" cy="136.68" r="20.73" fill="#fff" stroke="#a05195" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    </g>
+  </g>
+  <g id="iter_group">
+    <text id="iteration_text" transform="translate(222 92.37)" class="iter_text">Starting</text>
+    <rect id="iter_light" x="216" y="78" width="73" height="20" rx="8.49" fill="none" stroke="#f95d6a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- <text id="keepprob_text" class="iter_text" transform="translate(213.33 540)">keep_prob</text> -->
+  <g id="slide_box">
+    <rect id="box" x="71.96" y="453.37" width="40" height="22" rx="9.23" fill="#fff" stroke="#000" stroke-linecap="round" stroke-linejoin="round"/>
+    <text id="box_text" class="iter_text" x="78" y="470">0.01</text>
+  </g>
+</svg>
