@@ -112,8 +112,12 @@
                 <!-- In the margin for this term: This term ensures that the class of the predicted bounding box should match the class of the ground thruth box.
                 -->
 
-                <script>
+                <!-- <script>
                 var render = katex.renderToString("\\begin{aligned}\\mathcal{L} &= \\lambda_{coord} \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} \\left[ (x_i - \\hat{x}_i)^2 + (y_i - \\hat{y}_i)^2 \\right] &\\text{BBox Center}\\cr &+ \\lambda_{coord} \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} \\left[ (\\sqrt{w_i} - \\sqrt{\\hat{w}_i})^2 + (\\sqrt{h_i} - \\sqrt{\\hat{h}_i})^2 \\right] &\\text{BBox Width/Height}\\cr &+ \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} (C_i - \\hat{C}_i)^2 &\\text{Objectness}\\cr &+\\lambda_{noobj}\\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} (C_i - \\hat{C}_i)^2 &\\text{No Objectness}\\cr &+\\sum_{i=0}^{S^2} \\mathbb{1}_{i}^{obj} \\sum_{c \\in classes} (p_i(c) - \\hat{p}_i(c))^2 &\\text{Class Probabilities}\\end{aligned}", { displayMode: true });
+                document.writeln(render);
+                </script> -->
+                <script>
+                var render = katex.renderToString("\\mathcal{L} = \\underbrace{(x - \\hat{x})^2 + (y - \\hat{y})^2}_{\\text{BBox Center}} + \\underbrace{(w - \\hat{w})^2 + (h - \\hat{h})^2}_{\\text{BBox Width/Height}}", { displayMode: true });
                 document.writeln(render);
                 </script>
                 
