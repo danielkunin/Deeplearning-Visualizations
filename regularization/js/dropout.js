@@ -24,8 +24,8 @@ function main_dropout() {
         drop_6 = $("#drop_6"),
         drop_arr = [drop_0, drop_1, drop_2, drop_3, drop_4, drop_5, drop_6];
 
-    let tl_time = 1.2,
-        anim_time = 0.6;
+    let tl_time = 1.0,
+        anim_time = 0.4;
 
     let tl = new TimelineMax({
         repeat: -1,
@@ -121,6 +121,8 @@ function main_dropout() {
         iter_count = 0;
         update_iteration_text();
         tl.restart();
+        play_button.attr("visibility", "hidden");
+        pause_button.attr("visibility", "visible");
         update_keep_prob();
         TweenMax.to(slide_box, 0.5, {opacity: 0});
     }
