@@ -1,0 +1,20 @@
+
+rect.sparsity {
+	stroke-width: 2px;
+	fill: none;
+	stroke: black;
+}
+
+path.sparsity {
+	stroke-width: 4px;
+	fill: none;
+}
+
+#regularized {
+	stroke: #009CDE;
+	color: #009CDE;
+}
+#unregularized {
+	stroke: #FF8686;
+	color: #FF8686;
+}

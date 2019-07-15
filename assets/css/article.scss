@@ -1,0 +1,70 @@
+---
+# This ensures Jekyll reads the file to be transformed into CSS later
+# only Main files contain this front matter, not partials.
+---
+
+/**
+ * Style (style.scss)
+ */
+
+/* ----- Charset ----- */
+@charset 'utf-8';
+
+/* ----- Variables ----- */
+@import 'variables';
+
+/* ----- Tools ----- */
+@import 'tools/responsive';
+@import 'tools/grid-framework';
+@import 'tools/list';
+
+/* ----- Base ----- */
+@import 'generic/normalize';
+@import 'generic/base';
+
+/* ----- Components ----- */
+@import 'components/site-header';
+@import 'components/article-title';
+@import 'components/table-of-content';
+@import 'components/article-body';
+@import 'components/foot-note';
+@import 'components/site-footer';
+@import 'components/visualization';
+
+/* ----- Objects ----- */
+@import 'objects/button';
+@import 'objects/backToTop';
+@import 'objects/sideNotes';
+@import 'objects/table';
+@import 'objects/modal';
+
+
+
+
+
+
+/* ----- WIP ----- */
+
+body {
+    width: 100%;
+    margin: 0;
+    font-family: "Assistant";
+    background-color: #FFFFFF;
+}
+
+html{
+	width: 100%;
+}
+
+.main{
+	text-align: center;
+}
+
+.container{
+	margin: 0 $marg-header; 
+	width: (100% - $marg-header*2);
+	@include breakpoint(xs){
+		width: 100%;
+		margin: 0;
+	}
+}

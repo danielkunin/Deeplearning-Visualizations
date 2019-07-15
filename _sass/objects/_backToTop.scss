@@ -1,0 +1,27 @@
+
+.backToTop{
+  width: auto;
+  height: auto;
+  padding: 0.5em 1em;
+  margin: 0 auto;
+  position: fixed;
+  bottom:1.5em;
+  right: 2em;
+  background-color: #F0F0F0;
+  border-radius: 2px;
+  z-index: 1000;
+  cursor: pointer;
+  display: block;
+  visibility: hidden;
+}
+
+
+.backToTop p{
+  margin: 0 auto;
+  color: rgba(0,0,0,0.4);
+  font-size: 12px;
+}
+
+.backToTop:hover p{
+  color: $color-pink-red;
+}

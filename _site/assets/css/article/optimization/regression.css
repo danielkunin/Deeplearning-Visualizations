@@ -1,0 +1,45 @@
+.regression_coefficients img {
+	width: 25%;
+}
+.regression_coefficients label input {
+	display: none;
+}
+.regression_coefficients label input + img {
+	cursor: pointer;
+	opacity: 0.6;
+	border: 2px solid transparent;
+}
+.regression_coefficients label input + img:hover {
+	opacity: 1;
+}
+.regression_coefficients label input:checked + img {
+	opacity: 1;
+	border: 2px solid #009CDE;
+	border-radius: 3px;
+}
+
+
+
+line#true,path#true {
+	stroke-width: 2;
+	fill: none;
+	stroke: #009CDE;
+}
+line#estimate, path#estimate {
+	stroke-width: 2;
+	fill: none;
+	stroke: #FF8686;
+}
+
+circle.point {
+	fill: #FF8686;
+	cursor: pointer;
+}
+circle#true {
+	fill: #009CDE;
+	cursor: default;
+}
+circle#estimate {
+	fill: #FF8686;
+	cursor: pointer;
+}

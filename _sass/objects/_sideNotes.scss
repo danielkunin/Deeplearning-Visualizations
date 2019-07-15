@@ -1,0 +1,50 @@
+.sidenote {
+    cursor: pointer;
+    font-style: italic;
+    background-color: $color-pink-red-transparent;
+    @include breakpoint(xs){
+      background-color:transparent;
+      cursor:default;
+    }
+}
+
+.sidenote:hover {
+    background-color: $color-pink-red;
+    @include breakpoint(xs){
+      background-color:transparent;
+    }
+}
+
+
+
+.sidenote-body {
+  opacity: 0;
+  border-left: 2px solid $color-pink-red;
+  padding-left: 1em;
+  position: absolute;
+  display: inline-block;
+  @include col(2,8,$marg-article);
+  @include breakpoint(xs){
+      display:none;
+  }
+
+}
+
+
+.sidenote-body p {
+  margin: 0;
+  font-size: $font-size-subtle;
+}
+
+.sidenote-body img{
+  margin-top: 0;
+}
+
+
+
+
+.margin-border {
+  opacity: 1;
+  border-left: 2px solid $color-pink-red;
+
+}

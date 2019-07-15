@@ -1,0 +1,71 @@
+/**
+ * Variables (_variables.scss)
+*/
+
+/*WIP*/
+
+
+
+
+/* ----- Colors ----- */
+// General
+$color-white: #fff !default;
+$color-black: #000 !default;
+$color-dark: #333 !default;
+$color-dark-blue: #253951 !default;
+$color-yellow: #f6d000 !default;
+
+$base-font-color: #000000;
+$primary-black:#000000;
+$secondary-black:#333333;
+$tertiary-black:rgba(0,0,0,0.6);
+$background-black:#F0F0F0;
+
+$color-pink-red:#FF988B;
+$color-pink-red-transparent: rgba(255,134,134,0.4);
+
+
+
+/* ----- Font sizes ----- */
+// Base
+$font-size-base: 1rem !default;
+$font-size-paragraph: 1.25rem;
+
+
+// Headings
+$font-size-h1: 5rem;
+$font-size-h2: 1.5rem;
+$font-size-h3: 1.25rem;
+
+$font-size-h1-sm: 3rem;
+
+$font-size-subtle: 0.75rem;
+
+//margin
+$marg-header:5%;
+$margin-bottom-3-4:0.75rem;
+$margin-bottom-1:1rem;
+$margin-bottom-2:2rem;
+$margin-bottom-3:3rem;
+
+
+/* ----- Font weight ----- */
+
+
+
+
+
+/* ------- */
+$section-padding-top: 2em;
+
+
+
+/* ----- Media queries breakpoints ----- */
+// Mobile first
+$screen-xs-min: 766px !default; // Extra small screens, Phones
+$screen-sm-min: 768px !default; // Small screens, Tablets
+$screen-md-min: 992px !default; // Medium screens, Desktop
+$screen-lg-min: 1200px !default; // Large screens, Wide desktops
+
+
+

@@ -1,0 +1,85 @@
+<div class="article-banner-content" id="vis-background">
+    <div id="cppn-overlay"></div>  
+</div>
+<div>
+    <a class="cppn-control-toggle">
+      <div class="cppn-control">
+        <i class="fas fa-sliders-h"></i>
+      </div>
+    </a>
+    <div class="cppn-control" style="display: none">
+      <a class="cppn-control-toggle fa fa-times"></a>
+      <p>Network Depth:</p>
+      <label class="radio-container">
+          Shallow
+          <input type="radio" name="depth" value="3" checked/>
+          <span class="checkmark"></span>
+      </label>
+      <label class="radio-container">
+          Deep
+          <input type="radio" name="depth" value="4" />
+          <span class="checkmark"></span>
+      </label>
+      <p>Layer Complexity:</p>
+      <label class="radio-container">
+          Simple
+          <input type="radio" name="complexity" value="20" checked/>
+          <span class="checkmark"></span>
+      </label>
+      <label class="radio-container">
+          Complex
+          <input type="radio" name="complexity" value="25" />
+          <span class="checkmark"></span>
+      </label>
+      <p>Nonlinearity:</p>
+      <select id="activation" class="select-containter">
+          <option value="sin" selected>Sine</option>
+          <option value="cos">Cosine</option>
+          <option value="tanh">Tanh</option>
+          <option value="linear">Linear</option>
+          <option value="step">Step</option>
+          <option value="relu">Relu</option>
+          <option value="leakyRelu">Leaky Relu</option>
+      </select>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(".cppn-control-toggle").click(function() {
+      $(".cppn-control").toggle();
+    })
+
+    var c1 = "{{ page.colors.a | json }}".split(" "),
+        c2 = "{{ page.colors.b | json }}".split(" ");
+        c3 = "{{ page.colors.c | json }}".split(" ");
+
+    var cppn = cppnSetup([c1, c2, c3]),
+        layers = 3,
+        unit = 20
+        activation = "sin";
+
+    $("input[name='depth']").on("change", function () {
+      layers = parseInt($(this).val());
+      cppn.update(architecture(layers, unit), activation)
+    });
+
+    $("input[name='complexity']").on("change", function () {
+      unit = parseInt($(this).val());
+      cppn.update(architecture(layers, unit), activation)
+    });
+
+    $("#activation").on("change", function() {
+      activation = $(this).val();
+      cppn.update(architecture(layers, unit), activation)
+    });
+
+
+    function architecture(layers, units) {
+      var arr = [5];
+      for (var i = 0; i < layers; i++) {
+        arr.push(units);
+      }
+      arr.push(3);
+      return arr;
+    }
+</script>

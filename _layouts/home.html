@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include head.html %}
+    </head>
+
+
+  <body>
+
+	     <div class="header"> 
+	     	<div class="column-8-8">
+		        <div class="container" >
+
+		            <a href="https://www.deeplearning.ai/"><img id="header-logo" src="/assets/images/layout/deeplearning.png"></a>
+		          	<a href="https://www.deeplearning.ai/category/community/" class="header-nav">The deeplearning.ai Blog &#8594;</a>
+		
+		        </div>
+		    </div>
+	    </div>
+	    <div class="main">
+	        <div class="container title-section">
+	            <div class="column-6-8">
+	                <h1 class="title">{{ page.title }}</h1>
+	                <p class="sub-title">{{ content }}</p>
+	        	</div>
+	    	</div>
+
+		    <div class="main catalog">
+		    	<div class="container nav-tile-div">
+
+	            	<!-- <h3 class="column-6-8 ">ARTICLES</h3> -->
+
+	            	{% for item in site.notes.article.nav %}
+		              {% if jekyll.environment != 'production' or item.published %}
+		                <a href="{{ site.notes.baseurl }}/{{ item.url }}">
+			            	<div class="nav-tile column-25-8 column-align">
+			            		<h2>{{ item.title }}</h2>
+			            		<svg width="100%" height="10">
+								  <defs>
+								    <linearGradient id="linear{{ forloop.index }}" x1="0%" y1="0%" x2="100%" y2="0%">
+								      <stop offset="0%"   stop-color="{{ item.color.start }}"/>
+								      <stop offset="100%" stop-color="{{ item.color.stop }}"/>
+								    </linearGradient>
+								  </defs>
+								  <rect x="0" y="0" width="100%" height="10" fill="url(#linear{{ forloop.index }})" />
+								</svg>
+			            	</div>
+			            </a>
+		              {% endif %}
+		           {% endfor %}
+
+
+		        </div>
+		    </div>
+		</div>
+
+
+		{% include footer.html %}
+	   
+	    
+	</body>
+
+</html>

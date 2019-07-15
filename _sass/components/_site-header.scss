@@ -1,0 +1,77 @@
+/**
+ * Site header (components/_site-header.scss)
+ */
+
+// Header
+$headerLogoHeight: 1.5rem;
+$logoDividerSpacing: 0.5rem;
+$headerListLineHeight: 1.5rem;
+$headerListItemSpacing:2rem;
+
+
+/* ----- General ----- */
+
+.header {
+    position: absolute;
+    width: 100%;
+    margin: 1rem 0;
+    z-index: 100;
+}
+
+.header {
+    .header-wrapper {
+        margin: 0 auto;
+        width: (100%-$marg-header*2);
+        display: block;
+        @include list-reset;
+
+
+        ul {
+
+            li:first-child {
+                float: left;
+                margin-left: 0;
+
+                a img {
+                    height: $headerLogoHeight;
+                }
+            }
+
+            li:nth-child(2) {
+                float: left;
+                margin-left: 0;
+                line-height: $headerListLineHeight;
+            }
+
+            li {
+                float: right;
+                margin-left: $headerListItemSpacing;
+
+                a {
+                    text-decoration: none;
+                    color: $base-font-color;
+                    line-height: $headerListLineHeight;
+                }
+            }
+        }
+
+    }
+}
+
+
+.header-nav-article {
+    @include breakpoint(xs) {
+        display: none !important;
+    }
+}
+
+
+.backToBlog {
+    border-left: 1px solid $base-font-color;
+    padding-left: $logoDividerSpacing;
+    margin-left: $logoDividerSpacing;
+
+    vertical-align: middle;
+    color: $base-font-color;
+    text-decoration: none;
+}

@@ -1,0 +1,88 @@
+
+
+
+/* SVG elements */
+
+
+text.label {
+	text-anchor: middle;
+	font-size: 10px;
+	fill: black;
+}
+
+
+/* Input */
+
+.dataset {
+	fill: white;
+	fill-opacity: 0.5;
+	stroke: black;
+	stroke-opacity: 0.5;
+	stroke-width: 2px;
+}
+.dataset:hover {
+	fill-opacity: 0;
+	stroke-opacity: 1;
+}
+.dataset.active {
+	fill-opacity: 0;
+	stroke-opacity: 1;
+}
+
+/* Network */
+
+.Input {
+	fill: white;
+	stroke: black;
+    stroke-width: 2px;
+}
+
+.Relu {
+	fill: white;
+	stroke: #ffab00;
+    stroke-width: 2px;
+}
+
+.Sigmoid {
+	fill: white;
+	stroke: #26a69a;
+    stroke-width: 2px;
+}
+
+
+.link.connected {
+	stroke: black;
+	stroke-width: 1px;
+	stroke-dasharray: 10;
+}
+
+.paused {
+	-webkit-animation-duration: 0s !important;
+}
+
+.link.weight {
+	stroke-dasharray: 10;
+	-webkit-animation-name: forward; 
+	-webkit-animation-duration: 5s; 
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+}
+.link.gradient {
+	stroke-dasharray: 10;
+	-webkit-animation-name: backward; 
+	-webkit-animation-duration: 5s; 
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+}
+
+@keyframes forward {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+@keyframes backward {
+  to {
+    stroke-dashoffset: 100;
+  }
+}

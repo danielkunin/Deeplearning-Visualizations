@@ -1,0 +1,62 @@
+<svg id="loss" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect id="frame" width="800" height="600" fill="none"/>
+  <g id="UI">
+    <g>
+      <text transform="translate(591.28 184.96)" font-size="12" font-family="Roboto-Medium, Roboto" font-weight="500" letter-spacing="-0.01em" style="isolation: isolate">Loss</text>
+      <text transform="translate(619.38 184.96)" font-size="12" font-family="Roboto-Medium, Roboto" font-weight="500" letter-spacing="-0.02em" style="isolation: isolate">F</text>
+      <text transform="translate(625.72 184.96)" font-size="12" font-family="Roboto-Medium, Roboto" font-weight="500" letter-spacing="-0.01em" style="isolation: isolate">unction Cu</text>
+      <text transform="translate(682.2 184.96)" font-size="12" font-family="Roboto-Medium, Roboto" font-weight="500" style="isolation: isolate">r</text>
+      <text transform="translate(686.4 184.96)" font-size="12" font-family="Roboto-Medium, Roboto" font-weight="500" letter-spacing="-0.02em" style="isolation: isolate">v</text>
+      <text transform="translate(692.13 184.96)" font-size="12" font-family="Roboto-Medium, Roboto" font-weight="500" letter-spacing="-0.01em" style="isolation: isolate">atu</text>
+      <text transform="translate(708.92 184.96)" font-size="12" font-family="Roboto-Medium, Roboto" font-weight="500" letter-spacing="-0.02em" style="isolation: isolate">r</text>
+      <text transform="translate(712.91 184.96)" font-size="12" font-family="Roboto-Medium, Roboto" font-weight="500" letter-spacing="-0.01em" style="isolation: isolate">e:</text>
+    </g>
+    <text transform="translate(591.28 288.1)" font-size="12" font-family="Roboto-Medium, Roboto" font-weight="500" letter-spacing="-0.01em" style="isolation: isolate">Learning Rate:</text>
+    <circle id="curve_sel" data-name="curve sel" cx="602.79" cy="207.61" r="4.76" fill="#5ea0fa"/>
+    <circle id="rate_sel" data-name="rate sel" cx="602.79" cy="310.75" r="4.76" fill="#5ea0fa"/>
+    <circle id="curve_sel-2" data-name="curve sel-2" cx="670.94" cy="207.61" r="4.76" fill="#5ea0fa"/>
+    <circle id="rate_sel-2" data-name="rate sel-2" cx="670.94" cy="310.75" r="4.76" fill="#5ea0fa"/>
+    <circle id="lo_toggle" data-name="lo toggle" cx="602.79" cy="207.61" r="8.65" fill="none" stroke="#c6c6c6" stroke-miterlimit="10" stroke-width="2"/>
+    <circle id="hi_toggle" data-name="hi toggle" cx="670.94" cy="207.61" r="8.65" fill="#fff" stroke="#c6c6c6" stroke-miterlimit="10" stroke-width="2"/>
+    <circle id="big_toggle" data-name="big toggle" cx="602.79" cy="310.75" r="8.65" fill="none" stroke="#c6c6c6" stroke-miterlimit="10" stroke-width="2"/>
+    <circle id="sm_toggle" data-name="sm toggle" cx="670.94" cy="310.75" r="8.65" fill="#fff" stroke="#c6c6c6" stroke-miterlimit="10" stroke-width="2"/>
+    <text transform="translate(615.44 211.12)" font-size="12" font-family="Roboto-Regular, Roboto">Low</text>
+    <text transform="translate(683.59 211.12)" font-size="12" font-family="Roboto-Regular, Roboto">High</text>
+    <text transform="translate(615.44 315.51)" font-size="12" font-family="Roboto-Regular, Roboto">La<tspan x="12.98" y="0" letter-spacing="-0.01em">r</tspan><tspan x="16.93" y="0">ge</tspan></text>
+    <text transform="translate(683.59 315.51)" font-size="12" font-family="Roboto-Regular, Roboto">Small</text>
+  </g>
+  <g id="loss_graph" data-name="loss graph">
+    <line id="errorLine" x1="41.94" y1="17.8" x2="41.94" y2="17.8" fill="none" stroke="gray" stroke-miterlimit="10" stroke-width="1.5"/>
+    <g id="axes">
+      <line id="bottomLine" x1="61.48" y1="475.65" x2="523.48" y2="475.65" fill="none" stroke="#aaa" stroke-miterlimit="10" stroke-width="3"/>
+      <line id="vert" x1="61.48" y1="475.65" x2="61.48" y2="128.55" fill="none" stroke="#aaa" stroke-miterlimit="10" stroke-width="3"/>
+      <polygon id="left_arr" data-name="left arr" points="521.68 470.15 521.68 480.35 532.08 475.65 521.68 470.15" fill="#aaa"/>
+      <polygon id="up_arr" data-name="up arr" points="56.38 130.05 66.68 130.05 61.88 119.65 56.38 130.05" fill="#aaa"/>
+    </g>
+    <path id="flat_curve" data-name="flat curve" d="M93.22,170.88s95.32,239.34,218.32,239.34S529.85,170.88,529.85,170.88" fill="none" stroke="#2665ba" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3"/>
+    <path id="steep_curve" data-name="steep curve" d="M181.13,170.88s56.94,239.34,130.41,239.34,130.4-239.34,130.4-239.34" fill="none" stroke="#2665ba" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3"/>
+    <line id="deriv" x1="469.58" y1="410.22" x2="153.49" y2="410.22" fill="none" stroke="red" stroke-miterlimit="10" stroke-width="3"/>
+    <line id="ph_deriv" data-name="ph deriv" x1="469.58" y1="410.22" x2="153.49" y2="410.22" fill="none" stroke="#ffa600" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3"/>
+    <line id="learnLine" x1="41.94" y1="17.8" x2="41.94" y2="17.8" fill="none" stroke="#d45087" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4"/>
+    <circle id="cloneDot" cx="311.54" cy="410.22" r="6.66" fill="#ff7c43"/>
+    <circle id="phDot" cx="311.54" cy="410.22" r="6.66" fill="none"/>
+    <circle id="centerDot" cx="311.54" cy="410.22" r="6.66" fill="#5ea0fa"/>
+    <g id="errorText">
+      <rect id="text_frame" data-name="text frame" y="0.08" width="101.22" height="39.91" rx="9.08" fill="#ededed"/>
+      <g>
+        <text transform="translate(11.53 16.34)" font-size="12" font-family="Roboto-Regular, Roboto" style="isolation: isolate">Er</text>
+        <text transform="translate(22.41 16.34)" font-size="12" font-family="Roboto-Regular, Roboto" letter-spacing="-0.01em" style="isolation: isolate">r</text>
+        <text transform="translate(26.35 16.34)" font-size="12" font-family="Roboto-Regular, Roboto" style="isolation: isolate">or of</text>
+        <text transform="translate(11.53 30.74)" font-size="12" font-family="Roboto-Regular, Roboto" style="isolation: isolate">App</text>
+        <text transform="translate(32.82 30.74)" font-size="12" font-family="Roboto-Regular, Roboto" letter-spacing="-0.01em" style="isolation: isolate">r</text>
+        <text transform="translate(36.77 30.74)" font-size="12" font-family="Roboto-Regular, Roboto" letter-spacing="-0.01em" style="isolation: isolate">o</text>
+        <text transform="translate(43.49 30.74)" font-size="12" font-family="Roboto-Regular, Roboto" style="isolation: isolate">ximation</text>
+      </g>
+    </g>
+  </g>
+  <text transform="translate(483.95 505.12)" font-size="15" fill="#878787" font-family="Roboto-Regular, Roboto"><tspan letter-spacing="-0.01em">P</tspan><tspan x="9.38" y="0" letter-spacing="0em">a</tspan><tspan x="17.54" y="0" letter-spacing="-0.02em">r</tspan><tspan x="22.32" y="0">ameters</tspan></text>
+  <text transform="translate(10.35 130.05)" font-size="15" fill="#878787" font-family="Roboto-Regular, Roboto">Loss</text>
+</svg>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TweenMax.min.js'></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/utils/Draggable.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.5.1/snap.svg-min.js'></script>

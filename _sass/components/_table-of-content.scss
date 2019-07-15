@@ -1,0 +1,53 @@
+
+
+
+.tableOfContent{
+	@include list-reset;
+	@include col(5, 8, $marg-article);
+
+	@include breakpoint(lg) {
+        @include col(4, 8, $marg-article);
+	
+    }
+
+
+
+	padding-top:$section-padding-top;
+	padding-bottom: $margin-bottom-1;
+	border-bottom: 1px solid #D0D0D0;
+
+	text-align: left;
+
+
+	p{
+		font-weight: 600;
+		text-transform: uppercase;
+		color:#9B9B9B;
+		letter-spacing: 1px;
+		font-size: $font-size-subtle;
+		margin-top: $margin-bottom-1;
+		margin-bottom: 0;
+
+	}
+
+	a{
+		color: $base-font-color;
+	}
+
+	ul li{
+		display: block;
+		font-size: $font-size-base;
+		line-height: 1.6em;
+		padding:0.2em 0;
+		cursor: pointer;
+	}
+
+	ul li span{
+		width: 2rem;
+		display: inline-block;
+	}
+
+	ul li a:hover{
+		color:$color-pink-red;
+	}
+}
