@@ -79,7 +79,7 @@ All CSS and JS files should go in `assets/css/[folder]/` and `assets/js/[folder]
 #### Visualizations
 There are two types of visualizations we can handle:
  - Static images should go in the following folder `assets/images/[article]/` and use `![Alt text](/path/to/image.png)`
- - Interactive graphics and visualizations should be written independntly in HTML, CSS, and JS. The CSS and JS files should be added to the assets folder as described above.  The HTML should be added to `_includes/article/[folder]` and linked in the article content as `{% include article/[folder]/file.html %}`.
+ - Interactive graphics and visualizations should be written independently in HTML, CSS, and JS. The CSS and JS files should be added to the assets folder as described above.  The HTML should be added to `_includes/article/[folder]` and linked in the article content as `{% include article/[folder]/file.html %}`.
 
 #### Footenotes
 To add a footnote:
