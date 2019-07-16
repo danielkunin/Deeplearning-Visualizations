@@ -1,0 +1,71 @@
+<!-- Adapted from:
+- https://threejs.org/examples/?q=parametri#webgl_geometries_parametric
+- https://threejs.org/examples/?q=sha#webgl_geometry_extrude_shapes2
+ -->
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>three.js webgl - parametric geometries</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="css/loss.css">
+	</head>
+	<body>
+
+		<div id="container"></div>
+		<div id="info">
+			<h>Visualizing High Dimensional Loss Landscapes</h>
+			<p>Inspired by Andrej Karpathy's <a href="http://cs231n.github.io/optimization-1/">notes</a> and adapted from the following three.js <a href='https://threejs.org/examples/?q=sha#webgl_geometry_extrude_shapes2'>example</a>.</p>
+			1. Load MNIST
+			<button id="load">Load</button> <br>
+			2. Choose Architecture
+			<select id="layers">
+				<option selected disabled></option>
+				<option value="zero">[784, 10]</option>
+				<option value="one">[784, 300, 10]</option>
+				<option value="two">[784, 300, 300, 10]</option>
+			</select><br>
+			3. Select Loss
+			<select id="loss">
+				<option selected disabled></option>
+				<option value="entropy">Cross Entropy</option>
+				<option value="huber">Huber</option>
+				<option value="square">Mean Squared</option>
+				<option value="hinge">Hinge</option>
+			</select><br>
+			4. Train Network
+			<button id="train">Train</button><br>
+			5. Sample Loss Landscape
+			<button id="landscape">Sample</button>
+		</div>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+		<script src="js/three/three.js"></script>
+		<script src="js/three/Detector.js"></script>
+		<!-- <script src="js/three/ParametricGeometries.js"></script> -->
+		<script src="js/three/controls/OrbitControls.js"></script>
+		<!-- <script src="js/three/libs/stats.min.js"></script> -->
+
+    	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.11.6"> </script>
+		<script src="js/zip/zip.js"></script>
+		<script src="js/data.js"></script>
+		<script src="js/nn.js"></script>
+
+		<script src="js/landscape.js"></script>
+
+	</body>
+</html>
+
+
+<!-- 
+Run the following in console:
+
+var mnist = FC([784, 500, 300, 200, 100, 10], 'data/mnist_test.csv.zip');
+mnist.load();
+mnist.train();
+addLandscape();
+
+ -->
+

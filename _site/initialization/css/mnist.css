@@ -1,0 +1,37 @@
+
+.layer rect {
+	stroke-width: 2px;
+	fill: none;
+	stroke: black;
+}
+
+.layer path.activations {
+	stroke-width: 2px;
+	fill: none;
+}
+
+.layer-0 path.activations {
+	stroke: #009cde;
+}
+.layer-1 path.activations {
+	stroke: #46c8b2;
+}
+.layer-2 path.activations {
+	stroke: #f5d800;
+}
+.layer-3 path.activations {
+	stroke: #ff8b22;
+}
+.layer-4 path.activations {
+	stroke: #ff6859;
+}
+.layer-5 path.activations {
+	stroke: #fc4d77;
+}
+
+.correct {
+	color: #009CDE;
+}
+.incorrect {
+	color: #FF8686;
+}

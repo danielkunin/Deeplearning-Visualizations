@@ -1,0 +1,341 @@
+
+html{
+  margin: 0;
+}
+
+body {
+    width: 100%;
+    margin: 0;
+    font-family: "Assistant";
+    background-color: #FFFFFF; /*#FFF8F8*/
+    color: #303030;
+
+}
+
+
+.header{
+    width: 100%;
+    height: auto;
+    background-color: white;
+    border-bottom: 1px solid #FF6B58;
+}
+
+.header-nav{
+  display: inline-block;
+  float: right;
+  left: 0;
+  vertical-align: middle;
+   margin: 0.8em auto;
+   color: black;
+
+}
+
+
+
+#header-logo{
+  width: 9em;
+  vertical-align: middle;
+  margin: 0.8em auto;
+  display: inline-block;
+ 
+
+}
+
+/*Main*/
+
+.main {
+    width: 100%;
+    height: auto;
+
+}
+
+
+
+.container {
+    margin: 1em auto;
+    height: auto;
+
+}
+
+.title-section{
+  margin-top: 3em;
+  margin-bottom: 1em;
+
+
+}
+
+.main.catalog{
+  background-color: white;
+  padding-top: 2em;
+  padding-bottom: 4em;
+
+}
+
+.footer{
+/*  padding-top: 1em;*/
+border-top: 1px solid rgba(255,107,88,0.2);;
+/*background-color: #FCF2F2;*/
+}
+
+.footer-li li{
+  font-size: 0.8em;
+  display: inline-block;
+  padding-right: 0.5em;
+   color: rgba(0,0,0,0.6);
+}
+
+ul.footer-li{
+  display: inline-block;
+  padding: 0;
+  margin:0;
+  border-bottom: 1px solid rgba(0,0,0,0.4);
+}
+
+
+p.footer-note{
+  margin-top: 0;
+  padding-top: 1em;
+/*  padding-bottom:2em;*/
+  font-size: 0.8em;
+  color: rgba(0,0,0,0.6);
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+p.footer-note a{
+  text-decoration: none;
+  color: rgba(0,0,0,0.2);
+  padding-right: 1em;
+  font-weight: 600;
+  line-height: 1.8em;
+}
+
+p.footer-note a:hover{
+  color: rgba(0,0,0,0.8);
+}
+
+
+.social{
+  float: right;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
+
+
+.fontAwesomeIcon{
+  font-size: 30px;
+  margin-left: 0.2em;
+  margin-top: 0.5em;
+  color: rgba(0,0,0,0.2);
+  display: inline-block;
+}
+
+.fontAwesomeIcon:hover{
+  color: black;
+  cursor: pointer;
+}
+
+
+a.highlighted{
+  font-style: italic;
+  font-weight: 400;
+  color: #303030;
+}
+
+a{
+  text-decoration: none;
+}
+
+h1.title{
+  font-size: 48px;
+  margin: 0em auto;
+}
+
+p.title{
+  margin: 0 auto;
+  font-size: 16px;
+}
+
+p.title a {
+  text-decoration: none;
+  color: #303030;
+}
+
+p.sub-title{
+  font-size: 0.9em;
+  color: rgba(0,0,0,0.5);
+  margin-top: 0;
+/*  padding-bottom: 2em;
+  border-bottom: 1px solid rgba(255,107,88,0.2);*/
+}
+
+h2{
+  font-weight: 600;
+  color: black;
+  font-size: 22px;
+}
+
+
+h3{
+  font-weight: 600;
+  color: rgba(0,0,0,0.4);
+  font-size: 14px;
+}
+
+
+
+ul{
+  list-style: none;
+  padding-left: 0;
+  font-size: 18px;
+  font-weight: 300;
+  padding-top: 2em;
+  padding-bottom: 3em;
+  color: rgba(255,255,255,0.6)
+}
+
+li{
+  color: black;
+  font-size: 22px;
+  font-weight: 400;
+  padding: 0.5em 0;
+  cursor: pointer;
+}
+
+
+ul li a {
+  font-size: 22px;
+  color: black;
+  list-style: none;
+  text-decoration: none;
+    
+  
+
+
+}
+
+.backToBlog{
+  border-left: 1px solid #3E3E3E; 
+  padding-left: 1em;
+  margin-left: 1em;
+  vertical-align: middle;
+  color: #303030;
+}
+
+.column-align {
+    display: inline-block;
+    vertical-align: text-top;
+}
+
+
+
+
+.column-8-8,
+.column-7-8,
+.column-6-8,
+.column-5-8,
+.column-4-8,
+.column-3-8,
+.column-25-8,
+.column-2-8,
+.column-1-8 {
+    margin:0% 1%;
+    padding:0 0%;
+}
+
+
+
+.nav-tile{
+  padding-top: 2.5%;
+  padding-bottom: 1%;
+/*  border-bottom:10px solid gray;*/
+/*  border: 1px solid black;*/
+  transition: top ease 0.5s;
+  position: relative;
+  top: 0;
+  padding-right: 2%;
+  max-width: 300px;
+  vertical-align: bottom;
+}
+
+.nav-tile h2{
+  vertical-align: bottom;
+}
+
+.nav-tile a{
+  text-decoration: none;
+}
+
+
+
+.nav-tile:hover{ 
+  top: -10px;
+
+} 
+
+
+
+
+/*Responsive*/
+
+@media screen and (max-width: 720px) {
+
+
+    .column-2-8, .column-25-8 {
+        width: 42%;
+    }
+
+   
+
+    .nav-tile{
+      padding-top: 1.5em;
+      padding-bottom: 1.5em;
+      max-width: 350px;
+    }
+
+    .nav-tile a h2{
+      font-size: 32px;
+
+    }
+
+    .nav-tile-div{
+      padding-top: 1em;
+      padding-bottom: 1em;
+    }
+
+    .nav-tile a svg, .nav-tile a svg rect{
+      height: 15px;
+    }
+
+    .container {
+      width: 85%;
+    }
+
+ 
+
+}
+
+@media screen and (min-width: 720px) {
+
+
+    .column-8-8 {
+        width: 100%;
+    }
+
+    .column-6-8 {
+        width: 67%;
+    }
+
+    .column-25-8 {
+        width: 26.25%;
+    }
+
+    .container {
+      width: 75%;
+    }
+
+   
+}
+

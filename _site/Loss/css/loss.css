@@ -1,0 +1,24 @@
+body {
+	color: #eee;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+}
+
+h {
+	font-size:20px;
+}
+
+p {
+	font-size:15px;
+}
+
+#info {
+	position: absolute;
+	top: 0px; width: 100%;
+	padding: 5px;
+}
+
+a {
+	color: #0080ff;
+}

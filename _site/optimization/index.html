@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Learn how to appropriately optimize neural networks.">
+    <meta name="author" content="--">
+    <title>Optimization</title>
+    <!-- Fonts -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Assistant:300,400,600,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <!-- Home Page CSS -->
+    <link rel="stylesheet" type="text/css" href="../css/template.css">
+    <!--Favicon-->
+    <link rel="shortcut icon" type="image/png" href="../img/favicon.png" />
+    <!-- Load jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Load D3 -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <!--Tool Tip-->
+    <script src="../js/d3.tip.js"></script>
+    <!-- Load Tensorflow -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.13.3/dist/tf.min.js"></script>
+    <!-- Load Katex -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.css" integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>
+    <!--Scroll To-->
+    <script src="../js/template.js"></script>
+</head>
+
+<body>
+    <div class="header"> 
+        <div class="header-wrapper">
+
+  
+                <a href="https://www.deeplearning.ai/"><img id="header-logo" class="cppnControl" src="../img/deeplearning.png"></a>
+                <a href="../index.html" class="backToBlog">AI Notes</a>
+            <!-- Uncomment below to add links to other articles -->
+            <ul class="header-nav">
+                <li><a href="../regularization/index.html">Regularization</a></li>
+                <li><a href="../initialization/index.html">Initialization</a></li>
+                <li id="current_article">Optimization</li>
+            </ul>
+        </div>
+    </div>
+    <div class="main vis-background">
+        <div class="container" >
+            <div class="column-6-8 column-align" >
+                <h1 class="title">Optimizing neural networks</h1>
+            </div>
+        </div>
+        
+    </div>
+    <div class="main intro ">
+        <div class="container divider-bottom" >
+            <div class="column-6-8 column-align" >
+               
+                <h2 class="title">Training a machine learning model is a matter of closing the gap between the model's predictions and reality. But optimizing the model isn't so straightforward. Through interactive visualizations, we'll help you develop your intuition for setting up and solving the optimization problem.</h2>
+               
+            </div>
+
+            <div class="column-2-8 column-align">
+                <h3 class="tableOfContent">Table of content</h3>
+                <ol class="tableOfContent" type="I">
+                    <li class="index index1">Setting up the optimization problem</li>
+                    <li class="index index2">Running the optimization process</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="container index1-target">
+            <div class="column-6-8 column-align">
+            	
+            	<p>In machine learning, you start by defining a task and a model consisting of an architecture and parameters. For a given architecture, the values of the parameters determine how accurately the model performs the task. But how do you find good values? By defining a loss function that evaluates how well the model performs. The goal is to optimize the loss function and thereby to find parameter values that close the gap between the model's predictions and reality.</p>
+
+                <h3>I&emsp;Setting up the optimization problem</h3>
+                <p>The loss function will be different in different tasks depending on the output desired. How you define it has a major influence on how the model will train and perform. Let's consider two examples:</p>
+
+                <h4>Example 1: House price prediction</h4>
+
+                <p> Say your task is to predict the price of houses <script>document.write(katex.renderToString('y \\in \\mathbb{R}'))</script> based on features such as floor area, number of bedrooms, and ceiling height. The loss function can be summarized by the sentence:</p>
+
+                <p class="inline-caption">Given a set of house features, the square of the difference between your prediction and the actual price should be as small as possible.</p>
+
+                You define the loss function as <p><script>
+                document.write(katex.renderToString("\\mathcal{L} = ||y-\\hat{y}||_2^2"))</script></p>
+
+                <p>where <script>document.write(katex.renderToString('\\hat{y}'))</script> is your predicted price and <script>document.write(katex.renderToString('y'))</script> is the actual price, also known as ground truth.</p>
+
+                <h4>Example 2: object detection</h4>
+
+                <p> Let's consider a more complex example. Say your task is to detect (that is, localize and identify) cars and pedestrians in images. The loss function should frame the following sentence in mathematical terms:</p>
+                <p class="inline-caption">Given an image, predict bounding boxes (bbox) that contain all the cars and pedestrians in the image. The predicted boxes should match the size, position and class of the actual objects.</p>
+                <p>In mathematical terms, a possible loss function <script>
+                    document.write(katex.renderToString('\\mathcal{L}'))
+                </script> (<a href="https://arxiv.org/pdf/1506.02640.pdf">Redmon et al., 2016</a>) is:</p> 
+
+                <!-- YOLO LOSS FUNCTION LATEX FORMULA (see below, should be per line though) + explanation of terms 
+				-->
+                <!-- In the margin for this term: This term ensures that the center of the predicted bounding box should match the center of the ground thruth box.
+                -->
+                <!-- In the margin for this term: This term ensures that the width (resp. height) of the predicted bounding box should match the width (resp. height) of the ground thruth box.
+                -->
+                <!-- In the margin for this term: In object detection, there's usually a probability of objectness. This term ensures that the probability of objectness of the predicted bounding box should match the probability of objectness of the ground thruth box.
+                -->
+                <!-- In the margin for this term: In object detection, there's usually a probability of objectness. This term ensures that the probability of objectness of the predicted bounding box should match the probability of objectness of the ground thruth box if there is no ground thruth bounding box for the specific cell (i, j) in the YOLO output volume.
+                -->
+                <!-- In the margin for this term: This term ensures that the class of the predicted bounding box should match the class of the ground thruth box.
+                -->
+
+                <!-- <script>
+                var render = katex.renderToString("\\begin{aligned}\\mathcal{L} &= \\lambda_{coord} \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} \\left[ (x_i - \\hat{x}_i)^2 + (y_i - \\hat{y}_i)^2 \\right] &\\text{BBox Center}\\cr &+ \\lambda_{coord} \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} \\left[ (\\sqrt{w_i} - \\sqrt{\\hat{w}_i})^2 + (\\sqrt{h_i} - \\sqrt{\\hat{h}_i})^2 \\right] &\\text{BBox Width/Height}\\cr &+ \\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} (C_i - \\hat{C}_i)^2 &\\text{Objectness}\\cr &+\\lambda_{noobj}\\sum_{i=0}^{S^2} \\sum_{j=0}^{B} \\mathbb{1}_{ij}^{obj} (C_i - \\hat{C}_i)^2 &\\text{No Objectness}\\cr &+\\sum_{i=0}^{S^2} \\mathbb{1}_{i}^{obj} \\sum_{c \\in classes} (p_i(c) - \\hat{p}_i(c))^2 &\\text{Class Probabilities}\\end{aligned}", { displayMode: true });
+                document.writeln(render);
+                </script> -->
+                <script>
+                var render = katex.renderToString("\\mathcal{L} = \\underbrace{(x - \\hat{x})^2 + (y - \\hat{y})^2}_{\\text{BBox Center}} + \\underbrace{(w - \\hat{w})^2 + (h - \\hat{h})^2}_{\\text{BBox Width/Height}}", { displayMode: true });
+                document.writeln(render);
+                </script>
+                
+
+                <p>This <span class="marginanchor" id="margin-0-anchor" data-number="0" data-align="top">loss function</span> depends on:</p>
+                <ul>
+                    <li>Parameters of the network (weights and biases)</li>
+                    <li>Input to the network (images)</li>
+                    <li>Ground truth corresponding to the input (labels comprising bounding boxes and classes)</li>
+                </ul>
+                <p>For a fixed value of the input batch and ground-truth batch, the loss has a landscape that depends on the parameters of the network. It is difficult to visualize the loss landscape (against the parameters) if there are more than two parameters. However, the landscape does exist and our goal is to find the point where the loss value is minimal. Updating the parameter values will move the loss value either closer to or farther from the target minimum point.</p>
+            </div>
+            <div class="column-2-8 column-align margin">
+                <div class="marginbody" id="margin-0-body" data-number="0">
+                    <p class="caption">By definition, this function L has a low value when the model performs well on the task.</p>
+                </div>
+            </div>
+            <div class="column-6-8">
+                <h4>The relationship between the model and the loss function</h4>
+            </div>
+            <div class="column-6-8 column-align">
+                <p>It is important to distinguish between the function <script>document.write(katex.renderToString('f'))</script> that will perform the task (the model) and the function <script>document.write(katex.renderToString('\\mathcal{L}'))</script> you are optimizing (the loss function).</p>
+                <ul>
+                    <li><b>The model</b> is an architecture and a set of parameters that approximates a <span class="marginanchor" id="margin-1-anchor" data-number="1" data-align="middle">real function</span> that performs the task. The optimized parameter values will enable the model to perform the task with relative accuracy.</li>
+                    <li><b>The loss function</b> quantifies how accurately the model performs on given data set. Its value depends on the model's parameter values.</li>
+                </ul>
+                <p>At this point, good parameter values are unknown. However, you have a formula for the loss function. Optimize that, and you will find good parameter values. The way to do this is to feed the training data set into the model, find the loss function, and adjust the parameters to make it as small as possible. This is usually an iterative process.</p>
+                <p>In summary, the way you define the loss function will dictate the performance of your model on the task at hand. The diagram below illustrates the process of finding a model that performs the task at hand.</p>
+                <img src="img/functiongraph.png">
+            </div>
+            <div class="column-2-8 column-align margin">
+                <div class="marginbody" id="margin-1-body" data-number="1">
+                    <p class="caption">Do you know the mathematical formula that allows you to detect cats in images? Probably not, but using data you can find a function that performs this task. It turns out that a convolutional architecture with the right parameters defines a function that can perform this task well.</p>
+                </div>
+            </div>
+        </div>
+        <div class="container index2-target">
+            <div class="column-6-8 column-align">
+                <h3>II&emsp;Running the optimization process</h3>
+                <p>In this section, assume that you have already chosen a task and a loss function. You will minimize the loss function to find good parameter values.</p>
+            </div>
+            <div class="column-6-8">
+                <h4>Initialization, learning rate, and batch size</h4>
+            </div>
+            <div class="column-6-8">
+                <p>First, initialize the parameters so you have a starting point for  optimization. You also need to choose  hyperparameters such as learning rate and batch size. They will have an important influence on the optimization.</p>
+                <p>In the visualization below, you can play with the starting point of initialization, learning rate, and batch size. With these parameters, you will fit a linear regression on a set of 300 data points using the gradient descent optimization algorithm. For more information on gradient descent optimization, see the Deep Learning Specialization (<a href="https://www.coursera.org/learn/neural-networks-deep-learning">Course 1</a>: Neural Networks and Deep Learning, Week 2: Logistic Regression as a Neural Network.) Here are some questions to ask yourself:</p>
+                <ul>
+                    <li>Why does the loss landscape look like this?</li>
+                    <li>What is the red dot?</li>
+                    <li>Why can your optimization end up with a cost value lower than the ground truth line?</li>
+                    <li>What is the impact of the learning rate on the optimization?</li>
+                    <li>What is the impact of the batch size on the optimization?</li>
+                </ul>
+            </div>
+        </div>
+        <div class="full-container hide-backToTop" id="regression">
+            <div class="viz-column-2-8">
+                <h3>1. Generate your dataset</h3>
+                <p>Select a training set size.</p>
+                <label class="radio-container">Small
+                    <input type="radio" value="20" name="regression_tsize">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Medium
+                    <input type="radio" value="300" name="regression_tsize" checked>
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Large
+                    <input type="radio" value="800" name="regression_tsize">
+                    <span class="checkmark"></span>
+                </label>
+                <p>A training set of the chosen size will be sampled with noise from a <span class="blue">"ground truth"</span> line. This line is the target line for your <span class="red">network function</span> defined by <script>document.write(katex.renderToString('\\hat{y} = wx + b'))</script>.</p>
+                <div id="regression_plot" style="margin-top:1em;border: 1px solid rgba(0,0,0,0.2);"></div>
+                <button class="button-transport" id="generate">
+                   Generate a new <span class="blue">"ground truth"</span> line
+                </button>
+            </div>
+            <div class="viz-column-4-8">
+                <h3>2. Observe the loss landscape and initialize parameters</h3>
+                <p>The loss function is the L2 loss defined as <script>document.write(katex.renderToString('\\mathcal{L}(y, \\hat{y}) = ||y - \\hat{y}||_2^2'))</script>. The <span class="blue">blue dot</span> indicates the value of the loss function at the "ground truth" slope and intercept. The <span class="red">red dot</span> indicates the value of the loss function at a chosen initialization of the slope and intercept. Drag and drop the red dot to change the initialization.</p>
+                <div id="regression_landscape"></div>
+            </div>
+            <div class="viz-column-2-8">
+                <h3>3. Optimize your loss function</h3>
+                <p>You can now iteratively update your parameters to minimize the loss. Select a learning rate.</p>
+                <label class="radio-container">Small
+                    <input type="radio" value="0.0001" name="regression_lrate">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Medium
+                    <input type="radio" value="0.01" name="regression_lrate" checked>
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Large
+                    <input type="radio" value="0.1" name="regression_lrate">
+                    <span class="checkmark"></span>
+                </label>
+                <p>Select a batch size to use.</p>
+                <label class="radio-container">Stochastic
+                    <input type="radio" value="1" name="regression_bsize" checked>
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Mini-batch
+                    <input type="radio" value="30" name="regression_bsize">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Full-batch
+                    <input type="radio" value="300" name="regression_bsize">
+                    <span class="checkmark"></span>
+                </label>
+                <p>Train your <span class="red">network function</span>.</p>
+                <button class="button-transport" id="regression_reset" title="reset">
+                    <img src="img/reset.png">
+                </button>
+                <button class="button-transport" id="regression_train" title="start">
+                    <img src="img/play.png">
+                </button>
+                <button class="button-transport hidden" id="regression_stop" title="stop">
+                    <img src="img/pause.png">
+                </button>
+                <div id="regression_loss"></div>
+            </div>
+        </div>
+        <!-- <div class="full-container inlineType hide-backToTop" id="regression">
+            <div class="viz-column-4-8">
+                <h3>1. Generate your dataset</h3>
+                <p>Select a training set size.</p>
+                <label class="radio-container">Small
+                    <input type="radio" value="20" name="regression_tsize">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Medium
+                    <input type="radio" value="300" name="regression_tsize" checked>
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Large
+                    <input type="radio" value="800" name="regression_tsize">
+                    <span class="checkmark"></span>
+                </label>
+                <p>A training set of the chosen size will be sampled with noise from a <span class="blue">"ground truth"</span> line.</p>
+                <button class="button-transport" id="generate" style="margin:auto">
+                   Generate a new <span class="blue">"ground truth"</span> line
+                </button>
+                <p>This line is the target line for your <span class="red">network function</span> defined by <script>document.write(katex.renderToString('\\hat{y} = wx + b'))</script>.</p>
+            </div>
+            <div class="viz-column-4-8" style="margin-left: 4%;">
+                <div id="regression_plot" style="margin-top:1em;border: 1px solid rgba(0,0,0,0.2);"></div>
+            </div>
+            <div class="viz-column-5-8 viz-column-divider"></div>
+          
+
+            <div class="viz-column-4-8">
+                <h3>2. Observe the loss landscape and initialize parameters</h3>
+                <p>The loss function is the L2 loss defined as <script>document.write(katex.renderToString('\\mathcal{L}(y, \\hat{y}) = ||y - \\hat{y}||_2^2'))</script>. The <span class="blue">blue dot</span> indicates the value of the loss function at the "ground truth" slope and intercept. The <span class="red">red dot</span> indicates the value of the loss function at a chosen initialization of the slope and intercept. Drag and drop the red dot to change the initialization.</p>
+            </div>
+            <div class="viz-column-4-8">
+                <div id="regression_landscape"></div>
+            </div>
+
+            <div class="viz-column-5-8 viz-column-divider" style="margin-top: 0;"></div>
+
+            <div class="viz-column-4-8">
+                <h3>3. Optimize your loss function</h3>
+                <p>Using the gradient of the loss function we can now iteratively update our network functions parameters to improve its performance. Select a learning rate to use.</p>
+                <label class="radio-container">Small
+                    <input type="radio" value="0.0001" name="regression_lrate">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Medium
+                    <input type="radio" value="0.01" name="regression_lrate" checked>
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Large
+                    <input type="radio" value="0.1" name="regression_lrate">
+                    <span class="checkmark"></span>
+                </label>
+                <p>Select a batch size to use.</p>
+                <label class="radio-container">Stochastic
+                    <input type="radio" value="1" name="regression_bsize" checked>
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Mini-batch
+                    <input type="radio" value="30" name="regression_bsize">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Full-batch
+                    <input type="radio" value="300" name="regression_bsize">
+                    <span class="checkmark"></span>
+                </label>
+                <p>Train your <span class="red">network function</span>.</p>
+                <button class="button-transport" id="regression_reset" title="reset">
+                    <img src="img/reset.png">
+                </button>
+                <button class="button-transport" id="regression_train" title="start">
+                    <img src="img/play.png">
+                </button>
+                <button class="button-transport hidden" id="regression_stop" title="stop">
+                    <img src="img/pause.png">
+                </button>
+            </div>
+            <div class="viz-column-4-8">
+                <div id="regression_loss"></div>
+            </div>
+        </div> -->
+        <div class="container">
+            <div class="column-6-8 column-align">
+                <p>Here are some takeaways from the visualization:</p>
+            </div>
+            <div class="column-6-8">
+                <h4>a) Initialization</h4>
+                <p>A good initialization can make your optimization quicker and converge to the correct minimum (in the case where there are several minima). If you want to learn more about initialization, read our AI Note on <a href="../Initialization/index.html">Initializing neural networks</a>.</p>
+            </div>
+            <div class="column-6-8 column-align">
+                <h4>b) Learning rate</h4>
+                <p>The choice of learning rate influences the convergence of your optimization.</p>
+                <ul>
+                    <li>If the learning rate is too small, your updates are small and the optimization is slow. Furthermore, you’re likely to settle into an <span class="marginanchor" id="margin-3-anchor" data-number="3" data-align="middle">inappropriate local minimum</span>. (We use this term because, in machine learning optimization, the optimization is often non-convex and unlikely to converge to the global minimum.)</li>
+                    <li>If the learning rate is too large, your updates will be large and the optimization is likely to diverge.</li>
+                    <li>If the learning rate is appropriate, your updates are appropriate and the optimization will converge.</li>
+                </ul>
+                <p>The choice of learning rate depends on the curvature of your loss function. Gradient descent makes a linear approximation of the loss function in a given point. It then moves downhill along the approximation of the loss function. In the case where the loss is highly curved, the larger your step size (learning rate), the larger the error of your approximation. Taking small steps reduces the error<sup class="footnote-index footnote-index1">1</sup>.</p>
+                <img src="img/losscurve.png">
+                <p>It is common practice to start with a large learning rate and decay it during training. Choosing the right decay (how often? by how much?) is non-trivial. An excessively aggressive decay schedule slows the progress towards the optimum, while a slow-paced decay schedule leads to chaotic updates with small improvements.</p>
+            </div>
+            <div class="column-2-8 column-align margin">	
+                <div class="marginbody" id="margin-3-body" data-number="3">	
+                    <p class="caption">Here we say inappropriate local minimum because in machine learning optimization, the optimzation is often non-convex and unlikely to converge to the global minimum.</p>	
+                </div>	
+            </div>
+
+            <div class="column-6-8">
+                <h4>c) Batch size</h4>
+                <p>The right choice of batch size is crucial to ensure convergence and generalization of your network. Although there’s been some research<sup class="footnote-index footnote-index2">2</sup> on how to choose the batch size, there’s no consensus yet on what batch size to choose. In practice, you can use a hyperparameter search to choose a good batch size.</p>
+                <p>Recent research into batch size has uncovered the following principles:</p>
+                <ul>
+                    <li>The batch size determines the frequency of your updates. The smaller the batches, the more — though quicker — the updates.</li>
+                    <li>The larger the batch size, the more accurate the gradient of the loss will be with respect to the parameters. That is, the direction of the update is most likely going down the local slope of the loss landscape.</li>
+                    <li>Choosing the largest batch size that fits in GPU memory  results in efficient parallelization and usually accelerates training.</li>
+                    <li>However, large batch sizes can sometimes hurt the ability to generalize.</li>
+                </ul>
+
+                <p>
+                    In choosing batch size, there’s a balance to be struck depending on the task you’re trying to achieve. Recall that the input batch is an input to the cost function. Large batch size typically leads to sharper cost function surfaces than a small batch size, as  Keskar et al. find in their paper, <a href="https://arxiv.org/pdf/1609.04836.pdf">On large-batch training for deep learning: generalization gap and sharp minima</a>. Here's a figure comparing a flat and a sharp minumum. Flat cost surfaces (and thus small batche sizes) are preferred because they lead to good generalization without requiring high precision.
+                </p>
+
+                <img src="img/flat_vs_sharp.png">
+
+                <p>In practice, to find hyperparameters such as learning rate and  batch size, you should perform hyperparameter search. Batch size and learning rate are two ways to achieve the same outcome, according to Smith, Kindermans et al. in <a href="https://arxiv.org/pdf/1711.00489.pdf">Don't Decay the Learning Rate, Increase the Batch Size</a>. They argue that the benefits of decaying the learning rate can be achieved by increasing batch size during training. So if you change batch size, you may also need to change learning rate. The efficient use of vast batch sizes notably reduces the number of parameter updates required to train a model.
+                </p>
+
+            </div>
+            <div class="column-6-8">
+                <h4>d) Iterative update</h4>
+            </div>
+            <div class="column-6-8">
+                <p>Now that you have a starting point, a learning rate, and a batch size, it’s time to iteratively update the parameters to move toward the minimum of the loss function.</p> 
+                <p>The optimization algorithm is also a core choice. You can play with various optimizers in the visualization below. That will help you build intuition regarding the pros and cons of each.</p>
+            </div>
+        </div>
+        <div class="full-container hide-backToTop" id="landscape">
+            <div class="viz-column-4-8">
+                <p>In this visualization, you will choose the loss function and the starting point of your optimization. Although there's no explicit network function, you can assume that finding the minimum of your loss function is equivalent to finding the best network function for your task.</p>
+
+                <h3>1. Choose a loss landscape</h3>
+                <p>Select an <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization">artificial landscape</a> <script>document.write(katex.renderToString('\\mathcal{L}(w_1,w_2)'))</script>.</p>
+                <div class="lossFunctions">
+                    <label>
+                      <input type="radio" name="loss" value="himmelblaus" checked/>
+                      <img src="./img/loss/himmelblaus.png">
+                    </label>
+                    <label>
+                      <input type="radio" name="loss" value="styblinskiTang" />
+                      <img src="./img/loss/styblinskiTang.png">
+                    </label>
+                    <label>
+                      <input type="radio" name="loss" value="rosenbrock" />
+                      <img src="./img/loss/rosenbrock.png">
+                    </label>
+                    <label>
+                      <input type="radio" name="loss" value="goldsteinPrice"/>
+                      <img src="./img/loss/goldsteinPrice.png">
+                    </label>
+                </div>
+                </br>
+                <h3>2. Choose initial parameters</h3>
+                <p>On the loss landscape graph, drag the <font color="red">red dot</font> to choose the initial parameters values and thus the initial value of the loss.</p>
+
+                <h3>3. Choose an optimizer</h3>
+                <p>Select the optimizer and its hyperparameters.</p>
+
+
+                <table>
+                  <tr>
+                    <th>Optimizer</th>
+                    <th>Learning Rate</th> 
+                    <th>Learning Rate Decay</th>
+                  </tr>
+                  <tr>
+                    <td>
+                        <div class="checkbox">
+                            <input type="checkbox" name="opt" value="gd" checked/>
+                            <label>Gradient Descent</label>
+                        </div>
+                        
+                    </td>
+                    <td><input class="gd" type="number" name="lrate" value="0.001" min="0" max="1" step="0.0001"/></td>
+                    <td><input class="gd" type="number" name="ldecay" value="0" min="0" max="1" step="0.01"/></td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" name="opt" value="momentum" checked/> Momentum</td>
+                    <td><input class="momentum" type="number" name="lrate" value="0.001" min="0" max="1" step="0.0001"/></td>
+                    <td><input class="momentum" type="number" name="ldecay" value="0" min="0" max="1" step="0.01"/></td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" name="opt" value="rmsprop" checked/> RMSprop</td>
+                    <td><input class="rmsprop" type="number" name="lrate" value="0.001" min="0" max="1" step="0.0001"/></td>
+                    <td><input class="rmsprop" type="number" name="ldecay" value="0" min="0" max="1" step="0.01"/></td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" name="opt" value="adam" checked/> Adam</td>
+                    <td><input class="adam" type="number" name="lrate" value="0.001" min="0" max="1" step="0.0001"/></td>
+                    <td><input class="adam" type="number" name="ldecay" value="0" min="0" max="1" step="0.01"/></td>
+                  </tr>
+                </table>
+                <p>Optimize your loss function.</p>
+                <button class="button-transport" id="reset" title="reset">
+                    <img src="img/reset.png">
+                </button>
+                <button class="button-transport" id="train" title="start">
+                    <img src="img/play.png">
+                </button>
+                <button class="button-transport hidden" id="stop" title="stop">
+                    <img src="img/pause.png">
+                </button>
+            </div>
+            <div class="viz-column-4-8">
+                <p> This 2D plot describes the value of your loss function for different values of the 2 parameters <script>document.write(katex.renderToString('(w_1,w_2)'))</script>. The darker the color, the larger the loss value.</p>
+                <div id="contour"></div>
+                <div id="loss"></div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="column-6-8 column-align">
+                <p>The choice of optimizer influences both the speed of convergence and whether it occurs. Several alternatives to the classic gradient descent algorithms have been developed in the past few years and are listed in the table below. (Notation: <script>
+                    document.write(katex.renderToString('dW = \\frac{\\partial \\mathcal{L}}{\\partial W}'))
+                    </script>)</p>
+            </div>
+            <div class="column-6-8 column-align" style="overflow-x: auto;">
+                <table>
+                  <tr>
+                    <th>Optimizer</th>
+                    <th>Update rule</th> 
+                    <th>Attribute</th>
+                  </tr>
+                  <tr>
+                    <td>(Stochastic) Gradient Descent</td>
+                    <td>
+                        <script>document.write(katex.renderToString('W = W - \\alpha dW'))</script>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>GD can use parallelization efficiently, but is very slow when the data set is larger the GPU's memory can handle. The parallelization wouldn't be optimal.</li>
+                            <li>SGD usually converges faster than GD on large datasets, because updates are more frequent. Plus, the stochastic approximation of the gradient is usually precise without using the whole dataset because the data is often redundant.</li>
+                            <li>Of the optimizers profiled here, SGD uses the least memory for a given batch size.</li>
+                        </ul>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Momentum</td>
+                    <td>
+                        <script>
+                            document.write(katex.renderToString('V_{dW} = \\beta V_{dW} + ( 1 - \\beta ) dW'))
+                        </script>
+                        <script>
+                            document.write(katex.renderToString('W = W - \\alpha V_{dW}'))
+                        </script>
+                     </td>
+                    <td>    
+                        <ul>
+                            <li>Momentum speeds up the learning with a very minor implementation change.
+                                <li>Momentum uses more memory for a given batch size than SGD but less than RMSprop and Adam.</li></li>
+                        </ul>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>RMSprop</td>
+                    <td>
+                        <script>
+                        document.write(katex.renderToString('S_{dW} = \\beta S_{dW} + ( 1 - \\beta ) dW^2'))
+                        </script>
+                        <script>
+                        document.write(katex.renderToString('W = W - \\alpha \\frac{dW}{\\sqrt{S_{dW}} + \\varepsilon}'))
+                        </script>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>RMSprop’s adaptive learning rate prevents the learning rate decay from diminishing too slowly or too fast.</li>
+                            <li>RMSprop maintains per-parameter learning rates.</li>
+                            <li>RMSprop usually works well in <span class="marginanchor" id="margin-5-anchor" data-number="5" data-align="middle">online</span> and <span class="marginanchor" id="margin-6-anchor" data-number="6" data-align="middle">non-stationary settings</span>.</li>
+                            <li>RMSprop uses more memory for a given batch size than SGD and Momentum, but less than Adam.</li>
+                        </ul>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><a href="https://arxiv.org/pdf/1412.6980.pdf">Adam</a></td>
+                    <td>
+                        <script>
+                        document.write(katex.renderToString('V_{dW} = \\beta_1 V_{dW} + ( 1 - \\beta_1 ) dW'))
+                        </script>
+                        <script>
+                        document.write(katex.renderToString('S_{dW} = \\beta_2 S_{dW} + ( 1 - \\beta_2 ) dW^2'))
+                        </script>
+                        <script>
+                        document.write(katex.renderToString('Vcorr_{dW} = \\frac{V_{dW}}{(1 - \\beta_1)^t}'))
+                        </script> 
+                        <script>
+                        document.write(katex.renderToString('Scorr_{dW} = \\frac{S_{dW}}{(1 - \\beta_2)^t}'))
+                        </script> 
+                        <script>
+                        document.write(katex.renderToString('W = W - \\alpha \\frac{dW}{\\sqrt{S_{dW}} + \\varepsilon}'))
+                        </script>    
+                     </td>
+                    <td>
+                        <ul>
+                            <li>The hyperparameters of Adam (learning rate, exponential decay rates for the moment estimates, etc.) are usually set to predefined values (given in the paper), and do not need to be tuned.</li>
+                            <li>Adam performs a form of learning rate annealing with adaptive step-sizes.</li>
+                            <li>Of the optimizers profiled here, Adam uses the most memory for a given batch size.</li>
+                            <li>Adam is often the default optimizer in machine learning.</li>
+                        </ul>
+                    </td>
+                  </tr>
+                </table>
+            </div>
+
+             <div class="column-2-8 column-align margin">
+                <div class="marginbody" id="margin-5-body" data-number="5">
+                    <p class="caption">Online optimization is when updates must be made with incomplete knowledge of the future (as in Stochastic Gradient Descent optimization).</p>
+                </div>
+                <div class="marginbody" id="margin-6-body" data-number="6">
+                    <p class="caption">Non-stationary setting essentially describes inflection points (where the concavity of the landscape changes) for which the gradient is zero in some, but not all, directions.</p>
+                </div>
+            </div>
+
+            <div class="column-6-8 column-align">
+                <p>
+                    Despite performing well in the initial portion of training, adaptive optimization methods such as Adam or RMSprop have been found to generalize poorly at later stages of training compared to Stochastic Gradient Descent (SGD). In <a href="https://arxiv.org/pdf/1712.07628.pdf">Improving Generalization Performance by Switching from Adam to SGD</a>, Keskar et al. investigate a hybrid strategy that begins training with an adaptive method and switches to SGD when appropriate.</p>
+
+                <p>
+                    You can find more information about these optimizers in the Deep Learning Specialization (<a href="https://www.coursera.org/learn/deep-neural-network">Course 2</a>: Improving your Deep Neural Network, Week 2: Optimization) on Coursera.</p>
+            </div>
+
+            <div class="column-6-8 ">
+                <h3>Conclusion</h3>
+
+                <p>Exploring the optimization methods and hyperparameters presented above can help you build intuition for optimizing networks for your own tasks. Intuitively understanding  the sensitivity of the loss optimization for these hyperparameters (learning rate, batch size, optimizer, and so on) is important during hyperparameter search. Combined with the right method (random search or Bayesian optimization), it will help you iterate through your search to find the right model.</p>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="container">
+            <div class="column-2-8 column-align">
+                <h4 class="reference">Authors</h4>
+            </div>
+            <div class="column-6-8 column-align">
+                <ol class="reference ">
+                    <li><a href="https://twitter.com/kiankatan">Kian Katanforoosh</a> - Written content and structure. </li>
+                    <li><a href="http://daniel-kunin.com">Daniel Kunin</a> - Visualizations (created using <a href="https://d3js.org/">D3.js</a> and <a href="https://js.tensorflow.org/">TensorFlow.js</a>).</li>
+                </ol>
+            </div>
+            <div class="column-2-8 column-align">
+                <h4 class="reference">Acknowledgments</h4>
+            </div>
+            <div class="column-6-8 column-align">
+                <ol class="reference">
+                    <li>The template for the article was designed by <a href="https://www.jingru-guo.com/">Jingru Guo</a> and inspired by <a href="https://distill.pub/">Distill</a>.</li>
+                    <li>The loss landscape visualization adapted code from Mike Bostock's <a href="https://bl.ocks.org/mbostock/f48ff9c1af4d637c9a518727f5fdfef5">visualization</a> of the Goldstein-Price function.</li>
+                    <li>The banner visualization adapted code from deeplearn.js's implementation of a <a href="https://deeplearnjs.org/demos/nn-art/">CPPN</a>.</li>
+                </ol>
+            </div>
+            <div class="column-2-8 column-align">
+                <h4 class="reference">Footnotes</h4>
+            </div>
+            <div class="column-6-8 column-align">
+                <ol class="reference footnote">
+                    <li class="footnote-index1-target">Chapter 4 of the Deep Learning textbook (numerical computation) from Goodfellow et al.</li>
+                    <li class="footnote-index2-target">Check out these papers:<br> 
+                    - <a href="https://arxiv.org/pdf/1711.00489.pdf">Don't decay the learning rate, increase the batch size</a><br>
+                    - <a href="https://papers.nips.cc/paper/6770-train-longer-generalize-better-closing-the-generalization-gap-in-large-batch-training-of-neural-networks.pdf">Train longer generalize better</a><br>
+                    - <a href="https://arxiv.org/pdf/1706.02677.pdf">Accurate, large minibatch SGD</a></li>
+                    </li>
+                </ol>
+            </div>
+            <div class="column-2-8 column-align">
+                <h4 class="reference">Reference</h4>
+            </div>
+            <div class="column-6-8 column-align">
+                <p class="reference">To reference this article in an academic context, please cite this work as:</p>
+                <p class="citation">Katanforoosh & Kunin, "Optimizing neural networks", deeplearning.ai, 2018.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-generic hide-backToTop">
+        <div class="container">
+            <p class="footer-note">
+                Contact us at hello@deeplearning.ai</br>
+                © Deeplearning.ai 2018</br>
+                <a href="https://www.deeplearning.ai/privacy/">PRIVACY POLICY</a> <a href="https://www.deeplearning.ai/terms-of-use/">TERMS OF USE</a>
+            </p>
+
+
+            <div class="social">
+                    <a href="https://www.facebook.com/deeplearningHQ/"><i class="fab fa-facebook fontAwesomeIcon" ></i></a>
+                    <a href="https://twitter.com/deeplearningai_"><i class="fab fa-twitter-square fontAwesomeIcon"></i></a>
+                    <a href="https://www.linkedin.com/company/deeplearningai/"><i class="fab fa-linkedin fontAwesomeIcon"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="backToTop">
+        <p>↑ Back to top</p>
+    </div>
+</body>
+
+<!-- Additional JS -->
+<script src="https://d3js.org/d3-contour.v1.min.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
+
+<!-- LANDSCAPE -->
+<link rel="stylesheet" href="css/landscape.css">
+<script src="js/landscape/point.js"></script>
+<script src="js/landscape/loss.js"></script>
+<script src="js/landscape/optimizer.js"></script>
+<script src="js/landscape/viz.js"></script>
+
+<!-- REGRESSION -->
+<link rel="stylesheet" href="css/regression.css">
+<script src="js/regression/line.js"></script>
+<script src="js/regression/loss.js"></script>
+<script src="js/regression/optimizer.js"></script>
+<script src="js/regression/viz.js"></script>
+
+<!-- CPPN -->
+<script src="js/cppn.js"></script>

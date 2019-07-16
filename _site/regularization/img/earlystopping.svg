@@ -1,0 +1,73 @@
+<svg class="mainSVG" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+          <filter id="glow" x="-100%" y="-100%" width="350%" height="350%" color-interpolation-filters="sRGB">
+            <feGaussianBlur stdDeviation="5" result="coloredBlur" />
+            <feOffset dx="0" dy="20" result="offsetblur"></feOffset>
+            <feFlood id="glowAlpha" flood-color="#000" flood-opacity="0.123"></feFlood>
+            <feComposite in2="offsetblur" operator="in"></feComposite>
+            <feMerge>
+              <feMergeNode/>
+              <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+          </filter>
+    </defs>
+
+    <g id="horizontalLinesGroup"   fill="none" stroke="#FFF" stroke-miterlimit="10">
+        <line id="bottomLine" x1="149.72" y1="467.16" x2="611.66" y2="467.16" fill="none" stroke="#aaa" stroke-miterlimit="10" stroke-width="3"/>
+        <line id="vert" x1="149.72" y1="467.16" x2="149.72" y2="120.11" fill="none" stroke="#aaa" stroke-miterlimit="10" stroke-width="3"/>
+        <polygon id="left_arr" stroke-width="0" points="609.86 461.68 609.86 471.93 620.29 467.16 609.86 461.68" fill="#aaa"/>
+        <polygon id="up_arr" stroke-width="0" points="144.6 121.58 154.85 121.58 150.08 111.15 144.6 121.58" fill="#aaa"/>
+    </g>
+
+    <g id="uiGroup">
+        <g id="v_dash">
+          <g>
+            <line x1="401.5" y1="466.8" x2="401.5" y2="460.8" fill="none" stroke="#aaa" stroke-miterlimit="10" stroke-width="1"/>
+            <line x1="401.5" y1="449.28" x2="401.5" y2="339.78" fill="none" stroke="#aaa" stroke-miterlimit="10" stroke-width="1" stroke-dasharray="11.53 11.53"/>
+            <line x1="401.5" y1="334.02" x2="401.5" y2="328.02" fill="none" stroke="#aaa" stroke-miterlimit="10" stroke-width="1"/>
+          </g>
+        </g>
+        <g id="h_dash">
+          <g>
+            <line x1="401.5" y1="327" x2="395.5" y2="327" fill="none" stroke="#aaa" stroke-miterlimit="10" stroke-width="1"/>
+            <line x1="384.08" y1="327" x2="161.43" y2="327" fill="none" stroke="#aaa" stroke-miterlimit="10" stroke-width="1" stroke-dasharray="11.42 11.42"/>
+            <line x1="155.72" y1="327" x2="149.72" y2="327" fill="none" stroke="#aaa" stroke-miterlimit="10" stroke-width="1"/>
+          </g>
+        </g>
+
+        <path id="graphLine" d="M187.06,168.76S278,321.66,400,326.52s210.16-135.1,210.16-135.1" fill="none" stroke-linecap="round" stroke="#2665BA" stroke-width="4" stroke-miterlimit="10"/>
+        <path id="train_err_line" d="M185.1,222.7c22.6,47.7,64.7,115.6,124.5,158.1c69,49,136.8,53.6,304.2,53.4" fill="none" stroke-linecap="round" stroke="#F79819" stroke-width="4" stroke-miterlimit="10"/>
+
+        <g id="connectorGroup">
+            <line id="connector" x1="1000" x2="1000" y1="0" y2="0" stroke="#5ea0fa" />
+            <line id="connector2" x1="1000" x2="1000" y1="0" y2="0" stroke="#5ea0fa" />
+            <line id="connector3" x1="1000" x2="1000" y1="0" y2="0" stroke="#5ea0fa" />
+        </g>
+
+        <text class="axes" transform="translate(75 120)">Error</text>
+        <text class="legend" transform="translate(620.09 190)">dev error</text>
+        <text class="legend" transform="translate(620.09 438)">train error</text>
+        <text class="axes" transform="translate(560 530)">Number of Epochs</text>
+
+        <g id="box">
+            <rect x="0" width="160" height="40" rx="20" ry="20" fill="#eeecec"/>
+            <text id="boxLabel" x="80" y="25"></text>
+        </g>
+
+        <g id="box2">
+            <rect x="0" width="170" height="40" rx="20" ry="20" fill="#eeecec"/>
+            <text id="boxLabel2" x="85" y="25"></text>
+        </g>
+    </g>
+
+    <circle id="nullDot" fill="red" cx="0" cy="0" r="0"/>
+    <circle id="graphDot" fill="#5ea0fa" cx="0" cy="0" r="10"/>
+    <circle id="interDot" fill="#F79819" cx="0" cy="0" r="8"/>
+    <circle id="dragger" fill="rgba(0, 137, 236, 0.2)" cx="0" cy="0" r="15" stroke="rgba(95, 190, 237, 0.05)" stroke-width="10"/>
+
+    <linearGradient id="boxGrad" gradientUnits="userSpaceOnUse" x1="65.7809" y1="25.7808" x2="14.2194" y2="25.7808" gradientTransform="matrix(-5.857245e-007 -1 1 -5.872379e-007 14.2192 65.7809)">
+    	<stop  offset="0.3858" style="stop-color:#E4386D"/>
+    	<stop  offset="0.7513" style="stop-color:#CF2156"/>
+    </linearGradient>
+
+</svg>
