@@ -63,7 +63,7 @@ Then, in  `_config.yml` add a new bullet under `nav:` and fill in the following 
  - `link` is the name that will appear in the navigation menu
  - `url` is the url that will be used (and must be the same as the `permalink` in the new Markdown file)
  - `published` is a flag denoting whether an article is ready for publication
- - 
+
 Your article is now available at `http://127.0.0.1:4000/[url]`
 
 ## Editing an article
@@ -71,6 +71,7 @@ Your article is now available at `http://127.0.0.1:4000/[url]`
 There are two parts of a Markdown file:
  - The *header* is the section between `---` and `---` and is where style specific content is declared
  - The *content* is the section after the second `---` and is where the text goes
+
 For shortcuts to Markdown formatting check out this [cheat sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).  Below are specific formatting instructions for this repository.
 
 #### CSS & JS
@@ -85,12 +86,14 @@ There are two types of visualizations we can handle:
 To add a footnote:
  - Add the footnote label as `<sup class="footnote"></sup>`
  - Add the footnote text in the article header under `footnotes:`
+
 The order of the footnote text must be in the same order that the footnotes appear in the article.
 
 #### Sidenotes
 To add a sidenote:
  - Surround the sidenote anchor word as `<span class="sidenote"> anchor word </span>`
  - Add the sidenote text in the article header under `sidenotes:`
+
 The order of the sidenote text must be in the same order that the sidenote anchors appear in the article.
 
 #### Latex
@@ -114,6 +117,7 @@ You can comment out Markdown with HTML comment symbols.  Surround the text you w
 Change the `published` tag in `_config.yml` to true for all articles that are being published.  In the `_config.yml` file change `baseurl:` to 
  - `""` if you are sharing folder
  - `deeplearning.ai/ai-notes` if you are adding to the server 
+
 From terminal run `JEKYLL_ENV=production jekyll build` in the top folder. A publishable HTML version of the website will be available in the `_site` folder. Share and view the `_site` folder by running `python -m http.server 4000` from it or transfer the content of the `_site` folder to the server to host it.
 
 
