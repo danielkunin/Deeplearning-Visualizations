@@ -15,7 +15,8 @@ kramdown:
   math_engine: nil  # for katex (because kramdown defaults to mathjax)
   # parse_block_html: true
 
-
+# Jekyll settings
+exclude: [ 'README.md' ]
 
 # SASS settings
 sass:

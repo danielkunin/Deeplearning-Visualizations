@@ -19,7 +19,7 @@
 <!-- Load jquery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <!--Favicon-->
-<link rel="shortcut icon" type="image/png" href="/assets/images/layout/favicon.png"/>
+<link rel="shortcut icon" type="image/png" href="{% if jekyll.environment == 'production' %}{{ site.baseurl }}{% endif %}/assets/images/layout/favicon.png"/>
 
 {% if page.layout == 'home' %}
 
@@ -50,9 +50,9 @@
 </script>
 
 <!-- Load JS -->
-<script src= "/assets/js/cppn.js"></script>
-<script src= "/assets/js/d3.tip.js"></script>
-<script src= "/assets/js/tool.js"></script>
+<script src= "{% if jekyll.environment == 'production' %}{{ site.baseurl }}{% endif %}/assets/js/cppn.js"></script>
+<script src= "{% if jekyll.environment == 'production' %}{{ site.baseurl }}{% endif %}/assets/js/d3.tip.js"></script>
+<script src= "{% if jekyll.environment == 'production' %}{{ site.baseurl }}{% endif %}/assets/js/tool.js"></script>
 <script src="https://d3js.org/d3-contour.v1.min.js"></script>
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>

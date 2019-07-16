@@ -97,13 +97,13 @@
 
     {% if page.css %}
       {% for file in page.css %}
-      <link rel="stylesheet" href="/assets/css/article/{{ page.folder }}/{{ file }}.css" >
+      <link rel="stylesheet" href="{% if jekyll.environment == 'production' %}{{ site.baseurl }}{% endif %}/assets/css/article/{{ page.folder }}/{{ file }}.css" >
       {% endfor %}
     {% endif %}
 
     {% if page.js %}
       {% for file in page.js %}
-      <script src="/assets/js/article/{{ page.folder }}/{{ file }}.js" type="text/javascript"></script>
+      <script src="{% if jekyll.environment == 'production' %}{{ site.baseurl }}{% endif %}/assets/js/article/{{ page.folder }}/{{ file }}.js" type="text/javascript"></script>
       {% endfor %}
     {% endif %}   
   

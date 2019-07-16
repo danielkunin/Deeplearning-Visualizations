@@ -17,7 +17,7 @@ To create a new article, copy the folling code into a Markdown file (`.md`) in t
 ```
 ---
 layout: article
-permalink: <!-- url used -->
+permalink: <!-- url used plus backslash -->
 folder: <!-- folder name used in assets -->
 
 # CSS & JS
@@ -111,7 +111,10 @@ You can comment out Markdown with HTML comment symbols.  Surround the text you w
 
 ## Publishing an article
 
-Change the `published` tag in `_config.yml` to true for all articles that are being published.  Then, from terminal run `JEKYLL_ENV=production jekyll build` in the top folder for a local version of the website. A publishable HTML version of the website will be available in the `_site` folder. Transfer the content of the `_site` folder to the server.
+Change the `published` tag in `_config.yml` to true for all articles that are being published.  In the `_config.yml` file change `baseurl:` to 
+ - `""` if you are sharing folder
+ - `deeplearning.ai/ai-notes` if you are adding to the server 
+From terminal run `JEKYLL_ENV=production jekyll build` in the top folder. A publishable HTML version of the website will be available in the `_site` folder. Share and view the `_site` folder by running `python -m http.server 4000` from it or transfer the content of the `_site` folder to the server to host it.
 
 
 ## Improvements
@@ -123,4 +126,4 @@ Template:
 - Link footnotes and sidenotes with unique id instead of relying on the order of the anchors and the text being the same.
 - Create unique include/plugin tag for the different visualization styles allowing a user to put placeholder visualizations to indicate a visualization should appear while editing. This will also make the Markdown more readable.
 - Sometimes js files will need access to the assets.  Create a standardized url strcuture to handle these calls.  The simpelest solution would be to create a template js function for grabbing files.
-- Make sure that in the published version relative and global links don't get messed up. In general clean up CSS and JS calls.
+- Make sure that in the published version relative and global links don't get messed up. In general clean up CSS and JS calls. Make sure `_site` folder can stand alone and with specific `baseurl`.

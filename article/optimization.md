@@ -1,7 +1,7 @@
 ---
 
 layout: article
-permalink: optimization
+permalink: optimization/
 folder: optimization
 
 # CSS & JS
@@ -55,6 +55,7 @@ sidenotes:
 - <!-- sidenote text in order -->
 
 ---
+
 
 {% include article/optimization/regression.html %}
 

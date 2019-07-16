@@ -1,7 +1,7 @@
 ---
 
 layout: article
-permalink: initialization
+permalink: initialization/
 folder: initialization
 
 # CSS & JS
