@@ -1,4 +1,11 @@
-// initialize vars
+$(document).ready(function() {
+    // $('#loss-vis-container').load("../img/quadratic_curve.svg", main);
+    main();
+});
+
+// ####################################################
+function main() {
+    // initialize vars
     let center_dot = $("#centerDot"),
         clone_dot = $("#cloneDot"),
         flat_curve = $("#flat_curve"),
@@ -10,13 +17,19 @@
         l_line = $("#learnLine"),
         error_text = $('#errorText'),
         curr_pos = [0, 0],
-        l_default = 0.85, //default is big
-        l_rate = l_default,
+        l_big = 50, //default is big
+        l_small = 25,
+        l_rate = l_big,
+        l_breakpoint = l_small + 1
+        is_cur_lo = true,
         dir = true,
         deriv_tl = new TimelineMax({
             paused: true,
         }),
-        abs_curveBezier = MorphSVGPlugin.pathDataToBezier(flat_curve[0].getAttribute('d'));
+        abs_curveBezier = MorphSVGPlugin.pathDataToBezier(flat_curve[0].getAttribute('d')),
+        iter_count = 0,
+        iter_text = $('#iter_text'),
+        replay_btn = $('#replay');
 
     // UI element
     let hi_toggle = $("#hi_toggle"),
@@ -72,7 +85,7 @@
             onUpdate: checkLocation,
         });
 
-        deriv_tl.seek(2.0) // (1) move to a point 2.5 steep
+        deriv_tl.seek(0.60) // (1) move to a point 2.5 steep
         curr_pos = applyTransform(center_dot.attr('cx'), center_dot.attr('cy'), center_dot.attr('transform'))
         moveCloneDot() // (2) move clone dot forward
     }
@@ -95,8 +108,6 @@
         TweenMax.to(ph_dot, 0.0001, {
             x: moveForward()[0] - center_dot.attr("cx"),
             y: moveForward()[1] - center_dot.attr("cy"),
-            // delay: 0.2,
-            // onComplete: moveCenterDotAnimForward
         })
     }
 
@@ -156,22 +167,36 @@
         let newX = 0
         let newY = 0
 
-        if (newEnd[1] <= newStart[1]) { //negative slope
-            newX = (newStart[0] - newEnd[0]) * l_rate + newEnd[0];
-            newY = (newStart[1] - newEnd[1]) * l_rate + newEnd[1];
-            dir = false;
+        // calculate slope
+        let slope = (newEnd[1] - newStart[1]) / (newEnd[0] - newStart[0])
+        let offset = slope * l_rate
 
-        } else { //positive slope
-            newX = (newEnd[0] - newStart[0]) * l_rate + newStart[0];
-            newY = (newEnd[1] - newStart[1]) * l_rate + newStart[1];
-            dir = true;
-        }
+        // move dot horizontally
+        TweenMax.set(ph_dot, {
+            x: center_dot[0]._gsTransform.x + offset,
+            y: center_dot[0]._gsTransform.y
+        })
+
+        //find intersection downwards
+        let ph_deriv_path = MorphSVGPlugin.convertToPath(ph_deriv.clone()[0])[0]
+        let pos = findAndDrawIntersectionDot(ph_dot, ph_deriv_path)
+
+        newX = pos.x
+        newY = pos.y
+
+        dir = (slope < 0) ? false : true
+
         return [newX, newY]
     }
 
+
+    // play pause animation and update counter
     function playPauseAnimation(pause_time) {
         let start = applyTransform(center_dot.attr('cx'), center_dot.attr('cy'), center_dot.attr('transform'))
         let end = applyTransform(clone_dot.attr('cx'), clone_dot.attr('cy'), clone_dot.attr('transform'))
+
+        iter_count += 1;
+        iter_text.html('Iteration: ' + iter_count);
 
         TweenMax.set(error_line, {
             attr: {
@@ -184,12 +209,12 @@
         })
 
         let dir_val = (dir) ? 1.0 : -1.0
-        TweenMax.set(error_text, {
-            // x: parseFloat(error_line.attr("x1")) + dir_val * 15,
-            x: (parseFloat(error_line.attr("x1")) - parseFloat($('#text_frame').attr("width")) / 2) + dir_val * parseFloat($('#text_frame').attr("width")) / 1.5,
-            y: (parseFloat(error_line.attr("y1")) + parseFloat(error_line.attr("y2") - parseFloat($('#text_frame').attr("height")))) / 2,
-            opacity: 1
-        })
+        // TweenMax.set(error_text, {
+        //     // x: parseFloat(error_line.attr("x1")) + dir_val * 15,
+        //     x: (parseFloat(error_line.attr("x1")) - parseFloat($('#text_frame').attr("width")) / 2) + dir_val * parseFloat($('#text_frame').attr("width")) / 1.5,
+        //     y: (parseFloat(error_line.attr("y1")) + parseFloat(error_line.attr("y2") - parseFloat($('#text_frame').attr("height")))) / 2,
+        //     opacity: 1
+        // })
 
         // error line appears
         TweenMax.from(error_line, 1, {
@@ -205,11 +230,11 @@
             delay: 2
         })
 
-        //error text disappears
-        TweenMax.to(error_text, 1, {
-            opacity: 0,
-            delay: 2
-        })
+        // //error text disappears
+        // TweenMax.to(error_text, 1, {
+        //     opacity: 0,
+        //     delay: 2
+        // })
 
         // clone dot and l line disappears
         TweenMax.to([clone_dot, l_line], 0.5, {
@@ -257,7 +282,7 @@
 
     function drawDownwardLine(dot) {
         let new_center = applyTransform(dot.attr("cx"), dot.attr("cy"), dot.attr("transform"))
-        let str = "M" + new_center[0] + "," + new_center[1] + "v" + '1000';
+        let str = "M" + new_center[0] + "," + (new_center[1]-100) + "v" + '1000';
         return str;
     }
 
@@ -308,13 +333,15 @@
         is_sm: true
     }, toggleRate)
 
+    replay_btn.click(restartAnimation)
+
     function toggleRate(event) {
         if (event.data.is_sm) {
-            l_rate = 0.6
-            toggleToggle(big_toggle, sm_toggle, false)
+            l_rate = l_small
+            toggleToggle(sm_toggle, big_toggle)
         } else {
-            l_rate = l_default
-            toggleToggle(big_toggle, sm_toggle, true)
+            l_rate = l_big
+            toggleToggle(big_toggle, sm_toggle)
         }
         console.log(l_rate)
     }
@@ -327,31 +354,63 @@
 
         if (event.data.is_flat) {
             flat_curve = $("#flat_curve");
-            toggleToggle(lo_toggle, hi_toggle, true)
+            l_small = 25
+            l_big = 50
+            toggleToggle(lo_toggle, hi_toggle)
         } else {
             flat_curve = $("#steep_curve");
-            toggleToggle(lo_toggle, hi_toggle, false)
+            l_small = 13
+            l_big = 26
+            toggleToggle(hi_toggle, lo_toggle)
         }
 
         TweenMax.set(flat_curve, {
             opacity: 1
         })
 
-        TweenMax.killAll(false, true, false, true)
-        resetAttrLines()
-        init()
+        if (l_rate >= l_breakpoint) {
+            l_rate = l_big
+        } else {
+            l_rate = l_small
+        }
+
+        console.log(l_rate)
+        restartAnimation()
     }
 
     function toggleToggle(btn1, btn2, is_btn1) {
-        if (is_btn1) {
             btn1.attr("stroke", active_color)
             btn1.attr("fill", "none")
             btn2.attr("stroke", default_color)
             btn2.attr("fill", "white")
-        } else {
-            btn1.attr("stroke", default_color)
-            btn1.attr("fill", "white")
-            btn2.attr("stroke", active_color)
-            btn2.attr("fill", "none")
-        }
     }
+
+    function restartAnimation() {
+        TweenMax.killAll(false, true, false, true)
+        resetAttrLines()
+        dir = true
+        iter_count = 0
+        iter_text.html("Iteration: 0")
+        init()
+    }
+
+
+    // function lineToBezier(line) {
+    //     // console.log(line.attr("transform"))
+    //     line_path = MorphSVGPlugin.convertToPath(line);
+    //     applyTransform(line.attr("x2"), line.attr("y2"), line.attr("transform"))
+    //     return MorphSVGPlugin.pathDataToBezier(line_path[0].getAttribute('d'), {
+    //         align: "relative"
+    //     })
+    // }
+
+    //generate points y = ax^2+bx+c
+    // function createPoints(a, b, c, rangeX, step) {
+    //     return Array.apply(null, Array((rangeX[1] - rangeX[0]) / step | 0 + 1))
+    //         .map(function(d, i) {
+    //             var x = rangeX[0] + i * step;
+    //             return [x, a * x * x + b * x + c];
+    //         })
+    // }
+
+}

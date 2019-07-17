@@ -7,8 +7,6 @@ folder: optimization
 # CSS & JS
 
 js:
-- curvature/DrawSVGPlugin.min
-- curvature/MorphSVGPlugin.min
 - curvature/script
 - regression/loss
 - regression/optimizer
