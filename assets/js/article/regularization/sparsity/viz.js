@@ -183,7 +183,7 @@ function mnist_setup() {
 
   // load mnist
   d3.select("#mnist_load").on("click", function() {
-    extract('data/mnist_test.csv.zip', mnist.data);
+    extract('mnist/mnist_test.csv.zip', mnist.data);
   });
 
 }

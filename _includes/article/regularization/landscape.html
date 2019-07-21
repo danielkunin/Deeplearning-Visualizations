@@ -1,0 +1,65 @@
+<div class="visualization hide-backToTop" id="landscape">
+    <div class="visualization-column-2">
+        <div id="contour"></div>
+    </div>
+    <div class="visualization-column-2">
+        <div class="viz-field">
+            <h4>1. Choose an <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization" target="_blank">artificial</a> loss landscape</h4>
+
+            <div class="lossFunctions">
+                <label>
+                  <input type="radio" name="loss" value="himmelblaus" checked/>
+                  <img src="/assets/images/article/regularization/loss/himmelblaus.png">
+                </label>
+                <label>
+                  <input type="radio" name="loss" value="styblinskiTang" />
+                  <img src="/assets/images/article/regularization/loss/styblinskiTang.png">
+                </label>
+                <label>
+                  <input type="radio" name="loss" value="mcCormick" />
+                  <img src="/assets/images/article/regularization/loss/mcCormick.png">
+                </label>
+                <label>
+                  <input type="radio" name="loss" value="matyas" />
+                  <img src="/assets/images/article/regularization/loss/matyas.png">
+                </label>
+                <label>
+                  <input type="radio" name="loss" value="rosenbrock" />
+                  <img src="/assets/images/article/regularization/loss/rosenbrock.png">
+                </label>
+                <label>
+                  <input type="radio" name="loss" value="beale" />
+                  <img src="/assets/images/article/regularization/loss/beale.png">
+                </label>
+                <label>
+                  <input type="radio" name="loss" value="goldsteinPrice"/>
+                  <img src="/assets/images/article/regularization/loss/goldsteinPrice.png">
+                </label>
+                <label>
+                  <input type="radio" name="loss" value="rastrigin" />
+                  <img src="/assets/images/article/regularization/loss/rastrigin.png">
+                </label>
+            </div>
+        </div>
+
+        <div class="viz-field">
+            <h4>2. Select a regularization method</h4>
+
+            <label class="radio-container">$L_1$ regularization
+                <input type="radio" value="1" name="reg">
+                <span class="checkmark"></span>
+            </label>
+            <label class="radio-container">$L_2$ regularization
+                <input type="radio" value="0" name="reg" checked>
+                <span class="checkmark"></span>
+            </label>
+        </div>
+
+        <div class="viz-field">
+          <h4>3. Choose a value for the regularization constant</h4>
+
+            <input type="range" value="0" min="0" max="40" step="any" id="lambda">
+            <label>Lambda = <span id="lambda_val">0.00</span></label>
+        </div>
+    </div>
+</div>

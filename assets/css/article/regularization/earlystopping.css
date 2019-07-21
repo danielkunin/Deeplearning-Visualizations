@@ -1,0 +1,41 @@
+#boxLabel, #boxLabel2{
+  text-anchor:middle;
+  fill:#115F9A;
+  font-size:16px;
+  user-select:none;
+  -webkit-user-select:none;
+  pointer-events:none;
+  font-family: 'Roboto', sans-serif;
+  font-weight:700;
+}
+
+#earlystopping-placeholder svg {
+    overflow: visible;
+}
+
+.legend {
+    fill: #aaa;
+    font-size:14px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.axes {
+    fill: #878181;
+    font-size:15px;
+    font-family: 'Roboto', sans-serif;
+}
+
+#box, #box2{
+  opacity:0;
+}
+
+.iter_text {
+    /* text-anchor:middle; */
+    font-size:13px;
+    font-family: 'Roboto', sans-serif;
+    /* font-weight:700; */
+}
+
+circle{
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}

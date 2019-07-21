@@ -1,38 +1,39 @@
 ---
 
 layout: article
-permalink: optimization/
-folder: optimization
+permalink: regularization/
+folder: regularization
 
 # CSS & JS
 
 js:
-- curvature
-- regression/loss
-- regression/optimizer
-- regression/line
-- regression/viz
-- landscape/point
+- dropout
+- earlystopping
 - landscape/loss
-- landscape/optimizer
 - landscape/viz
+- sparsity/zip/zip
+- sparsity/zip/zip-ext
+- sparsity/data
+- sparsity/nn
+- sparsity/viz
 
 css:
+- earlystopping
 - landscape
-- regression
+- sparsity
 
 
 # Banner
 
-title: Optimizing neural networks
+title: Regularizing neural networks
 abstract: Add abstract here...
 table-of-content:
 - index: I
   title: First Header
 colors:
-  a: 120 184 66
-  b: 45 155 106
-  c: 0 125 117
+  a: 0 233 222
+  b: 41 156 222
+  c: 98 0 222
 
 # Authors, Acknowledgments, Reference
 
@@ -54,10 +55,11 @@ sidenotes:
 
 ---
 
+{% include article/regularization/earlystopping.html %}
 
-{% include article/optimization/regression.html %}
+{% include article/regularization/sparsity.html %}
 
-{% include article/optimization/curvature.html %}
+{% include article/regularization/landscape.html %}
 
-{% include article/optimization/landscape.html %}
+{% include article/regularization/dropout.html %}
 

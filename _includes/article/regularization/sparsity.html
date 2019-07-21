@@ -1,0 +1,55 @@
+<div class="visualization hide-backToTop" id="mnist">
+    <div class="visualization-column-2">
+        <div id="mnist_network"></div>
+    </div>
+    <div class="visualization-column-2">
+        <p class="viz-field">Use the following selections to view a histogram of the weight values <span id="regularized"
+        class="bold">with</span> and <span id="unregularized" class="bold">without</span> regularization.</p>
+    	<div class="viz-field">
+            <h4>1. Select a regularization method</h4>
+        	<label class="radio-container">$L_1$ regularization
+                <input type="radio" value="1" name="mnist_init" checked>
+                <span class="checkmark"></span>
+            </label>
+            <label class="radio-container">$L_2$ regularization
+                <input type="radio" value="0" name="mnist_init">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="viz-field">
+            <h4>2. Choose a value for the regularization constant</h4>
+            <p class="viz-field">Choose a value for $\lambda$ in the update equations above.</p>
+            <label class="radio-container">Too small
+                <input type="radio" value="0.00001" name="lambda_sparsity">
+                <span class="checkmark"></span>
+            </label>
+            <label class="radio-container">Appropriate
+                <input type="radio" value="0.01" name="lambda_sparsity" checked>
+                <span class="checkmark"></span>
+            </label>
+            <label class="radio-container">Too large
+                <input type="radio" value="1" name="lambda_sparsity">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="viz-field">
+            <h4>3. Load your dataset and train the network</h4>
+            <p class="viz-field">Load data and train both <span id="regularized" class="bold">regularized</span> and <span id="unregularized" class="bold">unregularized</span> networks.</p>
+            <div class="viz-button">
+            	<button class="button emphasized" id="mnist_load">
+                    Load Data (<span id="percent">0%</span>)
+                </button>
+                <button class="button-transport" id="mnist_reset"><img src="/assets/images/layout/reset.png"></button>
+                <button class="button-transport inactive" id="mnist_start"><img src="/assets/images/layout/play.png"></button>
+                <button class="button-transport hidden" id="mnist_stop"><img src="/assets/images/layout/pause.png"></button>
+                <button class="button-transport inactive" id="mnist_step"><img src="/assets/images/layout/fastforward.png"></button>
+            </div>
+            <label class="viz">
+                Batch: <span id="batch">0</span>
+            </label>
+            <label class="viz">
+                Epoch: <span id="epoch">0</span>
+            </label>
+        </div>
+    </div>
+</div>
