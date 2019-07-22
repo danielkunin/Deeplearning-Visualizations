@@ -279,113 +279,56 @@
 
 <div class="visualization hide-backToTop">
   <div class="visualization-column-2">
-    <svg id="loss" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
-      <title>quadratic_curve</title>
-      <rect id="frame" width="800" height="600" fill="none" />
-      <g id="UI">
-        <text transform="translate(591.28 299.22)" font-size="12" font-family="Roboto-Medium, Roboto" font-weight="500" letter-spacing="-0.01em" style="isolation: isolate">Learning Rate:</text>
-        <circle id="curve_sel" data-name="curve sel" cx="602.79" cy="243.81" r="4.76" fill="#5ea0fa" />
-        <circle id="rate_sel" data-name="rate sel" cx="602.79" cy="321.87" r="4.76" fill="#5ea0fa" />
-        <circle id="curve_sel-2" data-name="curve sel-2" cx="670.94" cy="243.81" r="4.76" fill="#5ea0fa" />
-        <circle id="rate_sel-2" data-name="rate sel-2" cx="670.94" cy="321.87" r="4.76" fill="#5ea0fa" />
-        <circle id="lo_toggle" data-name="lo toggle" cx="602.79" cy="243.81" r="8.65" fill="none" stroke="#c6c6c6" stroke-miterlimit="10" stroke-width="2" />
-        <circle id="hi_toggle" data-name="hi toggle" cx="670.94" cy="243.81" r="8.65" fill="#fff" stroke="#c6c6c6" stroke-miterlimit="10" stroke-width="2" />
-        <circle id="big_toggle" data-name="big toggle" cx="670.94" cy="321.87" r="8.65" fill="none" stroke="#c6c6c6" stroke-miterlimit="10" stroke-width="2" />
-        <circle id="sm_toggle" data-name="sm toggle" cx="602.79" cy="321.87" r="8.65" fill="#fff" stroke="#c6c6c6" stroke-miterlimit="10" stroke-width="2" />
-        <text transform="translate(615.44 247.32)" font-size="12" font-family="Roboto-Regular, Roboto" style="isolation: isolate">Low</text>
-        <text transform="translate(683.59 247.32)" font-size="12" font-family="Roboto-Regular, Roboto" style="isolation: isolate">High</text>
-        <text transform="translate(615.44 326.63)" font-size="12" font-family="Roboto-Regular, Roboto" style="isolation: isolate">Small</text>
-        <text transform="translate(683.59 326.63)" font-size="12" font-family="Roboto-Regular, Roboto" style="isolation: isolate">La<tspan x="12.98" y="0" letter-spacing="-0.01em">r</tspan><tspan x="16.93" y="0">ge</tspan></text>
-        <g id="replay">
-          <path d="M602.47,368.51h37.86a9.2,9.2,0,0,1,9.2,9.2h0a9.2,9.2,0,0,1-9.2,9.2H602.47a9.2,9.2,0,0,1-9.2-9.2h0a9.2,9.2,0,0,1,9.2-9.2Z" fill="#636363" />
+    <svg id="loss" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 565 403">
+        <rect id="frame" width="565" height="403" fill="none" />
+        <g id="loss_graph" data-name="loss graph">
+          <g id="axes">
+            <line id="bottomLine" x1="61.48" y1="364.65" x2="523.48" y2="364.65" fill="none" stroke="#aaa" stroke-miterlimit="10" stroke-width="3" />
+            <line id="vert" x1="61.48" y1="364.65" x2="61.48" y2="17.55" fill="none" stroke="#aaa" stroke-miterlimit="10" stroke-width="3" />
+            <polygon id="left_arr" data-name="left arr" points="521.68 359.15 521.68 369.35 532.08 364.65 521.68 359.15" fill="#aaa" />
+            <polygon id="up_arr" data-name="up arr" points="56.38 19.05 66.68 19.05 61.88 8.65 56.38 19.05" fill="#aaa" />
+          </g>
+          <line id="errorLine" x1="3" y1="8.65" x2="3" y2="8.65" fill="none" stroke="#ff1e00" stroke-miterlimit="10" stroke-width="3" />
+          <path id="flat_curve" data-name="flat curve" d="M93.22,59.88S188.5,299.22,311.5,299.22,529.85,59.88,529.85,59.88" fill="none" stroke="#2665ba" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3" />
+          <path id="steep_curve" data-name="steep curve" d="M166.62,59.88S229.9,299.22,311.5,299.22s145-239.34,145-239.34" fill="none" stroke="#2665ba" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3" />
+          <line id="deriv" x1="523.48" y1="299.22" x2="99.59" y2="299.22" fill="none" stroke="red" stroke-miterlimit="10" stroke-width="3" />
+          <line id="ph_deriv" data-name="ph deriv" x1="523.48" y1="299.22" x2="99.59" y2="299.22" fill="none" stroke="#ffa600" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3" />
+          <line id="learnLine" x1="3" y1="8.65" x2="3" y2="8.65" fill="none" stroke="#d45087" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4" />
+          <circle id="cloneDot" cx="311.54" cy="299.22" r="6.66" fill="#ff7c43" />
+          <circle id="phDot" cx="311.54" cy="299.22" r="6.66" fill="none" />
+          <circle id="centerDot" cx="311.54" cy="299.22" r="6.66" fill="#5ea0fa" />
+          <text transform="translate(10.35 19.05)" font-size="15" fill="#878787" font-family="Roboto-Regular, Roboto" style="isolation: isolate">Loss</text>
           <g>
-            <path d="M604.39,382.22a4.52,4.52,0,1,1,2.92-8l-.68.67a.25.25,0,0,0,0,.34.24.24,0,0,0,.11.06l3.23.87a.24.24,0,0,0,.29-.17.29.29,0,0,0,0-.13l-.9-3.22a.23.23,0,0,0-.27-.17h0a.21.21,0,0,0-.1.06l-.66.66a6,6,0,1,0,.56,8.47,5.68,5.68,0,0,0,.59-.8.47.47,0,0,0-.14-.65h0l-.48-.23a.5.5,0,0,0-.61.15A4.46,4.46,0,0,1,604.39,382.22Z" fill="#fff" />
-            <g>
-              <text transform="translate(613.2 380.6)" font-size="9.9" fill="#fff" font-family="Roboto-Regular, Roboto" letter-spacing="-0.01em" style="isolation: isolate">Resta</text>
-              <text transform="translate(637.78 380.6)" font-size="9.9" fill="#fff" font-family="Roboto-Regular, Roboto" letter-spacing="0.01em" style="isolation: isolate">r</text>
-              <text transform="translate(641.27 380.6)" font-size="9.9" fill="#fff" font-family="Roboto-Regular, Roboto" letter-spacing="-0.01em" style="isolation: isolate">t</text>
-            </g>
+            <text transform="translate(483.95 394.12)" font-size="15" fill="#878787" font-family="Roboto-Regular, Roboto" letter-spacing="-0.01em" style="isolation: isolate">P</text>
+            <text transform="translate(493.33 394.12)" font-size="15" fill="#878787" font-family="Roboto-Regular, Roboto" style="isolation: isolate">a</text>
+            <text transform="translate(501.49 394.12)" font-size="15" fill="#878787" font-family="Roboto-Regular, Roboto" letter-spacing="-0.02em" style="isolation: isolate">r</text>
+            <text transform="translate(506.27 394.12)" font-size="15" fill="#878787" font-family="Roboto-Regular, Roboto" style="isolation: isolate">ameters</text>
           </g>
         </g>
-        <text id="iter_text" data-name="iter text" transform="translate(591.28 176.11)" font-size="12" font-family="Roboto-Medium, Roboto" font-weight="500" letter-spacing="-0.01em" style="isolation: isolate">Ite<tspan x="13.46" y="0" letter-spacing="-0.02em">r</tspan><tspan x="17.38" y="0">ation: 0</tspan></text>
-        <g>
-          <g>
-            <line x1="604.08" y1="453.51" x2="626" y2="453.51" fill="none" stroke="#ff1e00" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3" />
-            <text transform="translate(636.64 449.81)" font-size="10" font-family="Roboto-Medium, Roboto" font-weight="500" letter-spacing="-0.01em">Er<tspan x="8.97" y="0" letter-spacing="-0.03em">r</tspan><tspan x="12.21" y="0" letter-spacing="-0.01em">or of </tspan><tspan letter-spacing="-0.03em"><tspan x="0" y="12">A</tspan><tspan x="6.32" y="12" letter-spacing="-0.01em">pp</tspan><tspan x="17.38" y="12" letter-spacing="-0.03em">r</tspan><tspan x="20.62" y="12" letter-spacing="-0.02em">o</tspan><tspan x="26.11" y="12" letter-spacing="-0.01em">ximation</tspan></tspan></text>
-          </g>
-          <rect x="593.27" y="430.5" width="118.32" height="44.79" rx="4.18" fill="none" stroke="#c6c6c6" stroke-miterlimit="10" />
-        </g>
-        <g>
-          <text transform="translate(591.28 221.16)" font-size="12" font-family="Roboto-Medium, Roboto" font-weight="500" letter-spacing="-0.01em" style="isolation: isolate">Loss</text>
-          <text transform="translate(619.38 221.16)" font-size="12" font-family="Roboto-Medium, Roboto" font-weight="500" letter-spacing="-0.02em" style="isolation: isolate">F</text>
-          <text transform="translate(625.72 221.16)" font-size="12" font-family="Roboto-Medium, Roboto" font-weight="500" letter-spacing="-0.01em" style="isolation: isolate">unction Cu</text>
-          <text transform="translate(682.2 221.16)" font-size="12" font-family="Roboto-Medium, Roboto" font-weight="500" style="isolation: isolate">r</text>
-          <text transform="translate(686.4 221.16)" font-size="12" font-family="Roboto-Medium, Roboto" font-weight="500" letter-spacing="-0.02em" style="isolation: isolate">v</text>
-          <text transform="translate(692.13 221.16)" font-size="12" font-family="Roboto-Medium, Roboto" font-weight="500" letter-spacing="-0.01em" style="isolation: isolate">atu</text>
-          <text transform="translate(708.92 221.16)" font-size="12" font-family="Roboto-Medium, Roboto" font-weight="500" letter-spacing="-0.02em" style="isolation: isolate">r</text>
-          <text transform="translate(712.91 221.16)" font-size="12" font-family="Roboto-Medium, Roboto" font-weight="500" letter-spacing="-0.01em" style="isolation: isolate">e:</text>
-        </g>
-      </g>
-      <g id="loss_graph" data-name="loss graph">
-        <g id="axes">
-          <line id="bottomLine" x1="61.48" y1="475.65" x2="523.48" y2="475.65" fill="none" stroke="#aaa" stroke-miterlimit="10" stroke-width="3" />
-          <line id="vert" x1="61.48" y1="475.65" x2="61.48" y2="128.55" fill="none" stroke="#aaa" stroke-miterlimit="10" stroke-width="3" />
-          <polygon id="left_arr" data-name="left arr" points="521.68 470.15 521.68 480.35 532.08 475.65 521.68 470.15" fill="#aaa" />
-          <polygon id="up_arr" data-name="up arr" points="56.38 130.05 66.68 130.05 61.88 119.65 56.38 130.05" fill="#aaa" />
-        </g>
-        <line id="errorLine" x1="41.94" y1="17.8" x2="41.94" y2="17.8" fill="none" stroke="#ff1e00" stroke-miterlimit="10" stroke-width="3" />
-        <path id="flat_curve" data-name="flat curve" d="M93.22,170.88s95.32,239.34,218.32,239.34S529.85,170.88,529.85,170.88" fill="none" stroke="#2665ba" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3" />
-        <path id="steep_curve" data-name="steep curve" d="M166.62,170.88S229.9,410.22,311.54,410.22,456.45,170.88,456.45,170.88" fill="none" stroke="#2665ba" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3" />
-        <line id="deriv" x1="523.48" y1="410.22" x2="99.59" y2="410.22" fill="none" stroke="red" stroke-miterlimit="10" stroke-width="3" />
-        <line id="ph_deriv" data-name="ph deriv" x1="523.48" y1="410.22" x2="99.59" y2="410.22" fill="none" stroke="#ffa600" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3" />
-        <line id="learnLine" x1="41.94" y1="17.8" x2="41.94" y2="17.8" fill="none" stroke="#d45087" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4" />
-        <circle id="cloneDot" cx="311.54" cy="410.22" r="6.66" fill="#ff7c43" />
-        <circle id="phDot" cx="311.54" cy="410.22" r="6.66" fill="none" />
-        <circle id="centerDot" cx="311.54" cy="410.22" r="6.66" fill="#5ea0fa" />
-        <g id="errorText">
-          <rect id="text_frame" data-name="text frame" y="0.08" width="101.22" height="39.91" rx="9.08" fill="#ededed" />
-          <g>
-            <text transform="translate(11.53 16.34)" font-size="12" font-family="Roboto-Regular, Roboto" style="isolation: isolate">Er</text>
-            <text transform="translate(22.41 16.34)" font-size="12" font-family="Roboto-Regular, Roboto" letter-spacing="-0.01em" style="isolation: isolate">r</text>
-            <text transform="translate(26.35 16.34)" font-size="12" font-family="Roboto-Regular, Roboto" style="isolation: isolate">or of</text>
-            <text transform="translate(11.53 30.74)" font-size="12" font-family="Roboto-Regular, Roboto" style="isolation: isolate">App</text>
-            <text transform="translate(32.82 30.74)" font-size="12" font-family="Roboto-Regular, Roboto" letter-spacing="-0.01em" style="isolation: isolate">r</text>
-            <text transform="translate(36.77 30.74)" font-size="12" font-family="Roboto-Regular, Roboto" letter-spacing="-0.01em" style="isolation: isolate">o</text>
-            <text transform="translate(43.49 30.74)" font-size="12" font-family="Roboto-Regular, Roboto" style="isolation: isolate">ximation</text>
-          </g>
-        </g>
-        <text transform="translate(10.35 130.05)" font-size="15" fill="#878787" font-family="Roboto-Regular, Roboto" style="isolation: isolate">Loss</text>
-        <g>
-          <text transform="translate(483.95 505.12)" font-size="15" fill="#878787" font-family="Roboto-Regular, Roboto" letter-spacing="-0.01em" style="isolation: isolate">P</text>
-          <text transform="translate(493.33 505.12)" font-size="15" fill="#878787" font-family="Roboto-Regular, Roboto" style="isolation: isolate">a</text>
-          <text transform="translate(501.49 505.12)" font-size="15" fill="#878787" font-family="Roboto-Regular, Roboto" letter-spacing="-0.02em" style="isolation: isolate">r</text>
-          <text transform="translate(506.27 505.12)" font-size="15" fill="#878787" font-family="Roboto-Regular, Roboto" style="isolation: isolate">ameters</text>
-        </g>
-      </g>
     </svg>
   </div>
   <div class="visualization-column-1">
-    <p>Iteration: <span id="curvature_ittr">0</span></p>
+    <p id="iter_text">Iteration: <span id="curvature_ittr">0</span></p>
     <p>Loss function curvature:</p>
-    <label class="radio-container">Low
+    <label id="lo_toggle" class="radio-container">Low
         <input type="radio" value="20" name="curvature_lrate" checked="" />
         <span class="checkmark"></span>
     </label>
-    <label class="radio-container">High
+    <label id="hi_toggle" class="radio-container">High
         <input type="radio" value="300" name="curvature_lrate" />
         <span class="checkmark"></span>
     </label>
     <p>Learning rate:</p>
-    <label class="radio-container">Small
+    <label id="sm_toggle" class="radio-container">Small
         <input type="radio" value="800" name="curvature_crate" />
         <span class="checkmark"></span>
     </label>
-    <label class="radio-container">Large
+    <label id="big_toggle" class="radio-container">Large
         <input type="radio" value="800" name="curvature_crate" checked="" />
         <span class="checkmark"></span>
     </label>
     <div>
-    <button class="button-transport" id="reset" title="reset">
+    <button class="button-transport" id="replay" title="reset">
         <img src="/assets/images/layout/reset.png" /> Reset
     </button>
     <br />
