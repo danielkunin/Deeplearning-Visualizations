@@ -1,0 +1,51 @@
+<div class="visualization hide-backToTop" id="playground">
+    <div class="visualization-column-1">
+       <h3>1. Choose input dataset</h3>
+       <p>Select a training dataset.</p>
+       <div id="playground_dataset"></div>
+       <p>This legend details the color scheme for labels, and the values of the weights/gradients.</p>
+       <div id="playground_legend"></div>
+    </div>
+    <div class="visualization-column-2">
+        <h3>2. Choose initialization method</h3>
+        <p>Select an initialization method for the values of your neural network parameters<sup class="footnote"></sup>.</p>
+       <label class="radio-container">Zero
+          <input type="radio" value="0" name="playground_init">
+          <span class="checkmark"></span>
+       </label>
+        <label class="radio-container">Too small
+            <input type="radio" value="0.01" name="playground_init">
+            <span class="checkmark"></span>
+        </label>
+        <label class="radio-container">Appropriate
+            <input type="radio" value="1" name="playground_init" checked>
+            <span class="checkmark"></span>
+        </label>
+        <label class="radio-container">Too large
+            <input type="radio" value="100" name="playground_init">
+            <span class="checkmark"></span>
+        </label>
+        <div id="playground_network"></div>
+        <p>Select whether to visualize the weights or gradients of the network above.</p>
+        <label class="radio-container">Weight
+            <input type="radio" value="weight" name="playground_link" checked>
+            <span class="checkmark"></span>
+        </label>
+        <label class="radio-container">Gradient
+            <input type="radio" value="gradient" name="playground_link">
+            <span class="checkmark"></span>
+        </label>
+    </div>
+    <div class="visualization-column-1" style="min-height: 530px;">
+        <h3>3. Train the network.</h3>
+        <p>Observe the cost function and the decision boundary.</p>
+        <button class="button-transport" id="playground_reset" title="reset"><img src="/assets/images/layout/reset.png"></button>
+        <button class="button-transport inactive" id="playground_start" title="start"><img src="/assets/images/layout/play.png"></button>
+        <button class="button-transport hidden" id="playground_stop" title="stop"><img src="/assets/images/layout/pause.png"></button>
+        <button class="button-transport inactive" id="playground_step" title="step"><img src="/assets/images/layout/fastforward.png"></button>
+        <div class="line-break-sm"></div>
+        <div id="playground_loss"></div>
+        <div class="line-break-sm"></div>
+        <div id="playground_pred"></div>
+    </div>
+</div>

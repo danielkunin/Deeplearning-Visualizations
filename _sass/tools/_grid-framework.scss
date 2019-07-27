@@ -1,0 +1,57 @@
+
+$marg-article:10%;
+$gutter:1%;
+$align: top;
+
+
+
+@mixin max_col{
+	width: (100% - $marg-header*2);
+  	
+  	
+  
+}
+
+@mixin col($col, $sum, $marg,$first: false, $last: false) {
+	display: inline-block;
+	
+
+	@include breakpoint(xs) {
+		@include max_col;
+		margin: 0 $marg-header;
+	}
+
+	@include breakpoint(sm) {
+		width: percentage($col/$sum);
+    	vertical-align: $align;
+    	margin-left: if($first, 0, $marg);
+    	margin-right: if($last, 0, $marg);
+    // 	padding-left: if($first, 0, $marg);
+  		// padding-right: if($last, 0, $marg);
+	}
+
+
+  
+
+}
+
+@mixin col_viz($col, $sum, $marg,$first: false, $last: false) {
+	display: inline-block;
+	text-align: left;
+	
+
+	@include breakpoint(xs) {
+		@include max_col;
+		margin: 0 $marg-header;
+	}
+
+	@include breakpoint(sm) {
+		width: (100%-2*$sum*$marg)/$sum*$col;
+    	vertical-align: $align;
+    	margin-left: $marg;
+
+	}
+
+  
+
+}

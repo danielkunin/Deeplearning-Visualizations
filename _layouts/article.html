@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include head.html %}
+    </head>
+
+
+  <body>
+    {% include header-article.html %} 
+
+     <div class="main">
+        <div class="container article-banner" >
+        	
+            {% include banner.html %}
+            
+            <div class="banner-title" >
+                <h1>{{page.title}}</h1>
+                <p>{{page.abstract}}</p>
+            </div>
+            
+        </div>
+
+
+        <div class="tableOfContent">
+        		<p>TABLE OF CONTENT</p>
+	        	<ul id="toc">
+	        		{% for item in page.table-of-content %}
+	        			<li><span> {{ item.index }} </span> <a href="#{{ item.index }}">{{ item.title }}</a></li>
+	                {% endfor %}
+	        	</ul>
+
+        </div>
+
+        <section class="article-content">
+        		{{ content }}
+                {% for item in page.sidenotes %}
+                    <div class="sidenote-body">
+                        <p class="caption">{{ item }}</p>
+                    </div>
+                {% endfor %}
+        </section>
+
+    </div>
+
+
+
+
+    <div class="foot-note">
+
+            <div class="foot-note-header">
+                <h4 class="reference">Authors</h4>
+            </div>
+            <div class="foot-note-content">
+                <ol class="reference ">
+                    {% for item in page.authors %}
+                    <li><a href="{{ item.link }}">{{ item.name }}</a> - {{ item.description }}.</li>
+                    {% endfor %}
+                </ol>
+            </div>
+
+            <div class="foot-note-header">
+                <h4 class="reference">Acknowledgments</h4>
+            </div>
+            <div class="foot-note-content">
+                <ol class="reference">
+                    {% for item in page.acknowledgments %}
+                    <li>{{ item }}.</li>
+                    {% endfor %}
+                </ol>
+            </div>
+
+            <div class="foot-note-header">
+                <h4 class="reference">Footnotes</h4>
+            </div>
+            <div class="foot-note-content">
+                <ol class="reference" id="fn">
+                   {% for item in page.footnotes %}
+                    <li class="footnote-body"><span>{{ item }}</span></li>
+                    {% endfor %}
+                </ol>
+            </div>
+
+
+            <div class="foot-note-header">
+                <h4 class="reference">Reference</h4>
+            </div>
+            <div class="foot-note-content">
+                <p class="reference">To reference this article in an academic context, please cite this work as:</p>
+                <p class="citation">{{page.reference}}</p>
+               
+            </div>
+
+</div>
+
+    {% include footer.html %}
+
+    {% if page.css %}
+      {% for file in page.css %}
+      <link rel="stylesheet" href="{% if jekyll.environment == 'production' %}{{ site.baseurl }}{% endif %}/assets/css/article/{{ page.folder }}/{{ file }}.css" >
+      {% endfor %}
+    {% endif %}
+
+    {% if page.js %}
+      {% for file in page.js %}
+      <script src="{% if jekyll.environment == 'production' %}{{ site.baseurl }}{% endif %}/assets/js/article/{{ page.folder }}/{{ file }}.js" type="text/javascript"></script>
+      {% endfor %}
+    {% endif %}   
+  
+
+  </body>
+
+
+  
+</html>

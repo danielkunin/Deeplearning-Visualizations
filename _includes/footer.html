@@ -1,0 +1,26 @@
+{% if page.layout == 'home' %}
+<div class="footer">
+{% endif %}
+{% if page.layout == 'article' %}
+<div class="footer-generic hide-backToTop">
+{% endif %}
+    <div class="container">
+        <p class="footer-note">
+            Contact us at hello@deeplearning.ai</br>
+            © Deeplearning.ai 2018</br>
+            <a href="https://www.deeplearning.ai/privacy/">PRIVACY POLICY</a> <a href="https://www.deeplearning.ai/terms-of-use/">TERMS OF USE</a>
+        </p>
+
+
+        <div class="social">
+                <a href="https://www.facebook.com/deeplearningHQ/"><i class="fab fa-facebook fontAwesomeIcon" ></i></a>
+                <a href="https://twitter.com/deeplearningai_"><i class="fab fa-twitter-square fontAwesomeIcon"></i></a>
+                <a href="https://www.linkedin.com/company/deeplearningai/"><i class="fab fa-linkedin fontAwesomeIcon"></i></a>
+        </div>
+    </div>
+</div>
+{% if page.layout == 'article' %}   
+<div class="backToTop">
+    <p>↑ Back to top</p>
+</div>
+{% endif %}

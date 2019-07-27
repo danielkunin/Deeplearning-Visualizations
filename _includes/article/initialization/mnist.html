@@ -1,0 +1,62 @@
+<div class="visualization hide-backToTop" id="mnist">
+    <div class="visualization-column-1">
+        <h3>1. Load your dataset</h3>
+        <p>Load 10,000 handwritten digits images (<a href="http://yann.lecun.com/exdb/mnist/">MNIST</a>).</p>            
+        <button class="button emphasized" id="mnist_load">
+            Load MNIST (<span id="percent">0%</span>)
+        </button>
+    </div>
+    <div class="visualization-column-2">
+        <h3>2. Select an initialization method</h3>
+        <p>Among the below distributions, select the one to use to initialize your parameters<sup class="footnote"></sup>.</p>
+        <label class="radio-container">Zero
+            <input type="radio" value="zero" name="mnist_init">
+            <span class="checkmark"></span>
+        </label>
+        <label class="radio-container">Uniform
+            <input type="radio" value="uniform" name="mnist_init">
+            <span class="checkmark"></span>
+        </label>
+        <label class="radio-container">Xavier
+            <input type="radio" value="xe" name="mnist_init" checked>
+            <span class="checkmark"></span>
+        </label>
+        <label class="radio-container">Standard Normal
+            <input type="radio" value="normal" name="mnist_init">
+            <span class="checkmark"></span>
+        </label>
+    </div>
+    <div class="visualization-column-1">
+        <h3>3. Train the network and observe</h3>
+        <p>The grid below refers to the input images, <span class="correct bold">Blue</span> squares represent correctly classified images. <span class="incorrect bold">Red</span> squares represent misclassified images.</p>              
+        <button class="button-transport" id="mnist_reset"><img src="/assets/images/layout/reset.png"></button>
+        <button class="button-transport inactive" id="mnist_start"><img src="/assets/images/layout/play.png"></button>
+        <button class="button-transport hidden" id="mnist_stop"><img src="/assets/images/layout/pause.png"></button>
+        <button class="button-transport inactive" id="mnist_step"><img src="/assets/images/layout/fastforward.png"></button>
+    </div>
+    <div class="visualization-column-1">
+        <p>Input batch of 100 images</p>
+        <div id="mnist_input"></div>
+        <label class="viz">
+            Batch: <span id="batch">0</span> </label>
+        <label>
+            Epoch: <span id="epoch">0</span>
+        </label>
+    </div>
+    <div class="visualization-column-2">
+        <div id="mnist_network"></div>
+    </div>
+    <div class="visualization-column-1">
+        <p>Output predictions of 100 images</p>
+        <div id="mnist_output"></div>
+        <label class="viz">
+            Misclassified: <span id="accuracy">0/100</span>
+        </label>
+        <label>
+            Cost: <span id="cost">0.00</span>
+        </label>        
+    </div>   
+    <div class="visualization-column-full">
+        <img src="/assets/images/article/initialization/img4.png" class="viz-full-img">
+    </div>
+</div>

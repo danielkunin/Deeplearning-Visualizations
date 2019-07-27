@@ -1,0 +1,76 @@
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Jingru Guo">
+
+<title>{{page.title}}</title>
+{% if page.description %}
+    <meta name="description" content="{{ page.description }}">
+{% endif %}
+{% if page.keywords %}
+    <meta name="keywords" content="{{ page.keywords }}">
+{% endif %}
+
+
+<!-- Fonts -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Assistant:300,400,600,700" rel="stylesheet">
+<!-- Load jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<!--Favicon-->
+<link rel="shortcut icon" type="image/png" href="{% if jekyll.environment == 'production' %}{{ site.baseurl }}{% endif %}/assets/images/layout/favicon.png"/>
+
+{% if page.layout == 'home' %}
+
+<!-- Home Page CSS -->
+<link rel="stylesheet" href="{% if jekyll.environment == 'production' %}{{ site.baseurl }}{% endif %}/assets/css/home.css">
+
+{% endif %}
+
+{% if page.layout == 'article' %}
+
+<!-- Article CSS -->
+<link rel="stylesheet" href="{% if jekyll.environment == 'production' %}{{ site.baseurl }}{% endif %}/assets/css/article.css">
+
+<!-- Load D3 -->
+<script src="https://d3js.org/d3.v5.min.js"></script>
+
+<!-- Load Tensorflow -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.13.3/dist/tf.min.js"></script>
+
+<!-- Load Katex -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.css" integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+    onload="renderMathInElement(document.body, {delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+    ]});">
+</script>
+
+<!-- Load GreenSock and Snap SVG -->
+<script src="{% if jekyll.environment == 'production' %}{{ site.baseurl }}{% endif %}/assets/js/TweenMax.min.js"></script>
+<script src="{% if jekyll.environment == 'production' %}{{ site.baseurl }}{% endif %}/assets/js/Draggable.min.js"></script>
+<script src="{% if jekyll.environment == 'production' %}{{ site.baseurl }}{% endif %}/assets/js/DrawSVGPlugin.min.js"></script>
+<script src="{% if jekyll.environment == 'production' %}{{ site.baseurl }}{% endif %}/assets/js/MorphSVGPlugin.min.js"></script>
+<script src="{% if jekyll.environment == 'production' %}{{ site.baseurl }}{% endif %}/assets/js/ThrowPropsPlugin.min.js"></script>
+<script src="{% if jekyll.environment == 'production' %}{{ site.baseurl }}{% endif %}/assets/js/snap.svg-min.js"></script>
+
+<!-- Load JS -->
+<script src= "{% if jekyll.environment == 'production' %}{{ site.baseurl }}{% endif %}/assets/js/cppn.js"></script>
+<script src= "{% if jekyll.environment == 'production' %}{{ site.baseurl }}{% endif %}/assets/js/d3.tip.js"></script>
+<script src= "{% if jekyll.environment == 'production' %}{{ site.baseurl }}{% endif %}/assets/js/tool.js"></script>
+<script src="https://d3js.org/d3-contour.v1.min.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
+
+
+<!-- Load Highlight -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/monokai-sublime.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+{% endif %}
+    
+     

@@ -1,0 +1,67 @@
+
+# Site settings
+title: Informatica
+email: jingrug@gmail.com
+description: > # this means to ignore newlines until "baseurl:"
+  Jekyll theme for Deeplearning.ai
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://localhost:4000" # the base hostname & protocol for your site
+github_username:  jingruguo
+
+# Build Settings
+include: ['_pages']
+kramdown:
+  input: GFM
+  math_engine: nil  # for katex (because kramdown defaults to mathjax)
+  # parse_block_html: true
+
+# Jekyll settings
+exclude: [ 'README.md' ]
+
+# SASS settings
+sass:
+    sass_dir: _sass
+    style: :compressed
+
+
+
+# Theme settings
+notes:
+    baseurl: 
+    article:
+        nav:
+          - title: Initializing neural networks
+            link: Initialization
+            url: initialization
+            published: true
+            color:
+              start: "#FFB991"
+              stop: "#FF866F"
+          - title: Optimizing neural networks
+            link: Optimization
+            url: optimization
+            published: false
+            color:
+              start: "#41AF92"
+              stop: "#96E06A"
+          - title: Regularizing neural networks
+            link: Regularization
+            url: regularization
+            published: false
+            color:
+              start: "#009CDE"
+              stop: "#29E9F6"
+          # - title: Tuning neural networks
+          #   link: Tuning
+          #   url: "#"
+          #   published: false
+          #   color:
+          #     start: "#FFA900"
+          #     stop: "#F5C35F"
+          # - title: Evaluating neural networks
+          #   link: Evaluating
+          #   url: "#"
+          #   published: false
+          #   color:
+          #     start: "#F19FB9"
+          #     stop: "#E474E4"
