@@ -1,0 +1,145 @@
+$mainTitle1-lineHeight:1;
+$mainTitle1-letterSpacing:0.01em;
+
+$bannerPosition:6%;
+$bannerHeight1:70vh;
+$bannerHeight2:60vh;
+
+$readingWidth: 65%;
+$mgns: 15%;
+
+$textMaxWidth:720px;
+
+
+.article-banner {
+    padding-top: 5rem;
+    position: relative;
+    width: 100%;
+    height: $bannerHeight1;
+    margin: 0 auto;
+    opacity: 0;
+
+
+    @include breakpoint(xs) {
+        width: 100%;
+        height: $bannerHeight2;
+    }
+
+
+
+}
+
+
+.article-banner .banner-title {
+    position: absolute;
+    text-align: left;
+
+    bottom: $bannerPosition;
+
+}
+
+
+
+.article-banner .banner-title {
+    h1 {
+        font-size: $font-size-h1;
+        line-height: $mainTitle1-lineHeight;
+        letter-spacing: $mainTitle1-letterSpacing;
+        max-width: $textMaxWidth;
+
+        @include col(5, 8, $marg-article);
+       margin-bottom: $margin-bottom-1;
+       color:#FFFFFF;
+
+
+
+        
+
+        @include breakpoint(xs) {
+            font-size: $font-size-h1-sm;
+        }
+
+
+    }
+
+
+    p {
+        font-size: $font-size-base;
+        max-width: $textMaxWidth;
+        color:#FFFFFF;
+
+        @include col(5, 8,$marg-article);
+
+        @include breakpoint(xs) {
+            margin-top: $margin-bottom-2;
+        }
+
+    }
+
+
+}
+
+#cppn-overlay{
+    width: 100%;
+    height: $bannerHeight1;
+    position: absolute;
+    left: 0;
+    background: rgba(0,0,0,0.3);
+    pointer-events: none;
+
+     @include breakpoint(xs) {
+        height: $bannerHeight2;
+    }
+
+}
+
+
+.article-banner-content {
+    width: 100%;
+    height: $bannerHeight1;
+    margin: 0 auto;
+
+    @include breakpoint(xs) {
+        height: $bannerHeight2;
+    }
+}
+
+
+.cppn-control {
+    position: absolute;
+    text-align: left;
+    top: 18%;
+    right: 2%;
+    z-index: 100;
+    border-radius: 3px;
+    display: inline-block;
+    background-color: rgba(255,255,255,0.4);
+    padding: 0.6em 0.8em;
+    margin:0;
+}
+
+.cppn-control:hover{
+    background-color: rgba(255,255,255,0.8);
+}
+
+.cppn-control p{
+    font-weight: 600;
+    margin-bottom:0.2em;
+    font-size: 0.8em;
+}
+
+.cppn-control p:first-child{
+    margin-top:0;
+}
+
+.cppn-control label{
+    padding-right: 1em;
+     font-size: 0.8em;
+}
+
+.cppn-control-toggle {
+    display: block;
+    text-align: right;
+    cursor: pointer;
+}
+

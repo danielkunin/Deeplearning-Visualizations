@@ -1,0 +1,19 @@
+$col-article: 4;
+$sum-article: 8;
+
+.article-content{
+	@include col(5,8,$marg-article);
+	text-align: left;
+	
+	position: relative;
+	// max-width: 1200px;
+	// min-width: $screen-xs-min;
+
+	@include breakpoint(lg){
+		@include col(4,8,$marg-article);
+	}
+
+}
+
+
+	

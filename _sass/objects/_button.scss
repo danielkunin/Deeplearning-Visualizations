@@ -1,0 +1,333 @@
+
+.button{
+	padding: 0.55em 1.6em;
+  margin-top: $margin-bottom-3-4;
+/*  margin-right: 0.4em;*/
+	font-size: 14px;
+	background-color: white;
+	border-radius: 0.2em;
+	-webkit-transition: box-shadow 0.5s; /* For Safari 3.1 to 6.0 */
+  transition: box-shadow 0.5s;
+  font-family: "Assistant";
+
+}
+
+button{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.viz-button{
+  padding-top: 1em;
+  display: block;
+
+}
+
+.button-transport{
+
+  padding: 0.5em 1.6em;
+  margin-top: $margin-bottom-3-4;
+ /* margin-right: 0.4em;*/
+  font-size: 14px;
+  background-color: white;
+  border-radius: 0.2em;
+   -webkit-transition: box-shadow 0.5s; /* For Safari 3.1 to 6.0 */
+    transition: box-shadow 0.5s;
+    font-family: "Assistant";
+
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0,0,0,0.1);
+
+}
+
+.button-transport img{
+  width: 0.8em;
+  height: 0.8em;
+  margin: 0 !important;
+}
+
+.button:hover,.button-transport:hover{
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  /*border:1px solid rgba(3, 169, 244, 1);*/
+}
+
+.button.emphasized{
+	background-color: $secondary-black !important;
+	color:white;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+	border: transparent;
+  vertical-align: top;
+}
+
+.button.emphasized:hover{
+	box-shadow: 0 2px 8px rgba(3, 169, 244, 0.4);
+}
+
+.inactive{
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.hidden{
+  display: none;
+}
+
+.lossFunctions{
+  margin-top: 1em;
+}
+
+/*radioButton*/
+/* The container */
+.radio-container {
+    display: inline-block;
+    position: relative;
+    padding-left: 2em;
+    padding-right: 2.2em;
+    margin-top: 0.8em;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    
+}
+
+/* Hide the browser's default radio button */
+.radio-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 16px;
+    width: 16px;
+    background-color: #fff;
+    border:1px solid $color-pink-red;
+    border-radius: 50%;
+    -webkit-transition: border 0.5s; /* For Safari 3.1 to 6.0 */
+    transition: border 0.5s;
+
+
+}
+
+/* On mouse-over, add a grey background color */
+.radio-container:hover input ~ .checkmark {
+    border:1px solid $color-pink-red;
+}
+
+/* When the radio button is checked, add a blue background */
+.radio-container input:checked ~ .checkmark {
+    background-color: #ffffff;
+    border:1px solid $color-pink-red;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.radio-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.radio-container .checkmark:after {
+ 	top: 4px;
+	left: 4px;
+	width: 8px;
+	height: 8px;
+  vertical-align: middle;
+	border-radius: 50%;
+	background: $color-pink-red;
+}
+
+
+/*slider*/
+
+
+input[type=range] {
+  -webkit-appearance: none;
+  width: 80%;
+  margin: 2em 0 1.6em 0;
+  display: block;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);
+  background: rgba(208, 208, 208, 0.78);
+  border-radius: 25px;
+  border: 0px solid rgba(1, 1, 1, 0);
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 0px 0px 0px rgba(3, 169, 244, 0.23), 0px 0px 0px rgba(20, 180, 252, 0.23);
+  border: 0px solid rgba(0, 0, 0, 0);
+  height: 20px;
+  width: 20px;
+  border-radius: 50px;
+  background: rgba(41, 182, 246, 0.94);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -7.5px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: rgba(221, 221, 221, 0.78);
+}
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);
+  background: rgba(208, 208, 208, 0.78);
+  border-radius: 25px;
+  border: 0px solid rgba(1, 1, 1, 0);
+}
+input[type=range]::-moz-range-thumb {
+  box-shadow: 0px 0px 0px rgba(3, 169, 244, 0.23), 0px 0px 0px rgba(20, 180, 252, 0.23);
+  border: 0px solid rgba(0, 0, 0, 0);
+  height: 20px;
+  width: 20px;
+  border-radius: 50px;
+  background: rgba(41, 182, 246, 0.94);
+  cursor: pointer;
+}
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: rgba(195, 195, 195, 0.78);
+  border: 0px solid rgba(1, 1, 1, 0);
+  border-radius: 50px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);
+}
+input[type=range]::-ms-fill-upper {
+  background: rgba(208, 208, 208, 0.78);
+  border: 0px solid rgba(1, 1, 1, 0);
+  border-radius: 50px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);
+}
+input[type=range]::-ms-thumb {
+  box-shadow: 0px 0px 0px rgba(3, 169, 244, 0.23), 0px 0px 0px rgba(20, 180, 252, 0.23);
+  border: 0px solid rgba(0, 0, 0, 0);
+  height: 20px;
+  width: 20px;
+  border-radius: 50px;
+  background: rgba(41, 182, 246, 0.94);
+  cursor: pointer;
+  height: 5px;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: rgba(208, 208, 208, 0.78);
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: rgba(221, 221, 221, 0.78);
+}
+
+
+input[type=text] {
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+.check-box{
+  padding-right: 5%;
+}
+
+/*table*/
+table, td,th{
+  border: 1px solid #DADADA;
+}
+
+th, td{
+/*  padding: 0.5em;*/
+  text-align: left;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 1.8em;
+    margin-bottom: 1.8em;
+    overflow-x:auto;
+}
+
+th {
+    height: 2em;
+    font-size: 14px;
+}
+
+.d3-tip {
+  line-height: 1;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  position: absolute;
+  pointer-events: none;
+}
+
+.d3-tip.n:after {
+  content: "\25BC";
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+  text-align: center;
+}
+
+
+.select-containter {
+  display: block;
+  color: #444;
+
+  height: 2.5em;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  border: 1px solid rgba(0,0,0,0.6);
+  border-radius: 3px;
+
+  background-color: #fff;
+  
+}
+
+.select-containter:hover {
+  border-color: #888;
+}
+.select-containter:focus {
+  border-color: #aaa;
+  box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
+  box-shadow: 0 0 0 3px -moz-mac-focusring;
+  color: #222;
+  outline: none;
+}
+

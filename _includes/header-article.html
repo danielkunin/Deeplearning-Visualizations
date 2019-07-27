@@ -1,0 +1,17 @@
+<header class="header"> 
+    <div class="header-wrapper">
+        <ul>
+            <li>
+                <a href="https://www.deeplearning.ai/">
+                    <img src="{% if jekyll.environment == 'production' %}{{ site.baseurl }}{% endif %}/assets/images/layout/deeplearning.png">
+                </a>
+            </li>
+            <li> <a href="{% if jekyll.environment == 'production' %}{{ site.baseurl }}{% endif %}/" class="backToBlog">AI Notes</a></li>
+           {% for item in site.notes.article.nav %}
+              {% if jekyll.environment != 'production' or item.published %}
+                <li class="header-nav-article"><a href="{% if jekyll.environment == 'production' %}{{ site.baseurl }}{% endif %}/{{ item.url }}">{{ item.link }}</a></li>
+              {% endif %}
+           {% endfor %}
+        </ul>
+    </div>
+</header>
