@@ -1,4 +1,212 @@
-<p>In machine learning, you start by defining a task and a model. The model consists of an architecture and parameters. For a given architecture, the values of the parameters determine how accurately the model performs the task. 
+
+<!DOCTYPE html>
+<html>
+    <head>
+        
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Jingru Guo">
+
+<title>Optimizing neural networks</title>
+
+
+
+
+<!-- Fonts -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Assistant:300,400,600,700" rel="stylesheet">
+<!-- Load jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<!--Favicon-->
+<link rel="shortcut icon" type="image/png" href="/assets/images/layout/favicon.png"/>
+
+
+
+
+
+<!-- Article CSS -->
+<link rel="stylesheet" href="/assets/css/article.css">
+
+<!-- Load D3 -->
+<script src="https://d3js.org/d3.v5.min.js"></script>
+
+<!-- Load Tensorflow -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.13.3/dist/tf.min.js"></script>
+
+<!-- Load Katex -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.css" integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+    onload="renderMathInElement(document.body, {delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+    ]});">
+</script>
+
+<!-- Load GreenSock and Snap SVG -->
+<script src="/assets/js/TweenMax.min.js"></script>
+<script src="/assets/js/Draggable.min.js"></script>
+<script src="/assets/js/DrawSVGPlugin.min.js"></script>
+<script src="/assets/js/MorphSVGPlugin.min.js"></script>
+<script src="/assets/js/ThrowPropsPlugin.min.js"></script>
+<script src="/assets/js/snap.svg-min.js"></script>
+
+<!-- Load JS -->
+<script src= "/assets/js/cppn.js"></script>
+<script src= "/assets/js/d3.tip.js"></script>
+<script src= "/assets/js/tool.js"></script>
+<script src="https://d3js.org/d3-contour.v1.min.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
+
+
+<!-- Load Highlight -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/monokai-sublime.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+    
+     
+
+    </head>
+
+
+  <body>
+    <header class="header"> 
+    <div class="header-wrapper">
+        <ul>
+            <li>
+                <a href="https://www.deeplearning.ai/">
+                    <img src="/assets/images/layout/deeplearning.png">
+                </a>
+            </li>
+            <li> <a href="/" class="backToBlog">AI Notes</a></li>
+           
+              
+                <li class="header-nav-article"><a href="/optimization">Optimization</a></li>
+              
+           
+              
+                <li class="header-nav-article"><a href="/initialization">Initialization</a></li>
+              
+           
+        </ul>
+    </div>
+</header> 
+
+     <div class="main">
+        <div class="container article-banner" >
+        	
+            <div class="article-banner-content" id="vis-background">
+    <div id="cppn-overlay"></div>  
+</div>
+<div>
+    <a class="cppn-control-toggle">
+      <div class="cppn-control">
+        <i class="fas fa-sliders-h"></i>
+      </div>
+    </a>
+    <div class="cppn-control" style="display: none">
+      <a class="cppn-control-toggle fa fa-times"></a>
+      <p>Network Depth:</p>
+      <label class="radio-container">
+          Shallow
+          <input type="radio" name="depth" value="3" checked/>
+          <span class="checkmark"></span>
+      </label>
+      <label class="radio-container">
+          Deep
+          <input type="radio" name="depth" value="4" />
+          <span class="checkmark"></span>
+      </label>
+      <p>Layer Complexity:</p>
+      <label class="radio-container">
+          Simple
+          <input type="radio" name="complexity" value="20" checked/>
+          <span class="checkmark"></span>
+      </label>
+      <label class="radio-container">
+          Complex
+          <input type="radio" name="complexity" value="25" />
+          <span class="checkmark"></span>
+      </label>
+      <p>Nonlinearity:</p>
+      <select id="activation" class="select-containter">
+          <option value="sin" selected>Sine</option>
+          <option value="cos">Cosine</option>
+          <option value="tanh">Tanh</option>
+          <option value="linear">Linear</option>
+          <option value="step">Step</option>
+          <option value="relu">Relu</option>
+          <option value="leakyRelu">Leaky Relu</option>
+      </select>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(".cppn-control-toggle").click(function() {
+      $(".cppn-control").toggle();
+    })
+
+    var c1 = "120 184 66".split(" "),
+        c2 = "45 155 106".split(" ");
+        c3 = "0 125 117".split(" ");
+
+    var cppn = cppnSetup([c1, c2, c3]),
+        layers = 3,
+        unit = 20
+        activation = "sin";
+
+    $("input[name='depth']").on("change", function () {
+      layers = parseInt($(this).val());
+      cppn.update(architecture(layers, unit), activation)
+    });
+
+    $("input[name='complexity']").on("change", function () {
+      unit = parseInt($(this).val());
+      cppn.update(architecture(layers, unit), activation)
+    });
+
+    $("#activation").on("change", function() {
+      activation = $(this).val();
+      cppn.update(architecture(layers, unit), activation)
+    });
+
+
+    function architecture(layers, units) {
+      var arr = [5];
+      for (var i = 0; i < layers; i++) {
+        arr.push(units);
+      }
+      arr.push(3);
+      return arr;
+    }
+</script>
+            
+            <div class="banner-title" >
+                <h1>Optimizing neural networks</h1>
+                <p>Training a machine learning model is a matter of closing the gap between the model's predictions and reality. But optimizing the model isn't so straightforward. Through interactive visualizations, we'll help you develop your intuition for setting up and solving the optimization problem.</p>
+            </div>
+            
+        </div>
+
+
+        <div class="tableOfContent">
+        		<p>TABLE OF CONTENT</p>
+	        	<ul id="toc">
+	        		
+	        			<li><span> I </span> <a href="#I">Setting up the optimization problem</a></li>
+	                
+	        			<li><span> II </span> <a href="#II">Running the optimization process</a></li>
+	                
+	        	</ul>
+
+        </div>
+
+        <section class="article-content">
+        		<p>In machine learning, you start by defining a task and a model. The model consists of an architecture and parameters. For a given architecture, the values of the parameters determine how accurately the model performs the task. 
 But how do you find good values? By defining a loss function that evaluates how well the model performs. The goal is to optimize the loss and thereby to find parameter values that match predictions with reality. This is the essence of training.</p>
 
 <h1 id="I">I Setting up the optimization problem</h1>
@@ -15,17 +223,9 @@ But how do you find good values? By defining a loss function that evaluates how 
 
 <p>You define the loss function as</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>\mathcal{L} =</td>
-      <td> </td>
-      <td>y-\hat{y}</td>
-      <td> </td>
-      <td>_2^2L=∣∣y−y^​∣∣22​</td>
-    </tr>
-  </tbody>
-</table>
+<div class="kdmath">$$
+\mathcal{L} = ||y-\hat{y}||_2^2L=∣∣y−y^​∣∣_
+$$</div>
 
 <p>where \hat{y}y^​ is your predicted price and yy is the actual price, also known as ground truth.</p>
 
@@ -424,3 +624,150 @@ slope of the loss landscape.</p>
 
 <p>Exploring optimization methods and hyperparameter values can help you build intuition for optimizing networks for your own tasks. During hyperparameter search, it’s important to understand intuitively the optimization’s sensitivity to learning rate, batch size, optimizer, and so on. That intuitive understanding, combined with the right method (random search or Bayesian optimization), will help you find the right model.</p>
 
+
+                
+                    <div class="sidenote-body">
+                        <p class="caption">By definition, this function L has a low value when the model performs well on the task.</p>
+                    </div>
+                
+                    <div class="sidenote-body">
+                        <p class="caption">Do you know the mathematical formula that allows a neural network to detect cats in images? Probably not. But using data you can find a function that performs this task. It turns out that a convolutional architecture with the right parameters defines a function that can perform this task well.</p>
+                    </div>
+                
+                    <div class="sidenote-body">
+                        <p class="caption">While model parameters are derived during training, hyperparameters are values set before training starts. Hyperperameters include batch size and learning rate.</p>
+                    </div>
+                
+                    <div class="sidenote-body">
+                        <p class="caption">{"We use the term inappropriate local minimum because, in optimizing a machine learning model, the optimization is often non-convex and unlikely to converge to the global minimum. <!-- NOTE"=>"MISSING \"ONELINE\" and \"NONSTATIONARY SETTINGS\" HIGHLIGHTED IN OPTIMIZER TABLE -->"}</p>
+                    </div>
+                
+                    <div class="sidenote-body">
+                        <p class="caption">Gradient descent makes a linear approximation of the loss function in a given point. It then moves downhill along the approximation of the loss function.</p>
+                    </div>
+                
+                    <div class="sidenote-body">
+                        <p class="caption">{"For more information on hyperparameter tuning, see the Deep Learning Specialization Course 2"=>"Improving Neural Networks, Week 3 (Hyperparameter tuning, Batch Normalization and Programming Frameworks)."}</p>
+                    </div>
+                
+        </section>
+
+    </div>
+
+
+
+
+    <div class="foot-note">
+
+            <div class="foot-note-header">
+                <h4 class="reference">Authors</h4>
+            </div>
+            <div class="foot-note-content">
+                <ol class="reference ">
+                    
+                    <li><a href="https://twitter.com/kiankatan">Kian Katanforoosh</a> - Written content and structure.</li>
+                    
+                    <li><a href="http://daniel-kunin.com">Daniel Kunin</a> - Visualizations (created using <a href="https://d3js.org/">D3.js</a> and <a href="https://js.tensorflow.org/">TensorFlow.js</a>).</li>
+                    
+                </ol>
+            </div>
+
+            <div class="foot-note-header">
+                <h4 class="reference">Acknowledgments</h4>
+            </div>
+            <div class="foot-note-content">
+                <ol class="reference">
+                    
+                    <li>The template for the article was designed by <a href="https://www.jingru-guo.com/">Jingru Guo</a> and inspired by <a href="https://distill.pub/">Distill</a>.</li>
+                    
+                    <li>The loss landscape visualization adapted code from Mike Bostock's <a href="https://bl.ocks.org/mbostock/f48ff9c1af4d637c9a518727f5fdfef5">visualization</a> of the Goldstein-Price function.</li>
+                    
+                    <li>The banner visualization adapted code from deeplearn.js's implementation of a <a href="https://en.wikipedia.org/wiki/Compositional_pattern-producing_network">CPPN</a>.</li>
+                    
+                </ol>
+            </div>
+
+            <div class="foot-note-header">
+                <h4 class="reference">Footnotes</h4>
+            </div>
+            <div class="foot-note-content">
+                <ol class="reference" id="fn">
+                   
+                    <li class="footnote-body"><span><!-- footnote text in order --></span></li>
+                    
+                </ol>
+            </div>
+
+
+            <div class="foot-note-header">
+                <h4 class="reference">Reference</h4>
+            </div>
+            <div class="foot-note-content">
+                <p class="reference">To reference this article in an academic context, please cite this work as:</p>
+                <p class="citation">Katanforoosh & Kunin, "Optimizing neural networks", deeplearning.ai, 2019.</p>
+               
+            </div>
+
+</div>
+
+    
+
+<div class="footer-generic hide-backToTop">
+
+    <div class="container">
+        <p class="footer-note">
+            Contact us at hello@deeplearning.ai</br>
+            © Deeplearning.ai 2018</br>
+            <a href="https://www.deeplearning.ai/privacy/">PRIVACY POLICY</a> <a href="https://www.deeplearning.ai/terms-of-use/">TERMS OF USE</a>
+        </p>
+
+
+        <div class="social">
+                <a href="https://www.facebook.com/deeplearningHQ/"><i class="fab fa-facebook fontAwesomeIcon" ></i></a>
+                <a href="https://twitter.com/deeplearningai_"><i class="fab fa-twitter-square fontAwesomeIcon"></i></a>
+                <a href="https://www.linkedin.com/company/deeplearningai/"><i class="fab fa-linkedin fontAwesomeIcon"></i></a>
+        </div>
+    </div>
+</div>
+   
+<div class="backToTop">
+    <p>↑ Back to top</p>
+</div>
+
+
+    
+      
+      <link rel="stylesheet" href="/assets/css/article/optimization/landscape.css" >
+      
+      <link rel="stylesheet" href="/assets/css/article/optimization/regression.css" >
+      
+    
+
+    
+      
+      <script src="/assets/js/article/optimization/curvature/script.js" type="text/javascript"></script>
+      
+      <script src="/assets/js/article/optimization/regression/loss.js" type="text/javascript"></script>
+      
+      <script src="/assets/js/article/optimization/regression/optimizer.js" type="text/javascript"></script>
+      
+      <script src="/assets/js/article/optimization/regression/line.js" type="text/javascript"></script>
+      
+      <script src="/assets/js/article/optimization/regression/viz.js" type="text/javascript"></script>
+      
+      <script src="/assets/js/article/optimization/landscape/point.js" type="text/javascript"></script>
+      
+      <script src="/assets/js/article/optimization/landscape/loss.js" type="text/javascript"></script>
+      
+      <script src="/assets/js/article/optimization/landscape/optimizer.js" type="text/javascript"></script>
+      
+      <script src="/assets/js/article/optimization/landscape/viz.js" type="text/javascript"></script>
+      
+       
+  
+
+  </body>
+
+
+  
+</html>

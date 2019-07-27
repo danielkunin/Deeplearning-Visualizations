@@ -6,6 +6,7 @@ folder: optimization
 
 # CSS & JS
 
+
 js:
 - curvature/script
 - regression/loss
@@ -21,17 +22,18 @@ css:
 - landscape
 - regression
 
-
 # Banner
 
 title: Optimizing neural networks
+
 abstract: Training a machine learning model is a matter of closing the gap between the model's predictions and reality. But optimizing the model isn't so straightforward. Through interactive visualizations, we'll help you develop your intuition for setting up and solving the optimization problem.
 
 table-of-content:
 - index: I
-- title: Setting up the optimization problem
+  title: Setting up the optimization problem
 - index: II
-- title: Running the optimization process
+  title: Running the optimization process
+
 colors:
   a: 120 184 66
   b: 45 155 106
@@ -59,12 +61,12 @@ reference: Katanforoosh & Kunin, "Optimizing neural networks", deeplearning.ai, 
 
 footnotes:
 - <!-- footnote text in order -->
+
 sidenotes:
 - By definition, this function L has a low value when the model performs well on the task.
 - Do you know the mathematical formula that allows a neural network to detect cats in images? Probably not. But using data you can find a function that performs this task. It turns out that a convolutional architecture with the right parameters defines a function that can perform this task well.
 - While model parameters are derived during training, hyperparameters are values set before training starts. Hyperperameters include batch size and learning rate.
-- We use the term inappropriate local minimum because, in optimizing a machine learning model, the optimization is often non-convex and unlikely to converge to the global minimum.
-***NOTE: MISSING "ONELINE" and "NONSTATIONARY SETTINGS" HIGHLIGHTED IN OPTIMIZER TABLE***
+- We use the term inappropriate local minimum because, in optimizing a machine learning model, the optimization is often non-convex and unlikely to converge to the global minimum. <!-- NOTE: MISSING "ONELINE" and "NONSTATIONARY SETTINGS" HIGHLIGHTED IN OPTIMIZER TABLE -->
 - Gradient descent makes a linear approximation of the loss function in a given point. It then moves downhill along the approximation of the loss function.
 - For more information on hyperparameter tuning, see the Deep Learning Specialization Course 2: Improving Neural Networks, Week 3 (Hyperparameter tuning, Batch Normalization and Programming Frameworks).
 
@@ -86,7 +88,8 @@ Say your task is to predict the price of houses y \in \mathbb{R}y∈R based on f
 
 You define the loss function as
 
-\mathcal{L} = ||y-\hat{y}||_2^2L=∣∣y−y^​∣∣22​
+$$\mathcal{L} = ||y-\hat{y}||_2^2L=∣∣y−y^​∣∣_$$
+
 
 where \hat{y}y^​ is your predicted price and yy is the actual price, also known as ground truth.
 
