@@ -8,7 +8,7 @@ folder: optimization
 
 
 js:
-- curvature/script
+- curvature
 - regression/loss
 - regression/optimizer
 - regression/line

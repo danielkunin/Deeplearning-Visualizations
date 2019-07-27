@@ -1,10 +1,11 @@
 
 // Set directory of zip reader
-zip.workerScriptsPath = window.location.pathname.slice(0, -10) + "/assets/js/article/2/sparsity/zip/";
+// zip.workerScriptsPath = window.location.pathname.slice(0, -10) + "/assets/js/article/2/sparsity/zip/";
+zip.workerScriptsPath = "/assets/js/article/regularization/sparsity/zip/";
 
 // Download the .zip file, Extract the .csv file, Load into RAM
 function extract(file, data) {//, draw) {
-  zip.createReader(new zip.HttpReader(file), function(reader) {
+  zip.createReader(new zip.HttpReader("/assets/data/" + file), function(reader) {
 
     reader.getEntries(function(entries) {
 
