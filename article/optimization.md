@@ -78,7 +78,7 @@ But how do you find good values? By defining a loss function that evaluates how 
 
 # I Setting up the optimization problem {#I}
 
-The loss function will be different in different tasks depending on the output desired. How you define it has a major influence on how the model will train and perform. Let's consider two examples:
+The <span class="sidenote">loss function</span> will be different in different tasks depending on the output desired. How you define it has a major influence on how the model will train and perform. Let's consider two examples:
 
 ### Example 1: House price prediction
 
@@ -99,14 +99,14 @@ Let's consider a more complex example. Say your task is to localize the car in a
 
 >Given an image containing one car, predict a bounding box (bbox) that surrounds the vehicle. The predicted box should match the size and position of the actual car as closely as possible.
 
-In mathematical terms, a possible loss function \mathcal{L}L (Redmon et al., 2016) is:
+In mathematical terms, a possible loss function $\mathcal{L}$ (Redmon et al., 2016) is:
 
-\mathcal{L} = \underbrace{(x - \hat{x})^2 + (y - \hat{y})^2}_{\text{BBox Center}} + \underbrace{(w - \hat{w})^2 + (h - \hat{h})^2}_{\text{BBox Width/Height}}L=(+(
+$\mathcal{L}$ = \underbrace{(x - \hat{x})^2 + (y - \hat{y})^2}_{\text{BBox Center}} + \underbrace{(w - \hat{w})^2 + (h - \hat{h})^2}_{\text{BBox Width/Height}}L=(+(
 
-This <span class="sidenote">loss function</span> depends on:
+This loss function depends on:
 
-1. The model’s prediction which, in turn, depends on the parameter values  (weights and biases) as well as the input (in this case, images)
-2. The ground truth corresponding to the input (labels; in this case, bounding boxes)
+1. The model’s prediction which, in turn, depends on the parameter values  (weights and biases) as well as the input (in this case, images).
+2. The ground truth corresponding to the input (labels; in this case, bounding boxes).
 
 ### Visualizing the loss function
 
@@ -116,9 +116,9 @@ It is difficult to visualize this landscape, if there are more than two paramete
 
 Updating the parameter values will move the value either closer to or farther from the target minimum point. 
 
-### The relationship between the model and the loss function
+### The model versus the loss function
 
-It is important to distinguish between the function f that will perform the task (the model) and the function \mathcal{L} you are optimizing (the loss function).
+It is important to distinguish between the function f that will perform the task (the model) and the function $\mathcal{L}$ you are optimizing (the loss function).
 
 1. The model is an architecture and a set of parameters that approximates a <span class="sidenote">real function</span>that performs the task. Optimized parameter values will enable the model to perform the task with relative accuracy.
 2. The loss function quantifies how accurately the model has performed on given data set. Its value depends on the model's parameter values.
@@ -144,10 +144,10 @@ $$W = W - \alpha \frac{\partial \mathcal{L}}{\partial W}$$
 Where:
 
 1. $W$ denotes the parameters
-2. $\frac{\partial \mathcal{L}}{\partial W}$ is a gradient indicating the direction to push the value of $W$ in order to decrease $\mathcal{L}$.
+2. $\frac{\partial \mathcal{L}}{\partial W}$ is a gradient indicating the direction to push the value of $W$ to decrease $\mathcal{L}$.
 3. $\alpha$ is the learning rate which you can tune to decide how much you want to adjust the value of $W$.
 
-You can learn more about gradient-based optimization algorithms in the Deep Learning Specialization. This topic is covered in Course 1, Week 2 (Logistic Regression as a Neural Network) and Course 2, Week 2 (Optimization Algorithms).
+You can learn more about gradient-based optimization algorithms in the Deep Learning Specialization. This topic is covered in Course 1, Week 2 (Neural Network Basics) and Course 2, Week 2 (Optimization Algorithms).
 
 
 ### Adjusting gradient descent hyperparameters
@@ -188,7 +188,7 @@ If the learning rate is too large, updates will be large and the optimization is
 
 If the learning rate is good, updates are appropriate and the optimization should converge.
 
-Play with the visualization below to understand the influence of the learning rate and the loss curvature on the convergence of your algorithm.
+Play with the visualization below to understand how learning rate and loss curvature influence an algorithm's convergence.
 
 {% include article/optimization/curvature.html %}
 
@@ -202,7 +202,7 @@ If the loss is highly curved, the larger the learning rate (step size), the larg
 
 Taking small steps reduces the gradient approximation error.
 
-It is common to start with a large learning rate and decay it during training. Learning rates depend on the application; values between 0.1 and 1 are usually considered large. Choosing the right decay (how often? by how much?) is non-trivial. An excessively aggressive decay schedule slows progress toward the optimum, while a slow-paced decay schedule leads to chaotic updates with small improvements.
+It is common to start with a large learning rate — say, between 0.1 and 1 — and decay it during training. Choosing the right decay (how often? by how much?) is non-trivial. An excessively aggressive decay schedule slows progress toward the optimum, while a slow-paced decay schedule leads to chaotic updates with small improvements.
 
 In fact, nobody knows the right decay schedule. However, adaptive learning-rate algorithms such as Momentum Adam and RMSprop help adjust the learning rate during the optimization process. We’ll explain those algorithms below.
 
@@ -235,7 +235,7 @@ Now that you have a starting point, a learning rate, and a batch size, it’s ti
 
 The optimization algorithm is also a core choice. You can play with various optimizers in the visualization below. That will help you build an intuitive sense of the pros and cons of each.
 
-In this visualization, your goal is to play with hyperparameters to find parameter values that minimize a loss function. You can choose the loss function and starting point of the optimization. Although there's no explicit model, you can assume that finding the minimum of the loss function is equivalent to finding the best model for your task. For the sake of simplicity, the model only has two parameters and the batch batch size is always 1.
+In the visualization below, your goal is to play with hyperparameters to find parameter values that minimize a loss function. You can choose the loss function and starting point of the optimization. Although there's no explicit model, you can assume that finding the minimum of the loss function is equivalent to finding the best model for your task. For the sake of simplicity, the model only has two parameters and the batch batch size is always 1.
 
 {% include article/optimization/landscape.html %}
 
@@ -243,7 +243,7 @@ The choice of optimizer influences both the speed of convergence and whether it 
 
 Adaptive optimization methods such as Adam or RMSprop perform well in the initial portion of training, but they have been found to generalize poorly at later stages  compared to Stochastic Gradient Descent. In Improving Generalization Performance by Switching from Adam to SGD, Keskar et al. investigate a hybrid strategy that begins training with an adaptive method and switches to SGD.
 
-You can find more information about these optimizers in the Deep Learning Specialization Course 2: Improving your Deep Neural Network, Week 2 (Optimization) on Coursera.
+You can find more information about these optimizers in the Deep Learning Specialization Course 2, Week 2 (Optimization Algorithms) on Coursera.
 
 ### Conclusion
 

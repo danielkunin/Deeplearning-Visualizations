@@ -1,6 +1,6 @@
 <div class="visualization hide-backToTop" id="landscape">
     <div class="visualization-column-2">
-        <p>In this visualization, you will choose the loss function and the starting point of your optimization. Although there's no explicit network function, you can assume that finding the minimum of your loss function is equivalent to finding the best network function for your task.</p>
+        <p>In this visualization, you will choose a loss function and starting point for your optimization. There's no explicit network function, but you can assume that finding the loss function's minimum is equivalent to finding the best network function for your task.</p>
 
         <h3>1. Choose a loss landscape</h3>
         <p>Select an <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization">artificial landscape</a> $\mathcal{L}(w_1,w_2)$.</p>
@@ -23,7 +23,7 @@
             </label>
         </div>
         <h3>2. Choose initial parameters</h3>
-        <p>On the loss landscape graph, drag the <font color="red">red dot</font> to choose the initial parameters values and thus the initial value of the loss.</p>
+        <p>On the loss landscape graph, drag the <font color="red">red dot</font> to choose initial parameters values and thus the initial value of the loss.</p>
 
         <h3>3. Choose an optimizer</h3>
         <p>Select the optimizer and its hyperparameters.</p>
@@ -62,7 +62,7 @@
             <td><input class="adam" type="number" name="ldecay" value="0" min="0" max="1" step="0.01"/></td>
           </tr>
         </table>
-        <p>Optimize your loss function.</p>
+        <p>Optimize the loss function.</p>
         <button class="button-transport" id="reset" title="reset">
             <img src="/assets/images/layout/reset.png">
         </button>
@@ -74,7 +74,7 @@
         </button>
     </div>
     <div class="visualization-column-2">
-        <p> This 2D plot describes the value of your loss function for different values of the 2 parameters $(w_1,w_2)$. The darker the color, the larger the loss value.</p>
+        <p> This 2D plot describes the loss function's value for different values of the two parameters $(w_1,w_2)$. The darker the color, the larger the loss value.</p>
         <div id="landscape_contour"></div>
         <div id="landscape_loss"></div>
     </div>

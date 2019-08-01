@@ -85,11 +85,15 @@
             <li> <a href="/" class="backToBlog">AI Notes</a></li>
            
               
+                <li class="header-nav-article"><a href="/initialization">Initialization</a></li>
+              
+           
+              
                 <li class="header-nav-article"><a href="/optimization">Optimization</a></li>
               
            
               
-                <li class="header-nav-article"><a href="/initialization">Initialization</a></li>
+                <li class="header-nav-article"><a href="/regularization">Regularization</a></li>
               
            
         </ul>
@@ -211,7 +215,7 @@ But how do you find good values? By defining a loss function that evaluates how 
 
 <h1 id="I">I Setting up the optimization problem</h1>
 
-<p>The loss function will be different in different tasks depending on the output desired. How you define it has a major influence on how the model will train and perform. Let’s consider two examples:</p>
+<p>The <span class="sidenote">loss function</span> will be different in different tasks depending on the output desired. How you define it has a major influence on how the model will train and perform. Let’s consider two examples:</p>
 
 <h3 id="example-1-house-price-prediction">Example 1: House price prediction</h3>
 
@@ -237,15 +241,15 @@ $$</div>
   <p>Given an image containing one car, predict a bounding box (bbox) that surrounds the vehicle. The predicted box should match the size and position of the actual car as closely as possible.</p>
 </blockquote>
 
-<p>In mathematical terms, a possible loss function \mathcal{L}L (Redmon et al., 2016) is:</p>
+<p>In mathematical terms, a possible loss function $\mathcal{L}$ (Redmon et al., 2016) is:</p>
 
-<p>\mathcal{L} = \underbrace{(x - \hat{x})^2 + (y - \hat{y})^2}<em>{\text{BBox Center}} + \underbrace{(w - \hat{w})^2 + (h - \hat{h})^2}</em>{\text{BBox Width/Height}}L=(+(</p>
+<p>$\mathcal{L}$ = \underbrace{(x - \hat{x})^2 + (y - \hat{y})^2}<em>{\text{BBox Center}} + \underbrace{(w - \hat{w})^2 + (h - \hat{h})^2}</em>{\text{BBox Width/Height}}L=(+(</p>
 
-<p>This <span class="sidenote">loss function</span> depends on:</p>
+<p>This loss function depends on:</p>
 
 <ol>
-  <li>The model’s prediction which, in turn, depends on the parameter values  (weights and biases) as well as the input (in this case, images)</li>
-  <li>The ground truth corresponding to the input (labels; in this case, bounding boxes)</li>
+  <li>The model’s prediction which, in turn, depends on the parameter values  (weights and biases) as well as the input (in this case, images).</li>
+  <li>The ground truth corresponding to the input (labels; in this case, bounding boxes).</li>
 </ol>
 
 <h3 id="visualizing-the-loss-function">Visualizing the loss function</h3>
@@ -256,9 +260,9 @@ $$</div>
 
 <p>Updating the parameter values will move the value either closer to or farther from the target minimum point.</p>
 
-<h3 id="the-relationship-between-the-model-and-the-loss-function">The relationship between the model and the loss function</h3>
+<h3 id="the-model-versus-the-loss-function">The model versus the loss function</h3>
 
-<p>It is important to distinguish between the function f that will perform the task (the model) and the function \mathcal{L} you are optimizing (the loss function).</p>
+<p>It is important to distinguish between the function f that will perform the task (the model) and the function $\mathcal{L}$ you are optimizing (the loss function).</p>
 
 <ol>
   <li>The model is an architecture and a set of parameters that approximates a <span class="sidenote">real function</span>that performs the task. Optimized parameter values will enable the model to perform the task with relative accuracy.</li>
@@ -289,11 +293,11 @@ $$</div>
 
 <ol>
   <li>$W$ denotes the parameters</li>
-  <li>$\frac{\partial \mathcal{L}}{\partial W}$ is a gradient indicating the direction to push the value of $W$ in order to decrease $\mathcal{L}$.</li>
+  <li>$\frac{\partial \mathcal{L}}{\partial W}$ is a gradient indicating the direction to push the value of $W$ to decrease $\mathcal{L}$.</li>
   <li>$\alpha$ is the learning rate which you can tune to decide how much you want to adjust the value of $W$.</li>
 </ol>
 
-<p>You can learn more about gradient-based optimization algorithms in the Deep Learning Specialization. This topic is covered in Course 1, Week 2 (Logistic Regression as a Neural Network) and Course 2, Week 2 (Optimization Algorithms).</p>
+<p>You can learn more about gradient-based optimization algorithms in the Deep Learning Specialization. This topic is covered in Course 1, Week 2 (Neural Network Basics) and Course 2, Week 2 (Optimization Algorithms).</p>
 
 <h3 id="adjusting-gradient-descent-hyperparameters">Adjusting gradient descent hyperparameters</h3>
 
@@ -315,7 +319,7 @@ $$</div>
 
 <div class="visualization hide-backToTop" id="regression">
     <div class="visualization-column-1">
-        <h3>1. Generate your dataset</h3>
+        <h3>1. Generate a dataset</h3>
         <p>Select a training set size.</p>
         <label class="radio-container">Small
             <input type="radio" value="20" name="regression_tsize" />
@@ -329,20 +333,20 @@ $$</div>
             <input type="radio" value="800" name="regression_tsize" />
             <span class="checkmark"></span>
         </label>
-        <p>A training set of the chosen size will be sampled with noise from a <span class="blue">"ground truth"</span> line. This line is the target line for your <span class="red">network function</span> defined by <script>document.write(katex.renderToString('\\hat{y} = wx + b'))</script>.</p>
+        <p>A training set of the chosen size will be sampled with noise from a line representing <span class="blue">ground truth</span>. This line is the target line for the <span class="red">network function</span> defined by <script>document.write(katex.renderToString('\\hat{y} = wx + b'))</script>.</p>
         <div id="regression_plot" style="margin-top:1em;border: 1px solid rgba(0,0,0,0.2);"></div>
         <button class="button-transport" id="generate">
-           Generate a new <span class="blue">"ground truth"</span> line
+           Generate a new <span class="blue">ground truth</span> line.
         </button>
     </div>
     <div class="visualization-column-2">
-        <h3>2. Observe the loss landscape and initialize parameters</h3>
-        <p>The loss function is the L2 loss defined as <script>document.write(katex.renderToString('\\mathcal{L}(y, \\hat{y}) = ||y - \\hat{y}||_2^2'))</script>. The <span class="blue">blue dot</span> indicates the value of the loss function at the "ground truth" slope and intercept. The <span class="red">red dot</span> indicates the value of the loss function at a chosen initialization of the slope and intercept. Drag and drop the red dot to change the initialization.</p>
+        <h3>2. Observe the loss landscape and initialize parameters.</h3>
+        <p>The loss function is the L2 loss defined as <script>document.write(katex.renderToString('\\mathcal{L}(y, \\hat{y}) = ||y - \\hat{y}||_2^2'))</script>. The <span class="blue">blue dot</span> indicates the value of the loss function at the ground-truth slope and intercept. The <span class="red">red dot</span> indicates the value of the loss function at a chosen initialization of the slope and intercept. Drag and drop the red dot to change the initialization.</p>
         <div id="regression_landscape"></div>
     </div>
     <div class="visualization-column-1">
-        <h3>3. Optimize your loss function</h3>
-        <p>You can now iteratively update your parameters to minimize the loss. Select a learning rate.</p>
+        <h3>3. Optimize the loss function</h3>
+        <p>Now you can update the parameters iteratively to minimize the loss. Select a learning rate.</p>
         <label class="radio-container">Small
             <input type="radio" value="0.0001" name="regression_lrate" />
             <span class="checkmark"></span>
@@ -355,7 +359,7 @@ $$</div>
             <input type="radio" value="0.1" name="regression_lrate" />
             <span class="checkmark"></span>
         </label>
-        <p>Select a batch size to use.</p>
+        <p>Select a batch size.</p>
         <label class="radio-container">Stochastic
             <input type="radio" value="1" name="regression_bsize" checked="" />
             <span class="checkmark"></span>
@@ -368,7 +372,7 @@ $$</div>
             <input type="radio" value="300" name="regression_bsize" />
             <span class="checkmark"></span>
         </label>
-        <p>Train your <span class="red">network function</span>.</p>
+        <p>Train the <span class="red">network function</span>.</p>
         <button class="button-transport" id="regression_reset" title="reset">
             <img src="/assets/images/layout/reset.png" />
         </button>
@@ -400,7 +404,7 @@ $$</div>
 
 <p>If the learning rate is good, updates are appropriate and the optimization should converge.</p>
 
-<p>Play with the visualization below to understand the influence of the learning rate and the loss curvature on the convergence of your algorithm.</p>
+<p>Play with the visualization below to understand how learning rate and loss curvature influence an algorithm’s convergence.</p>
 
 <div class="visualization hide-backToTop">
   <div class="visualization-column-2">
@@ -472,7 +476,7 @@ $$</div>
 
 <p>Taking small steps reduces the gradient approximation error.</p>
 
-<p>It is common to start with a large learning rate and decay it during training. Learning rates depend on the application; values between 0.1 and 1 are usually considered large. Choosing the right decay (how often? by how much?) is non-trivial. An excessively aggressive decay schedule slows progress toward the optimum, while a slow-paced decay schedule leads to chaotic updates with small improvements.</p>
+<p>It is common to start with a large learning rate — say, between 0.1 and 1 — and decay it during training. Choosing the right decay (how often? by how much?) is non-trivial. An excessively aggressive decay schedule slows progress toward the optimum, while a slow-paced decay schedule leads to chaotic updates with small improvements.</p>
 
 <p>In fact, nobody knows the right decay schedule. However, adaptive learning-rate algorithms such as Momentum Adam and RMSprop help adjust the learning rate during the optimization process. We’ll explain those algorithms below.</p>
 
@@ -505,11 +509,11 @@ slope of the loss landscape.</p>
 
 <p>The optimization algorithm is also a core choice. You can play with various optimizers in the visualization below. That will help you build an intuitive sense of the pros and cons of each.</p>
 
-<p>In this visualization, your goal is to play with hyperparameters to find parameter values that minimize a loss function. You can choose the loss function and starting point of the optimization. Although there’s no explicit model, you can assume that finding the minimum of the loss function is equivalent to finding the best model for your task. For the sake of simplicity, the model only has two parameters and the batch batch size is always 1.</p>
+<p>In the visualization below, your goal is to play with hyperparameters to find parameter values that minimize a loss function. You can choose the loss function and starting point of the optimization. Although there’s no explicit model, you can assume that finding the minimum of the loss function is equivalent to finding the best model for your task. For the sake of simplicity, the model only has two parameters and the batch batch size is always 1.</p>
 
 <div class="visualization hide-backToTop" id="landscape">
     <div class="visualization-column-2">
-        <p>In this visualization, you will choose the loss function and the starting point of your optimization. Although there's no explicit network function, you can assume that finding the minimum of your loss function is equivalent to finding the best network function for your task.</p>
+        <p>In this visualization, you will choose a loss function and starting point for your optimization. There's no explicit network function, but you can assume that finding the loss function's minimum is equivalent to finding the best network function for your task.</p>
 
         <h3>1. Choose a loss landscape</h3>
         <p>Select an <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization">artificial landscape</a> $\mathcal{L}(w_1,w_2)$.</p>
@@ -532,7 +536,7 @@ slope of the loss landscape.</p>
             </label>
         </div>
         <h3>2. Choose initial parameters</h3>
-        <p>On the loss landscape graph, drag the <font color="red">red dot</font> to choose the initial parameters values and thus the initial value of the loss.</p>
+        <p>On the loss landscape graph, drag the <font color="red">red dot</font> to choose initial parameters values and thus the initial value of the loss.</p>
 
         <h3>3. Choose an optimizer</h3>
         <p>Select the optimizer and its hyperparameters.</p>
@@ -571,7 +575,7 @@ slope of the loss landscape.</p>
             <td><input class="adam" type="number" name="ldecay" value="0" min="0" max="1" step="0.01" /></td>
           </tr>
         </table>
-        <p>Optimize your loss function.</p>
+        <p>Optimize the loss function.</p>
         <button class="button-transport" id="reset" title="reset">
             <img src="/assets/images/layout/reset.png" />
         </button>
@@ -583,7 +587,7 @@ slope of the loss landscape.</p>
         </button>
     </div>
     <div class="visualization-column-2">
-        <p> This 2D plot describes the value of your loss function for different values of the 2 parameters $(w_1,w_2)$. The darker the color, the larger the loss value.</p>
+        <p> This 2D plot describes the loss function's value for different values of the two parameters $(w_1,w_2)$. The darker the color, the larger the loss value.</p>
         <div id="landscape_contour"></div>
         <div id="landscape_loss"></div>
     </div>
@@ -593,7 +597,7 @@ slope of the loss landscape.</p>
 
 <p>Adaptive optimization methods such as Adam or RMSprop perform well in the initial portion of training, but they have been found to generalize poorly at later stages  compared to Stochastic Gradient Descent. In Improving Generalization Performance by Switching from Adam to SGD, Keskar et al. investigate a hybrid strategy that begins training with an adaptive method and switches to SGD.</p>
 
-<p>You can find more information about these optimizers in the Deep Learning Specialization Course 2: Improving your Deep Neural Network, Week 2 (Optimization) on Coursera.</p>
+<p>You can find more information about these optimizers in the Deep Learning Specialization Course 2, Week 2 (Optimization Algorithms) on Coursera.</p>
 
 <h3 id="conclusion">Conclusion</h3>
 
