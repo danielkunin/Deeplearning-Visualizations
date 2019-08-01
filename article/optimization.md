@@ -250,7 +250,7 @@ You can find more information about these optimizers in the Deep Learning Specia
 Exploring optimization methods and hyperparameter values can help you build intuition for optimizing networks for your own tasks. During hyperparameter search, it’s important to understand intuitively the optimization’s sensitivity to learning rate, batch size, optimizer, and so on. That intuitive understanding, combined with the right method (random search or Bayesian optimization), will help you find the right model.
 
 
-
+dummy
 
 
 
