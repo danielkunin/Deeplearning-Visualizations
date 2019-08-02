@@ -62,7 +62,7 @@ reference: Katanforoosh & Kunin, "Optimizing neural networks", deeplearning.ai, 
 
 footnotes:
 - Chapter 4, <i>Deep Learning</i>, Goodfellow et al. (MIT Press)
-- Check out these papers&#58; <a href="https://arxiv.org/pdf/1711.00489.pdf"><i>Don't decay the learning rate, increase the batch size</i></a>, <a href="https://papers.nips.cc/paper/6770-train-longer-generalize-better-closing-the-generalization-gap-in-large-batch-training-of-neural-networks.pdf"><i>Train longer generalize better</i></a>, <a href="https://arxiv.org/pdf/1706.02677.pdf"><i>Accurate, large minibatch SGD</i></a>
+- Check out these papers&#58; <ul><li><a href="https://arxiv.org/pdf/1711.00489.pdf"><i>Don't decay the learning rate, increase the batch size</i></a></li> <li><a href="https://papers.nips.cc/paper/6770-train-longer-generalize-better-closing-the-generalization-gap-in-large-batch-training-of-neural-networks.pdf"><i>Train longer generalize better</i></a></li> <li><a href="https://arxiv.org/pdf/1706.02677.pdf"><i>Accurate, large minibatch SGD</i></a></li></ul>
 
 
 sidenotes:
