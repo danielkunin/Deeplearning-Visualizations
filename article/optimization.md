@@ -59,16 +59,21 @@ reference: Katanforoosh & Kunin, "Optimizing neural networks", deeplearning.ai, 
 
 # Footnotes & Sidenotes
 
-<!-- footnotes:
-- footnote text in order -->
+
+footnotes:
+- Chapter 4, <i>Deep Learning</i>, Goodfellow et al. (MIT Press)
+- Check out these papers: <a href="https://arxiv.org/pdf/1711.00489.pdf"><i>Don't decay the learning rate, increase the batch size</i></a>, <a href="https://papers.nips.cc/paper/6770-train-longer-generalize-better-closing-the-generalization-gap-in-large-batch-training-of-neural-networks.pdf"><i>Train longer generalize better</i></a>, <a href="https://arxiv.org/pdf/1706.02677.pdf"><i>Accurate, large minibatch SGD</i></a>
+
 
 sidenotes:
 - By definition, this function L has a low value when the model performs well on the task.
 - Do you know the mathematical formula that allows a neural network to detect cats in images? Probably not. But using data you can find a function that performs this task. It turns out that a convolutional architecture with the right parameters defines a function that can perform this task well.
 - While model parameters are derived during training, hyperparameters are values set before training starts. Hyperperameters include batch size and learning rate.
-- We use the term inappropriate local minimum because, in optimizing a machine learning model, the optimization is often non-convex and unlikely to converge to the global minimum. <!-- NOTE: MISSING "ONELINE" and "NONSTATIONARY SETTINGS" HIGHLIGHTED IN OPTIMIZER TABLE -->
+- We use the term inappropriate local minimum because, in optimizing a machine learning model, the optimization is often non-convex and unlikely to converge to the global minimum.
+- Online optimization is when updates must be made with incomplete knowledge of the future, as in Stochastic Gradient Descent optimization.
+- This term essentially describes inflection points (where the concavity of the landscape changes) for which the gradient is zero in some, but not all, directions. 
 - Gradient descent makes a linear approximation of the loss function in a given point. It then moves downhill along the approximation of the loss function.
-- For more information on hyperparameter tuning, see the Deep Learning Specialization Course 2: Improving Neural Networks, Week 3 (Hyperparameter tuning, Batch Normalization and Programming Frameworks).
+- For more information on hyperparameter tuning, see the Deep Learning Specialization Course 2, Week 3 (Hyperparameter Tuning, Batch Normalization and Programming Frameworks).
 
 ---
 
@@ -83,7 +88,7 @@ The <span class="sidenote">loss function</span> will be different in different t
 
 ### Example 1: House price prediction
 
-Say your task is to predict the price of houses y \in \mathbb{R}y∈R based on features such as floor area, number of bedrooms, and ceiling height. The loss function can be summarized by the sentence:
+Say your task is to predict the price of houses $y \in \mathbb{R}y∈R$ based on features such as floor area, number of bedrooms, and ceiling height. The loss function can be summarized by the sentence:
 
 >Given a set of house features, the square of the difference between your prediction and the actual price should be as small as possible.
 
@@ -106,8 +111,8 @@ $$\mathcal{L} = \underbrace{(x - \hat{x})^2 + (y - \hat{y})^2}_{\text{BBox Cente
 
 This loss function depends on:
 
-1. The model’s prediction which, in turn, depends on the parameter values  (weights and biases) as well as the input (in this case, images).
-2. The ground truth corresponding to the input (labels; in this case, bounding boxes).
+- The model’s prediction which, in turn, depends on the parameter values  (weights and biases) as well as the input (in this case, images).
+- The ground truth corresponding to the input (labels; in this case, bounding boxes).
 
 ### Visualizing the loss function
 
@@ -119,16 +124,19 @@ Updating the parameter values will move the value either closer to or farther fr
 
 ### The model versus the loss function
 
-It is important to distinguish between the function f that will perform the task (the model) and the function $\mathcal{L}$ you are optimizing (the loss function).
+It is important to distinguish between the function $f$ that will perform the task (the model) and the function $\mathcal{L}$ you are optimizing (the loss function).
 
-1. The model is an architecture and a set of parameters that approximates a <span class="sidenote">real function</span>that performs the task. Optimized parameter values will enable the model to perform the task with relative accuracy.
-2. The loss function quantifies how accurately the model has performed on given data set. Its value depends on the model's parameter values.
+- The model is an architecture and a set of parameters that approximates a <span class="sidenote">real function</span>that performs the task. Optimized parameter values will enable the model to perform the task with relative accuracy.
+- The loss function quantifies how accurately the model has performed on given data set. Its value depends on the model's parameter values.
 
 At this point, good parameter values are unknown. However, you have a formula for the loss function. Optimize that on your dataset, and theoretically you will find good parameter values. The way to do this is to feed a training data set into the model and adjust the parameters iteratively to make the loss function as small as possible. 
 
 In summary, the way you define the loss function will dictate the performance of your model on the task at hand. The diagram below illustrates the process of finding a model that performs well.
 
-# II &emsp; Running the optimization process {#I}
+
+# II &emsp; Running the optimization process {#II}
+
+![optimization_chart](/assets/images/article/optimization/optimization_chart.png "optimization_chart")
 
 In this section, we assume that you have chosen a task, a data set, and a loss function. You will minimize the loss on the data set to find good parameter values.
 
@@ -144,9 +152,9 @@ $$W = W - \alpha \frac{\partial \mathcal{L}}{\partial W}$$
 
 Where:
 
-1. $W$ denotes the parameters
-2. $\frac{\partial \mathcal{L}}{\partial W}$ is a gradient indicating the direction to push the value of $W$ to decrease $\mathcal{L}$.
-3. $\alpha$ is the learning rate which you can tune to decide how much you want to adjust the value of $W$.
+- $W$ denotes the parameters
+- $\frac{\partial \mathcal{L}}{\partial W}$ is a gradient indicating the direction to push the value $W$ to decrease $\mathcal{L}$.
+- $\alpha$ is the learning rate which you can tune to decide how much you want to adjust the value of $W$.
 
 You can learn more about gradient-based optimization algorithms in the Deep Learning Specialization. This topic is covered in Course 1, Week 2 (Neural Network Basics) and Course 2, Week 2 (Optimization Algorithms).
 
@@ -159,49 +167,39 @@ In the visualization below, you can play with the starting point of initializati
 
 Here are some questions to consider as you explore the visualization:
 
-What is the impact of the training set size?
-
-What is the impact of the learning rate on the optimization?
-
-What is the impact of the batch size on the optimization?
-
-Why does the loss landscape look like this?
-
-Why do the model parameters converge to values different than those of the ground-truth slope and intercept?
+- What is the impact of the training set size?
+- What is the impact of the learning rate on the optimization?
+- Why does the loss landscape look like this?
+- Why do the model parameters converge to values different than those of the ground-truth slope and intercept?
 
 {% include article/optimization/regression.html %}
 
 Note that the loss $\mathcal{L}$ takes as input a single example, so minimizing it doesn’t guarantee better model parameters for other examples. It is common to minimize the average of the loss computed over a batch of examples; for instance, $\mathcal{J} = \frac{1}{m_b} \sum_{i=1}^{m_b} \mathcal{L}^{(i)}$. We call this function the cost, and reducing it leads to a more accurate parameter-update direction to minimize training error. $m_b$  is called the batch size. This is a key <span class="sidenote">hyperparameter</span> to tune.
 
 Here are some takeaways from the visualization:
+<!-- Kian, please add, as a series of bullets, a taleaway statement for initialization, learning rate, batch size, and iterative update. -->
 
 ### Initialization
 
-A good initialization can accelerate optimization and enable it to converge to the minimum or, if there are several minima, the best one. To learn more about initialization, read our AI Note on initializing neural networks. 
+A good initialization can accelerate optimization and enable it to converge to the minimum or, if there are several minima, the best one. To learn more about initialization, read our AI Note,  <a href="http://www.deeplearning.ai/ai-notes/initialization/"> <i>Initializing Neural Networks</i></a>. 
 
 ### Learning rate
 
 The learning rate influences the optimization’s convergence. It also counterbalances the influence of the loss function’s curvature. According to the gradient descent formula above, the direction and magnitude of the parameter update is given by the learning rate multiplied by the slope of the loss function at a certain point $W$. Specifically: $\alpha \frac{\partial \mathcal{L}}{\partial W}$.
 
-If the learning rate is too small, updates are small and optimization is slow, especially if the loss curvature is low. Also, you're likely to settle into an <span class="sidenote">inappropriate local minimum<span>.
-
-If the learning rate is too large, updates will be large and the optimization is likely to diverge, especially if the loss curvature is high. 
-
-If the learning rate is good, updates are appropriate and the optimization should converge.
+- If the learning rate is too small, updates are small and optimization is slow, especially if the loss curvature is low. Also, you're likely to settle into an <span class="sidenote">inappropriate local minimum</span>.
+- If the learning rate is too large, updates will be large and the optimization is likely to diverge, especially if the loss curvature is high. 
+- If the learning rate is good, updates are appropriate and the optimization should converge.
 
 Play with the visualization below to understand how learning rate and loss curvature influence an algorithm's convergence.
 
 {% include article/optimization/curvature.html %}
 
-Takeaways from the visualization:
-
-The choice of learning rate depends on the curvature of the loss function.
-
-Gradient descent makes a linear approximation of the loss function at a given point. Then it moves downhill along the approximation of the loss function.
-
-If the loss is highly curved, the larger the learning rate (step size), the larger the error of the <span class="sidenote">gradient approximation<span>. The approximation tends to overshoot.
-
-Taking small steps reduces the gradient approximation error.
+The visuzation illustrates that:
+- The choice of learning rate depends on the curvature of the loss function.
+- Gradient descent makes a linear approximation of the loss function at a given point. Then it moves downhill along the approximation of the loss function.
+- If the loss is highly curved, the larger the learning rate (step size), the larger the error of the <span class="sidenote">gradient approximation</span>. The approximation tends to overshoot.
+- Taking small steps reduces the gradient approximation error.<sup class="footnote"></sup>
 
 It is common to start with a large learning rate — say, between 0.1 and 1 — and decay it during training. Choosing the right decay (how often? by how much?) is non-trivial. An excessively aggressive decay schedule slows progress toward the optimum, while a slow-paced decay schedule leads to chaotic updates with small improvements.
 
@@ -211,22 +209,21 @@ In fact, nobody knows the right decay schedule. However, adaptive learning-rate 
 
 Batch size is the number of data points used to train a model in each iteration. Typical small batches are 32, 64, 128, 256, 512, while large batches can be thousands of examples.
 
-Choosing the right batch size is crucial to ensure convergence of the loss function and parameter values, and to the generalization of your model. Research2 has considered how to make the choice, but there is no consensus. In practice, you can use a <span class="sidenote">hyperparameter search<span>.
+Choosing the right batch size is crucial to ensure convergence of the loss function and parameter values, and to the generalization of your model. Some research<sup class="footnote"></sup> has considered how to make the choice, but there is no consensus. In practice, you can use a <span class="sidenote">hyperparameter search</span>.
 
 Research into batch size has revealed the following principles:
 
-Batch size determines the frequency of updates. The smaller the batches, the more — though quicker — the updates.
-
-The larger the batch size, the more accurate the gradient of the loss will be with respect to the parameters. That is, the direction of the update is most likely going down the local 
+- Batch size determines the frequency of updates. The smaller the batches, the more — though quicker the updates.
+- The larger the batch size, the more accurate the gradient of the loss will be with respect to the parameters. That is, the direction of the update is most likely going down the local 
 slope of the loss landscape.
-
-The largest batch size that fits into GPU memory leads to efficient parallelization and usually accelerates training.
-
-However, in practice, large batch sizes can hurt the model’s ability to generalize.
+- The largest batch size that fits into GPU memory leads to efficient parallelization and usually accelerates training.
+- However, in practice, large batch sizes can hurt the model’s ability to generalize.
 
 In choosing batch size, there’s a balance to be struck depending on the available computational hardware and the task you’re trying to achieve. Recall that the input batch is an input to the cost function. Large batch size typically leads to sharper cost function surfaces than a small batch size, as Keskar et al. find in their paper, “On large-batch training for deep learning: generalization gap and sharp minima.”
 
 Here's a figure comparing a flat and a sharp minimum. Flat cost surfaces (and thus small batch sizes) are preferred because they lead to good generalization without requiring high precision.
+
+![flat_vs_sharp](/assets/images/article/optimization/flat_vs_sharp.png "flat_vs_sharp")
 
 In practice, hyperparameter search can help you find batch size and learning rate. These hyperparameters are two routes to the same outcome, according to Smith, Kindermans et al. in Don't Decay the Learning Rate, Increase the Batch Size. They argue that the benefits of decaying the learning rate can be achieved by increasing batch size during training. So if you change batch size, you may also need to change learning rate. Efficient use of vast batch sizes notably reduces the number of parameter updates required to train a model.
 
@@ -249,9 +246,6 @@ You can find more information about these optimizers in the Deep Learning Specia
 ### Conclusion
 
 Exploring optimization methods and hyperparameter values can help you build intuition for optimizing networks for your own tasks. During hyperparameter search, it’s important to understand intuitively the optimization’s sensitivity to learning rate, batch size, optimizer, and so on. That intuitive understanding, combined with the right method (random search or Bayesian optimization), will help you find the right model.
-
-
-dummy
 
 
 
