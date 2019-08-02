@@ -198,7 +198,7 @@
 
 
         <div class="tableOfContent">
-        		<p>TABLE OF CONTENT</p>
+        		<p>TABLE OF CONTENTS</p>
 	        	<ul id="toc">
 	        		
 	        			<li><span> I </span> <a href="#I">The importance of effective initialization</a></li>
@@ -214,7 +214,7 @@
         </div>
 
         <section class="article-content">
-        		<h1 id="I">I The importance of effective initialization</h1>
+        		<h1 id="I">I   The importance of effective initialization</h1>
 <p>To build a machine learning algorithm, usually you’d define an architecture (e.g. Logistic regression, Support Vector Machine, Neural Network) and train it to learn parameters. Here is a common training process for neural networks:</p>
 <ol>
   <li>Initialize the parameters</li>
@@ -301,7 +301,7 @@
 
 <p>Choosing proper values for initialization is necessary for efficient training. We will investigate this further in the next section.</p>
 
-<h1 id="II">II The problem of exploding or vanishing gradients</h1>
+<h1 id="II">II   The problem of exploding or vanishing gradients</h1>
 
 <p>Consider this 9-layer neural network.</p>
 
@@ -341,7 +341,7 @@ $$</div>
 
 <p>All in all, initializing weights with inappropriate values will lead to divergence or a slow-down in the training of your neural network. Although we illustrated the exploding/vanishing gradient problem with simple symmetrical weight matrices, the observation generalizes to any initialization values that are too small or too large.</p>
 
-<h1 id="III">III How to find appropriate initialization values</h1>
+<h1 id="III">III   How to find appropriate initialization values</h1>
 <p>To prevent the gradients of the network’s activations from vanishing or exploding, we will stick to the following rules of thumb:</p>
 
 <ol>
@@ -438,7 +438,7 @@ $$</div>
 
 <p>You can find the theory behind this visualization in <a href="http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf?hc_location=ufi">Glorot et al. (2010)</a>.  The next section presents the mathematical justification for Xavier initialization and explains more precisely why it is an effective initialization.</p>
 
-<h1 id="IV">IV Justification for Xavier initialization</h1>
+<h1 id="IV">IV   Justification for Xavier initialization</h1>
 
 <p>In this section, we will show that Xavier Initialization<sup class="footnote"></sup> keeps the variance the same across every layer. We will assume that our layer’s activations are normally distributed around zero. Sometimes it helps to understand the mathematical justification to grasp the concept, but you can understand the fundamental idea without the math.</p>
 
@@ -613,6 +613,7 @@ $$</div>
                 </ol>
             </div>
 
+            
             <div class="foot-note-header">
                 <h4 class="reference">Acknowledgments</h4>
             </div>
@@ -627,7 +628,9 @@ $$</div>
                     
                 </ol>
             </div>
+            
 
+            
             <div class="foot-note-header">
                 <h4 class="reference">Footnotes</h4>
             </div>
@@ -648,6 +651,7 @@ $$</div>
                     
                 </ol>
             </div>
+            
 
 
             <div class="foot-note-header">

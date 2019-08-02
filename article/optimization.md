@@ -59,8 +59,8 @@ reference: Katanforoosh & Kunin, "Optimizing neural networks", deeplearning.ai, 
 
 # Footnotes & Sidenotes
 
-footnotes:
-- <!-- footnote text in order -->
+<!-- footnotes:
+- footnote text in order -->
 
 sidenotes:
 - By definition, this function L has a low value when the model performs well on the task.
@@ -76,7 +76,8 @@ In machine learning, you start by defining a task and a model. The model consist
 But how do you find good values? By defining a loss function that evaluates how well the model performs. The goal is to optimize the loss and thereby to find parameter values that match predictions with reality. This is the essence of training.
 
 
-# I Setting up the optimization problem {#I}
+
+# I &emsp; Setting up the optimization problem {#I}
 
 The <span class="sidenote">loss function</span> will be different in different tasks depending on the output desired. How you define it has a major influence on how the model will train and perform. Let's consider two examples:
 
@@ -88,10 +89,10 @@ Say your task is to predict the price of houses y \in \mathbb{R}y∈R based on f
 
 You define the loss function as
 
-$$\mathcal{L} = ||y-\hat{y}||_2^2L=∣∣y−y^​∣∣_$$
+$$\mathcal{L} = ||y-\hat{y}||_2^2$$
 
 
-where \hat{y}y^​ is your predicted price and yy is the actual price, also known as ground truth.
+where $\hat{y}$ is your predicted price and $y$ is the actual price, also known as ground truth.
 
 ### Example 2: Object localization
 
@@ -101,7 +102,7 @@ Let's consider a more complex example. Say your task is to localize the car in a
 
 In mathematical terms, a possible loss function $\mathcal{L}$ (Redmon et al., 2016) is:
 
-$\mathcal{L}$ = \underbrace{(x - \hat{x})^2 + (y - \hat{y})^2}_{\text{BBox Center}} + \underbrace{(w - \hat{w})^2 + (h - \hat{h})^2}_{\text{BBox Width/Height}}L=(+(
+$$\mathcal{L} = \underbrace{(x - \hat{x})^2 + (y - \hat{y})^2}_{\text{BBox Center}} + \underbrace{(w - \hat{w})^2 + (h - \hat{h})^2}_{\text{BBox Width/Height}}$$
 
 This loss function depends on:
 
@@ -127,7 +128,7 @@ At this point, good parameter values are unknown. However, you have a formula fo
 
 In summary, the way you define the loss function will dictate the performance of your model on the task at hand. The diagram below illustrates the process of finding a model that performs well.
 
-# II Running the optimization process {#I}
+# II &emsp; Running the optimization process {#I}
 
 In this section, we assume that you have chosen a task, a data set, and a loss function. You will minimize the loss on the data set to find good parameter values.
 
@@ -239,7 +240,7 @@ In the visualization below, your goal is to play with hyperparameters to find pa
 
 {% include article/optimization/landscape.html %}
 
-The choice of optimizer influences both the speed of convergence and whether it occurs. Several alternatives to the classic gradient descent algorithms have been developed in the past few years and are listed in the table below. (Notation: dW = \frac{\partial \mathcal{L}}{\partial W}dW=∂W∂L​)
+The choice of optimizer influences both the speed of convergence and whether it occurs. Several alternatives to the classic gradient descent algorithms have been developed in the past few years and are listed in the table below. (Notation: $dW = \frac{\partial \mathcal{L}}{\partial W}$)
 
 Adaptive optimization methods such as Adam or RMSprop perform well in the initial portion of training, but they have been found to generalize poorly at later stages  compared to Stochastic Gradient Descent. In Improving Generalization Performance by Switching from Adam to SGD, Keskar et al. investigate a hybrid strategy that begins training with an adaptive method and switches to SGD.
 

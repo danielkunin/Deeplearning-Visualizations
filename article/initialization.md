@@ -101,7 +101,7 @@ sidenotes:
 
 ---
 
-# I The importance of effective initialization {#I}
+# I &emsp; The importance of effective initialization {#I}
 To build a machine learning algorithm, usually you'd define an architecture (e.g. Logistic regression, Support Vector Machine, Neural Network) and train it to learn parameters. Here is a common training process for neural networks:
 1. Initialize the parameters
 2. Choose an <span class="sidenote">optimization algorithm</span>
@@ -131,7 +131,7 @@ Choosing proper values for initialization is necessary for efficient training. W
 
 
 
-# II The problem of exploding or vanishing gradients {#II}
+# II &emsp; The problem of exploding or vanishing gradients {#II}
 
 Consider this 9-layer neural network.
 
@@ -166,7 +166,7 @@ This simplifies to $\hat{y} = W^{[L]}0.5^{L-1}x$, and the values of the activati
 
 All in all, initializing weights with inappropriate values will lead to divergence or a slow-down in the training of your neural network. Although we illustrated the exploding/vanishing gradient problem with simple symmetrical weight matrices, the observation generalizes to any initialization values that are too small or too large.
 
-# III How to find appropriate initialization values {#III}
+# III &emsp; How to find appropriate initialization values {#III}
 To prevent the gradients of the network's activations from vanishing or exploding, we will stick to the following rules of thumb: 
 
 1. The <span class="sidenote">mean</span> of the activations should be zero.
@@ -194,7 +194,7 @@ The visualization below illustrates the influence of the Xavier initialization o
 
 You can find the theory behind this visualization in [Glorot et al. (2010)](http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf?hc_location=ufi).  The next section presents the mathematical justification for Xavier initialization and explains more precisely why it is an effective initialization.
 
-# IV Justification for Xavier initialization {#IV}
+# IV &emsp; Justification for Xavier initialization {#IV}
 
 In this section, we will show that Xavier Initialization<sup class="footnote"></sup> keeps the variance the same across every layer. We will assume that our layer’s activations are normally distributed around zero. Sometimes it helps to understand the mathematical justification to grasp the concept, but you can understand the fundamental idea without the math.
 

@@ -23,7 +23,7 @@
 
 
         <div class="tableOfContent">
-        		<p>TABLE OF CONTENT</p>
+        		<p>TABLE OF CONTENTS</p>
 	        	<ul id="toc">
 	        		{% for item in page.table-of-content %}
 	        			<li><span> {{ item.index }} </span> <a href="#{{ item.index }}">{{ item.title }}</a></li>
@@ -59,6 +59,7 @@
                 </ol>
             </div>
 
+            {% if page.acknowledgments %}
             <div class="foot-note-header">
                 <h4 class="reference">Acknowledgments</h4>
             </div>
@@ -69,7 +70,9 @@
                     {% endfor %}
                 </ol>
             </div>
+            {% endif %}
 
+            {% if page.footnotes %}
             <div class="foot-note-header">
                 <h4 class="reference">Footnotes</h4>
             </div>
@@ -80,6 +83,7 @@
                     {% endfor %}
                 </ol>
             </div>
+            {% endif %}
 
 
             <div class="foot-note-header">
