@@ -87,7 +87,7 @@ To add a footnote:
  - Add the footnote label as `<sup class="footnote"></sup>`
  - Add the footnote text in the article header under `footnotes:`
 
-The order of the footnote text must be in the same order that the footnotes appear in the article.
+The order of the footnote text must be in the same order that the footnotes appear in the article. *Note* in order to include a colon in the header you must use `&#58;` instead of `:`.
 
 #### Sidenotes
 To add a sidenote:

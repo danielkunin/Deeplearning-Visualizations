@@ -228,17 +228,10 @@ But how do you find good values? By defining a loss function that evaluates how 
 <p>You define the loss function as</p>
 
 <div class="kdmath">$$
-<<<<<<< HEAD
 \mathcal{L} = ||y-\hat{y}||_2^2
 $$</div>
 
 <p>where $\hat{y}$ is your predicted price and $y$ is the actual price, also known as ground truth.</p>
-=======
-=\mathcal{L} = ||y-\hat{y}||_2^2L=∣∣y−y^​∣∣_
-$$</div>
-
-<p>where \hat{y}y^ is your predicted price and yy is the actual price, also known as ground truth.</p>
->>>>>>> 749131656dfe574d92ee85ae81dd13d4b1e4604c
 
 <h3 id="example-2-object-localization">Example 2: Object localization</h3>
 
@@ -250,13 +243,9 @@ $$</div>
 
 <p>In mathematical terms, a possible loss function $\mathcal{L}$ (Redmon et al., 2016) is:</p>
 
-<<<<<<< HEAD
 <div class="kdmath">$$
 \mathcal{L} = \underbrace{(x - \hat{x})^2 + (y - \hat{y})^2}_{\text{BBox Center}} + \underbrace{(w - \hat{w})^2 + (h - \hat{h})^2}_{\text{BBox Width/Height}}
 $$</div>
-=======
-<p>$\mathcal{L}$ = $\underbrace{(x - \hat{x})^2 + (y - \hat{y})^2}<em>{\text{BBox Center}} + \underbrace{(w - \hat{w})^2 + (h - \hat{h})^2}</em>{\text{BBox Width/Height}}L=(+($</p>
->>>>>>> 749131656dfe574d92ee85ae81dd13d4b1e4604c
 
 <p>This loss function depends on:</p>
 
@@ -286,13 +275,9 @@ $$</div>
 
 <p>In summary, the way you define the loss function will dictate the performance of your model on the task at hand. The diagram below illustrates the process of finding a model that performs well.</p>
 
-<<<<<<< HEAD
-<h1 id="I">II   Running the optimization process</h1>
-=======
-<p><img src="/assets/images/article/optimization/optimization_chart.png" alt="optimization_chart" title="optimization_chart" /></p>
+<h1 id="II">II   Running the optimization process</h1>
 
-<h1 id="I">II Running the optimization process</h1>
->>>>>>> 749131656dfe574d92ee85ae81dd13d4b1e4604c
+<p><img src="/assets/images/article/optimization/optimization_chart.png" alt="optimization_chart" title="optimization_chart" /></p>
 
 <p>In this section, we assume that you have chosen a task, a data set, and a loss function. You will minimize the loss on the data set to find good parameter values.</p>
 
@@ -609,11 +594,7 @@ slope of the loss landscape.</li>
     </div>
 </div>
 
-<<<<<<< HEAD
 <p>The choice of optimizer influences both the speed of convergence and whether it occurs. Several alternatives to the classic gradient descent algorithms have been developed in the past few years and are listed in the table below. (Notation: $dW = \frac{\partial \mathcal{L}}{\partial W}$)</p>
-=======
-<p>The choice of optimizer influences both the speed of convergence and whether it occurs. Several alternatives to the classic gradient descent algorithms have been developed in the past few years and are listed in the table below. (Notation: $dW$ = $\frac{\partial \mathcal{L}}{\partial W}dW=∂W∂L​)$</p>
->>>>>>> 749131656dfe574d92ee85ae81dd13d4b1e4604c
 
 <p>Adaptive optimization methods such as Adam or RMSprop perform well in the initial portion of training, but they have been found to generalize poorly at later stages  compared to Stochastic Gradient Descent. In Improving Generalization Performance by Switching from Adam to SGD, Keskar et al. investigate a hybrid strategy that begins training with an adaptive method and switches to SGD.</p>
 
@@ -696,9 +677,7 @@ slope of the loss landscape.</li>
             </div>
             
 
-<<<<<<< HEAD
             
-=======
             <div class="foot-note-header">
                 <h4 class="reference">Footnotes</h4>
             </div>
@@ -707,13 +686,11 @@ slope of the loss landscape.</li>
                    
                     <li class="footnote-body"><span>Chapter 4, <i>Deep Learning</i>, Goodfellow et al. (MIT Press)</span></li>
                     
-                    <li class="footnote-body"><span>{"Check out these papers"=>"<a href=\"https://arxiv.org/pdf/1711.00489.pdf\"><i>Don't decay the learning rate, increase the batch size</i></a>, <a href=\"https://papers.nips.cc/paper/6770-train-longer-generalize-better-closing-the-generalization-gap-in-large-batch-training-of-neural-networks.pdf\"><i>Train longer generalize better</i></a>, <a href=\"https://arxiv.org/pdf/1706.02677.pdf\"><i>Accurate, large minibatch SGD</i></a>"}</span></li>
-                    
-                    <li class="footnote-body"><span><!-- footnote text in order --></span></li>
+                    <li class="footnote-body"><span>Check out these papers&#58; <a href="https://arxiv.org/pdf/1711.00489.pdf"><i>Don't decay the learning rate, increase the batch size</i></a>, <a href="https://papers.nips.cc/paper/6770-train-longer-generalize-better-closing-the-generalization-gap-in-large-batch-training-of-neural-networks.pdf"><i>Train longer generalize better</i></a>, <a href="https://arxiv.org/pdf/1706.02677.pdf"><i>Accurate, large minibatch SGD</i></a></span></li>
                     
                 </ol>
             </div>
->>>>>>> 749131656dfe574d92ee85ae81dd13d4b1e4604c
+            
 
 
             <div class="foot-note-header">
