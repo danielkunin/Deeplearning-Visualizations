@@ -48,6 +48,9 @@ authors:
 - name: Daniel Kunin
   link: http://daniel-kunin.com
   description: Visualizations (created using <a href="https://d3js.org/">D3.js</a> and <a href="https://js.tensorflow.org/">TensorFlow.js</a>)
+- name: Jiaju Ma
+  link: https://majiaju.io/
+  description: Static and interactive graphics
 
 acknowledgments:
 - The template for the article was designed by <a href="https://www.jingru-guo.com/">Jingru Guo</a> and inspired by <a href="https://distill.pub/">Distill</a>
