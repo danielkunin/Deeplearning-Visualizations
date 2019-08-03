@@ -112,9 +112,13 @@ You can estimate a model’s ability to generalize by splitting to generalize by
 
 To fix underfitting, deepen your neural network by adding more layers.
 
-To fix overfitting, reduce the model's capacity by removing layers and thus reducing the number of parameters. Another way to reduce capacity is to limit the growth of the weights through some kind of weight decay, as shown by Krogh and Hertz (1992). By decaying weights, in effect you're limiting the range of potential networks to choose from. 
+To fix overfitting, reduce the model's capacity by removing layers and thus reducing the number of parameters. 
 
-<!-- THIS DESCRIBES L1 and L2 REG, RIGHT? I THINK THINGS ARE GETTING GARBLED HERE. NEED TO CLARIFY DIFF BETWEEN NON-REGULARIZATION METHODS AND REGULARIZATION METHODS -->
+Another way to reduce capacity is to limit the growth of the weights through some kind of weight decay, as shown by Krogh and Hertz (1992). By decaying weights, in effect you're limiting the range of potential networks to choose from. 
+
+<!-- THE ABOVE DESCRIBES L1 and L2 REG, RIGHT? 
+
+	I THINK THINGS ARE GETTING GARBLED HERE. WE NEED TO CLARIFY DIFF BETWEEN NON-REGULARIZATION METHODS AND REGULARIZATION METHODS. -->
 
 The best way to help a model generalize is to gather a larger data set. But this is not always possible. If you don't have access to more data, you can use regularization methods.
 
@@ -124,7 +128,7 @@ The aim to close the performance gap between the test set and the dev and traini
 
 # II &emsp; Regularization techniques {#I}
 
-Let’s take a look at three approaches to regularization: Early stopping, L1 and L2 regularizations, and dropout regularization.
+Let’s take a look at three regularization techniques: Early stopping, L1 and L2 regularizations, and dropout regularization.
 
 ### Early stopping
 

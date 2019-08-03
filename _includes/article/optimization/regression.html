@@ -1,5 +1,6 @@
 <div class="visualization hide-backToTop" id="regression">
     <div class="visualization-column-1">
+        <p>In this visualization, you can fit a linear model <script>document.write(katex.renderToString('\\hat{y} = wx + b'))</script> on a set of 300 data points using gradient descent. Press the button to generate a dataset of chosen size (<b>1</b>) and observe its impact on the cost landscape. Then, choose initial values of your model parameters by dragging the <span class="red">red dot</span> (<b>2</b>) before optimizing (<b>3</b>).</p>
         <h3>1. Generate a dataset</h3>
         <p>Select a training set size.</p>
         <label class="radio-container">Small
@@ -14,11 +15,11 @@
             <input type="radio" value="800" name="regression_tsize">
             <span class="checkmark"></span>
         </label>
-        <p>A training set of the chosen size will be sampled with noise from a line representing <span class="blue">ground truth</span>. This line is the target line for the <span class="red">network function</span> defined by <script>document.write(katex.renderToString('\\hat{y} = wx + b'))</script>.</p>
-        <div id="regression_plot" style="margin-top:1em;border: 1px solid rgba(0,0,0,0.2);"></div>
+        <p>A training set of the chosen size will be sampled with noise from a line representing <span class="blue">ground truth</span>. This line is the target line for the <span class="red">model</span> defined by <script>document.write(katex.renderToString('\\hat{y} = wx + b'))</script>.</p>
         <button class="button-transport" id="generate">
-           Generate a new <span class="blue">ground truth</span> line.
+           Generate a new dataset.
         </button>
+        <div id="regression_plot" style="margin-top:1em;border: 1px solid rgba(0,0,0,0.2);"></div>
     </div>
     <div class="visualization-column-2">
         <h3>2. Observe the loss landscape and initialize parameters.</h3>
@@ -53,7 +54,7 @@
             <input type="radio" value="300" name="regression_bsize">
             <span class="checkmark"></span>
         </label>
-        <p>Train the <span class="red">network function</span>.</p>
+        <p>Train the <span class="red">model</span>.</p>
         <button class="button-transport" id="regression_reset" title="reset">
             <img src="/assets/images/layout/reset.png">
         </button>

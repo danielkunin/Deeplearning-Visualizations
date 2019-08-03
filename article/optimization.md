@@ -166,9 +166,7 @@ You can learn more about gradient-based optimization algorithms in the Deep Lear
 
 To use gradient descent, you must choose values for hyperparameters such as learning rate and batch size. These values will influence the optimization, so it’s important to set them appropriately.
 
-In the visualization below, you can play with the starting point of initialization, learning rate, and batch size. With these hyperparameters, you will fit a linear model $$\hat{y} = wa x + b$$ (for the sake of simplicity) on a set of 300 data points using gradient descent.
-
-Here are some questions to consider as you explore the visualization:
+In the visualization below, you can play with the starting point of initialization, learning rate, and batch size. Here are some questions to consider as you explore the visualization:
 
 - What is the impact of the training set size?
 - What is the impact of the learning rate on the optimization?
@@ -236,7 +234,7 @@ Now that you have a starting point, a learning rate, and a batch size, it’s ti
 
 The optimization algorithm is also a core choice. You can play with various optimizers in the visualization below. That will help you build an intuitive sense of the pros and cons of each.
 
-In the visualization below, your goal is to play with hyperparameters to find parameter values that minimize a loss function. You can choose the loss function and starting point of the optimization. Although there's no explicit model, you can assume that finding the minimum of the loss function is equivalent to finding the best model for your task. For the sake of simplicity, the model only has two parameters and the batch batch size is always 1.
+In the visualization below, your goal is to play with hyperparameters to find parameter values that minimize a loss function. You can choose the loss function and starting point of the optimization. Although there's no explicit model, you can assume that finding the minimum of the loss function is equivalent to finding the best model for your task. For the sake of simplicity, the model only has two parameters and the batch size is always 1.
 
 {% include article/optimization/landscape.html %}
 

@@ -307,9 +307,7 @@ $$</div>
 
 <p>To use gradient descent, you must choose values for hyperparameters such as learning rate and batch size. These values will influence the optimization, so it’s important to set them appropriately.</p>
 
-<p>In the visualization below, you can play with the starting point of initialization, learning rate, and batch size. With these hyperparameters, you will fit a linear model <span class="kdmath">$\hat{y} = wa x + b$</span> (for the sake of simplicity) on a set of 300 data points using gradient descent.</p>
-
-<p>Here are some questions to consider as you explore the visualization:</p>
+<p>In the visualization below, you can play with the starting point of initialization, learning rate, and batch size. Here are some questions to consider as you explore the visualization:</p>
 
 <ul>
   <li>What is the impact of the training set size?</li>
@@ -320,6 +318,7 @@ $$</div>
 
 <div class="visualization hide-backToTop" id="regression">
     <div class="visualization-column-1">
+        <p>In this visualization, you can fit a linear model <script>document.write(katex.renderToString('\\hat{y} = wx + b'))</script> on a set of 300 data points using gradient descent. Press the button to generate a dataset of chosen size (<b>1</b>) and observe its impact on the cost landscape. Then, choose initial values of your model parameters by dragging the <span class="red">red dot</span> (<b>2</b>) before optimizing (<b>3</b>).</p>
         <h3>1. Generate a dataset</h3>
         <p>Select a training set size.</p>
         <label class="radio-container">Small
@@ -334,11 +333,11 @@ $$</div>
             <input type="radio" value="800" name="regression_tsize" />
             <span class="checkmark"></span>
         </label>
-        <p>A training set of the chosen size will be sampled with noise from a line representing <span class="blue">ground truth</span>. This line is the target line for the <span class="red">network function</span> defined by <script>document.write(katex.renderToString('\\hat{y} = wx + b'))</script>.</p>
-        <div id="regression_plot" style="margin-top:1em;border: 1px solid rgba(0,0,0,0.2);"></div>
+        <p>A training set of the chosen size will be sampled with noise from a line representing <span class="blue">ground truth</span>. This line is the target line for the <span class="red">model</span> defined by <script>document.write(katex.renderToString('\\hat{y} = wx + b'))</script>.</p>
         <button class="button-transport" id="generate">
-           Generate a new <span class="blue">ground truth</span> line.
+           Generate a new dataset.
         </button>
+        <div id="regression_plot" style="margin-top:1em;border: 1px solid rgba(0,0,0,0.2);"></div>
     </div>
     <div class="visualization-column-2">
         <h3>2. Observe the loss landscape and initialize parameters.</h3>
@@ -373,7 +372,7 @@ $$</div>
             <input type="radio" value="300" name="regression_bsize" />
             <span class="checkmark"></span>
         </label>
-        <p>Train the <span class="red">network function</span>.</p>
+        <p>Train the <span class="red">model</span>.</p>
         <button class="button-transport" id="regression_reset" title="reset">
             <img src="/assets/images/layout/reset.png" />
         </button>
@@ -439,6 +438,7 @@ $$</div>
     </svg>
   </div>
   <div class="visualization-column-1">
+    <p>In this visualization, you are trying to find the parameter corresponding to the minimum of a loss function (<font color="blue">blue parabola</font>) using gradient descent. At a given point (<font color="blue">blue dot</font>), the loss function is approximated by its slope (<font color="orange">orange line</font>). You can tune the loss curvature and the learning rate, which together determine the direction and value of each parameter update and the approximation error (<font color="red">red line</font>).</p>
     <p id="iter_text">Iteration: <span id="curvature_ittr">0</span></p>
     <p>Loss function curvature:</p>
     <label id="lo_toggle" class="radio-container">Low
@@ -510,11 +510,11 @@ slope of the loss landscape.</li>
 
 <p>The optimization algorithm is also a core choice. You can play with various optimizers in the visualization below. That will help you build an intuitive sense of the pros and cons of each.</p>
 
-<p>In the visualization below, your goal is to play with hyperparameters to find parameter values that minimize a loss function. You can choose the loss function and starting point of the optimization. Although there’s no explicit model, you can assume that finding the minimum of the loss function is equivalent to finding the best model for your task. For the sake of simplicity, the model only has two parameters and the batch batch size is always 1.</p>
+<p>In the visualization below, your goal is to play with hyperparameters to find parameter values that minimize a loss function. You can choose the loss function and starting point of the optimization. Although there’s no explicit model, you can assume that finding the minimum of the loss function is equivalent to finding the best model for your task. For the sake of simplicity, the model only has two parameters and the batch size is always 1.</p>
 
 <div class="visualization hide-backToTop" id="landscape">
     <div class="visualization-column-2">
-        <p>In this visualization, you will choose a loss function and starting point for your optimization. There's no explicit network function, but you can assume that finding the loss function's minimum is equivalent to finding the best network function for your task.</p>
+        <p>In this visualization, you can compare optimizers applied to different loss functions and initialization. For a given loss landscape (<b>1</b>) and initialization (<b>2</b>), you can choose optimizers, their learning rate and decay (<b>3</b>). Then, press the play button to see the optimization process (<b>4</b>). There's no explicit model, but you can assume that finding the loss function's minimum is equivalent to finding the best model for your task.</p>
 
         <h3>1. Choose a loss landscape</h3>
         <p>Select an <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization">artificial landscape</a> $\mathcal{L}(w_1,w_2)$.</p>
@@ -537,11 +537,10 @@ slope of the loss landscape.</li>
             </label>
         </div>
         <h3>2. Choose initial parameters</h3>
-        <p>On the loss landscape graph, drag the <font color="red">red dot</font> to choose initial parameters values and thus the initial value of the loss.</p>
+        <p>On the <font color="blue">loss landscape graph</font>, drag the <font color="red">red dot</font> to choose initial parameter values and thus the initial value of the loss.</p>
 
         <h3>3. Choose an optimizer</h3>
-        <p>Select the optimizer and its hyperparameters.</p>
-
+        <p>Select the optimizer(s) and hyperparameters.</p>
 
         <table>
           <tr>
@@ -576,7 +575,7 @@ slope of the loss landscape.</li>
             <td><input class="adam" type="number" name="ldecay" value="0" min="0" max="1" step="0.01" /></td>
           </tr>
         </table>
-        <p>Optimize the loss function.</p>
+        <h3>4. Optimize the loss function</h3>
         <button class="button-transport" id="reset" title="reset">
             <img src="/assets/images/layout/reset.png" />
         </button>
@@ -588,8 +587,9 @@ slope of the loss landscape.</li>
         </button>
     </div>
     <div class="visualization-column-2">
-        <p> This 2D plot describes the loss function's value for different values of the two parameters $(w_1,w_2)$. The darker the color, the larger the loss value.</p>
+        <p> This 2D plot describes the loss function's value for different values of the two parameters $(w_1,w_2)$. The lighter the color, the smaller the loss value.</p>
         <div id="landscape_contour"></div>
+        <p>The graph below shows how the value of the loss changes through successive epochs for each optimizer.</p>
         <div id="landscape_loss"></div>
     </div>
 </div>
