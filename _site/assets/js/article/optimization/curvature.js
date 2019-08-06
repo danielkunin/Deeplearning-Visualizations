@@ -81,11 +81,13 @@ function moveToInitialPos() {
     // deriv_tl.seek(0.60) // 0.60 - 6.30
     let pos = 0
     if (genRanNum(0,2) > 1) {
-        pos = genRanNum(0.60, 2.7)
+        pos = genRanNum(0.7, 2.7)
     } else {
-        pos = genRanNum(2.7, 6.30)
+        pos = genRanNum(2.7, 6.00)
     }
     deriv_tl.seek(pos)
+    updateDir()
+    console.log(dir)
 }
 
 function moveCloneDot() {
@@ -111,6 +113,7 @@ function moveCloneDot() {
 //play animation until hit intersect
 function checkLocation() {
     if (Math.abs(center_dot[0]._gsTransform.x - ph_dot[0]._gsTransform.x) < 2) {
+        // pause and play pause animation
         let pause_time = 4;
         TweenMax.to(ph_dot, pause_time, {
             opacity: 0,
@@ -121,7 +124,8 @@ function checkLocation() {
         playPauseAnimation(pause_time)
 
     } else {
-        // move both dots forward
+        // move both dots forward if not hit intersects
+        checkDirection()
         let ph_deriv_path = MorphSVGPlugin.convertToPath(ph_deriv.clone()[0])[0]
         let pos = findAndDrawIntersectionDot(center_dot, ph_deriv_path)
         TweenMax.set(l_line, {
@@ -155,6 +159,15 @@ function moveCenterDotAnimForward() {
     TweenMax.set(clone_dot, {
         opacity: 1
     })
+}
+
+function checkDirection() {
+    updateDir()
+    if (dir) {
+        deriv_tl.play()
+    } else {
+        deriv_tl.reverse()
+    }
 }
 
 // move to a point along the line according to learning rate
@@ -204,8 +217,6 @@ function playPauseAnimation(pause_time) {
         },
         drawSVG: "100%"
     })
-
-    let dir_val = (dir) ? 1.0 : -1.0
 
     // error line appears
     TweenMax.from(error_line, 1, {
@@ -300,6 +311,13 @@ function resetAttrLines() {
     })
 }
 
+function updateDir() {
+    let newStart = applyTransform(deriv.attr("x2"), deriv.attr("y2"), deriv.attr("transform"));
+    let newEnd = applyTransform(deriv.attr("x1"), deriv.attr("y1"), deriv.attr("transform"));
+    let slope = (newEnd[1] - newStart[1]) / (newEnd[0] - newStart[0])
+    dir = (slope < 0) ? false : true
+}
+
 // ################### UI Functions #######################
 hi_toggle.click({
     is_flat: false
@@ -325,11 +343,9 @@ function toggleRate(event) {
         l_rate = l_big
         toggleToggle(big_toggle, sm_toggle)
     }
-    console.log(l_rate)
 }
 
 function toggleCurve(event) {
-    console.log(event.data.is_flat)
     TweenMax.set(flat_curve, {
         opacity: 0
     })
@@ -356,7 +372,6 @@ function toggleCurve(event) {
         l_rate = l_small
     }
 
-    console.log(l_rate)
     restartAnimation()
 }
 
@@ -370,7 +385,6 @@ function toggleToggle(btn1, btn2, is_btn1) {
 function restartAnimation() {
     TweenMax.killAll(false, true, false, true)
     resetAttrLines()
-    dir = true
     iter_count = 0
     iter_text.html("Iteration: 0")
     init()
