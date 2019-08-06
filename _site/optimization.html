@@ -542,10 +542,10 @@ slope of the loss landscape.</li>
         <h3>3. Choose an optimizer</h3>
         <p>Select the optimizer(s) and hyperparameters.</p>
 
-        <table>
+        <table id="optimizer-table">
           <tr>
             <th>Optimizer</th>
-            <th>Learning Rate</th> 
+            <th>Learning Rate</th>
             <th>Learning Rate Decay</th>
           </tr>
           <tr>
@@ -554,7 +554,7 @@ slope of the loss landscape.</li>
                     <input type="checkbox" name="opt" value="gd" checked="" />
                     <label>Gradient Descent</label>
                 </div>
-                
+
             </td>
             <td><input class="gd" type="number" name="lrate" value="0.001" min="0" max="1" step="0.0001" /></td>
             <td><input class="gd" type="number" name="ldecay" value="0" min="0" max="1" step="0.01" /></td>
