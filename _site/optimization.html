@@ -210,7 +210,7 @@
         </div>
 
         <section class="article-content">
-        		<p>In machine learning, you start by defining a task and a model. The model consists of an architecture and parameters. For a given architecture, the values of the parameters determine how accurately the model performs the task. 
+        		<p>In machine learning, you start by defining a task and a model. The model consists of an architecture and parameters. For a given architecture, the values of the parameters determine how accurately the model performs the task.
 But how do you find good values? By defining a loss function that evaluates how well the model performs. The goal is to optimize the loss and thereby to find parameter values that match predictions with reality. This is the essence of training.</p>
 
 <h1 id="I">I   Setting up the optimization problem</h1>
@@ -485,7 +485,7 @@ $$</div>
 
 <ul>
   <li>Batch size determines the frequency of updates. The smaller the batches, the more — though quicker the updates.</li>
-  <li>The larger the batch size, the more accurate the gradient of the loss will be with respect to the parameters. That is, the direction of the update is most likely going down the local 
+  <li>The larger the batch size, the more accurate the gradient of the loss will be with respect to the parameters. That is, the direction of the update is most likely going down the local
 slope of the loss landscape.</li>
   <li>The largest batch size that fits into GPU memory leads to efficient parallelization and usually accelerates training.</li>
   <li>However, in practice, large batch sizes can hurt the model’s ability to generalize.</li>
@@ -495,7 +495,7 @@ slope of the loss landscape.</li>
 
 <p>Here’s a figure comparing a flat and a sharp minimum. Flat cost surfaces (and thus small batch sizes) are preferred because they lead to good generalization without requiring high precision.</p>
 
-<p><img src="/assets/images/article/optimization/flat_vs_sharp.png" alt="flat_vs_sharp" title="flat_vs_sharp" /></p>
+<p><img src="/assets/images/article/optimization/flat_vs_sharp.jpg" alt="flat_vs_sharp" title="flat_vs_sharp" /></p>
 
 <p>In practice, hyperparameter search can help you find batch size and learning rate. These hyperparameters are two routes to the same outcome, according to Smith, Kindermans et al. in Don’t Decay the Learning Rate, Increase the Batch Size. They argue that the benefits of decaying the learning rate can be achieved by increasing batch size during training. So if you change batch size, you may also need to change learning rate. Efficient use of vast batch sizes notably reduces the number of parameter updates required to train a model.</p>
 
@@ -598,7 +598,6 @@ slope of the loss landscape.</li>
 <h3 id="conclusion">Conclusion</h3>
 
 <p>Exploring optimization methods and hyperparameter values can help you build intuition for optimizing networks for your own tasks. During hyperparameter search, it’s important to understand intuitively the optimization’s sensitivity to learning rate, batch size, optimizer, and so on. That intuitive understanding, combined with the right method (random search or Bayesian optimization), will help you find the right model.</p>
-
 
                 
                     <div class="sidenote-body">
