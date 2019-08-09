@@ -291,7 +291,7 @@ $$</div>
 
 <p>$\quad \text{for x in dataset:}$</p>
 
-<p>$ \quad \quad \quad \hat{y} = model_W(x) \quad \quad \text{(predict)}$</p>
+<p>$\quad \quad \quad \hat{y} = model_W(x) \quad \quad \text{(predict)}$</p>
 
 <p>$ \quad \quad \quad W = W - \alpha \frac{\partial \mathcal{L}(y, \hat{y})}{\partial W} \quad \quad \text{(update parameters)}$</p>
 
@@ -305,24 +305,26 @@ $$</div>
 
 <p>You can learn more about gradient-based optimization algorithms in the Deep Learning Specialization. This topic is covered in Course 1, Week 2 (Neural Network Basics) and Course 2, Week 2 (Optimization Algorithms).</p>
 
+<p>Note that the loss $\mathcal{L}$ takes as input a single example, so minimizing it doesn’t guarantee better model parameters for other examples. It is common to minimize the average of the loss computed over a batch of examples; for instance, $\mathcal{J} = \frac{1}{m_b} \sum_{i=1}^{m_b} \mathcal{L}^{(i)}$. We call this function the cost, and reducing it leads to a more accurate parameter-update direction to minimize training error. $m_b$  is called the batch size. This is a key <span class="sidenote">hyperparameter</span> to tune.</p>
+
 <h3 id="adjusting-gradient-descent-hyperparameters">Adjusting gradient descent hyperparameters</h3>
 
 <p>To use gradient descent, you must choose values for hyperparameters such as learning rate and batch size. These values will influence the optimization, so it’s important to set them appropriately.</p>
 
-<p>In the visualization below, you can play with the starting point of initialization, learning rate, and batch size. Here are some questions to consider as you explore the visualization:</p>
+<p>In the visualization below, you observe data from a distribution considered to be the ground truth. Try to rediscover the ground truth parameters used to generate the data by training a model. Play with the starting point of initialization, learning rate, and batch size. Here are some questions to consider as you explore the visualization:</p>
 
 <ul>
+  <li>Why do the model parameters converge to values different than the ground-truth?</li>
   <li>What is the impact of the training set size?</li>
   <li>What is the impact of the learning rate on the optimization?</li>
-  <li>Why does the loss landscape look like this?</li>
-  <li>Why do the model parameters converge to values different than those of the ground-truth slope and intercept?</li>
+  <li>Why does the cost landscape look like this?</li>
 </ul>
 
 <div class="visualization hide-backToTop" id="regression">
     <div class="visualization-column-1">
-        <p>In this visualization, you can fit a linear model <script>document.write(katex.renderToString('\\hat{y} = wx + b'))</script> on a set of 300 data points using gradient descent. Press the button to generate a dataset of chosen size (<b>1</b>) and observe its impact on the cost landscape. Then, choose initial values of your model parameters by dragging the <span class="red">red dot</span> (<b>2</b>) before optimizing (<b>3</b>).</p>
+        <p>In this visualization, your goal is to recover the ground truth parameters used to generate a training set. You can fit a linear model <script>document.write(katex.renderToString('\\hat{y} = wx + b'))</script> on the training set using gradient descent. Press the button to generate a dataset of chosen size (<b>1</b>) and observe its impact on the cost landscape. Then, choose initial values of your model parameters by dragging the <span class="red">red dot</span> (<b>2</b>) before optimizing (<b>3</b>).</p>
         <h3>1. Generate a dataset</h3>
-        <p>Select a training set size.</p>
+        <p>Select a training set size $m$.</p>
         <label class="radio-container">Small
             <input type="radio" value="20" name="regression_tsize" />
             <span class="checkmark"></span>
@@ -342,13 +344,13 @@ $$</div>
         <div id="regression_plot" style="margin-top:1em;border: 1px solid rgba(0,0,0,0.2);"></div>
     </div>
     <div class="visualization-column-2">
-        <h3>2. Observe the loss landscape and initialize parameters.</h3>
-        <p>The loss function is the L2 loss defined as <script>document.write(katex.renderToString('\\mathcal{L}(y, \\hat{y}) = ||y - \\hat{y}||_2^2'))</script>. The <span class="blue">blue dot</span> indicates the value of the loss function at the ground-truth slope and intercept. The <span class="red">red dot</span> indicates the value of the loss function at a chosen initialization of the slope and intercept. Drag and drop the red dot to change the initialization.</p>
+        <h3>2. Observe the cost landscape and initialize parameters.</h3>
+        <p>The cost function is the L2 loss (defined as <script>document.write(katex.renderToString('\\mathcal{L}(y, \\hat{y}) = ||y - \\hat{y}||_2^2'))</script>) averaged over the training set. The <span class="blue">blue dot</span> indicates the value of the cost function at the ground-truth slope and intercept. The <span class="red">red dot</span> indicates the value of the cost function at a chosen initialization of the slope and intercept. Drag and drop the red dot to change the initialization.</p>
         <div id="regression_landscape"></div>
     </div>
     <div class="visualization-column-1">
-        <h3>3. Optimize the loss function</h3>
-        <p>Now you can update the parameters iteratively to minimize the loss. Select a learning rate.</p>
+        <h3>3. Optimize the cost function</h3>
+        <p>Now you can update the parameters iteratively to minimize the cost. Select a learning rate.</p>
         <label class="radio-container">Small
             <input type="radio" value="0.0001" name="regression_lrate" />
             <span class="checkmark"></span>
@@ -362,15 +364,15 @@ $$</div>
             <span class="checkmark"></span>
         </label>
         <p>Select a batch size.</p>
-        <label class="radio-container">Stochastic
+        <label class="radio-container">$m_b = 1$
             <input type="radio" value="1" name="regression_bsize" checked="" />
             <span class="checkmark"></span>
         </label>
-        <label class="radio-container">Mini-batch
-            <input type="radio" value="30" name="regression_bsize" />
+        <label class="radio-container">$m_b = 24$
+            <input type="radio" value="24" name="regression_bsize" />
             <span class="checkmark"></span>
         </label>
-        <label class="radio-container">Full-batch
+        <label class="radio-container">$m_b = m$
             <input type="radio" value="300" name="regression_bsize" />
             <span class="checkmark"></span>
         </label>
@@ -388,10 +390,18 @@ $$</div>
     </div>
 </div>
 
-<p>Note that the loss $\mathcal{L}$ takes as input a single example, so minimizing it doesn’t guarantee better model parameters for other examples. It is common to minimize the average of the loss computed over a batch of examples; for instance, $\mathcal{J} = \frac{1}{m_b} \sum_{i=1}^{m_b} \mathcal{L}^{(i)}$. We call this function the cost, and reducing it leads to a more accurate parameter-update direction to minimize training error. $m_b$  is called the batch size. This is a key <span class="sidenote">hyperparameter</span> to tune.</p>
+<p>Here are some takeaways from the visualization:</p>
+<ul>
+  <li>The model parameters converge to values different than the ground-truth because the dataset is just a <span class="sidenote">proxy</span> for the ground-truth distribution.</li>
+  <li>The larger is the training set size, the closer are your trained model parameters to the parameters used to generate the data.</li>
+  <li>If your learning rate is too large, your algorithm won’t converge. If it is too small, your algorithm will converge slowly.</li>
+  <li>If your batch size is too small, your parameters values keep oscillating around the ground truth.</li>
+  <li>If the initial point is close to the ground truth and the hyperparameters (learning rate and batch size) are tuned properly, your algorithm will converge quickly.</li>
+</ul>
 
-<p>Here are some takeaways from the visualization:
-<!-- Kian, please add, as a series of bullets, a taleaway statement for initialization, learning rate, batch size, and iterative update. --></p>
+<p>As you see, each hyperparameter has their own impact on the convergence of your algorithm.</p>
+
+<!-- Kian, please add, as a series of bullets, a taleaway statement for initialization, learning rate, batch size, and iterative update. -->
 
 <h3 id="initialization">Initialization</h3>
 
@@ -443,7 +453,7 @@ $$</div>
         <span class="checkmark"></span>
     </label>
     <label id="hi_toggle" class="radio-container">High
-        <input type="radio" value="300" name="curvature_lrate" />
+        <input type="radio" value="1000" name="curvature_lrate" />
         <span class="checkmark"></span>
     </label>
     <p>Learning rate:</p>
@@ -465,7 +475,7 @@ $$</div>
   </div>
 </div>
 
-<p>The visuzation illustrates that:</p>
+<p>The visualization illustrates that:</p>
 <ul>
   <li>The choice of learning rate depends on the curvature of the loss function.</li>
   <li>Gradient descent makes a linear approximation of the loss function at a given point. Then it moves downhill along the approximation of the loss function.</li>
@@ -619,6 +629,10 @@ slope of the loss landscape.</li>
                     </div>
                 
                     <div class="sidenote-body">
+                        <p class="caption">In theory, if you sampled infinitely many data points from the distribution and fit a linear model, you could recover the ground truth parameters.</p>
+                    </div>
+                
+                    <div class="sidenote-body">
                         <p class="caption">We use the term inappropriate local minimum because, in optimizing a machine learning model, the optimization is often non-convex and unlikely to converge to the global minimum.</p>
                     </div>
                 
@@ -653,7 +667,7 @@ slope of the loss landscape.</li>
             <div class="foot-note-content">
                 <ol class="reference ">
                     
-                    <li><a href="https://twitter.com/kiankatan">Kian Katanforoosh</a> - Written content and structure.</li>
+                    <li><a href="https://twitter.com/kiankatan">Kian Katanforoosh</a> - Content and structure.</li>
                     
                     <li><a href="http://daniel-kunin.com">Daniel Kunin</a> - Visualizations (created using <a href="https://d3js.org/">D3.js</a> and <a href="https://js.tensorflow.org/">TensorFlow.js</a>).</li>
                     
@@ -700,7 +714,7 @@ slope of the loss landscape.</li>
             </div>
             <div class="foot-note-content">
                 <p class="reference">To reference this article in an academic context, please cite this work as:</p>
-                <p class="citation">Katanforoosh & Kunin, "Optimizing neural networks", deeplearning.ai, 2019.</p>
+                <p class="citation">Katanforoosh, Kunin et al., "Optimizing neural networks", deeplearning.ai, 2019.</p>
                
             </div>
 

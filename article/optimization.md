@@ -44,7 +44,7 @@ colors:
 authors:
 - name: Kian Katanforoosh
   link: https://twitter.com/kiankatan
-  description: Written content and structure
+  description: Content and structure
 - name: Daniel Kunin
   link: http://daniel-kunin.com
   description: Visualizations (created using <a href="https://d3js.org/">D3.js</a> and <a href="https://js.tensorflow.org/">TensorFlow.js</a>)
@@ -57,7 +57,7 @@ acknowledgments:
 - The loss landscape visualization adapted code from Mike Bostock's <a href="https://bl.ocks.org/mbostock/f48ff9c1af4d637c9a518727f5fdfef5">visualization</a> of the Goldstein-Price function
 - The banner visualization adapted code from deeplearn.js's implementation of a <a href="https://en.wikipedia.org/wiki/Compositional_pattern-producing_network">CPPN</a>
 
-reference: Katanforoosh & Kunin, "Optimizing neural networks", deeplearning.ai, 2019.
+reference: Katanforoosh, Kunin et al., "Optimizing neural networks", deeplearning.ai, 2019.
 
 
 # Footnotes & Sidenotes
@@ -73,6 +73,7 @@ sidenotes:
 - Do you know the mathematical formula that allows a neural network to detect cats in images? Probably not. But using data you can find a function that performs this task. It turns out that a convolutional architecture with the right parameters defines a function that can perform this task well.
 - Close-form methods attempt to solve a problem in a finite sequence of algebraic operations. For instance, you can find the point achieving the minimum of $f(x) = x^2 + 1$ by solving $f'(x) = 0$ which leads to $2x = 0 \implies x=0$.
 - While model parameters are derived during training, hyperparameters are values set before training starts. Hyperperameters include batch size and learning rate.
+- In theory, if you sampled infinitely many data points from the distribution and fit a linear model, you could recover the ground truth parameters.
 - We use the term inappropriate local minimum because, in optimizing a machine learning model, the optimization is often non-convex and unlikely to converge to the global minimum.
 - Online optimization is when updates must be made with incomplete knowledge of the future, as in Stochastic Gradient Descent optimization.
 - This term essentially describes inflection points (where the concavity of the landscape changes) for which the gradient is zero in some, but not all, directions.
@@ -154,7 +155,7 @@ The mathematical procedure to remember is:
 
 $\quad \text{for x in dataset:}$ 
 
-  $ \quad \quad \quad \hat{y} = model_W(x) \quad \quad \text{(predict)}$
+  $\quad \quad \quad \hat{y} = model_W(x) \quad \quad \text{(predict)}$
 
 $ \quad \quad \quad W = W - \alpha \frac{\partial \mathcal{L}(y, \hat{y})}{\partial W} \quad \quad \text{(update parameters)}$
 
@@ -167,23 +168,31 @@ Where:
 
 You can learn more about gradient-based optimization algorithms in the Deep Learning Specialization. This topic is covered in Course 1, Week 2 (Neural Network Basics) and Course 2, Week 2 (Optimization Algorithms).
 
+Note that the loss $\mathcal{L}$ takes as input a single example, so minimizing it doesn’t guarantee better model parameters for other examples. It is common to minimize the average of the loss computed over a batch of examples; for instance, $\mathcal{J} = \frac{1}{m_b} \sum_{i=1}^{m_b} \mathcal{L}^{(i)}$. We call this function the cost, and reducing it leads to a more accurate parameter-update direction to minimize training error. $m_b$  is called the batch size. This is a key <span class="sidenote">hyperparameter</span> to tune.
 
 ### Adjusting gradient descent hyperparameters
 
 To use gradient descent, you must choose values for hyperparameters such as learning rate and batch size. These values will influence the optimization, so it’s important to set them appropriately.
 
-In the visualization below, you can play with the starting point of initialization, learning rate, and batch size. Here are some questions to consider as you explore the visualization:
 
+In the visualization below, you observe data from a distribution considered to be the ground truth. Try to rediscover the ground truth parameters used to generate the data by training a model. Play with the starting point of initialization, learning rate, and batch size. Here are some questions to consider as you explore the visualization:
+
+- Why do the model parameters converge to values different than the ground-truth?
 - What is the impact of the training set size?
 - What is the impact of the learning rate on the optimization?
-- Why does the loss landscape look like this?
-- Why do the model parameters converge to values different than those of the ground-truth slope and intercept?
+- Why does the cost landscape look like this?
 
 {% include article/optimization/regression.html %}
 
-Note that the loss $\mathcal{L}$ takes as input a single example, so minimizing it doesn’t guarantee better model parameters for other examples. It is common to minimize the average of the loss computed over a batch of examples; for instance, $\mathcal{J} = \frac{1}{m_b} \sum_{i=1}^{m_b} \mathcal{L}^{(i)}$. We call this function the cost, and reducing it leads to a more accurate parameter-update direction to minimize training error. $m_b$  is called the batch size. This is a key <span class="sidenote">hyperparameter</span> to tune.
-
 Here are some takeaways from the visualization:
+- The model parameters converge to values different than the ground-truth because the dataset is just a <span class="sidenote">proxy</span> for the ground-truth distribution.
+- The larger is the training set size, the closer are your trained model parameters to the parameters used to generate the data.
+- If your learning rate is too large, your algorithm won't converge. If it is too small, your algorithm will converge slowly.
+- If your batch size is too small, your parameters values keep oscillating around the ground truth. 
+- If the initial point is close to the ground truth and the hyperparameters (learning rate and batch size) are tuned properly, your algorithm will converge quickly.
+
+As you see, each hyperparameter has their own impact on the convergence of your algorithm.
+
 <!-- Kian, please add, as a series of bullets, a taleaway statement for initialization, learning rate, batch size, and iterative update. -->
 
 ### Initialization
@@ -202,7 +211,7 @@ Play with the visualization below to understand how learning rate and loss curva
 
 {% include article/optimization/curvature.html %}
 
-The visuzation illustrates that:
+The visualization illustrates that:
 - The choice of learning rate depends on the curvature of the loss function.
 - Gradient descent makes a linear approximation of the loss function at a given point. Then it moves downhill along the approximation of the loss function.
 - If the loss is highly curved, the larger the learning rate (step size), the larger the error of the <span class="sidenote">gradient approximation</span>. The approximation tends to overshoot.
