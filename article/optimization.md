@@ -71,6 +71,7 @@ footnotes:
 sidenotes:
 - By definition, this function L has a low value when the model performs well on the task.
 - Do you know the mathematical formula that allows a neural network to detect cats in images? Probably not. But using data you can find a function that performs this task. It turns out that a convolutional architecture with the right parameters defines a function that can perform this task well.
+- Close-form methods attempt to solve a problem in a finite sequence of algebraic operations. For instance, you can find the point achieving the minimum of $f(x) = x^2 + 1$ by solving $f'(x) = 0$ which leads to $2x = 0 \implies x=0$.
 - While model parameters are derived during training, hyperparameters are values set before training starts. Hyperperameters include batch size and learning rate.
 - We use the term inappropriate local minimum because, in optimizing a machine learning model, the optimization is often non-convex and unlikely to converge to the global minimum.
 - Online optimization is when updates must be made with incomplete knowledge of the future, as in Stochastic Gradient Descent optimization.
@@ -129,7 +130,7 @@ Updating the parameter values will move the value either closer to or farther fr
 
 It is important to distinguish between the function $f$ that will perform the task (the model) and the function $\mathcal{L}$ you are optimizing (the loss function).
 
-- The model is an architecture and a set of parameters that approximates a <span class="sidenote">real function</span>that performs the task. Optimized parameter values will enable the model to perform the task with relative accuracy.
+- The model is an architecture and a set of parameters that approximates a <span class="sidenote">real function</span> that performs the task. Optimized parameter values will enable the model to perform the task with relative accuracy.
 - The loss function quantifies how accurately the model has performed on given data set. Its value depends on the model's parameter values.
 
 At this point, good parameter values are unknown. However, you have a formula for the loss function. Optimize that on your dataset, and theoretically you will find good parameter values. The way to do this is to feed a training data set into the model and adjust the parameters iteratively to make the loss function as small as possible.
@@ -145,19 +146,24 @@ In this section, we assume that you have chosen a task, a data set, and a loss f
 
 ### Using gradient descent
 
-First, you must initialize the parameter values so you have a starting point for optimization. Then, you will adjust the parameter values using gradient descent to reduce the value of the loss function.
+Parameter values achieving a function's minimum can be found algebraically in <span class="sidenote">closed form</span>, or approximated using an iterative method. In machine learning, iterative methods such as gradient descent are often the only option because loss functions are either non-linear or dependent on a large number of variables.
 
-Gradient descent is an iterative optimization algorithm that finds the minimum of a function. In machine learning, that means minimizing the loss. At every iteration, parameter values are adjusted according to the opposite direction of the gradient of the loss; that is, in the direction that reduces the loss.
+First, you must initialize the parameter values so you have a starting point for optimization. Then, you will adjust the parameter values using gradient descent to reduce the value of the loss function. At every iteration, parameter values are adjusted according to the opposite direction of the gradient of the loss; that is, in the direction that reduces the loss.
 
-The formula to remember is:
+The mathematical procedure to remember is:
 
-$$W = W - \alpha \frac{\partial \mathcal{L}}{\partial W}$$
+$\quad \text{for x in dataset:}$ 
+
+  $ \quad \quad \quad \hat{y} = model_W(x) \quad \quad \text{(predict)}$
+
+$ \quad \quad \quad W = W - \alpha \frac{\partial \mathcal{L}(y, \hat{y})}{\partial W} \quad \quad \text{(update parameters)}$
+
 
 Where:
-
-- $W$ denotes the parameters
+- $\hat{y}$ is the model's prediction given a batch $x$ of examples. 
+- $W$ denotes the parameters.
 - $\frac{\partial \mathcal{L}}{\partial W}$ is a gradient indicating the direction to push the value $W$ to decrease $\mathcal{L}$.
-- $\alpha$ is the learning rate which you can tune to decide how much you want to adjust the value of $W$.
+- $\alpha$ is the learning rate which you can tune to decide how much you want to adjust the value of $W$ per iteration.
 
 You can learn more about gradient-based optimization algorithms in the Deep Learning Specialization. This topic is covered in Course 1, Week 2 (Neural Network Basics) and Course 2, Week 2 (Optimization Algorithms).
 
