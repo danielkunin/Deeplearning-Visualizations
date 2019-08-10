@@ -11,11 +11,11 @@
           </g>
           <line id="errorLine" x1="3" y1="8.65" x2="3" y2="8.65" fill="none" stroke="#ff1e00" stroke-miterlimit="10" stroke-width="3"/>
           <path id="flat_curve" data-name="flat curve" d="M93.22,59.88S188.5,299.22,311.5,299.22,529.85,59.88,529.85,59.88" fill="none" stroke="#2665ba" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3"/>
-          <path id="steep_curve" data-name="steep curve" d="M166.62,59.88S229.9,299.22,311.5,299.22s145-239.34,145-239.34" fill="none" stroke="#2665ba" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3"/>
+          <path id="steep_curve" data-name="steep curve" d="M151,59.88s70.1,239.34,160.49,239.34S472.12,59.88,472.12,59.88" fill="none" stroke="#2665ba" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3"/>
           <line id="deriv" x1="523.48" y1="299.22" x2="99.59" y2="299.22" fill="none" stroke="red" stroke-miterlimit="10" stroke-width="3"/>
           <line id="ph_deriv" data-name="ph deriv" x1="523.48" y1="299.22" x2="99.59" y2="299.22" fill="none" stroke="#ffa600" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3"/>
           <line id="learnLine" x1="3" y1="8.65" x2="3" y2="8.65" fill="none" stroke="#ffc900" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4"/>
-          <circle id="cloneDot" cx="311.54" cy="299.22" r="6.66" fill="#ff7c43"/>
+          <circle id="cloneDot" cx="311.54" cy="299.22" r="6.66" fill="#ffdc58"/>
           <circle id="phDot" cx="311.54" cy="299.22" r="6.66" fill="none"/>
           <circle id="centerDot" cx="311.54" cy="299.22" r="6.66" fill="#5ea0fa"/>
           <text transform="translate(10.35 19.05)" font-size="15" fill="#878787" font-family="Assistant" style="isolation: isolate">Loss</text>
@@ -28,24 +28,24 @@
     <p id="iter_text">Iteration: <span id="curvature_ittr">0</span></p>
     <p>Loss function curvature:</p>
     <label id="lo_toggle" class="radio-container">Low
-        <input type="radio" value="20" name="curvature_lrate" checked>
+        <input type="radio" value="20" name="curvature_crate" checked>
         <span class="checkmark"></span>
     </label>
     <label id="hi_toggle" class="radio-container">High
-        <input type="radio" value="1000" name="curvature_lrate">
+        <input type="radio" value="1000" name="curvature_crate">
         <span class="checkmark"></span>
     </label>
     <p>Learning rate:</p>
     <label id="sm_toggle" class="radio-container">Small
-        <input type="radio" value="800" name="curvature_crate">
+        <input type="radio" value="800" name="curvature_lrate">
         <span class="checkmark"></span>
     </label>
     <label id="big_toggle" class="radio-container">Large
-        <input type="radio" value="800" name="curvature_crate" checked>
+        <input type="radio" value="800" name="curvature_lrate" checked>
         <span class="checkmark"></span>
     </label>
     <div>
-    <button class="button-transport" id="replay" title="reset">
+    <button class="button-transport" id="reset" title="reset">
         <img src="/assets/images/layout/reset.png"> Reset
     </button>
     <br>

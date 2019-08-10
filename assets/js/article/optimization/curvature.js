@@ -81,9 +81,9 @@ function moveToInitialPos() {
     // deriv_tl.seek(0.60) // 0.60 - 6.30
     let pos = 0
     if (genRanNum(0,2) > 1) {
-        pos = genRanNum(0.7, 2.7)
+        pos = genRanNum(0.7, 2.0)
     } else {
-        pos = genRanNum(2.7, 6.00)
+        pos = genRanNum(4.7, 6.00)
     }
     deriv_tl.seek(pos)
     updateDir()
