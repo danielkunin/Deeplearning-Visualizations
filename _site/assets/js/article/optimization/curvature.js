@@ -81,9 +81,9 @@ function moveToInitialPos() {
     // deriv_tl.seek(0.60) // 0.60 - 6.30
     let pos = 0
     if (genRanNum(0,2) > 1) {
-        pos = genRanNum(0.7, 2.0)
+        pos = genRanNum(0.8, 2.0)
     } else {
-        pos = genRanNum(4.7, 6.00)
+        pos = genRanNum(4.7, 5.8)
     }
     deriv_tl.seek(pos)
     updateDir()
@@ -383,6 +383,7 @@ function toggleToggle(btn1, btn2, is_btn1) {
 }
 
 function restartAnimation() {
+    console.log("reset")
     TweenMax.killAll(false, true, false, true)
     resetAttrLines()
     iter_count = 0
