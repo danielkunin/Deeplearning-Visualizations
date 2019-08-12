@@ -76,6 +76,7 @@ sidenotes:
 - In theory, if you sampled infinitely many data points from the distribution and fit a linear model, you could recover the ground truth parameters.
 - We use the term inappropriate local minimum because, in optimizing a machine learning model, the optimization is often non-convex and unlikely to converge to the global minimum.
 - Online optimization is when updates must be made with incomplete knowledge of the future, as in Stochastic Gradient Descent optimization.
+- Generalization refers to your model's ability to perform well on unseen data. In order to evaluate the generalization of your model, you can train your model on a training set and evaluate it on a hold-out test set.
 - This term essentially describes inflection points (where the concavity of the landscape changes) for which the gradient is zero in some, but not all, directions.
 - Gradient descent makes a linear approximation of the loss function in a given point. It then moves downhill along the approximation of the loss function.
 - For more information on hyperparameter tuning, see the Deep Learning Specialization Course 2, Week 3 (Hyperparameter Tuning, Batch Normalization and Programming Frameworks).
@@ -134,22 +135,25 @@ It is important to distinguish between the function $f$ that will perform the ta
 - The model is an architecture and a set of parameters that approximates a <span class="sidenote">real function</span> that performs the task. Optimized parameter values will enable the model to perform the task with relative accuracy.
 - The loss function quantifies how accurately the model has performed on given data set. Its value depends on the model's parameter values.
 
-At this point, good parameter values are unknown. However, you have a formula for the loss function. Optimize that on your dataset, and theoretically you will find good parameter values. The way to do this is to feed a training data set into the model and adjust the parameters iteratively to make the loss function as small as possible.
+
+### Optimizing the loss
+
+Initially, good parameter values are unknown. However, you have a formula for the loss function. Optimize that on your dataset, and theoretically you will find good parameter values. The way to do this is to feed a training data set into the model and adjust the parameters iteratively to make the loss function as small as possible.
 
 In summary, the way you define the loss function will dictate the performance of your model on the task at hand. The diagram below illustrates the process of finding a model that performs well.
 
+![optimization_chart](/assets/images/article/optimization/optimization_chart.png "optimization_chart")
+
 
 # II &emsp; Running the optimization process {#II}
-
-![optimization_chart](/assets/images/article/optimization/optimization_chart.png "optimization_chart")
 
 In this section, we assume that you have chosen a task, a data set, and a loss function. You will minimize the loss on the data set to find good parameter values.
 
 ### Using gradient descent
 
-Parameter values achieving a function's minimum can be found algebraically in <span class="sidenote">closed form</span>, or approximated using an iterative method. In machine learning, iterative methods such as gradient descent are often the only option because loss functions are either non-linear or dependent on a large number of variables.
+To find parameter values that achieve a function's minimum, you can derive a <span class="sidenote">closed form</span> solution algebraically or approximate it using an iterative method. In machine learning, iterative methods such as gradient descent are often the only option because loss functions are either non-linear and dependent on a large number of variables.
 
-First, you must initialize the parameter values so you have a starting point for optimization. Then, you will adjust the parameter values using gradient descent to reduce the value of the loss function. At every iteration, parameter values are adjusted according to the opposite direction of the gradient of the loss; that is, in the direction that reduces the loss.
+For gradient descent, you must first initialize the parameter values so that you have a starting point for optimization. Then, you adjust the parameter values iteratively to reduce the value of the loss function. At every iteration, parameter values are adjusted according to the opposite direction of the gradient of the loss; that is, in the direction that reduces the loss.
 
 The mathematical procedure to remember is:
 
@@ -161,7 +165,7 @@ $ \quad \quad \quad W = W - \alpha \frac{\partial \mathcal{L}(y, \hat{y})}{\part
 
 
 Where:
-- $\hat{y}$ is the model's prediction given a batch $x$ of examples. 
+- $\hat{y}$ is the model's prediction given an input $x$. 
 - $W$ denotes the parameters.
 - $\frac{\partial \mathcal{L}}{\partial W}$ is a gradient indicating the direction to push the value $W$ to decrease $\mathcal{L}$.
 - $\alpha$ is the learning rate which you can tune to decide how much you want to adjust the value of $W$ per iteration.
@@ -175,7 +179,7 @@ Note that the loss $\mathcal{L}$ takes as input a single example, so minimizing 
 To use gradient descent, you must choose values for hyperparameters such as learning rate and batch size. These values will influence the optimization, so it’s important to set them appropriately.
 
 
-In the visualization below, you observe data from a distribution considered to be the ground truth. Try to rediscover the ground truth parameters used to generate the data by training a model. Play with the starting point of initialization, learning rate, and batch size. Here are some questions to consider as you explore the visualization:
+In the visualization below, try to discover the parameters used to generate a dataset. You are provided the ground truth from which the data was generated (the blue line) so that you can compare it to your trained model (the red line). Play with the starting point of initialization, learning rate, and batch size. Here are some questions to consider as you explore the visualization:
 
 - Why do the model parameters converge to values different than the ground-truth?
 - What is the impact of the training set size?
@@ -185,13 +189,13 @@ In the visualization below, you observe data from a distribution considered to b
 {% include article/optimization/regression.html %}
 
 Here are some takeaways from the visualization:
-- The model parameters converge to values different than the ground-truth because the dataset is just a <span class="sidenote">proxy</span> for the ground-truth distribution.
-- The larger is the training set size, the closer are your trained model parameters to the parameters used to generate the data.
+- Even if you choose the best possible hyperparameters, the trained model will not exactly match the provided ground truth (blue line) because the dataset is just a <span class="sidenote">proxy</span> for the ground-truth distribution.
+- The larger the training set size, the closer your trained model parameters will be to the parameters used to generate the data.
 - If your learning rate is too large, your algorithm won't converge. If it is too small, your algorithm will converge slowly.
-- If your batch size is too small, your parameters values keep oscillating around the ground truth. 
-- If the initial point is close to the ground truth and the hyperparameters (learning rate and batch size) are tuned properly, your algorithm will converge quickly.
+- If your batch size is too small, your parameter values will usually oscillate around the ground truth. 
+- If the initial point (the red dot) is close to the ground truth and the hyperparameters (learning rate and batch size) are tuned properly, your algorithm will converge quickly.
 
-As you see, each hyperparameter has their own impact on the convergence of your algorithm.
+As you can see, each hyperparameter has a different impact on the convergence of your algorithm. Let's dig deeper into each hyperparameter.
 
 <!-- Kian, please add, as a series of bullets, a taleaway statement for initialization, learning rate, batch size, and iterative update. -->
 
@@ -225,7 +229,7 @@ In fact, nobody knows the right decay schedule. However, adaptive learning-rate 
 
 Batch size is the number of data points used to train a model in each iteration. Typical small batches are 32, 64, 128, 256, 512, while large batches can be thousands of examples.
 
-Choosing the right batch size is crucial to ensure convergence of the loss function and parameter values, and to the generalization of your model. Some research<sup class="footnote"></sup> has considered how to make the choice, but there is no consensus. In practice, you can use a <span class="sidenote">hyperparameter search</span>.
+Choosing the right batch size is crucial to ensure convergence of the loss function and parameter values, and to the <span class="sidenote">generalization</span> of your model. Some research<sup class="footnote"></sup> has considered how to make the choice, but there is no consensus. In practice, you can use a <span class="sidenote">hyperparameter search</span>.
 
 Research into batch size has revealed the following principles:
 
@@ -237,7 +241,7 @@ slope of the loss landscape.
 
 In choosing batch size, there’s a balance to be struck depending on the available computational hardware and the task you’re trying to achieve. Recall that the input batch is an input to the cost function. Large batch size typically leads to sharper cost function surfaces than a small batch size, as Keskar et al. find in their paper, “On large-batch training for deep learning: generalization gap and sharp minima.”
 
-Here's a figure comparing a flat and a sharp minimum. Flat cost surfaces (and thus small batch sizes) are preferred because they lead to good generalization without requiring high precision.
+Here's a figure comparing a flat and a sharp minimum. Flat cost surfaces (and thus small batch sizes) are preferred because they lead to good generalization without requiring high precision. In the graphic below, the values of the train and test costs for a given parameter value are much closer in the flat minimum case than in the sharp minimum case, which translates to better generalization.
 
 ![flat_vs_sharp](/assets/images/article/optimization/flat_vs_sharp.jpg "flat_vs_sharp")
 
