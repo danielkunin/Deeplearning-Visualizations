@@ -77,9 +77,9 @@ sidenotes:
 - We use the term poor local minimum because, in optimizing a machine learning model, the optimization is often non-convex and unlikely to converge to the global minimum.
 - Online optimization is when updates must be made with incomplete knowledge of the future, as in Stochastic Gradient Descent optimization.
 - Generalization refers to your model's ability to perform well on unseen data. In order to evaluate the generalization of your model, you can train your model on a training set and evaluate it on a hold-out test set.
-- This term essentially describes inflection points (where the concavity of the landscape changes) for which the gradient is zero in some, but not all, directions.
-- Gradient descent makes a linear approximation of the loss function in a given point. It then moves downhill along the approximation of the loss function.
 - For more information on hyperparameter tuning, see the Deep Learning Specialization Course 2, Week 3 (Hyperparameter Tuning, Batch Normalization and Programming Frameworks).
+- This term essentially describes inflection points (where the concavity of the landscape changes) for which the gradient is zero in some, but not all, directions.
+- Gradient descent makes a linear approximation of the cost function in a given point. It then moves downhill along the approximation of the cost function.
 
 ---
 
@@ -214,7 +214,7 @@ A good initialization can accelerate optimization and enable it to converge to t
 
 The learning rate influences the optimization’s convergence. It also counterbalances the influence of the cost function’s curvature. According to the gradient descent formula above, the direction and magnitude of the parameter update is given by the learning rate multiplied by the slope of the cost function at a certain point $W$. Specifically: $\alpha \frac{\partial \mathcal{J}}{\partial W}$.
 
-- If the learning rate is too small, updates are small and optimization is slow, especially if the loss curvature is low. Also, you're likely to settle into an <span class="sidenote">poor local minimum</span> or plateau.
+- If the learning rate is too small, updates are small and optimization is slow, especially if the cost curvature is low. Also, you're likely to settle into an <span class="sidenote">poor local minimum</span> or plateau.
 - If the learning rate is too large, updates will be large and the optimization is likely to diverge, especially if the cost curvature is high.
 - If the learning rate is good, updates are appropriate and the optimization should converge to a good set of parameters.
 
@@ -236,7 +236,7 @@ In fact, finding the "best decay schedule" is non trivial. However, adaptive lea
 
 Batch size is the number of data points used to train a model in each iteration. Typical small batches are 32, 64, 128, 256, 512, while large batches can be thousands of examples.
 
-Choosing the right batch size is crucial to ensure convergence of the cost function and parameter values, and to the <span class="sidenote">generalization</span> of your model. Some research<sup class="footnote"></sup> has considered how to make the choice, but there is no consensus. In practice, you can use a <span class="sidenote">hyperparameter search</span>.
+Choosing the right batch size is important to ensure convergence of the cost function and parameter values, and to the <span class="sidenote">generalization</span> of your model. Some research<sup class="footnote"></sup> has considered how to make the choice, but there is no consensus. In practice, you can use a <span class="sidenote">hyperparameter search</span>.
 
 Research into batch size has revealed the following principles:
 
@@ -245,9 +245,13 @@ Research into batch size has revealed the following principles:
 - Having larger batch sizes, but not so large that they no longer fit in GPU memory, tends to improve parallelization efficiency and can accelerate training.
 - Some authors have also suggested that large batch sizes can hurt the model’s ability to generalize, perhaps by causing the algorithm to find poorer local optima/plateau.
 
-In choosing batch size, there’s a balance to be struck depending on the available computational hardware and the task you’re trying to achieve. Recall that the input batch is an input to the cost function. Large batch size typically leads to sharper cost function surfaces than a small batch size, as Keskar et al. find in their paper, “On large-batch training for deep learning: generalization gap and sharp minima.”
+In choosing batch size, there’s a balance to be struck depending on the available computational hardware and the task you’re trying to achieve.
 
-Here's a figure comparing a flat and a sharp minimum. Flat cost surfaces (and thus small batch sizes) are preferred because they lead to good generalization without requiring high precision. In the graphic below, the values of the train and test costs for a given parameter value are much closer in the flat minimum case than in the sharp minimum case, which translates to better generalization.
+### Flat vs. sharp minima
+
+It is also hypothesized that larger batch sizes can lead to sharper cost function surfaces and relate to generalization.
+
+Here's a figure comparing a flat and a sharp minimum. Flat cost surfaces are preferred because they lead to good generalization without requiring high precision. In the graphic below, the values of the train and test costs for a given parameter value are much closer in the flat minimum case than in the sharp minimum case, which translates to better generalization.
 
 ![flat_vs_sharp](/assets/images/article/optimization/flat_vs_sharp.jpg "flat_vs_sharp")
 
@@ -315,7 +319,7 @@ The choice of optimizer influences both the speed of convergence and whether it 
         <ul>
             <li>RMSprop’s adaptive learning rate prevents the learning rate decay from diminishing too slowly or too fast.</li>
             <li>RMSprop maintains per-parameter learning rates.</li>
-            <li>RMSprop usually works well in <span class="sidenote">online</span> and <span class="sidenote">non-stationary settings</span>.</li>
+            <!--<li>RMSprop usually works well in <span class="sidenote">online</span> and <span class="sidenote">non-stationary settings</span>.</li>-->
             <li>RMSprop uses more memory for a given batch size than SGD and Momentum, but less than Adam.</li>
         </ul>
     </td>
