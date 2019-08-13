@@ -74,7 +74,7 @@ sidenotes:
 - Close-form methods attempt to solve a problem in a finite sequence of algebraic operations. For instance, you can find the point achieving the minimum of $f(x) = x^2 + 1$ by solving $f'(x) = 0$ which leads to $2x = 0 \implies x=0$.
 - While model parameters are derived during training, hyperparameters are values set before training starts. Hyperperameters include batch size and learning rate.
 - In theory, if you sampled infinitely many data points from the distribution and fit a linear model, you could recover the ground truth parameters.
-- We use the term inappropriate local minimum because, in optimizing a machine learning model, the optimization is often non-convex and unlikely to converge to the global minimum.
+- We use the term poor local minimum because, in optimizing a machine learning model, the optimization is often non-convex and unlikely to converge to the global minimum.
 - Online optimization is when updates must be made with incomplete knowledge of the future, as in Stochastic Gradient Descent optimization.
 - Generalization refers to your model's ability to perform well on unseen data. In order to evaluate the generalization of your model, you can train your model on a training set and evaluate it on a hold-out test set.
 - This term essentially describes inflection points (where the concavity of the landscape changes) for which the gradient is zero in some, but not all, directions.
