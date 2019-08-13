@@ -24,9 +24,9 @@ css:
 
 # Banner
 
-title: Optimizing neural networks
+title: Parameter optimization in neural networks
 
-abstract: Training a machine learning model is a matter of closing the gap between the model's predictions and reality. But optimizing the model isn't so straightforward. Through interactive visualizations, we'll help you develop your intuition for setting up and solving the optimization problem.
+abstract: Training a machine learning model is a matter of closing the gap between the model's predictions and the observed training data labels. But optimizing the model isn't so straightforward. Through interactive visualizations, we'll help you develop your intuition for setting up and solving this optimization problem.
 
 table-of-content:
 - index: I
@@ -84,7 +84,7 @@ sidenotes:
 ---
 
 In machine learning, you start by defining a task and a model. The model consists of an architecture and parameters. For a given architecture, the values of the parameters determine how accurately the model performs the task.
-But how do you find good values? By defining a loss function that evaluates how well the model performs. The goal is to optimize the loss and thereby to find parameter values that match predictions with reality. This is the essence of training.
+But how do you find good values? By defining a loss function that evaluates how well the model performs. The goal is to minimize the loss and thereby to find parameter values that match predictions with reality. This is the essence of training.
 
 
 
@@ -94,11 +94,11 @@ The <span class="sidenote">loss function</span> will be different in different t
 
 ### Example 1: House price prediction
 
-Say your task is to predict the price of houses $y \in \mathbb{R}y∈R$ based on features such as floor area, number of bedrooms, and ceiling height. The loss function can be summarized by the sentence:
+Say your task is to predict the price of houses $y \in \mathbb{R}$ based on features such as floor area, number of bedrooms, and ceiling height. The squared loss function can be summarized by the sentence:
 
 >Given a set of house features, the square of the difference between your prediction and the actual price should be as small as possible.
 
-You define the loss function as
+This loss function is
 
 $$\mathcal{L} = ||y-\hat{y}||_2^2$$
 
@@ -117,14 +117,14 @@ $$\mathcal{L} = \underbrace{(x - \hat{x})^2 + (y - \hat{y})^2}_{\text{BBox Cente
 
 This loss function depends on:
 
-- The model’s prediction which, in turn, depends on the parameter values  (weights and biases) as well as the input (in this case, images).
+- The model’s prediction which, in turn, depends on the parameter values (weights) as well as the input (in this case, images).
 - The ground truth corresponding to the input (labels; in this case, bounding boxes).
 
 ### Visualizing the loss function
 
-For a given input batch along with the corresponding ground truths, the loss function has a landscape that depends on the parameters of the network.
+For a given set of examples along with the corresponding ground truth labels, the loss function has a landscape that varies as a function of the parameters of the network.
 
-It is difficult to visualize this landscape, if there are more than two parameters. However, the landscape does exist, and our goal is to find the point where the loss function’s value is minimal.
+It is difficult to visualize this landscape, if there are more than two parameters. However, the landscape does exist, and our goal is to find the point where the loss function’s value is (approximately) minimal.
 
 Updating the parameter values will move the value either closer to or farther from the target minimum point.
 
@@ -132,13 +132,13 @@ Updating the parameter values will move the value either closer to or farther fr
 
 It is important to distinguish between the function $f$ that will perform the task (the model) and the function $\mathcal{L}$ you are optimizing (the loss function).
 
-- The model is an architecture and a set of parameters that approximates a <span class="sidenote">real function</span> that performs the task. Optimized parameter values will enable the model to perform the task with relative accuracy.
-- The loss function quantifies how accurately the model has performed on given data set. Its value depends on the model's parameter values.
+- The model inputs an unlabeled example (such as a picture) and outputs a label (such as a bbox for a car). It is defined by an architecture and a set of parameters, and approximates a <span class="sidenote">real function</span> that performs the task. Optimized parameter values will enable the model to perform the task with relative accuracy.
+- The loss function inputs a set of parameters and outputs a loss, measuring how well that set of parameters performs the task (on the training set).
 
 
-### Optimizing the loss
+### Optimizing the loss function
 
-Initially, good parameter values are unknown. However, you have a formula for the loss function. Optimize that on your dataset, and theoretically you will find good parameter values. The way to do this is to feed a training data set into the model and adjust the parameters iteratively to make the loss function as small as possible.
+Initially, good parameter values are unknown. However, you have a formula for the loss function. Minimize the loss function, and theoretically you will find good parameter values. The way to do this is to feed a training data set into the model and adjust the parameters iteratively to make the loss function as small as possible.
 
 In summary, the way you define the loss function will dictate the performance of your model on the task at hand. The diagram below illustrates the process of finding a model that performs well.
 
@@ -147,11 +147,11 @@ In summary, the way you define the loss function will dictate the performance of
 
 # II &emsp; Running the optimization process {#II}
 
-In this section, we assume that you have chosen a task, a data set, and a loss function. You will minimize the loss on the data set to find good parameter values.
+In this section, we assume that you have chosen a task, a data set, and a loss function. You will minimize the loss to find good parameter values.
 
 ### Using gradient descent
 
-To find parameter values that achieve a function's minimum, you can derive a <span class="sidenote">closed form</span> solution algebraically or approximate it using an iterative method. In machine learning, iterative methods such as gradient descent are often the only option because loss functions are either non-linear and dependent on a large number of variables.
+To find parameter values that achieve a function's minimum, you can either derive a <span class="sidenote">closed form</span> solution algebraically or approximate it using an iterative method. In machine learning, iterative methods such as gradient descent are often the only option because loss functions are dependent on a large number of variables, and there is almost never any practical way to find a closed form solution for the minimum.
 
 For gradient descent, you must first initialize the parameter values so that you have a starting point for optimization. Then, you adjust the parameter values iteratively to reduce the value of the loss function. At every iteration, parameter values are adjusted according to the opposite direction of the gradient of the loss; that is, in the direction that reduces the loss.
 
@@ -192,7 +192,6 @@ Here are some takeaways from the visualization:
 - Even if you choose the best possible hyperparameters, the trained model will not exactly match the provided ground truth (blue line) because the dataset is just a <span class="sidenote">proxy</span> for the ground-truth distribution.
 - The larger the training set size, the closer your trained model parameters will be to the parameters used to generate the data.
 - If your learning rate is too large, your algorithm won't converge. If it is too small, your algorithm will converge slowly.
-- If your batch size is too small, your parameter values will usually oscillate around the ground truth. 
 - If the initial point (the red dot) is close to the ground truth and the hyperparameters (learning rate and batch size) are tuned properly, your algorithm will converge quickly.
 
 As you can see, each hyperparameter has a different impact on the convergence of your algorithm. Let's dig deeper into each hyperparameter.
@@ -207,9 +206,9 @@ A good initialization can accelerate optimization and enable it to converge to t
 
 The learning rate influences the optimization’s convergence. It also counterbalances the influence of the loss function’s curvature. According to the gradient descent formula above, the direction and magnitude of the parameter update is given by the learning rate multiplied by the slope of the loss function at a certain point $W$. Specifically: $\alpha \frac{\partial \mathcal{L}}{\partial W}$.
 
-- If the learning rate is too small, updates are small and optimization is slow, especially if the loss curvature is low. Also, you're likely to settle into an <span class="sidenote">inappropriate local minimum</span>.
+- If the learning rate is too small, updates are small and optimization is slow, especially if the loss curvature is low. Also, you're likely to settle into an <span class="sidenote">poor local minimum</span> or plateau.
 - If the learning rate is too large, updates will be large and the optimization is likely to diverge, especially if the loss curvature is high.
-- If the learning rate is good, updates are appropriate and the optimization should converge.
+- If the learning rate is good, updates are appropriate and the optimization should converge to a good set of parameters.
 
 Play with the visualization below to understand how learning rate and loss curvature influence an algorithm's convergence.
 
@@ -223,7 +222,7 @@ The visualization illustrates that:
 
 It is common to start with a large learning rate — say, between 0.1 and 1 — and decay it during training. Choosing the right decay (how often? by how much?) is non-trivial. An excessively aggressive decay schedule slows progress toward the optimum, while a slow-paced decay schedule leads to chaotic updates with small improvements.
 
-In fact, nobody knows the right decay schedule. However, adaptive learning-rate algorithms such as Momentum Adam and RMSprop help adjust the learning rate during the optimization process. We’ll explain those algorithms below.
+In fact, finding the "best decay schedule" is non trivial. However, adaptive learning-rate algorithms such as Momentum Adam and RMSprop help adjust the learning rate during the optimization process. We’ll explain those algorithms below.
 
 ### Batch size
 
@@ -234,10 +233,9 @@ Choosing the right batch size is crucial to ensure convergence of the loss funct
 Research into batch size has revealed the following principles:
 
 - Batch size determines the frequency of updates. The smaller the batches, the more — though quicker the updates.
-- The larger the batch size, the more accurate the gradient of the loss will be with respect to the parameters. That is, the direction of the update is most likely going down the local
-slope of the loss landscape.
-- The largest batch size that fits into GPU memory leads to efficient parallelization and usually accelerates training.
-- However, in practice, large batch sizes can hurt the model’s ability to generalize.
+- The larger the batch size, the more accurate the gradient of the loss will be with respect to the parameters. That is, the direction of the update is most likely going down the local slope of the loss landscape.
+- Having larger batch sizes, but not so large that they no longer fit in GPU memory, tends to improve parallelization efficiency and can accelerate training.
+- Some authors have also suggested that large batch sizes can hurt the model’s ability to generalize, perhaps by causing the algorithm to find poorer local optima/plateau.
 
 In choosing batch size, there’s a balance to be struck depending on the available computational hardware and the task you’re trying to achieve. Recall that the input batch is an input to the cost function. Large batch size typically leads to sharper cost function surfaces than a small batch size, as Keskar et al. find in their paper, “On large-batch training for deep learning: generalization gap and sharp minima.”
 
