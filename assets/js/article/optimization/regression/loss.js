@@ -113,7 +113,7 @@ class regression_loss {
 
     this.legend = d3.legendColor()
       .labelFormat(d3.format(".2g"))
-      .title("Loss");
+      .title("Cost");
 
     this.svg.append("clipPath")
       .attr("id", "regression_clip")
