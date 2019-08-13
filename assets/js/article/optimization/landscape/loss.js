@@ -115,7 +115,7 @@ class loss {
 
     this.legend = d3.legendColor()
       .labelFormat(d3.format(".2g"))
-      .title("Loss");
+      .title("Cost");
 
     this.title = this.svg.append("text")
       .attr("class", "titles")

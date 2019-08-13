@@ -120,40 +120,47 @@ This loss function depends on:
 - The model’s prediction which, in turn, depends on the parameter values (weights) as well as the input (in this case, images).
 - The ground truth corresponding to the input (labels; in this case, bounding boxes).
 
-### Visualizing the loss function
+### Cost function
 
-For a given set of examples along with the corresponding ground truth labels, the loss function has a landscape that varies as a function of the parameters of the network.
+Note that the loss $\mathcal{L}$ takes as input a single example, so minimizing it doesn’t guarantee better model parameters for other examples.
 
-It is difficult to visualize this landscape, if there are more than two parameters. However, the landscape does exist, and our goal is to find the point where the loss function’s value is (approximately) minimal.
+It is common to minimize the average of the loss computed over the entire training data set; $\mathcal{J} = \frac{1}{m} \sum_{i=1}^{m} \mathcal{L}^{(i)}$. We call this function the cost. $m$ is the size of the training data set and $\mathcal{L}^{(i)}$ is the loss of a single training example $x^{(i)}$ labelled $y^{(i)}$.
+
+
+### Visualizing the cost function
+
+For a given set of examples along with the corresponding ground truth labels, the cost function has a landscape that varies as a function of the parameters of the network.
+
+It is difficult to visualize this landscape, if there are more than two parameters. However, the landscape does exist, and our goal is to find the point where the cost function’s value is (approximately) minimal.
 
 Updating the parameter values will move the value either closer to or farther from the target minimum point.
 
-### The model versus the loss function
+### The model versus the cost function
 
-It is important to distinguish between the function $f$ that will perform the task (the model) and the function $\mathcal{L}$ you are optimizing (the loss function).
+It is important to distinguish between the function $f$ that will perform the task (the model) and the function $\mathcal{J}$ you are optimizing (the cost function).
 
 - The model inputs an unlabeled example (such as a picture) and outputs a label (such as a bbox for a car). It is defined by an architecture and a set of parameters, and approximates a <span class="sidenote">real function</span> that performs the task. Optimized parameter values will enable the model to perform the task with relative accuracy.
-- The loss function inputs a set of parameters and outputs a loss, measuring how well that set of parameters performs the task (on the training set).
+- The cost function inputs a set of parameters and outputs a cost, measuring how well that set of parameters performs the task (on the training set).
 
 
-### Optimizing the loss function
+### Optimizing the cost function
 
-Initially, good parameter values are unknown. However, you have a formula for the loss function. Minimize the loss function, and theoretically you will find good parameter values. The way to do this is to feed a training data set into the model and adjust the parameters iteratively to make the loss function as small as possible.
+Initially, good parameter values are unknown. However, you have a formula for the cost function. Minimize the cost function, and theoretically you will find good parameter values. The way to do this is to feed a training data set into the model and adjust the parameters iteratively to make the cost function as small as possible.
 
-In summary, the way you define the loss function will dictate the performance of your model on the task at hand. The diagram below illustrates the process of finding a model that performs well.
+In summary, the way you define the cost function will dictate the performance of your model on the task at hand. The diagram below illustrates the process of finding a model that performs well.
 
 ![optimization_chart](/assets/images/article/optimization/optimization_chart.png "optimization_chart")
 
 
 # II &emsp; Running the optimization process {#II}
 
-In this section, we assume that you have chosen a task, a data set, and a loss function. You will minimize the loss to find good parameter values.
+In this section, we assume that you have chosen a task, a data set, and a cost function. You will minimize the cost to find good parameter values.
 
 ### Using gradient descent
 
-To find parameter values that achieve a function's minimum, you can either derive a <span class="sidenote">closed form</span> solution algebraically or approximate it using an iterative method. In machine learning, iterative methods such as gradient descent are often the only option because loss functions are dependent on a large number of variables, and there is almost never any practical way to find a closed form solution for the minimum.
+To find parameter values that achieve a function's minimum, you can either derive a <span class="sidenote">closed form</span> solution algebraically or approximate it using an iterative method. In machine learning, iterative methods such as gradient descent are often the only option because cost functions are dependent on a large number of variables, and there is almost never any practical way to find a closed form solution for the minimum.
 
-For gradient descent, you must first initialize the parameter values so that you have a starting point for optimization. Then, you adjust the parameter values iteratively to reduce the value of the loss function. At every iteration, parameter values are adjusted according to the opposite direction of the gradient of the loss; that is, in the direction that reduces the loss.
+For gradient descent, you must first initialize the parameter values so that you have a starting point for optimization. Then, you adjust the parameter values iteratively to reduce the value of the cost function. At every iteration, parameter values are adjusted according to the opposite direction of the gradient of the cost; that is, in the direction that reduces the cost.
 
 The mathematical procedure to remember is:
 
@@ -161,18 +168,19 @@ $\quad \text{for x in dataset:}$
 
   $\quad \quad \quad \hat{y} = model_W(x) \quad \quad \text{(predict)}$
 
-$ \quad \quad \quad W = W - \alpha \frac{\partial \mathcal{L}(y, \hat{y})}{\partial W} \quad \quad \text{(update parameters)}$
+$ \quad \quad \quad W = W - \alpha \frac{\partial \mathcal{J}(y, \hat{y})}{\partial W} \quad \quad \text{(update parameters)}$
 
 
 Where:
 - $\hat{y}$ is the model's prediction given an input $x$. 
 - $W$ denotes the parameters.
-- $\frac{\partial \mathcal{L}}{\partial W}$ is a gradient indicating the direction to push the value $W$ to decrease $\mathcal{L}$.
+- $\frac{\partial \mathcal{J}}{\partial W}$ is a gradient indicating the direction to push the value $W$ to decrease $\mathcal{J}$.
 - $\alpha$ is the learning rate which you can tune to decide how much you want to adjust the value of $W$ per iteration.
 
 You can learn more about gradient-based optimization algorithms in the Deep Learning Specialization. This topic is covered in Course 1, Week 2 (Neural Network Basics) and Course 2, Week 2 (Optimization Algorithms).
 
-Note that the loss $\mathcal{L}$ takes as input a single example, so minimizing it doesn’t guarantee better model parameters for other examples. It is common to minimize the average of the loss computed over a batch of examples; for instance, $\mathcal{J} = \frac{1}{m_b} \sum_{i=1}^{m_b} \mathcal{L}^{(i)}$. We call this function the cost, and reducing it leads to a more accurate parameter-update direction to minimize training error. $m_b$  is called the batch size. This is a key <span class="sidenote">hyperparameter</span> to tune.
+Note that the cost $\mathcal{J}$ takes as input the entire training data set, so computing it at every iteration can be slow. It is common to minimize the average of the loss computed over a batch of examples; for instance, $\mathcal{J_{mini-batch}} = \frac{1}{m_b} \sum_{i=1}^{m_b} \mathcal{L}^{(i)}$. Reducing this function leads to a quicker parameter-update direction to minimize training error. $m_b$  is called the batch size. This is a key <span class="sidenote">hyperparameter</span> to tune.
+
 
 ### Adjusting gradient descent hyperparameters
 
@@ -204,20 +212,20 @@ A good initialization can accelerate optimization and enable it to converge to t
 
 ### Learning rate
 
-The learning rate influences the optimization’s convergence. It also counterbalances the influence of the loss function’s curvature. According to the gradient descent formula above, the direction and magnitude of the parameter update is given by the learning rate multiplied by the slope of the loss function at a certain point $W$. Specifically: $\alpha \frac{\partial \mathcal{L}}{\partial W}$.
+The learning rate influences the optimization’s convergence. It also counterbalances the influence of the cost function’s curvature. According to the gradient descent formula above, the direction and magnitude of the parameter update is given by the learning rate multiplied by the slope of the cost function at a certain point $W$. Specifically: $\alpha \frac{\partial \mathcal{J}}{\partial W}$.
 
 - If the learning rate is too small, updates are small and optimization is slow, especially if the loss curvature is low. Also, you're likely to settle into an <span class="sidenote">poor local minimum</span> or plateau.
-- If the learning rate is too large, updates will be large and the optimization is likely to diverge, especially if the loss curvature is high.
+- If the learning rate is too large, updates will be large and the optimization is likely to diverge, especially if the cost curvature is high.
 - If the learning rate is good, updates are appropriate and the optimization should converge to a good set of parameters.
 
-Play with the visualization below to understand how learning rate and loss curvature influence an algorithm's convergence.
+Play with the visualization below to understand how learning rate and cost curvature influence an algorithm's convergence.
 
 {% include article/optimization/curvature.html %}
 
 The visualization illustrates that:
-- The choice of learning rate depends on the curvature of the loss function.
-- Gradient descent makes a linear approximation of the loss function at a given point. Then it moves downhill along the approximation of the loss function.
-- If the loss is highly curved, the larger the learning rate (step size), the larger the error of the <span class="sidenote">gradient approximation</span>. The approximation tends to overshoot.
+- The choice of learning rate depends on the curvature of the cost function.
+- Gradient descent makes a linear approximation of the cost function at a given point. Then it moves downhill along the approximation of the cost function.
+- If the cost is highly curved, the larger the learning rate (step size), the larger the error of the <span class="sidenote">gradient approximation</span>. The approximation tends to overshoot.
 - Taking small steps reduces the gradient approximation error.<sup class="footnote"></sup>
 
 It is common to start with a large learning rate — say, between 0.1 and 1 — and decay it during training. Choosing the right decay (how often? by how much?) is non-trivial. An excessively aggressive decay schedule slows progress toward the optimum, while a slow-paced decay schedule leads to chaotic updates with small improvements.
@@ -228,12 +236,12 @@ In fact, finding the "best decay schedule" is non trivial. However, adaptive lea
 
 Batch size is the number of data points used to train a model in each iteration. Typical small batches are 32, 64, 128, 256, 512, while large batches can be thousands of examples.
 
-Choosing the right batch size is crucial to ensure convergence of the loss function and parameter values, and to the <span class="sidenote">generalization</span> of your model. Some research<sup class="footnote"></sup> has considered how to make the choice, but there is no consensus. In practice, you can use a <span class="sidenote">hyperparameter search</span>.
+Choosing the right batch size is crucial to ensure convergence of the cost function and parameter values, and to the <span class="sidenote">generalization</span> of your model. Some research<sup class="footnote"></sup> has considered how to make the choice, but there is no consensus. In practice, you can use a <span class="sidenote">hyperparameter search</span>.
 
 Research into batch size has revealed the following principles:
 
 - Batch size determines the frequency of updates. The smaller the batches, the more — though quicker the updates.
-- The larger the batch size, the more accurate the gradient of the loss will be with respect to the parameters. That is, the direction of the update is most likely going down the local slope of the loss landscape.
+- The larger the batch size, the more accurate the gradient of the cost will be with respect to the parameters. That is, the direction of the update is most likely going down the local slope of the cost landscape.
 - Having larger batch sizes, but not so large that they no longer fit in GPU memory, tends to improve parallelization efficiency and can accelerate training.
 - Some authors have also suggested that large batch sizes can hurt the model’s ability to generalize, perhaps by causing the algorithm to find poorer local optima/plateau.
 
@@ -251,11 +259,11 @@ Now that you have a starting point, a learning rate, and a batch size, it’s ti
 
 The optimization algorithm is also a core choice. You can play with various optimizers in the visualization below. That will help you build an intuitive sense of the pros and cons of each.
 
-In the visualization below, your goal is to play with hyperparameters to find parameter values that minimize a loss function. You can choose the loss function and starting point of the optimization. Although there's no explicit model, you can assume that finding the minimum of the loss function is equivalent to finding the best model for your task. For the sake of simplicity, the model only has two parameters and the batch size is always 1.
+In the visualization below, your goal is to play with hyperparameters to find parameter values that minimize a cost function. You can choose the cost function and starting point of the optimization. Although there's no explicit model, you can assume that finding the minimum of the cost function is equivalent to finding the best model for your task. For the sake of simplicity, the model only has two parameters and the batch size is always 1.
 
 {% include article/optimization/landscape.html %}
 
-The choice of optimizer influences both the speed of convergence and whether it occurs. Several alternatives to the classic gradient descent algorithms have been developed in the past few years and are listed in the table below. (Notation: $dW = \frac{\partial \mathcal{L}}{\partial W}$)
+The choice of optimizer influences both the speed of convergence and whether it occurs. Several alternatives to the classic gradient descent algorithms have been developed in the past few years and are listed in the table below. (Notation: $dW = \frac{\partial \mathcal{J}}{\partial W}$)
 
 Adaptive optimization methods such as Adam or RMSprop perform well in the initial portion of training, but they have been found to generalize poorly at later stages  compared to Stochastic Gradient Descent. In Improving Generalization Performance by Switching from Adam to SGD, Keskar et al. investigate a hybrid strategy that begins training with an adaptive method and switches to SGD.
 

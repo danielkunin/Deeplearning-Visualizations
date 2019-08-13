@@ -1,9 +1,9 @@
 <div class="visualization hide-backToTop" id="landscape">
     <div class="visualization-column-2">
-        <p>In this visualization, you can compare optimizers applied to different loss functions and initialization. For a given loss landscape (<b>1</b>) and initialization (<b>2</b>), you can choose optimizers, their learning rate and decay (<b>3</b>). Then, press the play button to see the optimization process (<b>4</b>). There's no explicit model, but you can assume that finding the loss function's minimum is equivalent to finding the best model for your task.</p>
+        <p>In this visualization, you can compare optimizers applied to different cost functions and initialization. For a given cost landscape (<b>1</b>) and initialization (<b>2</b>), you can choose optimizers, their learning rate and decay (<b>3</b>). Then, press the play button to see the optimization process (<b>4</b>). There's no explicit model, but you can assume that finding the cost function's minimum is equivalent to finding the best model for your task.</p>
 
-        <h3>1. Choose a loss landscape</h3>
-        <p>Select an <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization">artificial landscape</a> $\mathcal{L}(w_1,w_2)$.</p>
+        <h3>1. Choose a cost landscape</h3>
+        <p>Select an <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization">artificial landscape</a> $\mathcal{J}(w_1,w_2)$.</p>
         <div class="lossFunctions">
             <label>
               <input type="radio" name="loss" value="himmelblaus" checked/>
@@ -23,7 +23,7 @@
             </label>
         </div>
         <h3>2. Choose initial parameters</h3>
-        <p>On the <font color="blue">loss landscape graph</font>, drag the <font color="red">red dot</font> to choose initial parameter values and thus the initial value of the loss.</p>
+        <p>On the <font color="blue">cost landscape graph</font>, drag the <font color="red">red dot</font> to choose initial parameter values and thus the initial value of the cost.</p>
 
         <h3>3. Choose an optimizer</h3>
         <p>Select the optimizer(s) and hyperparameters.</p>
@@ -61,7 +61,7 @@
             <td><input class="adam" type="number" name="ldecay" value="0" min="0" max="1" step="0.01"/></td>
           </tr>
         </table>
-        <h3>4. Optimize the loss function</h3>
+        <h3>4. Optimize the cost function</h3>
         <button class="button-transport" id="reset" title="reset">
             <img src="/assets/images/layout/reset.png">
         </button>
@@ -73,9 +73,9 @@
         </button>
     </div>
     <div class="visualization-column-2">
-        <p> This 2D plot describes the loss function's value for different values of the two parameters $(w_1,w_2)$. The lighter the color, the smaller the loss value.</p>
+        <p> This 2D plot describes the cost function's value for different values of the two parameters $(w_1,w_2)$. The lighter the color, the smaller the cost value.</p>
         <div id="landscape_contour"></div>
-        <p>The graph below shows how the value of the loss changes through successive epochs for each optimizer.</p>
+        <p>The graph below shows how the value of the cost changes through successive epochs for each optimizer.</p>
         <div id="landscape_loss"></div>
     </div>
 </div>
