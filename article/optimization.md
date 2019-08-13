@@ -166,7 +166,7 @@ The mathematical procedure to remember is:
 
 $\quad \text{for x in dataset:}$ 
 
-  $\quad \quad \quad \hat{y} = model_W(x) \quad \quad \text{(predict)}$
+$\quad \quad \quad \hat{y} = model_W(x) \quad \quad \text{(predict)}$
 
 $ \quad \quad \quad W = W - \alpha \frac{\partial \mathcal{J}(y, \hat{y})}{\partial W} \quad \quad \text{(update parameters)}$
 
@@ -264,6 +264,85 @@ In the visualization below, your goal is to play with hyperparameters to find pa
 {% include article/optimization/landscape.html %}
 
 The choice of optimizer influences both the speed of convergence and whether it occurs. Several alternatives to the classic gradient descent algorithms have been developed in the past few years and are listed in the table below. (Notation: $dW = \frac{\partial \mathcal{J}}{\partial W}$)
+
+<table class="full-width">
+  <tr>
+    <th>Optimizer</th>
+    <th>Update rule</th> 
+    <th>Attribute</th>
+  </tr>
+  <tr>
+    <td>(Stochastic) Gradient Descent</td>
+    <td>
+        $W = W - \alpha dW$
+    </td>
+    <td>
+        <ul>
+            <li>GD can use parallelization efficiently, but is very slow when the data set is larger the GPU's memory can handle. The parallelization wouldn't be optimal.</li>
+            <li>SGD usually converges faster than GD on large datasets, because updates are more frequent. Plus, the stochastic approximation of the gradient is usually precise without using the whole dataset because the data is often redundant.</li>
+            <li>Of the optimizers profiled here, SGD uses the least memory for a given batch size.</li>
+        </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>Momentum</td>
+    <td>
+        $$
+        \begin{aligned}
+        V_{dW} &= \beta V_{dW} + ( 1 - \beta ) dW\\
+        W &= W - \alpha V_{dW}
+        \end{aligned}
+        $$
+     </td>
+    <td>    
+        <ul>
+            <li>Momentum speeds up the learning with a very minor implementation change.
+                <li>Momentum uses more memory for a given batch size than SGD but less than RMSprop and Adam.</li></li>
+        </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>RMSprop</td>
+    <td>
+        $$
+        \begin{aligned}
+        S_{dW} &= \beta S_{dW} + ( 1 - \beta ) dW^2\\
+        W &= W - \alpha \frac{dW}{\sqrt{S_{dW}} + \varepsilon}
+        \end{aligned}
+        $$
+    </td>
+    <td>
+        <ul>
+            <li>RMSprop’s adaptive learning rate prevents the learning rate decay from diminishing too slowly or too fast.</li>
+            <li>RMSprop maintains per-parameter learning rates.</li>
+            <li>RMSprop usually works well in <span class="sidenote">online</span> and <span class="sidenote">non-stationary settings</span>.</li>
+            <li>RMSprop uses more memory for a given batch size than SGD and Momentum, but less than Adam.</li>
+        </ul>
+    </td>
+  </tr>
+  <tr>
+    <td><a href="https://arxiv.org/pdf/1412.6980.pdf">Adam</a></td>
+    <td>
+        $$
+        \begin{aligned}
+        V_{dW} &= \beta_1 V_{dW} + ( 1 - \beta_1 ) dW\\
+        S_{dW} &= \beta_2 S_{dW} + ( 1 - \beta_2 ) dW^2\\
+        Vcorr_{dW} &= \frac{V_{dW}}{(1 - \beta_1)^t}\\
+        Scorr_{dW} &= \frac{S_{dW}}{(1 - \beta_2)^t}\\
+        W &= W - \alpha \frac{dW}{\sqrt{S_{dW}} + \varepsilon}
+        \end{aligned}
+        $$
+     </td>
+    <td>
+        <ul>
+            <li>The hyperparameters of Adam (learning rate, exponential decay rates for the moment estimates, etc.) are usually set to predefined values (given in the paper), and do not need to be tuned.</li>
+            <li>Adam performs a form of learning rate annealing with adaptive step-sizes.</li>
+            <li>Of the optimizers profiled here, Adam uses the most memory for a given batch size.</li>
+            <li>Adam is often the default optimizer in machine learning.</li>
+        </ul>
+    </td>
+  </tr>
+</table>
 
 Adaptive optimization methods such as Adam or RMSprop perform well in the initial portion of training, but they have been found to generalize poorly at later stages  compared to Stochastic Gradient Descent. In Improving Generalization Performance by Switching from Adam to SGD, Keskar et al. investigate a hybrid strategy that begins training with an adaptive method and switches to SGD.
 
