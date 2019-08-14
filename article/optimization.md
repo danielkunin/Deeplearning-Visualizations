@@ -26,7 +26,7 @@ css:
 
 title: Parameter optimization in neural networks
 
-abstract: Training a machine learning model is a matter of closing the gap between the model's predictions and the observed training data labels. But optimizing the model isn't so straightforward. Through interactive visualizations, we'll help you develop your intuition for setting up and solving this optimization problem.
+abstract: Training a machine learning model is a matter of closing the gap between the model's predictions and the observed training data labels. But optimizing the model parameters isn't so straightforward. Through interactive visualizations, we'll help you develop your intuition for setting up and solving this optimization problem.
 
 table-of-content:
 - index: I
@@ -256,6 +256,9 @@ In the visualization below, your goal is to play with hyperparameters to find pa
 
 {% include article/optimization/landscape.html %}
 
+
+### Choice of optimizer
+
 The choice of optimizer influences both the speed of convergence and whether it occurs. Several alternatives to the classic gradient descent algorithms have been developed in the past few years and are listed in the table below. (Notation: $dW = \frac{\partial \mathcal{J}}{\partial W}$)
 
 <table class="full-width">
@@ -271,9 +274,9 @@ The choice of optimizer influences both the speed of convergence and whether it 
     </td>
     <td>
         <ul>
-            <li>GD can use parallelization efficiently, but is very slow when the data set is larger the GPU's memory can handle. The parallelization wouldn't be optimal.</li>
-            <li>SGD usually converges faster than GD on large datasets, because updates are more frequent. Plus, the stochastic approximation of the gradient is usually precise without using the whole dataset because the data is often redundant.</li>
-            <li>Of the optimizers profiled here, SGD uses the least memory for a given batch size.</li>
+            <li>Gradient descent can use parallelization efficiently, but is very slow when the data set is larger the GPU's memory can handle. The parallelization wouldn't be optimal.</li>
+            <li>Stochastic gradient descent usually converges faster than gradient descent on large datasets, because updates are more frequent. Plus, the stochastic approximation of the gradient is usually precise without using the whole dataset because the data is often redundant.</li>
+            <li>Of the optimizers profiled here, stochastic gradient descent uses the least memory for a given batch size.</li>
         </ul>
     </td>
   </tr>
@@ -289,8 +292,8 @@ The choice of optimizer influences both the speed of convergence and whether it 
      </td>
     <td>    
         <ul>
-            <li>Momentum speeds up the learning with a very minor implementation change.
-                <li>Momentum uses more memory for a given batch size than SGD but less than RMSprop and Adam.</li></li>
+            <li>Momentum usually speeds up the learning with a very minor implementation change.
+                <li>Momentum uses more memory for a given batch size than stochastic gradient descent but less than RMSprop and Adam.</li></li>
         </ul>
     </td>
   </tr>
@@ -306,10 +309,10 @@ The choice of optimizer influences both the speed of convergence and whether it 
     </td>
     <td>
         <ul>
-            <li>RMSprop’s adaptive learning rate prevents the learning rate decay from diminishing too slowly or too fast.</li>
+            <li>RMSprop’s adaptive learning rate usually prevents the learning rate decay from diminishing too slowly or too fast.</li>
             <li>RMSprop maintains per-parameter learning rates.</li>
             <!--<li>RMSprop usually works well in <span class="sidenote">online</span> and <span class="sidenote">non-stationary settings</span>.</li>-->
-            <li>RMSprop uses more memory for a given batch size than SGD and Momentum, but less than Adam.</li>
+            <li>RMSprop uses more memory for a given batch size than stochastic gradient descent and Momentum, but less than Adam.</li>
         </ul>
     </td>
   </tr>
@@ -337,7 +340,7 @@ The choice of optimizer influences both the speed of convergence and whether it 
   </tr>
 </table>
 
-Adaptive optimization methods such as Adam or RMSprop perform well in the initial portion of training, but they have been found to generalize poorly at later stages  compared to Stochastic Gradient Descent.
+Adaptive optimization methods such as Adam or RMSprop perform well in the initial portion of training, but they have been found to generalize poorly at later stages compared to Stochastic Gradient Descent.
 
 You can find more information about these optimizers in the Deep Learning Specialization Course 2, Week 2 (Optimization Algorithms) on Coursera.
 
