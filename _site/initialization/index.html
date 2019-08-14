@@ -274,10 +274,10 @@
     <div class="visualization-column-1" style="min-height: 530px;">
         <h3>3. Train the network.</h3>
         <p>Observe the cost function and the decision boundary.</p>
-        <button class="button-transport" id="playground_reset" title="reset"><img src="/assets/images/layout/reset.png" /></button>
-        <button class="button-transport inactive" id="playground_start" title="start"><img src="/assets/images/layout/play.png" /></button>
-        <button class="button-transport hidden" id="playground_stop" title="stop"><img src="/assets/images/layout/pause.png" /></button>
-        <button class="button-transport inactive" id="playground_step" title="step"><img src="/assets/images/layout/fastforward.png" /></button>
+        <button class="button-transport" id="playground_reset" title="reset"><img src="../assets/images/layout/reset.png" /></button>
+        <button class="button-transport inactive" id="playground_start" title="start"><img src="../assets/images/layout/play.png" /></button>
+        <button class="button-transport hidden" id="playground_stop" title="stop"><img src="../assets/images/layout/pause.png" /></button>
+        <button class="button-transport inactive" id="playground_step" title="step"><img src="../assets/images/layout/fastforward.png" /></button>
         <div class="line-break-sm"></div>
         <div id="playground_loss"></div>
         <div class="line-break-sm"></div>
@@ -305,7 +305,7 @@
 
 <p>Consider this 9-layer neural network.</p>
 
-<p><img src="/assets/images/article/initialization/9layer.png" alt="9 layer" title="9 layer" /></p>
+<p><img src="../assets/images/article/initialization/9layer.png" alt="9 layer" title="9 layer" /></p>
 
 <p>At every iteration of the optimization loop (forward, cost, backward, update), we observe that backpropagated gradients are either amplified or minimized as you move from the output layer towards the input layer. This result makes sense if you consider the following example.</p>
 
@@ -404,10 +404,10 @@ $$</div>
     <div class="visualization-column-1">
         <h3>3. Train the network and observe</h3>
         <p>The grid below refers to the input images, <span class="correct bold">Blue</span> squares represent correctly classified images. <span class="incorrect bold">Red</span> squares represent misclassified images.</p>              
-        <button class="button-transport" id="mnist_reset"><img src="/assets/images/layout/reset.png" /></button>
-        <button class="button-transport inactive" id="mnist_start"><img src="/assets/images/layout/play.png" /></button>
-        <button class="button-transport hidden" id="mnist_stop"><img src="/assets/images/layout/pause.png" /></button>
-        <button class="button-transport inactive" id="mnist_step"><img src="/assets/images/layout/fastforward.png" /></button>
+        <button class="button-transport" id="mnist_reset"><img src="../assets/images/layout/reset.png" /></button>
+        <button class="button-transport inactive" id="mnist_start"><img src="../assets/images/layout/play.png" /></button>
+        <button class="button-transport hidden" id="mnist_stop"><img src="../assets/images/layout/pause.png" /></button>
+        <button class="button-transport inactive" id="mnist_step"><img src="../assets/images/layout/fastforward.png" /></button>
     </div>
     <div class="visualization-column-1">
         <p>Input batch of 100 images</p>
@@ -432,7 +432,7 @@ $$</div>
         </label>        
     </div>   
     <div class="visualization-column-full">
-        <img src="/assets/images/article/initialization/img4.png" class="viz-full-img" />
+        <img src="../assets/images/article/initialization/img4.png" class="viz-full-img" />
     </div>
 </div>
 
@@ -560,15 +560,15 @@ $$</div>
                     </div>
                 
                     <div class="sidenote-body">
-                        <p class="caption"><img src='/assets/images/article/initialization/layerl.png'> $a^{[l-1]}$ represents the input to layer $l$ and $a^{[l]}$ represents the output. $g^{[l]}$ is the activation function of layer $l$. $n^{[l]}$ is the number of neuron in layer $l$.</p>
+                        <p class="caption"><img src='../assets/images/article/initialization/layerl.png'> $a^{[l-1]}$ represents the input to layer $l$ and $a^{[l]}$ represents the output. $g^{[l]}$ is the activation function of layer $l$. $n^{[l]}$ is the number of neuron in layer $l$.</p>
                     </div>
                 
                     <div class="sidenote-body">
-                        <p class="caption"><img src='/assets/images/article/initialization/normal.png'> Values generated from a normal distribution $\mathcal{N}(\mu,\sigma^2)$ are symmetric around the mean $\mu$.</p>
+                        <p class="caption"><img src='../assets/images/article/initialization/normal.png'> Values generated from a normal distribution $\mathcal{N}(\mu,\sigma^2)$ are symmetric around the mean $\mu$.</p>
                     </div>
                 
                     <div class="sidenote-body">
-                        <p class="caption"><img src='/assets/images/article/initialization/layerl.png'> $a^{[l-1]}$ represents the input to layer $l$ and $a^{[l]}$ represents the output.</p>
+                        <p class="caption"><img src='../assets/images/article/initialization/layerl.png'> $a^{[l-1]}$ represents the input to layer $l$ and $a^{[l]}$ represents the output.</p>
                     </div>
                 
                     <div class="sidenote-body">

@@ -79,7 +79,7 @@ All CSS and JS files should go in `assets/css/[folder]/` and `assets/js/[folder]
 
 #### Visualizations
 There are two types of visualizations we can handle:
- - Static images should go in the following folder `assets/images/[article]/` and use `![Alt text](/path/to/image.png)`
+ - Static images should go in the following folder `assets/images/[article]/` and use `![Alt text](../assets/images/[article]/[image].png)`
  - Interactive graphics and visualizations should be written independently in HTML, CSS, and JS. The CSS and JS files should be added to the assets folder as described above.  The HTML should be added to `_includes/article/[folder]` and linked in the article content as `{% include article/[folder]/file.html %}`.
 
 #### Footenotes
@@ -116,7 +116,7 @@ You can comment out Markdown with HTML comment symbols.  Surround the text you w
 
 Change the `published` tag in `_config.yml` to true for all articles that are being published.  In the `_config.yml` file change `baseurl:` to 
  - `""` if you are sharing folder
- - `deeplearning.ai/ai-notes` if you are adding to the server 
+ - `http://www.deeplearning.ai/ai-notes` if you are adding to the server 
 
 From terminal run `JEKYLL_ENV=production jekyll build` in the top folder. A publishable HTML version of the website will be available in the `_site` folder. Share and view the `_site` folder by running `python -m http.server 4000` from it or transfer the content of the `_site` folder to the server to host it.
 

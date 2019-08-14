@@ -283,7 +283,7 @@ $$</div>
 
 <p>In summary, the way you define the cost function will dictate the performance of your model on the task at hand. The diagram below illustrates the process of finding a model that performs well.</p>
 
-<p><img src="/assets/images/article/optimization/optimization_chart.png" alt="optimization_chart" title="optimization_chart" /></p>
+<p><img src="../assets/images/article/optimization/optimization_chart.png" alt="optimization_chart" title="optimization_chart" /></p>
 
 <h1 id="II">II   Running the optimization process</h1>
 
@@ -389,13 +389,13 @@ $$</div>
         </label>
         <p>Train the <span class="red">model</span>.</p>
         <button class="button-transport" id="regression_reset" title="reset">
-            <img src="/assets/images/layout/reset.png" />
+            <img src="../assets/images/layout/reset.png" />
         </button>
         <button class="button-transport" id="regression_train" title="start">
-            <img src="/assets/images/layout/play.png" />
+            <img src="../assets/images/layout/play.png" />
         </button>
         <button class="button-transport hidden" id="regression_stop" title="stop">
-            <img src="/assets/images/layout/pause.png" />
+            <img src="../assets/images/layout/pause.png" />
         </button>
         <div id="regression_loss"></div>
     </div>
@@ -479,10 +479,10 @@ $$</div>
     </label>
     <div>
     <button class="button-transport" id="replay" title="reset">
-        <img src="/assets/images/layout/reset.png" /> Reset
+        <img src="../assets/images/layout/reset.png" /> Reset
     </button>
     <br />
-    <img src="/assets/images/article/optimization/approx_error.png" style="width:50%" />
+    <img src="../assets/images/article/optimization/approx_error.png" style="width:50%" />
     </div>
   </div>
 </div>
@@ -522,7 +522,7 @@ $$</div>
 
 <p>Here’s a figure comparing a flat and a sharp minimum. Flat cost surfaces are preferred because they lead to good generalization without requiring high precision. In the graphic below, the values of the train and test costs for a given parameter value are much closer in the flat minimum case than in the sharp minimum case, which translates to better generalization.</p>
 
-<p><img src="/assets/images/article/optimization/flat_vs_sharp.jpg" alt="flat_vs_sharp" title="flat_vs_sharp" /></p>
+<p><img src="../assets/images/article/optimization/flat_vs_sharp.jpg" alt="flat_vs_sharp" title="flat_vs_sharp" /></p>
 
 <p>In practice, hyperparameter search can help you find batch size and learning rate. These hyperparameters are two routes to the same outcome, according to Smith, Kindermans et al. in Don’t Decay the Learning Rate, Increase the Batch Size. They argue that the benefits of decaying the learning rate can be achieved by increasing batch size during training. So if you change batch size, you may also need to change learning rate. Efficient use of vast batch sizes notably reduces the number of parameter updates required to train a model.</p>
 
@@ -543,19 +543,19 @@ $$</div>
         <div class="lossFunctions">
             <label>
               <input type="radio" name="loss" value="himmelblaus" checked="" />
-              <img src="/assets/images/article/optimization/loss/himmelblaus.png" />
+              <img src="../assets/images/article/optimization/loss/himmelblaus.png" />
             </label>
             <label>
               <input type="radio" name="loss" value="styblinskiTang" />
-              <img src="/assets/images/article/optimization/loss/styblinskiTang.png" />
+              <img src="../assets/images/article/optimization/loss/styblinskiTang.png" />
             </label>
             <label>
               <input type="radio" name="loss" value="rosenbrock" />
-              <img src="/assets/images/article/optimization/loss/rosenbrock.png" />
+              <img src="../assets/images/article/optimization/loss/rosenbrock.png" />
             </label>
             <label>
               <input type="radio" name="loss" value="goldsteinPrice" />
-              <img src="/assets/images/article/optimization/loss/goldsteinPrice.png" />
+              <img src="../assets/images/article/optimization/loss/goldsteinPrice.png" />
             </label>
         </div>
         <h3>2. Choose initial parameters</h3>
@@ -599,13 +599,13 @@ $$</div>
         </table>
         <h3>4. Optimize the cost function</h3>
         <button class="button-transport" id="reset" title="reset">
-            <img src="/assets/images/layout/reset.png" />
+            <img src="../assets/images/layout/reset.png" />
         </button>
         <button class="button-transport" id="train" title="start">
-            <img src="/assets/images/layout/play.png" />
+            <img src="../assets/images/layout/play.png" />
         </button>
         <button class="button-transport hidden" id="stop" title="stop">
-            <img src="/assets/images/layout/pause.png" />
+            <img src="../assets/images/layout/pause.png" />
         </button>
     </div>
     <div class="visualization-column-2">

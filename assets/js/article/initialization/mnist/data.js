@@ -1,12 +1,12 @@
 
 // Set directory of zip reader
 // zip.workerScriptsPath = window.location.pathname.slice(0, -10) + "/js/mnist/zip/";
-zip.workerScriptsPath = "/assets/js/article/initialization/mnist/zip/";
+zip.workerScriptsPath = "../assets/js/article/initialization/mnist/zip/";
 
 
 // Download the .zip file, Extract the .csv file, Load into RAM
 function extract(file, data, draw) {
-  zip.createReader(new zip.HttpReader("/assets/data/" + file), function(reader) {
+  zip.createReader(new zip.HttpReader("../assets/data/" + file), function(reader) {
 
     reader.getEntries(function(entries) {
 

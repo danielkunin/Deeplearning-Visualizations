@@ -83,11 +83,11 @@ sidenotes:
 
 - Variance is a measure of how much a random variable is spread around its mean. In deep learning, the random variable could be the data, the prediction, the weights, the activations, etc.
 
-- <img src='/assets/images/article/initialization/layerl.png'> $a^{[l-1]}$ represents the input to layer $l$ and $a^{[l]}$ represents the output. $g^{[l]}$ is the activation function of layer $l$. $n^{[l]}$ is the number of neuron in layer $l$.
+- <img src='../assets/images/article/initialization/layerl.png'> $a^{[l-1]}$ represents the input to layer $l$ and $a^{[l]}$ represents the output. $g^{[l]}$ is the activation function of layer $l$. $n^{[l]}$ is the number of neuron in layer $l$.
 
-- <img src='/assets/images/article/initialization/normal.png'> Values generated from a normal distribution $\mathcal{N}(\mu,\sigma^2)$ are symmetric around the mean $\mu$.
+- <img src='../assets/images/article/initialization/normal.png'> Values generated from a normal distribution $\mathcal{N}(\mu,\sigma^2)$ are symmetric around the mean $\mu$.
 
-- <img src='/assets/images/article/initialization/layerl.png'> $a^{[l-1]}$ represents the input to layer $l$ and $a^{[l]}$ represents the output.
+- <img src='../assets/images/article/initialization/layerl.png'> $a^{[l-1]}$ represents the input to layer $l$ and $a^{[l]}$ represents the output.
 
 - $tanh$ is a non-linear function defined as $tanh(x) = \frac{1 - e^{-2x}}{1 + e^{-2x}}$.
 
@@ -135,7 +135,7 @@ Choosing proper values for initialization is necessary for efficient training. W
 
 Consider this 9-layer neural network.
 
-![9 layer](/assets/images/article/initialization/9layer.png "9 layer")
+![9 layer](../assets/images/article/initialization/9layer.png "9 layer")
 
 At every iteration of the optimization loop (forward, cost, backward, update), we observe that backpropagated gradients are either amplified or minimized as you move from the output layer towards the input layer. This result makes sense if you consider the following example.
  
