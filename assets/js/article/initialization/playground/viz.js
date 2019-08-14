@@ -29,7 +29,7 @@ function playground_dataset() {
       .attr('y', function(d,i) { return(i % 2) * (height / 2 + padding); })
       .attr('width', width / 2 - padding)
       .attr('height',height / 2 - padding)
-      .attr('xlink:href', function(d) { return '/assets/images/article/initialization/' + d; });
+      .attr('xlink:href', function(d) { return '../assets/images/article/initialization/' + d; });
     var rects = svg.selectAll("rect")
       .data(data)
       .enter().append("rect")

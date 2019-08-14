@@ -1,7 +1,7 @@
 ---
 
 layout: article
-permalink: optimization
+permalink: optimization/
 folder: optimization
 
 # CSS & JS
@@ -149,7 +149,7 @@ Initially, good parameter values are unknown. However, you have a formula for th
 
 In summary, the way you define the cost function will dictate the performance of your model on the task at hand. The diagram below illustrates the process of finding a model that performs well.
 
-![optimization_chart](/assets/images/article/optimization/optimization_chart.png "optimization_chart")
+![optimization_chart](../assets/images/article/optimization/optimization_chart.png "optimization_chart")
 
 
 # II &emsp; Running the optimization process {#II}
@@ -253,7 +253,7 @@ It is also hypothesized that larger batch sizes can lead to sharper cost functio
 
 Here's a figure comparing a flat and a sharp minimum. Flat cost surfaces are preferred because they lead to good generalization without requiring high precision. In the graphic below, the values of the train and test costs for a given parameter value are much closer in the flat minimum case than in the sharp minimum case, which translates to better generalization.
 
-![flat_vs_sharp](/assets/images/article/optimization/flat_vs_sharp.jpg "flat_vs_sharp")
+![flat_vs_sharp](../assets/images/article/optimization/flat_vs_sharp.jpg "flat_vs_sharp")
 
 In practice, hyperparameter search can help you find batch size and learning rate. These hyperparameters are two routes to the same outcome, according to Smith, Kindermans et al. in Don't Decay the Learning Rate, Increase the Batch Size. They argue that the benefits of decaying the learning rate can be achieved by increasing batch size during training. So if you change batch size, you may also need to change learning rate. Efficient use of vast batch sizes notably reduces the number of parameter updates required to train a model.
 

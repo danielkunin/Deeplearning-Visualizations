@@ -23,45 +23,44 @@ sass:
     sass_dir: _sass
     style: :compressed
 
+# Publish settings
+baseurl:
 
-
-# Theme settings
-notes:
-    baseurl: 
-    article:
-        nav:
-          - title: Initializing neural networks
-            link: Initialization
-            url: initialization
-            published: true
-            color:
-              start: "#FFB991"
-              stop: "#FF866F"
-          - title: Optimizing neural networks
-            link: Optimization
-            url: optimization
-            published: false
-            color:
-              start: "#41AF92"
-              stop: "#96E06A"
-          - title: Regularizing neural networks
-            link: Regularization
-            url: regularization
-            published: false
-            color:
-              start: "#009CDE"
-              stop: "#29E9F6"
-          # - title: Tuning neural networks
-          #   link: Tuning
-          #   url: "#"
-          #   published: false
-          #   color:
-          #     start: "#FFA900"
-          #     stop: "#F5C35F"
-          # - title: Evaluating neural networks
-          #   link: Evaluating
-          #   url: "#"
-          #   published: false
-          #   color:
-          #     start: "#F19FB9"
-          #     stop: "#E474E4"
+# Article settings
+article:
+    nav:
+      - title: Initializing neural networks
+        link: Initialization
+        url: initialization
+        published: true
+        color:
+          start: "#FFB991"
+          stop: "#FF866F"
+      - title: Parameter optimization in neural networks
+        link: Optimization
+        url: optimization
+        published: true
+        color:
+          start: "#41AF92"
+          stop: "#96E06A"
+      - title: Regularizing neural networks
+        link: Regularization
+        url: regularization
+        published: false
+        color:
+          start: "#009CDE"
+          stop: "#29E9F6"
+      # - title: Tuning neural networks
+      #   link: Tuning
+      #   url: "#"
+      #   published: false
+      #   color:
+      #     start: "#FFA900"
+      #     stop: "#F5C35F"
+      # - title: Evaluating neural networks
+      #   link: Evaluating
+      #   url: "#"
+      #   published: false
+      #   color:
+      #     start: "#F19FB9"
+      #     stop: "#E474E4"
