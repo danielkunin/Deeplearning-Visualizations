@@ -258,7 +258,7 @@ In the visualization below, your goal is to play with hyperparameters to find pa
 
 The choice of optimizer influences both the speed of convergence and whether it occurs. Several alternatives to the classic gradient descent algorithms have been developed in the past few years and are listed in the table below. (Notation: $dW = \frac{\partial \mathcal{J}}{\partial W}$)
 
-<table class="full-width">
+<table class="full-width hide-backToTop">
   <tr>
     <th>Optimizer</th>
     <th>Update rule</th> 
