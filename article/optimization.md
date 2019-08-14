@@ -274,9 +274,9 @@ The choice of optimizer influences both the speed of convergence and whether it 
     </td>
     <td>
         <ul>
-            <li>Gradient Descent can use parallelization efficiently, but is very slow when the data set is larger the GPU's memory can handle. The parallelization wouldn't be optimal.</li>
-            <li>Stochastic Gradient Descent usually converges faster than gradient descent on large datasets, because updates are more frequent. Plus, the stochastic approximation of the gradient is usually precise without using the whole dataset because the data is often redundant.</li>
-            <li>Of the optimizers profiled here, Stochastic Gradient Descent uses the least memory for a given batch size.</li>
+            <li>Gradient descent can use parallelization efficiently, but is very slow when the data set is larger the GPU's memory can handle. The parallelization wouldn't be optimal.</li>
+            <li>Stochastic gradient descent usually converges faster than gradient descent on large datasets, because updates are more frequent. Plus, the stochastic approximation of the gradient is usually precise without using the whole dataset because the data is often redundant.</li>
+            <li>Of the optimizers profiled here, stochastic gradient descent uses the least memory for a given batch size.</li>
         </ul>
     </td>
   </tr>
@@ -293,7 +293,7 @@ The choice of optimizer influences both the speed of convergence and whether it 
     <td>    
         <ul>
             <li>Momentum usually speeds up the learning with a very minor implementation change.
-                <li>Momentum uses more memory for a given batch size than Stochastic Gradient Descent but less than RMSprop and Adam.</li></li>
+                <li>Momentum uses more memory for a given batch size than stochastic gradient descent but less than RMSprop and Adam.</li></li>
         </ul>
     </td>
   </tr>
@@ -312,7 +312,7 @@ The choice of optimizer influences both the speed of convergence and whether it 
             <li>RMSprop’s adaptive learning rate usually prevents the learning rate decay from diminishing too slowly or too fast.</li>
             <li>RMSprop maintains per-parameter learning rates.</li>
             <!--<li>RMSprop usually works well in <span class="sidenote">online</span> and <span class="sidenote">non-stationary settings</span>.</li>-->
-            <li>RMSprop uses more memory for a given batch size than Stochastic Gradient Descent and Momentum, but less than Adam.</li>
+            <li>RMSprop uses more memory for a given batch size than stochastic gradient descent and Momentum, but less than Adam.</li>
         </ul>
     </td>
   </tr>
@@ -340,7 +340,7 @@ The choice of optimizer influences both the speed of convergence and whether it 
   </tr>
 </table>
 
-Adaptive optimization methods such as Adam or RMSprop perform well in the initial portion of training, but they have been found to generalize poorly at later stages compared to Stochastic Gradient Descent.
+Adaptive optimization methods such as Adam or RMSprop perform well in the initial portion of training, but they have been found to generalize poorly at later stages compared to stochastic gradient descent.
 
 You can find more information about these optimizers in the Deep Learning Specialization Course 2, Week 2 (Optimization Algorithms) on Coursera.
 
