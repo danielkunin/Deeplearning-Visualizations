@@ -1,6 +1,9 @@
 <div class="visualization hide-backToTop" id="regression">
+    <div class="visualization-column-4">
+        <p>In this visualization, your goal is to recover the ground truth parameters used to generate a training set. You can fit a linear model $\hat{y} = wx + b$ on the training set using gradient descent. Press the button to generate a dataset of chosen size (<b>1</b>) and observe its impact on the cost landscape. Then, choose initial values of your model parameters by dragging the <span class="red">red dot</span> (<b>2</b>) before optimizing (<b>3</b>).</p>
+    </div>
     <div class="visualization-column-1">
-        <p>In this visualization, your goal is to recover the ground truth parameters used to generate a training set. You can fit a linear model <script>document.write(katex.renderToString('\\hat{y} = wx + b'))</script> on the training set using gradient descent. Press the button to generate a dataset of chosen size (<b>1</b>) and observe its impact on the cost landscape. Then, choose initial values of your model parameters by dragging the <span class="red">red dot</span> (<b>2</b>) before optimizing (<b>3</b>).</p>
+        <!-- <p>In this visualization, your goal is to recover the ground truth parameters used to generate a training set. You can fit a linear model <script>document.write(katex.renderToString('\\hat{y} = wx + b'))</script> on the training set using gradient descent. Press the button to generate a dataset of chosen size (<b>1</b>) and observe its impact on the cost landscape. Then, choose initial values of your model parameters by dragging the <span class="red">red dot</span> (<b>2</b>) before optimizing (<b>3</b>).</p> -->
         <h3>1. Generate a dataset</h3>
         <p>Select a training set size $m$.</p>
         <label class="radio-container">Small
@@ -15,7 +18,7 @@
             <input type="radio" value="800" name="regression_tsize">
             <span class="checkmark"></span>
         </label>
-        <p>A training set of the chosen size will be sampled with noise from a line representing <span class="blue">ground truth</span>. This line is the target line for the <span class="red">model</span> defined by <script>document.write(katex.renderToString('\\hat{y} = wx + b'))</script>.</p>
+        <p>A training set of the chosen size will be sampled with noise from a line representing <span class="blue">ground truth</span>. This line is the target line for the <span class="red">model</span> defined by $\hat{y} = wx + b$.</p>
         <button class="button-transport" id="generate">
            Generate a new dataset.
         </button>
@@ -23,7 +26,7 @@
     </div>
     <div class="visualization-column-2">
         <h3>2. Observe the cost landscape and initialize parameters.</h3>
-        <p>The cost function is the L2 loss (defined as <script>document.write(katex.renderToString('\\mathcal{L}(y, \\hat{y}) = ||y - \\hat{y}||_2^2'))</script>) averaged over the training set. The <span class="blue">blue dot</span> indicates the value of the cost function at the ground-truth slope and intercept. The <span class="red">red dot</span> indicates the value of the cost function at a chosen initialization of the slope and intercept. Drag and drop the red dot to change the initialization.</p>
+        <p>The cost function is the L2 loss (defined as $\mathcal{L}(y, \hat{y}) = ||y - \hat{y}||_2^2$) averaged over the training set. The <span class="blue">blue dot</span> indicates the value of the cost function at the ground-truth slope and intercept. The <span class="red">red dot</span> indicates the value of the cost function at a chosen initialization of the slope and intercept. Drag and drop the red dot to change the initialization.</p>
         <div id="regression_landscape"></div>
     </div>
     <div class="visualization-column-1">

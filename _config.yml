@@ -37,10 +37,10 @@ notes:
             color:
               start: "#FFB991"
               stop: "#FF866F"
-          - title: Optimizing neural networks
+          - title: Parameter optimization in neural networks
             link: Optimization
             url: optimization
-            published: false
+            published: true
             color:
               start: "#41AF92"
               stop: "#96E06A"

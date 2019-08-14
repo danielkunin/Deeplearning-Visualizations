@@ -1,7 +1,7 @@
 ---
 
 layout: article
-permalink: optimization
+permalink: optimization/
 folder: optimization
 
 # CSS & JS
