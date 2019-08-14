@@ -24,7 +24,7 @@ sass:
     style: :compressed
 
 # Publish settings
-baseurl: "http://www.deeplearning.ai/ai-notes"
+baseurl:
 
 # Article settings
 article:
