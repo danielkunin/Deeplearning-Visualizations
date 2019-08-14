@@ -72,10 +72,9 @@ sidenotes:
 - By definition, this function L has a low value when the model performs well on the task.
 - Do you know the mathematical formula that allows a neural network to detect cats in images? Probably not. But using data you can find a function that performs this task. It turns out that a convolutional architecture with the right parameters defines a function that can perform this task well.
 - Close-form methods attempt to solve a problem in a finite sequence of algebraic operations. For instance, you can find the point achieving the minimum of $f(x) = x^2 + 1$ by solving $f'(x) = 0$ which leads to $2x = 0 \implies x=0$.
-- While model parameters are derived during training, hyperparameters are values set before training starts. Hyperperameters include batch size and learning rate.
+- In addition to learning parameters for a model, you also need reasonable choices of hyperperameters that affect training, such as batch size and learning rate.
 - In theory, if you sampled infinitely many data points from the distribution and fit a linear model, you could recover the ground truth parameters.
 - We use the term poor local minimum because, in optimizing a machine learning model, the optimization is often non-convex and unlikely to converge to the global minimum.
-- Online optimization is when updates must be made with incomplete knowledge of the future, as in Stochastic Gradient Descent optimization.
 - Generalization refers to your model's ability to perform well on unseen data. In order to evaluate the generalization of your model, you can train your model on a training set and evaluate it on a hold-out test set.
 - For more information on hyperparameter tuning, see the Deep Learning Specialization Course 2, Week 3 (Hyperparameter Tuning, Batch Normalization and Programming Frameworks).
 - This term essentially describes inflection points (where the concavity of the landscape changes) for which the gradient is zero in some, but not all, directions.
@@ -131,7 +130,7 @@ It is common to minimize the average of the loss computed over the entire traini
 
 For a given set of examples along with the corresponding ground truth labels, the cost function has a landscape that varies as a function of the parameters of the network.
 
-It is difficult to visualize this landscape, if there are more than two parameters. However, the landscape does exist, and our goal is to find the point where the cost function’s value is (approximately) minimal.
+It is difficult to visualize this landscape if there are more than two parameters. However, the landscape does exist, and our goal is to find the point where the cost function’s value is (approximately) minimal.
 
 Updating the parameter values will move the value either closer to or farther from the target minimum point.
 
@@ -158,7 +157,7 @@ In this section, we assume that you have chosen a task, a data set, and a cost f
 
 ### Using gradient descent
 
-To find parameter values that achieve a function's minimum, you can either derive a <span class="sidenote">closed form</span> solution algebraically or approximate it using an iterative method. In machine learning, iterative methods such as gradient descent are often the only option because cost functions are dependent on a large number of variables, and there is almost never any practical way to find a closed form solution for the minimum.
+To find parameter values that achieve a function's minimum, you can either try to derive a <span class="sidenote">closed form</span> solution algebraically or approximate it using an iterative method. In machine learning, iterative methods such as gradient descent are often the only option because cost functions are dependent on a large number of variables, and there is almost never any practical way to find a closed form solution for the minimum.
 
 For gradient descent, you must first initialize the parameter values so that you have a starting point for optimization. Then, you adjust the parameter values iteratively to reduce the value of the cost function. At every iteration, parameter values are adjusted according to the opposite direction of the gradient of the cost; that is, in the direction that reduces the cost.
 
@@ -215,18 +214,18 @@ A good initialization can accelerate optimization and enable it to converge to t
 The learning rate influences the optimization’s convergence. It also counterbalances the influence of the cost function’s curvature. According to the gradient descent formula above, the direction and magnitude of the parameter update is given by the learning rate multiplied by the slope of the cost function at a certain point $W$. Specifically: $\alpha \frac{\partial \mathcal{J}}{\partial W}$.
 
 - If the learning rate is too small, updates are small and optimization is slow, especially if the cost curvature is low. Also, you're likely to settle into an <span class="sidenote">poor local minimum</span> or plateau.
-- If the learning rate is too large, updates will be large and the optimization is likely to diverge, especially if the cost curvature is high.
-- If the learning rate is good, updates are appropriate and the optimization should converge to a good set of parameters.
+- If the learning rate is too large, updates will be large and the optimization is likely to diverge, especially if the cost function's curvature is high.
+- If the learning rate is chosen well, updates are appropriate and the optimization should converge to a good set of parameters.
 
 Play with the visualization below to understand how learning rate and cost curvature influence an algorithm's convergence.
 
 {% include article/optimization/curvature.html %}
 
 The visualization illustrates that:
-- The choice of learning rate depends on the curvature of the cost function.
+- What makes a good learning rate depends on the curvature of the cost function.
 - Gradient descent makes a linear approximation of the cost function at a given point. Then it moves downhill along the approximation of the cost function.
-- If the cost is highly curved, the larger the learning rate (step size), the larger the error of the <span class="sidenote">gradient approximation</span>. The approximation tends to overshoot.
-- Taking small steps reduces the gradient approximation error.<sup class="footnote"></sup>
+- If the cost is highly curved, the larger the learning rate (step size), the more likely is the algorithm to overshoot.
+- Taking small steps reduces reduces this problem, but also slows down learning.<sup class="footnote"></sup>
 
 It is common to start with a large learning rate — say, between 0.1 and 1 — and decay it during training. Choosing the right decay (how often? by how much?) is non-trivial. An excessively aggressive decay schedule slows progress toward the optimum, while a slow-paced decay schedule leads to chaotic updates with small improvements.
 
@@ -240,22 +239,12 @@ Choosing the right batch size is important to ensure convergence of the cost fun
 
 Research into batch size has revealed the following principles:
 
-- Batch size determines the frequency of updates. The smaller the batches, the more — though quicker the updates.
+- Batch size determines the frequency of updates. The smaller the batches, the more, and the quicker, the updates.
 - The larger the batch size, the more accurate the gradient of the cost will be with respect to the parameters. That is, the direction of the update is most likely going down the local slope of the cost landscape.
 - Having larger batch sizes, but not so large that they no longer fit in GPU memory, tends to improve parallelization efficiency and can accelerate training.
-- Some authors have also suggested that large batch sizes can hurt the model’s ability to generalize, perhaps by causing the algorithm to find poorer local optima/plateau.
+- Some authors (Keskar et al., 2016) have also suggested that large batch sizes can hurt the model’s ability to generalize, perhaps by causing the algorithm to find poorer local optima/plateau.
 
 In choosing batch size, there’s a balance to be struck depending on the available computational hardware and the task you’re trying to achieve.
-
-### Flat vs. sharp minima
-
-It is also hypothesized that larger batch sizes can lead to sharper cost function surfaces and relate to generalization.
-
-Here's a figure comparing a flat and a sharp minimum. Flat cost surfaces are preferred because they lead to good generalization without requiring high precision. In the graphic below, the values of the train and test costs for a given parameter value are much closer in the flat minimum case than in the sharp minimum case, which translates to better generalization.
-
-![flat_vs_sharp](../assets/images/article/optimization/flat_vs_sharp.jpg "flat_vs_sharp")
-
-In practice, hyperparameter search can help you find batch size and learning rate. These hyperparameters are two routes to the same outcome, according to Smith, Kindermans et al. in Don't Decay the Learning Rate, Increase the Batch Size. They argue that the benefits of decaying the learning rate can be achieved by increasing batch size during training. So if you change batch size, you may also need to change learning rate. Efficient use of vast batch sizes notably reduces the number of parameter updates required to train a model.
 
 ### Iterative update
 
@@ -348,7 +337,7 @@ The choice of optimizer influences both the speed of convergence and whether it 
   </tr>
 </table>
 
-Adaptive optimization methods such as Adam or RMSprop perform well in the initial portion of training, but they have been found to generalize poorly at later stages  compared to Stochastic Gradient Descent. In Improving Generalization Performance by Switching from Adam to SGD, Keskar et al. investigate a hybrid strategy that begins training with an adaptive method and switches to SGD.
+Adaptive optimization methods such as Adam or RMSprop perform well in the initial portion of training, but they have been found to generalize poorly at later stages  compared to Stochastic Gradient Descent.
 
 You can find more information about these optimizers in the Deep Learning Specialization Course 2, Week 2 (Optimization Algorithms) on Coursera.
 
