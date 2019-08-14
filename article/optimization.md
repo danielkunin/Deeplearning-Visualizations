@@ -57,7 +57,7 @@ acknowledgments:
 - The loss landscape visualization adapted code from Mike Bostock's <a href="https://bl.ocks.org/mbostock/f48ff9c1af4d637c9a518727f5fdfef5">visualization</a> of the Goldstein-Price function
 - The banner visualization adapted code from deeplearn.js's implementation of a <a href="https://en.wikipedia.org/wiki/Compositional_pattern-producing_network">CPPN</a>
 
-reference: Katanforoosh, Kunin et al., "Optimizing neural networks", deeplearning.ai, 2019.
+reference: Katanforoosh, Kunin et al., "Parameter optimization in neural networks", deeplearning.ai, 2019.
 
 
 # Footnotes & Sidenotes
