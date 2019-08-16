@@ -30,7 +30,7 @@
 
 	            	<!-- <h3 class="column-6-8 ">ARTICLES</h3> -->
 
-	            	{% for item in site.notes.article.nav %}
+	            	{% for item in site.article.nav %}
 		              {% if jekyll.environment != 'production' or item.published %}
 		                <a href="{% if jekyll.environment == 'production' %}{{ site.baseurl }}{% endif %}/{{ item.url }}/">
 			            	<div class="nav-tile column-25-8 column-align">

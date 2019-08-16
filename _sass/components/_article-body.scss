@@ -16,4 +16,13 @@ $sum-article: 8;
 }
 
 
+.full-width {
+	width: 95vw;
+    position: relative;
+    height: auto;
+    left: calc(-47.5vw + 50%);
+    text-align: center;
+    margin: 2rem 0;
+    padding: 2rem 2.5vw;
+}
 	
